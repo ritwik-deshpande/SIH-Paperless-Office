@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 import Dashboard from './Dashboard'
 import * as serviceWorker from './serviceWorker';
+import {Provider} from 'react-redux'
+import store from './reducers/ReduxStore'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Dashboard />
+    <Provider store = {store}> <Dashboard /> </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
