@@ -8,6 +8,14 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
     },
+    media: {
+      height: 90,
+      width:90
+    },
+    cardDim:{
+      width: 300,
+      height:300,
+    },
     toolbarIcon: {
       display: 'flex',
       alignItems: 'center',

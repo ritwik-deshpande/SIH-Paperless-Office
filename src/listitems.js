@@ -10,15 +10,39 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { NavLink, withRouter } from 'react-router-dom'
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const navigationBar = (props)=>{
-    return(
+
+
+function Listitems(props) {
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    console.log(props)
+    props.history.push('/viewDocs')
+  };
+  const handleDashboard = () =>{
+    console.log('Props is',props)
+    props.history.push('/')
+  }
+
+
+  return (
     <div className="container">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Dashboard" onClick={handleDashboard} ></ListItemText>
+        
       </ListItem>
       <ListItem button>
         <ListItemIcon>
@@ -34,16 +58,27 @@ const navigationBar = (props)=>{
         <ListItemText primary="Start a Workflow" />
       </ListItem>
 
-      <NavLink exact to="/viewDocs">
+ 
       <ListItem button>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
       
-        <ListItemText primary="View Documents" />
+        <ListItemText primary="Documents" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        </ListItemText>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>New Document</MenuItem>
+          <MenuItem onClick={handleClose}>View Documents</MenuItem>
+        </Menu>
         
       </ListItem>
-      </NavLink>
+     
       <ListItem button>
         <ListItemIcon>
           <LayersIcon />
@@ -57,9 +92,13 @@ const navigationBar = (props)=>{
         <ListItemText primary="View Emails" />
       </ListItem>
     </div>
-    )
-  
+  )
 }
 
 
-export default withRouter(navigationBar )
+
+
+
+
+
+export default withRouter(Listitems )
