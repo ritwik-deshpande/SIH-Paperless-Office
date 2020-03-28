@@ -22,7 +22,8 @@ import useStyles from './Style'
 import y from './MainComponent'
 import {Route,BrowserRouter} from 'react-router-dom'
 import FolderComponent from './Folders'
-
+import FormComponent  from "./Forms/FormComponent";
+import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 
 
 export default function Dashboard() {
@@ -78,9 +79,12 @@ export default function Dashboard() {
         <List> <NavBar/></List>
         <Divider />
       </Drawer>
+      <div>
       <Route exact path='/' component={y}/>
       <Route exact path='/viewDocs' component={FolderComponent} />
-     
+      <Route exact path='/getForm' component={StartWrkflwComponent} />
+      <Route exact path='/Form' component={FormComponent} />
+     </div>
       
        
     </div>

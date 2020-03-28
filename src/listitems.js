@@ -51,12 +51,14 @@ function Listitems(props) {
         <ListItemText primary="Update Profile" />
       </ListItem>
       
+      <NavLink exact to="/getForm">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Start a Workflow" />
       </ListItem>
+      </NavLink>
 
  
       <ListItem button>
