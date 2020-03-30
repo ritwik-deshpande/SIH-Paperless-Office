@@ -7,6 +7,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormComponent from '../Forms/FormComponent';
+import DisplayWorkflow from './DisplayWorkflowComponent';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,7 +71,10 @@ class StartWrkflwComponent extends Component{
               {renderExpansionPanel()}
             </ExpansionPanel>
             {this.state.showFormandWrkflw ?
-           <FormComponent title={this.state.selectedTitle} /> :
+           (<div>
+             {/* <FormComponent title={this.state.selectedTitle} /> */}
+            <DisplayWorkflow title={this.state.selectedTitle} />
+            </div>) :
            null
             }
             </div>
