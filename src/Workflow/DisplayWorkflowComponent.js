@@ -1,6 +1,8 @@
 import React from "react";
 import DragAndDropSidebar from "./DragandDropSidebar"
-
+import { FlowChartWithState } from "@mrblenny/react-flow-chart";
+import useStyles from '../Style'
+import Container from '@material-ui/core/Container';
 const chartSimple = {
   offset: {
     x: 0,
