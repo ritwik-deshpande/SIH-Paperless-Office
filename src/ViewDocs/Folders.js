@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { getInitalData } from './reducers/ReduxStore';
+import { getInitalData } from '../reducers/ReduxStore';
 
 import ShowFiles from './ShowFiles'
 

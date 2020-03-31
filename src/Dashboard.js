@@ -17,15 +17,13 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import NavBar from './listitems'
+import NavBar from './Navbar'
 import useStyles from './Style'
-import y from './MainComponent'
+import LandingPage from './LandingPage'
 import {Route,BrowserRouter} from 'react-router-dom'
-import FolderComponent from './Folders'
+import FolderComponent from './ViewDocs/Folders'
 import FormComponent  from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
-
-import DisplayWorkflow from './Workflow/DisplayWorkflowComponent';
 
 
 
@@ -74,6 +72,7 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
@@ -83,7 +82,7 @@ export default function Dashboard() {
         <Divider />
       </Drawer>
       <div>
-      <Route exact path='/' component={y}/>
+      <Route exact path='/' component={LandingPage}/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />

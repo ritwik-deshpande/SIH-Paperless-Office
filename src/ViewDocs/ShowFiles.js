@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from '@material-ui/core/Container';
-import useStyles from './Style'
+import useStyles from '../Style'
 import Grid from '@material-ui/core/Grid';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import Card from '@material-ui/core/Card';
