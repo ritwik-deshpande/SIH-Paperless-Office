@@ -1,6 +1,7 @@
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 import axios from "axios";
+import api from "../utils/api";
 
 const defaultState = {
   metadata: {}, // It should be empty during store init
@@ -23,7 +24,7 @@ function rootReducer(state = defaultState, action) {
 export const getInitalData = (id) => async dispatch => {
   try {
     let metadata = await axios.get(
-      "https://jsonplaceholder.typicode.com/users/"
+      api.posts("users").getAll()
     );
     console.log("The id is",id)
     // You're dispatching not only the metadata, but also setting isDataInitialized to true, to denote, that data has been loaded

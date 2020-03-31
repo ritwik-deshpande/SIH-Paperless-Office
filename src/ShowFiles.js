@@ -1,7 +1,6 @@
 import React from 'react'
 import Container from '@material-ui/core/Container';
 import useStyles from './Style'
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import Card from '@material-ui/core/Card';
@@ -56,18 +55,18 @@ function ShowFiles({posts}) {
     }
     
 
-    const renderTable = () => {
-        return posts.metadata.data.map((user) => {
-          return (
-            <tr>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.address.street}</td>
-              <td>{user.company.name}</td>
-            </tr>
-          );
-        });
-      };
+    // const renderTable = () => {
+    //     return posts.metadata.data.map((user) => {
+    //       return (
+    //         <tr>
+    //           <td>{user.name}</td>
+    //           <td>{user.email}</td>
+    //           <td>{user.address.street}</td>
+    //           <td>{user.company.name}</td>
+    //         </tr>
+    //       );
+    //     });
+    //   };
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer} />

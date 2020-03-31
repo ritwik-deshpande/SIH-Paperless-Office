@@ -1,9 +1,4 @@
 import React from 'react'
-
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux'
 import { getInitalData } from './reducers/ReduxStore';
 

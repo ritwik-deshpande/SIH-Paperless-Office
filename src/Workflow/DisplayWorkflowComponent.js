@@ -1,10 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import DragAndDropSidebar from "./DragandDropSidebar"
 import { FlowChartWithState } from "@mrblenny/react-flow-chart";
 import useStyles from '../Style'
 import Container from '@material-ui/core/Container';
-
 const chartSimple = {
   offset: {
     x: 0,
@@ -12,7 +10,7 @@ const chartSimple = {
   },
   nodes: {
     node1: {
-      id: "node1",
+      id: "node1", 
       type: "Level One",
       properties: {
         approvers: '',
