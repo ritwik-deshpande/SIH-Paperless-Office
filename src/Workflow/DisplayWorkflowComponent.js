@@ -10,7 +10,7 @@ const chartSimple = {
   },
   nodes: {
     node1: {
-      id: "node1",
+      id: "node1", 
       type: "Level One",
       properties: {
         approvers: '',
