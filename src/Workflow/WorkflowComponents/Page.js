@@ -6,9 +6,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0px;
     max-width: 100vw;
     max-height: 100vh;
-    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
     box-sizing: border-box;
-    font-family: sans-serif;
+  
   }
   *, :after, :before {
     box-sizing: inherit;
@@ -19,6 +20,7 @@ const PageContent = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
+  font-family: 'Titillium Web';
   max-width: 100vw;
   max-height: 100vh;
 `

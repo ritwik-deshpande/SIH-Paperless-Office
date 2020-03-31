@@ -25,6 +25,9 @@ import FolderComponent from './Folders'
 import FormComponent  from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 
+import DisplayWorkflow from './Workflow/DisplayWorkflowComponent';
+
+
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -84,6 +87,7 @@ export default function Dashboard() {
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
+     
      </div>
       
        

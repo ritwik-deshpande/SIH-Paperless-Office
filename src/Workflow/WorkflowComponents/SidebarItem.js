@@ -16,7 +16,7 @@ export const SidebarItem = ({ type, ports, properties }) => {
     <Outer
       draggable={true}
       onDragStart={ (event) => {
-        event.dataTransfer.setData(REACT_FLOW_CHART, JSON.stringify({ type, ports, properties }))
+        event.dataTransfer.setData(REACT_FLOW_CHART, JSON.stringify({ type, approvers ,ports, properties }))
       } }
     >
       {type}

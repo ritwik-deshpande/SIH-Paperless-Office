@@ -21,11 +21,12 @@ function Listitems(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleNavlink = (link) => {
     setAnchorEl(null);
     console.log(props)
-    props.history.push('/viewDocs')
+    props.history.push(link)
   };
+ 
   const handleDashboard = () =>{
     console.log('Props is',props)
     props.history.push('/')
@@ -48,14 +49,14 @@ function Listitems(props) {
         <ListItemText primary="Update Profile" />
       </ListItem>
       
-      <NavLink exact to="/getForm">
+     
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="Start a Workflow" />
+        <ListItemText primary="Start a Workflow" onClick={() => handleNavlink('/getForm')} />
       </ListItem>
-      </NavLink>
+     
 
  
       <ListItem button>
@@ -70,10 +71,10 @@ function Listitems(props) {
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={() => handleNavlink('/viewDocs')}
         >
-          <MenuItem onClick={handleClose}>New Document</MenuItem>
-          <MenuItem onClick={handleClose}>View Documents</MenuItem>
+          <MenuItem onClick={() => handleNavlink('/viewDocs')}>New Document</MenuItem>
+          <MenuItem onClick={() => handleNavlink('/viewDocs')}>View Documents</MenuItem>
         </Menu>
         
       </ListItem>

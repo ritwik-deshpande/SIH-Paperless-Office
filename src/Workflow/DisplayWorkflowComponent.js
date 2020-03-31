@@ -1,7 +1,6 @@
 import React from "react";
 import DragAndDropSidebar from "./DragandDropSidebar"
 
-
 const chartSimple = {
   offset: {
     x: 0,
@@ -10,7 +9,10 @@ const chartSimple = {
   nodes: {
     node1: {
       id: "node1",
-      type: "output-only",
+      type: "Level One",
+      properties: {
+        approvers: '',
+      },
       position: {
         x: 300,
         y: 100
@@ -39,6 +41,9 @@ const chartSimple = {
         x: 300,
         y: 300
       },
+      properties: {
+        approvers: '',
+      },
       ports: {
         port1: {
           id: "port1",
@@ -53,6 +58,9 @@ const chartSimple = {
     node3: {
       id: "node3",
       type: "input-output",
+      properties: {
+        approvers: '',
+      },
       position: {
         x: 100,
         y: 600
@@ -71,6 +79,9 @@ const chartSimple = {
     node4: {
       id: "node4",
       type: "input-output",
+      properties: {
+        approvers: '',
+      },
       position: {
         x: 500,
         y: 600
@@ -133,13 +144,17 @@ const chartSimple = {
 };
 
 function DisplayWorkflow(props){
+  const classes = useStyles();
 
     return (
         
         <div >
+
             <h1 id="title"> API TABLE </h1>
             <h3>{props.title}</h3>
-        <DragAndDropSidebar chartSimple={chartSimple}/> 
+            <Container maxWidth="lg" className={classes.container}>
+            <DragAndDropSidebar chartSimple={chartSimple}/> 
+            </Container>
 
           
         </div>
