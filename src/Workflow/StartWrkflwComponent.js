@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import Collapsible from '../utils/Collapsible';
 import { makeStyles } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -25,32 +29,41 @@ class StartWrkflwComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
-            showFormandWrkflw : false,
-            selectedTitle : "",
-            Academics : [{id : 1, title: "Admission Cancellation"},
-                            {id :2, title: "No Dues Form"},]
+          anchorEl:null,
+          showFormandWrkflw : false,
+          selectedTitle : "",
+          Academics : [{id : 1, title: "Admission Cancellation"},
+                        {id :2, title: "No Dues Form"},]
         };
+        console.log(this.state);
     }
-      handleClick = (title) =>{
-       console.log(title);
-       this.setState({selectedTitle : title,
-        showFormandWrkflw  :true});
+    
+    handleClick = (title) =>{
+      console.log(title);
+      this.setState({selectedTitle : title,
+      showFormandWrkflw  :true});
+      this.handleClose()
        //this.props.history.push("/Form")
 
-     }
+    }
+    
+    handleListClick = (event) =>{
+      this.setState({anchorEl : event.currentTarget});
+    }
+
+    handleClose = () => {
+      this.setState({anchorEl : null});
+      console.log(this.props)
+      //this.props.history.push('/viewDocs')
+    };
     render(){
 
-        //const classes = useStyles();
-        const renderExpansionPanel = () => {
+        const renderPanel = () => {
             return this.state.Academics.map(form => {
               return (
 
-                <div id={form.id} onClick={()=>this.handleClick(form.title)}>
-                <ExpansionPanelDetails key={form.id}>
-                <Typography>
-                  {form.title}
-                </Typography>
-              </ExpansionPanelDetails>
+              <div key={form.id}>
+                <MenuItem onClick= {() => this.handleClick(form.title)}>{form.title}</MenuItem>
               </div>
               );
             });
@@ -58,27 +71,33 @@ class StartWrkflwComponent extends Component{
         return(
             <div>
                 <h1 id="title">API CALLS</h1>
-            <div className={useStyles.root}>
-            <ExpansionPanel>
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={useStyles.heading}>Academics</Typography>
-              </ExpansionPanelSummary>
-             
-              {renderExpansionPanel()}
-            </ExpansionPanel>
+                <ListItem button>
+                <ListItemText primary="Academics" 
+                aria-controls="simple-menu" 
+                aria-haspopup="true" 
+                onClick={this.handleListClick}>
+        </ListItemText>
+        <Menu
+          id="simple-menu"
+          anchorEl={this.state.anchorEl}
+          keepMounted
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleClose}
+        >
+          {renderPanel()}
+        </Menu>
+        
+      </ListItem>
+            
             {this.state.showFormandWrkflw ?
            (<div>
-             {/* <FormComponent title={this.state.selectedTitle} /> */}
+            <FormComponent title={this.state.selectedTitle} /> 
             <DisplayWorkflow title={this.state.selectedTitle} />
             </div>) :
-           null
+           (null)
             }
             </div>
-            </div>
+            
         )
     }
 }

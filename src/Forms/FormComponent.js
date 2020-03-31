@@ -1,59 +1,41 @@
 import React, { Component } from "react";
 import './FormComponent.css'
+import axios from 'axios';
 import Form from "react-jsonschema-form";
+import api from '../utils/api';
 
-
-const schema = {
-    "title": "A registration form",
-    "description": "A simple form example.",
-    "type": "object",
-    "required": [
-      "firstName",
-      "lastName"
-    ],
-    "properties": {
-      "firstName": {
-        "type": "string",
-        "title": "First name",
-        "default": "Chuck"
-      },
-      "lastName": {
-        "type": "string",
-        "title": "Last name"
-      },
-      "age": {
-        "type": "integer",
-        "title": "Age"
-      },
-      "bio": {
-        "type": "string",
-        "title": "Bio"
-      },
-      "password": {
-        "type": "string",
-        "title": "Password",
-        "minLength": 3
-      },
-      "telephone": {
-        "type": "string",
-        "title": "Telephone",
-        "minLength": 10
-      }
-    }
-  }
-
-  const UiSchema = {
-    "password" :{
-    "classNames" : "input-field",
-    "ui:widget": "password",
-    "ui:help": "Hint: Make it strong!",
-    "classNames" : "input-field col s12"
-    }
-    }
-  const onSubmit = ({formData}, e) => console.log("Data submitted: ",  formData);
+const onSubmit = ({formData}, e) => console.log("Data submitted: ",  formData);
 
 class FormComponent extends Component{
 
+    constructor(props){
+      super(props);
+      this.state = {
+          schema : {"title": "A registration form",
+          "description": "A simple form example.",
+          "type": "object",
+          
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "title": "First name",
+              "default": "Chuck"
+            }
+          }
+          },
+          uiSchema : {}      
+    }
+  }
+    componentDidMount(){
+      axios.get(api.forms("Forms").get("Admission Cancellation"))
+      .then(res => {
+        console.log(res.data[0].schema)
+        this.setState({
+          schema : res.data[0].schema,
+          uiSchema : res.data[0].uiSchema
+        })
+      })
+    }
     render(){
         
         let log = (type) => console.log.bind(console, type);
@@ -61,8 +43,8 @@ class FormComponent extends Component{
         return(
             <div className="input-field">
                 <h1 id="title">{this.props.title}</h1>
-                <Form schema={schema}
-                    uiSchema={UiSchema}
+                <Form schema={this.state.schema}
+                    uiSchema={this.state.uiSchema}
                     onChange={log("changed")}
                     onSubmit={onSubmit}
                     onError={log("errors")} />

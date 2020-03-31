@@ -1,7 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import DragAndDropSidebar from "./DragandDropSidebar"
-import { FlowChartWithState } from "@mrblenny/react-flow-chart";
 
 
 const chartSimple = {
