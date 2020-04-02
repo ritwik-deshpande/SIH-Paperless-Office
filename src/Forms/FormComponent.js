@@ -4,10 +4,11 @@ import axios from 'axios';
 import Form from "react-jsonschema-form";
 import api from '../utils/api';
 
-const onSubmit = ({formData}, e) => console.log("Data submitted: ",  formData);
+
 
 class FormComponent extends Component{
 
+  
     constructor(props){
       super(props);
       this.state = {
@@ -25,6 +26,12 @@ class FormComponent extends Component{
           },
           uiSchema : {}      
     }
+  }
+
+  onSubmit = ({formData}, e) => {
+  
+    console.log("Data submitted: ",  formData);
+    this.props.save(formData)
   }
     componentDidMount(){
       axios.get(api.forms("Forms").get("Admission Cancellation"))
@@ -46,7 +53,7 @@ class FormComponent extends Component{
                 <Form schema={this.state.schema}
                     uiSchema={this.state.uiSchema}
                     onChange={log("changed")}
-                    onSubmit={onSubmit}
+                    onSubmit={this.onSubmit}
                     onError={log("errors")} />
             </div>
         )

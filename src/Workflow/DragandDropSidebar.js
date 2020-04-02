@@ -201,8 +201,10 @@ const NodeInnerCustom = ({ node, config }) => {
 class SelectedSidebar extends React.Component {
   state = cloneDeep(this.props.chartSimple)
 
-  handleClick(props){
-    console.log('The final workflow is',props)
+  handleClick = (chart) =>{
+    console.log('The final workflow is',chart)
+    this.props.save(chart);
+
   }
   render () {
     const chart = this.state
@@ -308,7 +310,7 @@ class SelectedSidebar extends React.Component {
       </br>
       <br></br>
       <Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
-        Initiate Workflow
+        Save Workflow
       </Button>
       </div>
     )

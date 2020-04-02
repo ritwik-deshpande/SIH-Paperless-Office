@@ -152,10 +152,9 @@ function DisplayWorkflow(props){
         
         <div >
 
-            <h1 id="title"> API TABLE </h1>
             <h3>{props.title}</h3>
             <Container maxWidth="lg" className={classes.container}>
-            <DragAndDropSidebar chartSimple={chartSimple}/> 
+            <DragAndDropSidebar chartSimple={chartSimple} save={ props.save}/> 
             </Container>
 
           
