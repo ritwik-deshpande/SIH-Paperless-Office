@@ -64,9 +64,9 @@ function Listitems(props) {
           <BarChartIcon />
         </ListItemIcon>
       
-        <ListItemText primary="Documents" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <ListItemText primary="View Documents" onClick={() => handleNavlink('/viewDocs')}>
         </ListItemText>
-        <Menu
+        {/* <Menu
           id="simple-menu"
           anchorEl={anchorEl}
           keepMounted
@@ -75,7 +75,7 @@ function Listitems(props) {
         >
           <MenuItem onClick={() => handleNavlink('/viewDocs')}>New Document</MenuItem>
           <MenuItem onClick={() => handleNavlink('/viewDocs')}>View Documents</MenuItem>
-        </Menu>
+        </Menu> */}
         
       </ListItem>
      

@@ -17,17 +17,16 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import NavBar from './listitems'
+import NavBar from './Navbar'
 import useStyles from './Style'
-import y from './MainComponent'
+import LandingPage from './LandingPage'
 import {Route,BrowserRouter} from 'react-router-dom'
-import FolderComponent from './Folders'
+import FolderComponent from './ViewDocs/Folders'
 import FormComponent  from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 
-import DisplayWorkflow from './Workflow/DisplayWorkflowComponent';
-
-
+import CustomForm from './Forms/CustomForms'
+import FormBuilder from 'react-form-builder2'
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -41,7 +40,11 @@ export default function Dashboard() {
  
 
   return (
+   
+    // 
     <BrowserRouter>
+    
+    
     
     <div className={classes.root}>
       <CssBaseline />
@@ -74,24 +77,32 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
         <List> <NavBar/></List>
-        <Divider />
+        <Divider/>
       </Drawer>
-      <div>
-      <Route exact path='/' component={y}/>
+    
+      <div className={classes.appBarSpacer} />
+
+     
+      
+      <Route exact path='/' component={LandingPage}/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
      
-     </div>
       
+     </div>
+     {/* <CustomForm/> */}
        
-    </div>
+    
+   
+  
     </BrowserRouter>
   );
 }

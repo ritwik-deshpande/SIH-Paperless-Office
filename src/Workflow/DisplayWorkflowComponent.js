@@ -1,165 +1,126 @@
 import React from "react";
 import DragAndDropSidebar from "./DragandDropSidebar"
-import { FlowChartWithState } from "@mrblenny/react-flow-chart";
-import useStyles from '../Style'
+import axios from 'axios';
+import api from '../utils/api'
 import Container from '@material-ui/core/Container';
 const chartSimple = {
-  offset: {
-    x: 0,
-    y: 0
-  },
-  nodes: {
-    node1: {
-      id: "node1", 
-      type: "Level One",
-      properties: {
-        approvers: '',
-      },
-      position: {
-        x: 300,
-        y: 100
-      },
-      ports: {
-        port1: {
-          id: "port1",
-          type: "output",
-          properties: {
-            value: "yes"
-          }
-        },
-        port2: {
-          id: "port2",
-          type: "output",
-          properties: {
-            value: "no"
-          }
-        }
-      }
-    },
-    node2: {
-      id: "node2",
-      type: "input-output",
-      position: {
-        x: 300,
-        y: 300
-      },
-      properties: {
-        approvers: '',
-      },
-      ports: {
-        port1: {
-          id: "port1",
-          type: "input"
-        },
-        port2: {
-          id: "port2",
-          type: "output"
-        }
-      }
-    },
-    node3: {
-      id: "node3",
-      type: "input-output",
-      properties: {
-        approvers: '',
-      },
-      position: {
-        x: 100,
-        y: 600
-      },
-      ports: {
-        port1: {
-          id: "port1",
-          type: "input"
-        },
-        port2: {
-          id: "port2",
-          type: "output"
-        }
-      }
-    },
-    node4: {
-      id: "node4",
-      type: "input-output",
-      properties: {
-        approvers: '',
-      },
-      position: {
-        x: 500,
-        y: 600
-      },
-      ports: {
-        port1: {
-          id: "port1",
-          type: "input"
-        },
-        port2: {
-          id: "port2",
-          type: "output"
-        }
-      }
-    }
-  },
-  links: {
-    link1: {
-      id: "link1",
-      from: {
-        nodeId: "node1",
-        portId: "port2"
-      },
-      to: {
-        nodeId: "node2",
-        portId: "port1"
-      },
-      properties: {
-        label: "example link label"
-      }
-    },
-    link2: {
-      id: "link2",
-      from: {
-        nodeId: "node2",
-        portId: "port2"
-      },
-      to: {
-        nodeId: "node3",
-        portId: "port1"
-      },
-      properties: {
-        label: "another example link label"
-      }
-    },
-    link3: {
-      id: "link3",
-      from: {
-        nodeId: "node2",
-        portId: "port2"
-      },
-      to: {
-        nodeId: "node4",
-        portId: "port1"
-      }
-    }
-  },
+  
   selected: {id:"node2"},
   hovered: {}
 };
+class DisplayWorkflow extends React.Component{
 
-function DisplayWorkflow(props){
-  const classes = useStyles();
+      constructor(props){
+        super(props);
+        this.state = {
+            schema :  null
+      //         "offset": {
+      //           "x": 0,
+      //           "y": 0
+      //         },
+      //         "nodes": {
+      //           "node1": {
+      //             "id": "node1", 
+      //             "type": "Start",
+      //             "properties": {
+      //               "approvers": "RB Keskar-Manish Kurehkar"
+      //             },
+      //             "position": {
+      //               "x": 300,
+      //               "y": 100
+      //             },
+      //             "ports": {
+      //               "port1": {
+      //                 "id": "port1",
+      //                 "type": "output",
+      //                 "properties": {
+      //                   "value": "yes"
+      //                 }
+      //               },
+      //               "port2": {
+      //                 "id": "port2",
+      //                 "type": "output",
+      //                 "properties": {
+      //                   "value": "no"
+      //                 }
+      //               }
+      //             }
+      //           },
+      //           "node2": {
+      //             "id": "node2",
+      //             "type": "input-output",
+      //             "position": {
+      //               "x": 300,
+      //               "y": 300
+      //             },
+      //             "properties": {
+      //               "approvers": ""
+      //             },
+      //             "ports": {
+      //               "port1": {
+      //                 "id": "port1",
+      //                 "type": "input"
+      //               },
+      //               "port2": {
+      //                 "id": "port2",
+      //                 "type": "output"
+      //               }
+      //             }
+      //           }
+      //         },
+      //         "links": {
+      //           "link1": {
+      //             "id": "link1",
+      //             "from": {
+      //               "nodeId": "node1",
+      //               "portId": "port2"
+      //             },
+      //             "to": {
+      //               "nodeId": "node2",
+      //               "portId": "port1"
+      //             },
+      //             "properties": {
+      //             "label": "example link label"
+      //             }
+      //           }
+      //       },
+      //       "selected": {"id":"node2"},
+      //       "hovered": {}
+          
+           
+      }
+    }
 
-    return (
+    componentDidMount(){
+      axios.get(api.forms("Workflows").get(this.props.title))
+      .then(res => {
+        console.log('The data received is',res.data[0].schema)
+        this.setState({
+          schema : res.data[0].schema,
+        })
+      })
+    }
+
+  
+    render(){
+      console.log('The state is',this.state)
+      return (
         
         <div >
-
-            <h3>{props.title}</h3>
-            <Container maxWidth="lg" className={classes.container}>
-            <DragAndDropSidebar chartSimple={chartSimple} save={ props.save}/> 
+            <h1 id="title"> WORKFLOW </h1>
+            <h3>{this.props.title}</h3>
+            <Container maxWidth="lg">
+            {this.state.schema ? <DragAndDropSidebar chartSimple={this.state.schema}/>  :<div>
+              <h5>Initializing Workflow</h5>
+            </div>}
+             
             </Container>
-
-          
         </div>
       );
+
+    }
+
+    
 }
 
 export default DisplayWorkflow;
