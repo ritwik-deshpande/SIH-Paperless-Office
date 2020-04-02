@@ -265,6 +265,10 @@
                     "type": "integer",
                     "title": "Age"
                   },
+                  "dateofbirth": {
+                    "type": "date",
+                    "title": "Date of Birt"
+                  },
                   "bio": {
                     "type": "string",
                     "title": "Bio"

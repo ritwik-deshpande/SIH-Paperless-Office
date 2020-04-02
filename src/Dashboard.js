@@ -25,7 +25,8 @@ import FolderComponent from './ViewDocs/Folders'
 import FormComponent  from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 
-
+import CustomForm from './Forms/CustomForms'
+import FormBuilder from 'react-form-builder2'
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -39,7 +40,11 @@ export default function Dashboard() {
  
 
   return (
+   
+    // 
     <BrowserRouter>
+    
+    
     
     <div className={classes.root}>
       <CssBaseline />
@@ -79,18 +84,25 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List> <NavBar/></List>
-        <Divider />
+        <Divider/>
       </Drawer>
-      <div>
+    
+      <div className={classes.appBarSpacer} />
+
+     
+      
       <Route exact path='/' component={LandingPage}/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
      
-     </div>
       
+     </div>
+     {/* <CustomForm/> */}
        
-    </div>
+    
+   
+  
     </BrowserRouter>
   );
 }
