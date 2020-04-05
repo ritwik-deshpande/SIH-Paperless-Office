@@ -92,11 +92,11 @@ class DisplayWorkflow extends React.Component{
     }
 
     componentDidMount(){
-      axios.get(api.forms("Workflows").get(this.props.title))
+      axios.get(api.forms("FlowChart").get(this.props.title))
       .then(res => {
-        console.log('The data received is',res.data[0].schema)
+        console.log('The data received is',res.data[0].chart)
         this.setState({
-          schema : res.data[0].schema,
+          schema : res.data[0].chart,
         })
       })
     }
@@ -107,7 +107,7 @@ class DisplayWorkflow extends React.Component{
       return (
         
         <div >
-            <h1 id="title"> WORKFLOW </h1>
+            <h2 id="title"> WORKFLOW </h2>
             <h3>{this.props.title}</h3>
             <Container maxWidth="lg">
             {this.state.schema ? <DragAndDropSidebar chartSimple={this.state.schema}/>  :<div>

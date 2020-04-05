@@ -16,5 +16,18 @@ export default {
 
         get : (title) => {return `${Endpoint}/${url}?title=${title}`}
       }
-    }  
+    },
+    flowChart(url){
+      return{
+
+        get : (title) => {return `${Endpoint}/${url}?title=${title}`}
+      }
+    },
+    workflow(url){
+      return{
+
+        post : (payload) => axios.post(`${Endpoint}/${url}`,payload)
+
+      }
+    }
     }

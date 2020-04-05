@@ -41,6 +41,7 @@
     "react-star-rating": "^1.4.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "resolve-url-loader": "^3.1.1",
     "styled-components": "^5.0.1",
     "typescript": "^3.8.3"
   },
