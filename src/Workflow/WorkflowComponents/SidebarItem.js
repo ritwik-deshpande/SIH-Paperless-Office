@@ -5,6 +5,7 @@ import { REACT_FLOW_CHART } from '@mrblenny/react-flow-chart'
 const Outer = styled.div`
   padding: 20px 30px;
   font-size: 14px;
+  border: 1px solid cornflowerblue;
   background: white;
   cursor: move;
 `

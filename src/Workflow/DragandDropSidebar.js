@@ -32,11 +32,12 @@ const Content = styled.div`
 const Message = styled.div`
   margin: 10px;
   padding: 10px;
+  background: rgba(0,0,0,0.05);
   line-height: 1.4em;
 `
 
 const Sidebar = styled.div`
-  width: 300px;
+  width: 250px;
   background: white;
   display: flex;
   flex-direction: column;
@@ -44,10 +45,10 @@ const Sidebar = styled.div`
 `
 
 const countries = [
-  { code: 'AD', label: 'RB Keskar', phone: '376' },
-  { code: 'AE', label: 'Manish Kurehkar', phone: '971' },
-  { code: 'AF', label: 'UAD', phone: '93' },
-  { code: 'AG', label: 'Mokhade', phone: '1-268' },
+  { label: 'RB Keskar', phone: '376' },
+  { label: 'Manish Kurehkar', phone: '971' },
+  { label: 'UAD', phone: '93' },
+  { label: 'Mokhade', phone: '1-268' },
 ]
 function countryToFlag(isoCode) {
   return typeof String.fromCodePoint !== 'undefined'
@@ -156,11 +157,11 @@ const NodeInnerCustom = ({ node, config }) => {
     return (
       <Outer>
         <p>Add Approvers for this level</p>
-        <br />
+        
         <p>APPROVERS :</p>
         {node.properties.approvers.length > 1 ? renderApprovers(node): null}
         <Autocomplete
-            style={{ width: 300 }}
+            style={{ width: 200, height : 50 }}
             options={countries}
             classes={{
               option: classes.option,
@@ -171,13 +172,14 @@ const NodeInnerCustom = ({ node, config }) => {
             getOptionLabel={(option) => option.label}
             renderOption={(option) => (
               <React.Fragment>
-                <span>{countryToFlag(option.code)}</span>
-                {option.label} ({option.code}) +{option.phone}
+                {/* <span>{countryToFlag(option.code)}</span> */}
+                {option.label}
               </React.Fragment>
             )}
             renderInput={(params) => (
               <TextField
                 {...params}
+                size="small"
                 label="Choose an Approver"
                 variant="outlined"
 
@@ -188,7 +190,7 @@ const NodeInnerCustom = ({ node, config }) => {
               />
             )}
           />
-          <Button variant="contained" color="primary" onClick = {() => handleClickAddAprover(node)}>
+          <Button variant="contained" size="small" color="primary" onClick = {() => handleClickAddAprover(node)}>
             Add Approver
           </Button>
        
@@ -225,11 +227,11 @@ class SelectedSidebar extends React.Component {
           />
         </Content>
        <Sidebar>
-      <Typography align="center">
-      <h3>
+         <Message>
+      
         Drag and drop these items onto the canvas.
-      </h3> 
-      </Typography>
+      
+      </Message>
       <SidebarItem
         type="top/bottom"
         approvers = ''
@@ -285,9 +287,12 @@ class SelectedSidebar extends React.Component {
           approvers: '',
         }}
       />
-      
-    </Sidebar> 
-        <Sidebar>
+      <Sidebar>
+      <Message>
+              
+                Click on the Nodes or Link to Delete.
+               
+              </Message>
           { chart.selected.type
           ? <Message>
               <div>Type: {chart.selected.type}</div>
@@ -299,12 +304,10 @@ class SelectedSidebar extends React.Component {
               */}
               <Button variant="contained" color="primary" onClick={() => stateActions.onDeleteKey({})}>Delete</Button>
             </Message>
-          : <Typography align="center">
-              <h3>
-                Click on the Nodes or Link to Delete.
-              </h3> 
-              </Typography> }
+          : (null) }
         </Sidebar>
+    </Sidebar> 
+        
       </Page>
       <br>
       </br>

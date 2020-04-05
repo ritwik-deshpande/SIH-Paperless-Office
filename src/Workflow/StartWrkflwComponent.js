@@ -131,35 +131,18 @@ class StartWrkflwComponent extends Component
           
       <div>
         <h1 id="title">API CALLS</h1>
-        <NestedList/>
-        <ListItem button>
-
-          <ListItemText primary="Academics" 
-            aria-controls="simple-menu" 
-            aria-haspopup="true" 
-            onClick={this.handleListClick}>
-          </ListItemText>
-
-          <Menu
-            id="simple-menu"
-            anchorEl={this.state.anchorEl}
-            keepMounted
-            open={Boolean(this.state.anchorEl)}
-            onClose={this.handleClose}>
-          
-              {renderPanel()}
-
-          </Menu>
-      
-        </ListItem>
-          
+        
+        
         {this.state.showFormandWrkflw ?
           
           ( <div>
             
               <FormComponent title={this.state.selectedTitle} save={this.saveFormData} />
+
+              <br/>
+
               <DisplayWorkflow title={this.state.selectedTitle} save={this.saveFlowChart}/>
-          
+           <br/>
               <Button
                 variant="contained"
                 color="primary"
@@ -168,7 +151,7 @@ class StartWrkflwComponent extends Component
                 Send
               </Button>
             </div>) :
-            (<CustomFormComponent/>)
+            <NestedList Click={this.handleClick}/>
         } 
       </div>
           
