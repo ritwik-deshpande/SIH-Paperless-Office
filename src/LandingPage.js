@@ -54,7 +54,7 @@ const MainComponent= () =>{
               <Box pt={4}>
                 <Copyright />
               </Box>
-              <CustomForm/>
+              
               </Container>
           </main>
         )

@@ -34,7 +34,7 @@ class FormComponent extends Component{
     this.props.save(formData)
   }
     componentDidMount(){
-      axios.get(api.forms("Forms").get("Admission Cancellation"))
+      axios.get(api.forms("Forms").get(this.props.title))
       .then(res => {
         console.log(res.data[0].schema)
         this.setState({
@@ -48,8 +48,8 @@ class FormComponent extends Component{
         let log = (type) => console.log.bind(console, type);
 
         return(
-            <div className="input-field">
-                <h1 id="title">{this.props.title}</h1>
+            <div className="container">
+             
                 <Form schema={this.state.schema}
                     uiSchema={this.state.uiSchema}
                     onChange={log("changed")}

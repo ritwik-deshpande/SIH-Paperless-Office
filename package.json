@@ -29,7 +29,7 @@
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
     "react-draft-wysiwyg": "^1.14.4",
-    "react-drag-drop-form-builder": "^1.0.1",
+    "react-drag-drop-form-builder": "https://github.com/ritwik-deshpande/react-drag-drop-form-builder/tarball/master",
     "react-form-builder2": "^0.4.4",
     "react-jsonschema-form": "^1.8.1",
     "react-materialize": "^3.6.1",
