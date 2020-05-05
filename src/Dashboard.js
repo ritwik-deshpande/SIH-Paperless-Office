@@ -24,6 +24,7 @@ import {Route,BrowserRouter} from 'react-router-dom'
 import FolderComponent from './ViewDocs/Folders'
 import FormComponent  from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
+import ApproveComponent from './Approvals/ApproveComponent';
 
 import CustomForm from './Forms/CustomForms'
 import FormBuilder from 'react-form-builder2'
@@ -89,15 +90,13 @@ export default function Dashboard() {
     
       <div className={classes.appBarSpacer} />
 
-     
-      
       <Route exact path='/' component={LandingPage}/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
-     
-      
-     </div>
+      <Route exact path='/approve' component={ApproveComponent} />
+  
+      </div>
      {/* <CustomForm/> */}
        
     
