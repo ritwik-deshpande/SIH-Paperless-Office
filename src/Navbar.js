@@ -81,7 +81,7 @@ function Listitems(props) {
         <ListItemIcon>
           <LayersIcon />
         </ListItemIcon>
-        <ListItemText primary="Approve Documents" />
+        <ListItemText primary="Approve Documents" onClick={() => handleNavlink('/approve')}/>
       </ListItem>
       <ListItem button>
         <ListItemIcon>
