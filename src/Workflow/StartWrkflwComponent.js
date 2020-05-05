@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 import NestedList from './WorkflowComponents/NestedList';
 import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormComponent from '../Forms/FormComponent'
 import DisplayWorkflow from './DisplayWorkflowComponent';
 import axios from 'axios';
 import api from '../utils/api';
-import CustomFormComponent from '../Forms/CustomFormComponent';
+import TextField from '@material-ui/core/TextField';
+import CustomForm from '../Forms/CustomForms'
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,32 +27,54 @@ const useStyles = makeStyles(theme => ({
 class StartWrkflwComponent extends Component
 {
 
+  componentDidMount(){
+    axios.get(api.menu("menu"))
+    .then(res => {
+      console.log(res.data[0])
+      this.setState({
+        menu : res.data[0],
+      })
+    })
+  }
+
   
   constructor(props){
       super(props);
       this.state = {
+        customWorkflow:"Empty",
         anchorEl:null,
+        menu:null,
         showFormandWrkflw : false,
         FormData : null,
+        CustomForm:null,
+        CustomFlowChart:null,
         FlowChart : null,
         selectedTitle : "",
-        Academics : [{id : 1, title: "Admission Cancellation"},
-                      {id :2, title: "No Dues Form"},]
       };
       console.log(this.state);
   }
   
+  getID(){
+    let timestamp = new Date().getUTCMilliseconds();
+    console.log(timestamp)
+    return timestamp
+  }  
+
+
   postRequest = () =>{
     //TODO: Create post request to db.json
-    if(!this.state.Form)
+    if(!this.state.FormData)
     {
       alert("Please Submit the Form First");
     }
     else if(!this.state.FlowChart)
     {
-      alert("Please Save the Workflow First");
+      alert("Please Save the FlowChart First");
     }
-    
+
+
+    else{
+      
       let payload = {
 
         "FormData" : this.state.FormData,
@@ -71,24 +84,132 @@ class StartWrkflwComponent extends Component
         "isSigned" : false,
 
       }
+      console.log("The Payload")
       console.log(payload);
+
+
+
+
       api.workflow("Workflow").post(payload).then(res =>{
         console.log(res);
       })
+
+    }
     
     
   }
 
+  saveCustomForm = (Form) => {
+
+    console.log("The form",Form)
+
+    if(this.state.customWorkflow.localeCompare("Empty")== 0){
+      alert("Please Give the name of your Custom WorkFlow");
+    }
+    else{
+     Form.title = this.state.customWorkflow
+
+     Form.id = this.getID()
+     Form.schema.title = this.state.customWorkflow
+      console.log("Saving Form",Form)
+
+      this.setState({
+        CustomForm: Form
+      })
+
+    }
+    
+
+  }
+
+  saveCustomFlowChart = (FlowChart) =>{
+
+    console.log("Saving FlowChart")
+
+    if(this.state.customWorkflow.localeCompare("Empty")== 0){
+      alert("Please Give the name of your Custom WorkFlow");
+    }
+    else{
+
+      let NewFlowChart = {
+        "id":1,
+        "title":"FlowChart",
+        "chart":null,
+      }
+      NewFlowChart.title = this.state.customWorkflow
+
+      NewFlowChart.id = this.getID()
+      NewFlowChart.chart = FlowChart
+      console.log("Saving FlowChart ",NewFlowChart)
+
+      this.setState({
+        CustomFlowChart:NewFlowChart
+      })
+     
+     
+
+    }
+  }
+
+  saveCustomWorkFlow = () =>{
+
+    if(this.state.customWorkflow.localeCompare("Empty")== 0){
+      alert("Please Give the name of your Custom WorkFlow")
+    }
+    else if(!this.state.CustomForm){
+      alert("Please save your Custom Form");
+    }
+    else if(!this.state.CustomFlowChart){
+      alert("Please save your Custom Flow Chart");
+
+    }
+    else{
+
+      api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
+        console.log(res);
+        
+      })
+
+      api.saveCustomFlowChart("FlowChart").post(this.state.CustomFlowChart).then(res =>{
+        console.log(res);
+        
+      })
+
+
+
+
+      console.log("Original Menu",this.state.menu)
+      this.state.menu.contents.Custom = [...this.state.menu.contents.Custom , {id: this.getID(),title:this.state.customWorkflow}]
+      console.log("Saving new menu",this.state.menu)
+      console.log(this.state.menu.id)
+      api.saveMenu("menu",this.state.menu.id).put(this.state.menu).then(res =>{
+        console.log(res);
+        this.setState({
+          showFormandWrkflw: false
+        })
+      })
+
+    }
+
+    
+    
+  }
+
+
   saveFormData = (FormData) =>
   {
+    console.log("Saving Form")
     console.log(FormData);
     this.setState({
       FormData : FormData
     })
   }
+  
 
-  saveFlowChart = (chart) =>
+
+  saveFlowChartData = (chart) =>
   {
+    console.log("Saving FlowChart")
     console.log(chart)
     this.setState({
       FlowChart : chart
@@ -108,51 +229,98 @@ class StartWrkflwComponent extends Component
     this.setState({anchorEl : event.currentTarget});
   }
 
+  handleChange = (e) =>{
+      this.state.customWorkflow = e.target.value;
+  }
+
   handleClose = () => {
     this.setState({anchorEl : null});
     console.log(this.props)
     //this.props.history.push('/viewDocs')
   };
 
+
+  renderWorkFlow(){
+
+      console.log("the state ")
+      console.log(this.state)
+
+      if(this.state.showFormandWrkflw){
+
+        if(this.state.selectedTitle.localeCompare("Start a Custom WorkFlow") == 0){
+            return (<div>
+     
+         <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth
+
+           onChange = {this.handleChange}
+         />
+         
+
+          <CustomForm  save ={this.saveCustomForm}/>   
+
+          <DisplayWorkflow title="Custom FlowChart" save={this.saveCustomFlowChart}/>   
+
+              <br/>
+              <br/>
+              <br/>
+
+              <Button
+              variant="contained"
+              color="primary"
+              onClick = {this.saveCustomWorkFlow}>
+            
+              Save WorkFlow
+            </Button>   
+
+         
+
+            </div>)
+        }
+        else{
+          console.log("Returning academic cancellation")
+          return( <div>
+            
+            <FormComponent title={this.state.selectedTitle} save={this.saveFormData} />
+
+            <br/>
+
+            <DisplayWorkflow title={this.state.selectedTitle} save={this.saveFlowChartData}/>
+         <br/>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick = {this.postRequest}>
+            
+              Start WorkFlow
+            </Button>
+          </div>
+          )
+        }
+      }
+      else{
+       
+        return (<div>{this.state.menu ?<NestedList menu = {this.state.menu} Click={this.handleClick}/>:<div>
+              <h5>Initializing menu</h5>
+            </div>}
+            </div>
+            )
+      }
+  }
+
   render(){
 
-    
-    const renderPanel = () => {
-        return this.state.Academics.map(form => {
-          return (
-          <div key={form.id}>
-            <MenuItem onClick= {() => this.handleClick(form.title)}>{form.title}</MenuItem>
-          </div>
-
-          );
-        });
-      };
     return(
           
       <div>
         <h1 id="title">API CALLS</h1>
+        <Container maxWidth="lg">
+
         
-        
-        {this.state.showFormandWrkflw ?
+        { this.renderWorkFlow()} 
           
-          ( <div>
-            
-              <FormComponent title={this.state.selectedTitle} save={this.saveFormData} />
-
-              <br/>
-
-              <DisplayWorkflow title={this.state.selectedTitle} save={this.saveFlowChart}/>
-           <br/>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick = {this.postRequest}>
-              
-                Send
-              </Button>
-            </div>) :
-            <NestedList Click={this.handleClick}/>
-        } 
+        </Container>
+        
+        
       </div>
           
     )

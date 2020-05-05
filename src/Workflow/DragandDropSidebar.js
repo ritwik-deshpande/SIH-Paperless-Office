@@ -311,10 +311,13 @@ class SelectedSidebar extends React.Component {
       </Page>
       <br>
       </br>
-      <br></br>
-      <Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
-        Save Workflow
-      </Button>
+      
+      {this.props.title.localeCompare("Custom FlowChart") == 0?<Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
+        Save Flow Chart
+      </Button> : <Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
+        Submit Flow Chart
+      </Button>}
+      
       </div>
     )
   }
