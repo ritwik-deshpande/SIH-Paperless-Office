@@ -23,6 +23,27 @@ export default {
         get : (title) => {return `${Endpoint}/${url}?title=${title}`}
       }
     },
+    menu(url){
+      return `${Endpoint}/${url}`
+      
+    },
+
+    saveMenu(url,id){
+      return {
+        put :(payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
+      }
+    },
+    saveCustomFlowChart(url){
+      return {
+        post :(payload) => axios.post(`${Endpoint}/${url}`,payload)
+      }
+    },
+
+    saveCustomForm(url){
+      return {
+        post :(payload) => axios.post(`${Endpoint}/${url}`,payload)
+      }
+    },
     workflow(url){
       return{
 

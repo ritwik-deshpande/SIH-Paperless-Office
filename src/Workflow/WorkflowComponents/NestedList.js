@@ -23,19 +23,27 @@ const useStyles = makeStyles(theme => ({
     },
   }));
   
-const json ={
-  Academics : [{id : 1, title: "Admission Cancellation"},
-                {id :2, title: "No Dues Form"},
-                {id :3, title: "Library Registration"}],
-  Store : [{id :4, title: "Tender 1"},
-            {id : 5, title : "Random Form"}]
-}
+// const json ={
+//   New:[{id : 1, title: "Start a Custom WorkFlow"}],
+//   Academics : [{id : 1, title: "Admission Cancellation"},
+//                 {id :2, title: "No Dues Form"},
+//                 {id :3, title: "Library Registration"}],
+//   Store : [{id :4, title: "Tender 1"},
+//             {id : 5, title : "Random Form"}]
+// }
 
-const acad = [{id : 1, title: "Admission Cancellation"},
-{id :2, title: "No Dues Form"}]
+// const acad = [{id : 1, title: "Admission Cancellation"},
+// {id :2, title: "No Dues Form"}]
 
-export default function NestedList({Click}) {
+export default function NestedList({menu,Click}) {
     const classes = useStyles();
+
+
+    const json = menu.contents
+
+
+    console.log("The json is ")
+    console.log(menu)
     const [open, setOpen] = React.useState("")
     const handleClick = (key) => {
       
@@ -51,6 +59,8 @@ export default function NestedList({Click}) {
     const renderListItem = (obj) =>{
       return(obj.map(form =>{
         return(
+         <div>
+          <div className={classes.appBarSpacer} />
         <div key={form.id}>
         <ListItem button className={classes.nested} onClick={()=>Click(form.title)}>
           <ListItemIcon>
@@ -58,6 +68,7 @@ export default function NestedList({Click}) {
           </ListItemIcon>
           <ListItemText primary={form.title} />
         </ListItem>
+      </div>
       </div>
       )}))
     }
