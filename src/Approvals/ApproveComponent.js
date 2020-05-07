@@ -7,7 +7,9 @@ class ApproveComponent extends React.Component{
     constructor(props){
         super(props);
       this.state = {
-        showPDF: false
+        showPDF: false,
+        item :null
+
       };
       console.log(this.state);
     }
@@ -15,6 +17,7 @@ class ApproveComponent extends React.Component{
         
         console.log(item);
         this.setState({
+            item : item,
             showPDF : true
         })
     }
@@ -22,7 +25,14 @@ class ApproveComponent extends React.Component{
         return(
             <div>
                 <h1>API TEST </h1>
-            {this.state.showPDF ? (<CreatePDF />) : (<AlignItemsList Click={this.handleClick}/>)}
+            {this.state.showPDF ? 
+            
+            (<CreatePDF item={this.state.item} Doc = {null}/>) 
+
+            : 
+            
+            (<AlignItemsList Click={this.handleClick}/>)
+            }
             
             
             </div>

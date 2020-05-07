@@ -56,8 +56,8 @@ export default function AlignItemsList({Click}) {
             </React.Fragment>
           }
         />
-        <IconButton color="primary">
-        <DoubleArrowTwoToneIcon style={{ fontSize: 40 }} onClick={()=>Click(item)}/>
+        <IconButton color="primary" onClick={()=>Click(item)}>
+        <DoubleArrowTwoToneIcon style={{ fontSize: 40 }} />
         </IconButton>
       </ListItem>
       <Divider variant="inset" component="li" />
