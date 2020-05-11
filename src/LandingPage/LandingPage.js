@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from '@material-ui/core/Box';
-import useStyles from './Style'
+import useStyles from '../Style'
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,15 @@ import clsx from 'clsx';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import FormBuilder from 'react-form-builder2'
-import CustomForm from './Forms/CustomForms'
+import CustomForm from '../Forms/CustomForms'
+
+import {
+  OnTime,
+  DueSoon,
+  OverDue,
+  MyCalendar,
+  NewsFeed,
+} from './components';
 
 
 function Copyright() {
@@ -32,29 +40,33 @@ const MainComponent= () =>{
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
               <Grid container spacing={10}>
-                {/* Chart */}
-                <Grid item xs={12} md={8} lg={9}>
-                  <Paper className={fixedHeightPaper}>
-                   
-                  </Paper>
+                {/* On Time */}
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                  <OnTime />
                 </Grid>
-                {/* Recent Deposits */}
-                <Grid item xs={12} md={4} lg={3}>
-                  <Paper className={fixedHeightPaper}>
-                  
-                  </Paper>
+
+                {/* Due Soon */}
+                <Grid item lg={3} sm={6} xl={3} xs={12} >
+                  <DueSoon />
                 </Grid>
-                {/* Recent Orders */}
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                  
-                  </Paper>
+                
+                {/* Over Due */}
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                  <OverDue />
+                </Grid>
+                
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                  <MyCalendar />
+                </Grid>
+        
+                <Grid item lg={10} md={6} xl={3} xs={12}>
+                  <NewsFeed />
                 </Grid>
               </Grid>
+
               <Box pt={4}>
                 <Copyright />
               </Box>
-              
               </Container>
           </main>
         )

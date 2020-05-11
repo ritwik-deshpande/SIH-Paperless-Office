@@ -20,7 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import NavBar from './Navbar'
 import useStyles from './Style'
-import LandingPage from './LandingPage'
+import LandingPage from './LandingPage/LandingPage'
 import {Route,BrowserRouter} from 'react-router-dom'
 import FolderComponent from './ViewDocs/Folders'
 import FormComponent  from "./Forms/FormComponent";
