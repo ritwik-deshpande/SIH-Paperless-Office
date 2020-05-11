@@ -71,16 +71,7 @@ function Listitems(props) {
       
         <ListItemText primary="View Documents" onClick={() => handleNavlink('/viewDocs')}>
         </ListItemText>
-        {/* <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={() => handleNavlink('/viewDocs')}
-        >
-          <MenuItem onClick={() => handleNavlink('/viewDocs')}>New Document</MenuItem>
-          <MenuItem onClick={() => handleNavlink('/viewDocs')}>View Documents</MenuItem>
-        </Menu> */}
+        
         
       </ListItem>
      

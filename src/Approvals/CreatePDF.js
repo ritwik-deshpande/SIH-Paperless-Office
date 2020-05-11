@@ -15,8 +15,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Input from '@material-ui/core/Input'
-
+import GetAppIcon from '@material-ui/icons/GetApp';
+import AddCommentIcon from '@material-ui/icons/AddComment';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Header from './PDFComponents/Header';
+import api from '../utils/api'
+import Comments from '../utils/Comments';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -72,12 +76,13 @@ const MyDocument = (
   </Document>
 );
 
-const SignedDocument = (
+const SignedDocument = (imgpath)=>{
+  return(
   <Document>
     { MyContent }
     <Page style={styles.page} size="A4">
     <View style={styles.centerImage}>
-      <Image style={styles.image} src={require("../images/lodu.jpeg")} />
+      <Image style={styles.image} src={imgpath} />
     </View>
     <Text style={styles.text}>
       Added Esignature 
@@ -85,7 +90,17 @@ const SignedDocument = (
     </Page>
   </Document>
 );
-
+  }
+  const json ={
+  
+    listitems : [{id:1, name:'Dustin Henderson', message: 'never ending story. turn around and look at what tyou see.<br/>In her face something never ending story. turn around and look at what tyou see.<br/>In her face something'},
+              {id:2, name: 'Will Byers', message: 'Approved by Chief PD'},
+              {id:3, name: 'Mike Wheeler', message: 'Threatened by the party'},
+              {id:4, name:'Dustin Henderson', message: 'never ending story'},
+              {id:5, name: 'Will Byers', message: 'Approved by Chief PD'},
+              {id:6, name: 'Mike Wheeler', message: 'Threatened by the party'}
+              ]
+  }
 
 class CreatePDF extends React.Component{
 
@@ -94,13 +109,22 @@ class CreatePDF extends React.Component{
     this.state = {
     isSigned: false,
     isApproved : false,
-    comment : "",
-
+    comment : ""
     };
   }
 
-  //classes = useStyles();
 
+  //classes = useStyles();
+  handleAddComment = () => {
+    console.log(this.state.comment)
+    json.listitems.push({id:7, name:api.getUser().name, message:this.state.comment})
+    this.setState({comment:""})
+  }
+  handleChangeinComment = (e) => {
+
+  console.log(e.target.value);
+  this.setState({comment: e.target.value})
+  }
   handleSignClick = () => {
     this.setState({isSigned : true})
     console.log("in handlesignClick")
@@ -109,46 +133,84 @@ class CreatePDF extends React.Component{
     //const classes = useStyles();
   return(
     <div>
-      <PDFViewer height='200%' width='100%'>
-        { this.state.isSigned ? (SignedDocument) : (MyDocument) }
+      
+      <PDFViewer height='200' width='100%'>
+        { this.state.isSigned ? (<Document>
+                { MyContent }
+                <Page style={styles.page} size="A4">
+                <View style={styles.centerImage}>
+                  <Image style={styles.image} src={api.getUser().esign} />
+                </View>
+                
+                <Text style={styles.text}>
+                  Added Esignature 
+                </Text>
+                </Page>
+              </Document>) : (MyDocument) }
       </PDFViewer>
-      <PDFDownloadLink document={ this.state.isSigned ? (SignedDocument) : (MyDocument) }
+      <PDFDownloadLink document={ this.state.isSigned ? 
+      (<Document>
+        { MyContent }
+        <Page style={styles.page} size="A4">
+        <View style={styles.centerImage}>
+          <Image style={styles.image} src={api.getUser().esign} />
+        </View>
+        <Text style={styles.text}>
+          Added Esignature 
+        </Text>
+        </Page>
+      </Document>) 
+      
+      : (MyDocument) }
        fileName='output.pdf'>
+         <br/>
         <Button
               variant="contained"
               color="secondary"
               // className={this.classes.button}
-              startIcon={<DeleteIcon />}
+              startIcon={<GetAppIcon />}
             >
           Download
         </Button>
       </PDFDownloadLink>
 
-      <Button
-            variant="contained"
-            color="secondary"
-            //className={classes.button}
-            startIcon={<DeleteIcon />}
-            onClick = {this.handleSignClick}
-          >
-        Approve and add e-signature
-      </Button>
       <br/>
+      <br/>
+      <Comments json={json}/>
+      <br/> 
+
+
       <form //className={classes.root} 
       noValidate autoComplete="off">
       <Input //className={classes.button} 
+      onChange = {this.handleChangeinComment}
+      value = {this.state.comment}
       name='comment' 
+      fullWidth='true'
       placeholder='Add your valuable comments' 
       inputProps={{ 'aria-label': 'description' }} />
+      <br/><br/>
       <Button
             variant="contained"
             color="secondary"
             //className={classes.button}
-            startIcon={<DeleteIcon />}
+            startIcon={<AddCommentIcon />}
+            onClick={this.handleAddComment}
           >
         Add comment
       </Button>
       </form>
+      <br/>
+      <br/>
+      <Button
+            variant="contained"
+            color="primary"
+            //className={classes.button}
+            startIcon={<ThumbUpIcon />}
+            onClick = {this.handleSignClick}
+          >
+        Approve and add e-signature
+      </Button>
     </div>
     
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Link, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   container: {
@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#112131',
     borderBottomStyle: 'solid',
     alignItems: 'stretch',
+  },
+  image: {
+    width: "100%",
+    
   },
   detailColumn: {
     flexDirection: 'column',
@@ -43,7 +47,9 @@ export default () => (
     <View style={styles.detailColumn}>
       <Text style={styles.name}>Visvesvaraya National Institute of Technology, Nagpur</Text>
       <Text style={styles.subtitle}>South Ambazari Road, Nagpur-10</Text>
+      <Image style={styles.image} src={require("../../images/vnitheader.jpg")}/>
     </View>
+    
     <View style={styles.linkColumn}>
       <Link style={styles.link}></Link>
     </View>
