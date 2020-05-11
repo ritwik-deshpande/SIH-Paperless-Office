@@ -61,6 +61,15 @@ function Listitems(props) {
         </ListItemIcon>
         <ListItemText primary="Start a Workflow" onClick={() => handleNavlink('/getForm')} />
       </ListItem>
+
+      
+
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Status of WorkFlow" onClick={() => handleNavlink('/status?title=Application for Sports Secretary')} />
+      </ListItem>
      
 
  

@@ -13,21 +13,59 @@ import useStyles from '../Style'
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-export default function NodeStatus() {
+export default function NodeStatus({node}) {
     const classes = useStyles();
     const requestAccepted = true
+    console.log("the Node is",node)
+
+    function getListItems(){
+    
+        let rows = []
+
+        for(var approver in node.approvedBy){
+            if(node.approvedBy[approver]){
+                rows.push(<ListItem button>
+                    <ListItemIcon>
+                    <AccountCircle />
+                    </ListItemIcon>
+                    <ListItemText primary={approver} />
+                    <ListItemIcon>
+                        <CheckCircleIcon />
+                    </ListItemIcon>
+                    <Divider/>
+                </ListItem> )
+            }
+            else{
+
+                rows.push(<ListItem button>
+                    <ListItemIcon>
+                    <AccountCircle />
+                    </ListItemIcon>
+                    <ListItemText primary={approver} />
+                    <ListItemIcon>
+                        <HourglassEmptyIcon />
+                    </ListItemIcon>
+                    <Divider/>
+                </ListItem> )
+
+            }
+        }
+        return rows
+    }
+
+
     return (
         <div className ={classes.root}>
 
-        {requestAccepted ? (
+        
         <div>
-            
+{/*             
                 <Typography variant="h6" gutterBottom>
 
-
+                    {node.type}
 
                 
-                </Typography>
+                </Typography> */}
                
                 <Grid container spacing={3}>
                 <ShowPDF/>
@@ -38,37 +76,22 @@ export default function NodeStatus() {
                 <Typography variant="h6" gutterBottom>
                     Approvers Status
                 </Typography>
+                {
+                    getListItems()
 
-                <List  aria-label="approvers">
-                <ListItem button>
-                    <ListItemIcon>
-                    <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary="Ravindra Keskar    (Pending)" />
-                    <ListItemIcon>
-                        <HourglassEmptyIcon />
-                    </ListItemIcon>
-                </ListItem>
-                <Divider/>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary="Manish Kurehkar     (Approved)" />
-
-                    <ListItemIcon>
-                        <CheckCircleIcon />
-                    </ListItemIcon>
-                </ListItem>
-                </List>
+                }
                 </div>
-            
-       ):(
 
-           <div>
-               Approvers have not yet accepted the requests.
-           </div>
-       )}
+                <br/>
+                <br/>
+
+                {/* <Typography variant="h6" gutterBottom>
+
+                    Initiated at TimeStamp : {node.timestamp}
+
+                
+                </Typography> */}
+               
 
        </div>
     )

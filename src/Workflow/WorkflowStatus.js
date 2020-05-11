@@ -31,7 +31,9 @@ function Copyright() {
 
 function getStepContent(step,nodesList) {
 
-  return <NodeStatus node = {nodesList[step]} />
+  console.log(step,nodesList)
+
+  return <NodeStatus node = {nodesList[step]}/>
   // switch (step) {
   //   case 0:
   //     return <NodeStatus />;
@@ -44,9 +46,10 @@ function getStepContent(step,nodesList) {
   // }
 }
 
-export default function WorkflowStatus({title},{steps},{nodesList}) {
+export default function WorkflowStatus({title,steps,nodesList}) {
 
-  const steps = steps
+
+    console.log(title,steps,nodesList)
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(steps.length -1);
@@ -66,7 +69,7 @@ export default function WorkflowStatus({title},{steps},{nodesList}) {
          <main className = {classes.layout}>
         <Paper className={classes.paper}> 
           <Typography component="h1" variant="h4" align="center">
-            WorkFlow Progress : {}
+            WorkFlow Progress : {title}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
@@ -95,14 +98,24 @@ export default function WorkflowStatus({title},{steps},{nodesList}) {
                       Back
                     </Button>
                   )}
-                  <Button
+                  
+                    {activeStep === steps.length - 1 && steps.length != 1 ? 
+                    
+                      <Button
+                    variant="contained"
+                    color="primary"
+                    disabled = "true"
+                    onClick={handleNext}
+                    
+                    className={classes.button}
+                  >Next </Button> : <Button
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
+                    
                     className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
+                  >Next </Button>}
+                  
                 </div>
               </React.Fragment>
             )}
