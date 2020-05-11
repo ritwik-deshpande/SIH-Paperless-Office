@@ -11,7 +11,22 @@ import {
   PDFDownloadLink
 } from "@react-pdf/renderer";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Input from '@material-ui/core/Input'
+import GetAppIcon from '@material-ui/icons/GetApp';
+import AddCommentIcon from '@material-ui/icons/AddComment';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Header from './PDFComponents/Header';
+import api from '../utils/api'
+import Comments from '../utils/Comments';
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
 
 const styles = StyleSheet.create({
   page: {
@@ -34,13 +49,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const MyDocument = (
-  <Document>
+const MyContent = (
+ 
     <Page style={styles.page} size="A4">
       <Header/>
-      <View style={styles.centerImage}>
-        <Image style={styles.image} src="https://react-pdf.org/static/images/luke.jpg" />
-      </View>
       <Text style={styles.text}>
         PSPDFKit GmbH is the leading cross-platform SDK solution for integrating
         PDF support on all major platforms: iOS, Android, Windows, macOS, and on
@@ -55,18 +67,154 @@ const MyDocument = (
         Learn more at <Link src="https://pspdfkit.com/">pspdfkit.com</Link>
       </Text>
     </Page>
+  
+);
+
+const MyDocument = (
+  <Document>
+    { MyContent }
   </Document>
 );
 
-// Render the PDF using React DOM
-export default function CreatePDF(){
-return(
-  <div height='200px'>
-  <PDFViewer height='200px' width='200%'>
-    {MyDocument }
-  </PDFViewer>
-  <PDFDownloadLink document={MyDocument} fileName='output.pdf'>Download</PDFDownloadLink>
-  </div>
-  
+const SignedDocument = (imgpath)=>{
+  return(
+  <Document>
+    { MyContent }
+    <Page style={styles.page} size="A4">
+    <View style={styles.centerImage}>
+      <Image style={styles.image} src={imgpath} />
+    </View>
+    <Text style={styles.text}>
+      Added Esignature 
+    </Text>
+    </Page>
+  </Document>
 );
+  }
+  const json ={
+  
+    listitems : [{id:1, name:'Dustin Henderson', message: 'never ending story. turn around and look at what tyou see.<br/>In her face something never ending story. turn around and look at what tyou see.<br/>In her face something'},
+              {id:2, name: 'Will Byers', message: 'Approved by Chief PD'},
+              {id:3, name: 'Mike Wheeler', message: 'Threatened by the party'},
+              {id:4, name:'Dustin Henderson', message: 'never ending story'},
+              {id:5, name: 'Will Byers', message: 'Approved by Chief PD'},
+              {id:6, name: 'Mike Wheeler', message: 'Threatened by the party'}
+              ]
+  }
+
+class CreatePDF extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+    isSigned: false,
+    isApproved : false,
+    comment : ""
+    };
+  }
+
+
+  //classes = useStyles();
+  handleAddComment = () => {
+    console.log(this.state.comment)
+    json.listitems.push({id:7, name:api.getUser().name, message:this.state.comment})
+    this.setState({comment:""})
+  }
+  handleChangeinComment = (e) => {
+
+  console.log(e.target.value);
+  this.setState({comment: e.target.value})
+  }
+  handleSignClick = () => {
+    this.setState({isSigned : true})
+    console.log("in handlesignClick")
+  }
+  render(){
+    //const classes = useStyles();
+  return(
+    <div>
+      
+      <PDFViewer height='200' width='100%'>
+        { this.state.isSigned ? (<Document>
+                { MyContent }
+                <Page style={styles.page} size="A4">
+                <View style={styles.centerImage}>
+                  <Image style={styles.image} src={api.getUser().esign} />
+                </View>
+                
+                <Text style={styles.text}>
+                  Added Esignature 
+                </Text>
+                </Page>
+              </Document>) : (MyDocument) }
+      </PDFViewer>
+      <PDFDownloadLink document={ this.state.isSigned ? 
+      (<Document>
+        { MyContent }
+        <Page style={styles.page} size="A4">
+        <View style={styles.centerImage}>
+          <Image style={styles.image} src={api.getUser().esign} />
+        </View>
+        <Text style={styles.text}>
+          Added Esignature 
+        </Text>
+        </Page>
+      </Document>) 
+      
+      : (MyDocument) }
+       fileName='output.pdf'>
+         <br/>
+        <Button
+              variant="contained"
+              color="secondary"
+              // className={this.classes.button}
+              startIcon={<GetAppIcon />}
+            >
+          Download
+        </Button>
+      </PDFDownloadLink>
+
+      <br/>
+      <br/>
+      <Comments json={json}/>
+      <br/> 
+
+
+      <form //className={classes.root} 
+      noValidate autoComplete="off">
+      <Input //className={classes.button} 
+      onChange = {this.handleChangeinComment}
+      value = {this.state.comment}
+      name='comment' 
+      fullWidth='true'
+      placeholder='Add your valuable comments' 
+      inputProps={{ 'aria-label': 'description' }} />
+      <br/><br/>
+      <Button
+            variant="contained"
+            color="secondary"
+            //className={classes.button}
+            startIcon={<AddCommentIcon />}
+            onClick={this.handleAddComment}
+          >
+        Add comment
+      </Button>
+      </form>
+      <br/>
+      <br/>
+      <Button
+            variant="contained"
+            color="primary"
+            //className={classes.button}
+            startIcon={<ThumbUpIcon />}
+            onClick = {this.handleSignClick}
+          >
+        Approve and add e-signature
+      </Button>
+    </div>
+    
+  );
+  }
 }
+
+export default CreatePDF;

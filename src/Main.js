@@ -30,7 +30,7 @@ export default class Main extends Component {
                     this.setState({
                         loggedIn:true
                     })
-                    
+                    console.log("user obj = " + api.getUser())
                 }
                 else{
                     alert("Invalid Password");

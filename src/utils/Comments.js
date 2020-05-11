@@ -9,10 +9,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import DoubleArrowTwoToneIcon from '@material-ui/icons/DoubleArrowTwoTone';
 import IconButton from '@material-ui/core/IconButton';
-
+import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '200%',
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
   inline: {
@@ -20,17 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const json ={
-  
-  listitems : [{id:1, subject:'Need Plancks constant',
-            nameofSender: 'Dustin Henderson', status: 'never ending story'},
-            {id:2, subject:'Escape from Mind Flayer',
-            nameofSender: 'Will Byers', status: 'Approved by Chief PD'},
-            {id:3, subject:'Want eleven to stop', 
-            nameofSender: 'Mike Wheeler', status: 'Threatened by the party'}]
-}
 
-export default function AlignItemsList({Click}) {
+
+export default function Comments({json}) {
   const classes = useStyles();
   const renderListItem = (obj) =>{
     return(obj.map(item =>{
@@ -38,10 +30,10 @@ export default function AlignItemsList({Click}) {
       <div key={item.id}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={item.nameofSender} src="/static/images/avatar/1.jpg" />
+          <Avatar alt={item.name} src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary={ item.subject }
+          primary={ item.name }
           secondary={
             <React.Fragment>
               <Typography
@@ -50,26 +42,32 @@ export default function AlignItemsList({Click}) {
                 className={classes.inline}
                 color="textPrimary"
               >
-                {item.nameofSender}
+                {item.message}
               </Typography><br/>
-              {item.status}
+              
             </React.Fragment>
           }
         />
-        <IconButton color="primary" onClick={()=>Click(item)}>
-        <DoubleArrowTwoToneIcon style={{ fontSize: 40 }} />
-        </IconButton>
+        
       </ListItem>
       <Divider variant="inset" component="li" />
     </div>
     )}))
   }
   return (
-    
-    <List className={classes.root}>
+    <Paper >
+    <Typography
+        component="span"
+        variant="h4"
+        color="textPrimary"
+        >
+        Comments
+        </Typography>
+    <List className={classes.root} style={{maxHeight: 200,maxwidth:100, overflow: 'auto'}}>
 
       {renderListItem(json['listitems'])}
 
     </List>
+    </Paper>
   );
 }
