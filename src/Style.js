@@ -82,9 +82,8 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
       padding: theme.spacing(2),
-      display: 'flex',
+      width : '100%',
       overflow: 'auto',
-      flexDirection: 'column',
     },
     avatar: {
       margin: theme.spacing(1),
@@ -97,6 +96,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+     stepper: {
+    padding: theme.spacing(3, 0, 5),
+  },
+    layout: {
+      width: '100%',
+      [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+        width: 'auto',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      },
+    },
+    
     fixedHeight: {
       height: 240,
     },

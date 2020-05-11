@@ -9,6 +9,7 @@ import api from '../utils/api';
 import TextField from '@material-ui/core/TextField';
 import CustomForm from '../Forms/CustomForms'
 import Container from '@material-ui/core/Container';
+import ReformatWorkFlow from '../utils/ReformatWorkflow'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,6 +50,7 @@ class StartWrkflwComponent extends Component
         CustomForm:null,
         CustomFlowChart:null,
         FlowChart : null,
+        user: api.getUser().username,
         selectedTitle : "",
       };
       console.log(this.state);
@@ -82,6 +84,8 @@ class StartWrkflwComponent extends Component
         "Comments" : [],
         "approvedBy": [],
         "isSigned" : false,
+        "User":this.state.user,
+        "Title": this.state.selectedTitle,
 
       }
       console.log("The Payload")
@@ -92,6 +96,7 @@ class StartWrkflwComponent extends Component
 
       api.workflow("Workflow").post(payload).then(res =>{
         console.log(res);
+        this.props.history.push("/status?title="+this.state.selectedTitle)
       })
 
     }
@@ -211,6 +216,8 @@ class StartWrkflwComponent extends Component
   {
     console.log("Saving FlowChart")
     console.log(chart)
+
+    chart = ReformatWorkFlow.reformat(chart)
     this.setState({
       FlowChart : chart
     })

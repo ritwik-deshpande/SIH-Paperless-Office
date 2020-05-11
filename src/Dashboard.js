@@ -28,7 +28,7 @@ import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 import ApproveComponent from './Approvals/ApproveComponent';
 import ESignComponent from './Signatures/CreateESign'
 import api from './utils/api'
-
+import StatusComponent from './Workflow/StatusComponent'
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -114,13 +114,16 @@ export default function Dashboard() {
       <Route exact path='/Form' component={FormComponent} />
       <Route exact path='/esign' component={ESignComponent} />
       <Route exact path='/approve' component={ApproveComponent} />
+      <Route exact path='/status' component={StatusComponent}/>
   
       </div>
-     {/* <CustomForm/> */}
        
     
    
   
     </BrowserRouter>
+
+
+   
   );
 }

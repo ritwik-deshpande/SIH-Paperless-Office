@@ -32,25 +32,17 @@ class DisplayWorkflow extends React.Component{
                     "y": 100
                   },
                   "ports": {
-                    "port1": {
-                      "id": "port1",
-                      "type": "output",
-                      "properties": {
-                        "value": "yes"
-                      }
-                    },
+                    
                     "port2": {
                       "id": "port2",
                       "type": "output",
-                      "properties": {
-                        "value": "no"
-                      }
+                  
                     }
                   }
                 },
                 "node2": {
                   "id": "node2",
-                  "type": "end",
+                  "type": "End",
                   "position": {
                     "x": 100,
                     "y": 400
@@ -62,10 +54,6 @@ class DisplayWorkflow extends React.Component{
                     "port1": {
                       "id": "port1",
                       "type": "input"
-                    },
-                    "port2": {
-                      "id": "port2",
-                      "type": "output"
                     }
                   }
                 }

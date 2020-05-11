@@ -50,13 +50,7 @@ const countries = [
   { label: 'UAD', phone: '93' },
   { label: 'Mokhade', phone: '1-268' },
 ]
-function countryToFlag(isoCode) {
-  return typeof String.fromCodePoint !== 'undefined'
-    ? isoCode
-        .toUpperCase()
-        .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-    : isoCode;
-}
+
 
 let approver;
 
@@ -233,60 +227,24 @@ class SelectedSidebar extends React.Component {
       
       </Message>
       <SidebarItem
-        type="top/bottom"
+        type="Intermediate Nodes"
         approvers = ''
         ports={ {
           port1: {
             id: 'port1',
-            type: 'top',
-            properties: {
-              custom: 'property',
-            },
+            type: 'input',
           },
           port2: {
-            id: 'port1',
-            type: 'bottom',
-            properties: {
-              custom: 'property',
-            },
+            id: 'port2',
+            type: 'output',
+           
           },
         } }
         properties={ {
           approvers: '',
         }}
       />
-      <SidebarItem
-        type="bottom-only"
-        approvers = ''
-        ports={ {
-          port1: {
-            id: 'port1',
-            type: 'bottom',
-            properties: {
-              custom: 'property',
-            },
-          },
-        }}
-        properties={{
-          approvers: '',
-        }}
-      />
-       <SidebarItem
-        type="top-only"
-        approvers = ''
-        ports={ {
-          port1: {
-            id: 'port1',
-            type: 'top',
-            properties: {
-              custom: 'property',
-            },
-          },
-        }}
-        properties={ {
-          approvers: '',
-        }}
-      />
+      
       <Sidebar>
       <Message>
               
