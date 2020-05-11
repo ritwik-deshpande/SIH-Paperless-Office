@@ -181,7 +181,7 @@ ReformatWorkFlow.reformat(WorkFlow)
                     this.setState({
                         loggedIn:true
                     })
-                    
+                    console.log("user obj = " + api.getUser())
                 }
                 else{
                     alert("Invalid Password");
