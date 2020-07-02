@@ -4,6 +4,8 @@ import { getQueriesForElement } from "@testing-library/react";
 const Endpoint = "http://localhost:3030"
 
 
+export default {
+
 const User ={
   userObj :{
     "id": 0,
@@ -79,7 +81,8 @@ export default {
 
     users(url){
       return {
-        get :(username) =>{ return `${Endpoint}/${url}?username=${username}`}
+        get :(username) => {return `${Endpoint}/${url}?username=${username}`},
+        update : (id) => {return `${Endpoint}/${url}/${id}`}
       }
     },
     getWorkFlow(url){
@@ -114,9 +117,12 @@ export default {
 
     saveUser(url,id){
       return{
-        put : (payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
+        
       }
     },
+
+        
+}
     setUser(userObj){
       this.UserProfile.User.userObj = userObj
     },
