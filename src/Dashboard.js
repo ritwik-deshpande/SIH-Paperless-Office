@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-
+import Popover from '@material-ui/core/Popover';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -14,6 +14,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -31,6 +35,38 @@ import StatusComponent from './Workflow/StatusComponent'
 
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
 export default function Dashboard({userObj}) {
+
+	
+     const User = api.getDummyUser()
+
+ function getNotifications(){
+  let notifications = []
+
+  for (var key in User.notifications){
+	console.log(key)
+	notifications.push(
+		<Card >
+		      <CardContent>
+			<Typography variant="h5" component = "h2">
+			  {User.notifications[key].title}
+			</Typography>
+			<Typography className={classes.title} color="textSecondary" gutterBottom>
+			  {User.notifications[key].content}
+			</Typography>
+		      </CardContent>
+			
+		      <CardActions>
+			<Button size="small">Learn More</Button>
+		      </CardActions>
+		</Card>
+	)
+
+ }
+return notifications
+
+
+}
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -40,6 +76,29 @@ export default function Dashboard({userObj}) {
     setOpen(false);
   };
  
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const notify = Boolean(anchorEl);
+  const id = notify ? 'simple-popover' : undefined;
+
+ // const User = api.getUser()
+
+
+
+	
+ console.log("The user object is", User)
+
+
+
+
 
   return (
     
@@ -74,11 +133,33 @@ export default function Dashboard({userObj}) {
             </IconButton>
 
 
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+          <IconButton color="inherit" onClick={handleClick}>
+            <Badge badgeContent={Object.keys(User.notifications).length} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
+
+	<Popover
+		id={id}
+		open={notify}
+		anchorEl={anchorEl}
+		onClose={handleClose}
+		anchorOrigin={{
+		  vertical: 'bottom',
+		  horizontal: 'center',
+		}}
+		transformOrigin={{
+		  vertical: 'top',
+		  horizontal: 'center',
+		}}
+		>
+
+		{getNotifications()}
+		
+		
+
+
+	</Popover>
 
           <IconButton
               edge="end"
