@@ -195,7 +195,10 @@ ReformatWorkFlow.reformat(WorkFlow)
     }
 
     state = {
-        loggedIn:api.getSession()
+      //loggedIn : api.getSession
+      // For developement purpose skipped the logIn and used dummy user obejct
+      // in api.js called using separate method api.getDummyUser()
+        loggedIn:true
     }
     render() {
 

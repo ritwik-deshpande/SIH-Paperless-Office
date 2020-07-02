@@ -55,7 +55,7 @@ export default function SignIn({signin}) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            DigiDocs
+            Digi Docs
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
