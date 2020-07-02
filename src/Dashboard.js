@@ -32,12 +32,13 @@ import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 import ApproveComponent from './Approvals/ApproveComponent';
 import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
+import api from './utils/api'
 
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
 export default function Dashboard({userObj}) {
 
 	
-     const User = api.getDummyUser()
+     const User = userObj
 
  function getNotifications(){
   let notifications = []
