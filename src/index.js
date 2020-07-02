@@ -12,10 +12,18 @@ import 'jquery-ui-timepicker-addon/dist/jquery-ui-timepicker-addon.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'react-bootstrap-slider'
 import Main from './Main';
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import rootReducer from './reducers/rootReducer';
+import thunk from 'redux-thunk';
 
+
+const store = createStore(rootReducer, applyMiddleware(thunk))
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <Main/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

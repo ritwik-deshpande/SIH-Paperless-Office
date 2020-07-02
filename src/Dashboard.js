@@ -26,11 +26,11 @@ import FolderComponent from './ViewDocs/Folders'
 import FormComponent  from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 import ApproveComponent from './Approvals/ApproveComponent';
-import ESignComponent from './Signatures/CreateESign'
-import api from './utils/api'
+import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
 
-export default function Dashboard() {
+//connect returns a high order component in which we need to wrap the component we need the stroe in.
+export default function Dashboard({userObj}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -40,7 +40,6 @@ export default function Dashboard() {
     setOpen(false);
   };
  
-  const User = api.getUser()
 
   return (
     
@@ -65,7 +64,9 @@ export default function Dashboard() {
             DigiDocs
           </Typography>
 
-
+          <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
+            Name : {userObj.name}
+          </Typography>
           <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -101,7 +102,9 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List> <NavBar/></List>
+        <List>
+           <NavBar/>
+           </List>
         <Divider/>
       </Drawer>
     
@@ -111,7 +114,7 @@ export default function Dashboard() {
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
-      <Route exact path='/esign' component={ESignComponent} />
+      <Route exact path='/esign' render={() => <ESignComponent userObj={userObj} />} />
       <Route exact path='/approve' component={ApproveComponent} />
       <Route exact path='/status' component={StatusComponent}/>
   
