@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import CustomForm from '../Forms/CustomForms'
 import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,7 +51,7 @@ class StartWrkflwComponent extends Component
         CustomForm:null,
         CustomFlowChart:null,
         FlowChart : null,
-        user: api.getUser().username,
+        user: this.props.userObj.name,
         selectedTitle : "",
       };
       console.log(this.state);
@@ -334,4 +335,11 @@ class StartWrkflwComponent extends Component
   }
 }
 
-export default StartWrkflwComponent;
+const mapStatetoProps = (state) =>{
+
+  return{
+    userObj: state.auth.userObj,
+    loggedIn : state.auth.loggedIn
+  }
+}
+export default connect(mapStatetoProps, null)(StartWrkflwComponent);

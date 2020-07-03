@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import WorkFlowStatusUI from './WorkflowStatus'
 import api from '../utils/api'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
-
-export default class StatusComponent extends Component {
+class StatusComponent extends Component {
 
     state = {
         status:null,
@@ -127,7 +127,7 @@ export default class StatusComponent extends Component {
 
         
 
-        this.state.username= api.getUser().username
+        this.state.username= this.props.userObj.username
 
         
 
@@ -148,3 +148,12 @@ export default class StatusComponent extends Component {
         )
     }
 }
+
+const mapStatetoProps = (state) =>{
+
+    return{
+      userObj: state.auth.userObj,
+      loggedIn : state.auth.loggedIn
+    }
+  }
+  export default connect(mapStatetoProps, null)(StatusComponent);
