@@ -4,18 +4,22 @@ import { getQueriesForElement } from "@testing-library/react";
 const Endpoint = "http://localhost:3030"
 
 
-
-export default {
+export default { 
 
     posts(url) {
-        return {
-          getOne: ({ id }) => axios.get(`${url}/${id}`),
-          getAll: () => {return `${Endpoint}/${url}`},
-          update: (toUpdate) =>  axios.put(url,toUpdate),
-          create: (toCreate) =>  axios.put(url,toCreate),
-          delete: ({ id }) =>  axios.delete(`${url}/${id}`)
-        }
-      },
+      return {
+        getOne: ({ id }) => axios.get(`${url}/${id}`),
+        getAll: () => {return `${Endpoint}/${url}`},
+        update: (toUpdate) =>  axios.put(url,toUpdate),
+        create: (toCreate) =>  axios.put(url,toCreate),
+        delete: ({ id }) =>  axios.delete(`${url}/${id}`)
+      }
+    },
+    pending_request(){
+      return {
+        get : (id) => {return `${Endpoint}/${"pending_requests"}?id=${id}`}
+      }
+    },
     forms(url){
       return {
 
@@ -41,7 +45,8 @@ export default {
     },
     getWorkFlow(url){
       return {
-        get :(username,title) =>{ return `${Endpoint}/${url}?User=${username}&Title=${title}`}
+        get :(username,title) =>{ return `${Endpoint}/${url}?User=${username}&Title=${title}`},
+        getByid : (id) => {return `${Endpoint}/${url}?wrkflwid=${id}`}
       }
     },
 
@@ -67,7 +72,5 @@ export default {
         post : (payload) => axios.post(`${Endpoint}/${url}`,payload)
 
       }
-    },
-
-    
+    },        
 }

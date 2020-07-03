@@ -30,7 +30,7 @@ const json ={
             nameofSender: 'Mike Wheeler', status: 'Threatened by the party'}]
 }
 
-export default function AlignItemsList({Click}) {
+export default function AlignItemsList({Click,json}) {
   const classes = useStyles();
   const renderListItem = (obj) =>{
     return(obj.map(item =>{

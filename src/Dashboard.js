@@ -38,23 +38,23 @@ import Root from './Chat/Component/Root/Root'
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
 export default function Dashboard({userObj}) {
 
-
 	
  const User = userObj
+
 
  function getNotifications(){
   let notifications = []
 
-  for (var key in User.notifications){
+  for (var key in userObj.notifications){
 	console.log(key)
 	notifications.push(
 		<Card >
 		      <CardContent>
 			<Typography variant="h5" component = "h2">
-			  {User.notifications[key].title}
+			  {userObj.notifications[key].title}
 			</Typography>
 			<Typography className={classes.title} color="textSecondary" gutterBottom>
-			  {User.notifications[key].content}
+			  {userObj.notifications[key].content}
 			</Typography>
 		      </CardContent>
 			
@@ -92,22 +92,11 @@ return notifications
   const notify = Boolean(anchorEl);
   const id = notify ? 'simple-popover' : undefined;
 
- // const User = api.getUser()
-
-
-
-	
- console.log("The user object is", User)
-
-
-
-
+//console.log("The user object is", userObj)
 
   return (
     
     <BrowserRouter>
-    
-    
     
     <div className={classes.root}>
       <CssBaseline />
@@ -137,7 +126,7 @@ return notifications
 
 
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge badgeContent={Object.keys(User.notifications).length} color="secondary">
+            <Badge badgeContent={Object.keys(userObj.notifications).length} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -199,7 +188,7 @@ return notifications
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
       <Route exact path='/esign' render={() => <ESignComponent userObj={userObj} />} />
-      <Route exact path='/approve' component={ApproveComponent} />
+      <Route exact path='/approve' render={()=> <ApproveComponent userObj={userObj}/>} />
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={Root}/>
   

@@ -30,10 +30,9 @@ class Main extends Component {
 const mapDispatchtoProps = (dispatch) =>{
   return{
     getUser : (username, password) => dispatch(GetUser(username,password))
-
     }
-
 }
+
 const mapStatetoProps = (state) =>{
 
   return{
