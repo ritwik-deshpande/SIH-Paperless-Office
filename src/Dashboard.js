@@ -34,6 +34,7 @@ import ESignComponent from './Signatures/CreateESign'
 import api from './utils/api'
 import StatusComponent from './Workflow/StatusComponent'
 
+import Root from './Chat/Component/Root/Root'
 export default function Dashboard() {
 	
      const User = api.getDummyUser()
@@ -193,6 +194,7 @@ return notifications
       <Route exact path='/esign' component={ESignComponent} />
       <Route exact path='/approve' component={ApproveComponent} />
       <Route exact path='/status' component={StatusComponent}/>
+      <Route exact path='/chat' component={Root}/>
   
       </div>
        
