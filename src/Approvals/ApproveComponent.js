@@ -1,17 +1,30 @@
 import React from 'react'
 import AlignItemsList from '../Approvals/AlignItemsList'
 import CreatePDF from './CreatePDF'
-
+import api from '../utils/api'
+import axios from 'axios'
 class ApproveComponent extends React.Component{
 
     constructor(props){
         super(props);
       this.state = {
         showPDF: false,
-        item :null
-
+        item :null,
+        json : {listitems: ['a']},
+        dataloaded: false
       };
-      console.log(this.state);
+      
+    }
+    componentDidMount(){
+        axios.get(api.pending_request().get(this.props.userObj.id))
+        .then(res => {
+          console.log('The data received is',res.data[0])
+          this.setState({
+              json : res.data[0],
+              
+          })
+        })
+
     }
     handleClick = (item) => {
         
@@ -25,14 +38,14 @@ class ApproveComponent extends React.Component{
         return(
             <div>
                 <h1>API TEST </h1>
-            {this.state.showPDF ? 
+            {this.state.json.listitems ?(this.state.showPDF? 
             
-            (<CreatePDF item={this.state.item} Doc = {null}/>) 
+            (<CreatePDF item={this.state.item} />) 
 
             : 
-            
-            (<AlignItemsList Click={this.handleClick}/>)
-            }
+            (<AlignItemsList Click={this.handleClick} userObj={this.props.userObj} json={this.state.json}/>)
+            )
+        : null}
             
             
             </div>
