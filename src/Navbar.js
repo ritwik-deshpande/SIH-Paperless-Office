@@ -88,7 +88,7 @@ function Listitems(props) {
         <ListItemIcon>
           <LayersIcon />
         </ListItemIcon>
-        <ListItemText primary="View Emails" />
+        <ListItemText primary="Chat" onClick={() => handleNavlink('/chat')}/>
       </ListItem>
     </div>
   )
