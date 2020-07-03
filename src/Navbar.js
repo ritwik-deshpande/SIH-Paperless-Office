@@ -40,18 +40,12 @@ function Listitems(props) {
         <ListItemText primary="Dashboard" onClick={handleDashboard} ></ListItemText>
         
       </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Update Profile" />
-      </ListItem>
 
       <ListItem button>
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
-        <ListItemText primary="Create ESignature" onClick={() => handleNavlink('/esign')}/>
+        <ListItemText primary="Update Profile" onClick={() => handleNavlink('/esign')}/>
       </ListItem>
       
      
@@ -94,7 +88,7 @@ function Listitems(props) {
         <ListItemIcon>
           <LayersIcon />
         </ListItemIcon>
-        <ListItemText primary="View Emails" />
+        <ListItemText primary="Chat" onClick={() => handleNavlink('/chat')}/>
       </ListItem>
     </div>
   )

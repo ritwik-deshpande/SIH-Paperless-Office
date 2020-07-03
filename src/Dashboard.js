@@ -32,9 +32,14 @@ import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 import ApproveComponent from './Approvals/ApproveComponent';
 import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
+import api from './utils/api'
+import Root from './Chat/Component/Root/Root'
 
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
 export default function Dashboard({userObj}) {
+
+	
+ const User = userObj
 
 
  function getNotifications(){
@@ -185,6 +190,7 @@ return notifications
       <Route exact path='/esign' render={() => <ESignComponent userObj={userObj} />} />
       <Route exact path='/approve' render={()=> <ApproveComponent userObj={userObj}/>} />
       <Route exact path='/status' component={StatusComponent}/>
+      <Route exact path='/chat' component={Root}/>
   
       </div>
        

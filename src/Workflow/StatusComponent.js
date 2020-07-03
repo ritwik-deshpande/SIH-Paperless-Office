@@ -127,7 +127,7 @@ class StatusComponent extends Component {
 
         
 
-        this.state.username= this.props.userObj.name
+        this.state.username= this.props.userObj.username
 
         
 
