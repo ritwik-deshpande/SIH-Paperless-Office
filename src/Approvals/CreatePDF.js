@@ -10,6 +10,7 @@ import {
   StyleSheet,
   PDFDownloadLink
 } from "@react-pdf/renderer";
+import axios from 'axios'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,10 +21,9 @@ import AddCommentIcon from '@material-ui/icons/AddComment';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Header from './PDFComponents/Header';
-import api from '../utils/api'
 import Comments from '../utils/Comments';
 import AddComments from "./Comments";
-import axios from 'axios'
+import api from '../utils/api';
 import ShowPDF from "./ShowPDF";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,8 +52,8 @@ class CreatePDF extends React.Component{
     isSigned: false,
     isApproved : false,
     comments : null,
-    flowchart : null,
-    formdata : null
+	workflow : null,
+    signatures : null
     // comments : [{id:1, name:'Dustin Henderson', message: 'never ending story. turn around and look at what tyou see.<br/>In her face something never ending story. turn around and look at what tyou see.<br/>In her face something'},
     // {id:2, name: 'Will Byers', message: 'Approved by Chief PD'},
     // {id:3, name: 'Mike Wheeler', message: 'Threatened by the party'},
@@ -71,9 +71,9 @@ class CreatePDF extends React.Component{
           console.log('The data received is',res.data[0])
           if(res.data && res.data[0])
           {this.setState({
-            flowchart : res.data[0].FlowChart,
-            formdata : res.data[0].FormData,
+            workflow : res.data[0],
             comments : res.data[0].Comments,
+	    	signatures: res.data[0].Signatures
 
           })}
 
@@ -91,6 +91,35 @@ class CreatePDF extends React.Component{
     console.log(e.target.value);
     this.setState({comment: e.target.value})
   }
+  approvedByAll = (d) => {
+        for(var key in d){
+            if(!d[key]){
+              console.log(key, d[key])
+              return false
+            }
+        }
+        return true
+  }
+  chooseNextNode = (nodes, name) => {
+  	let i =0 
+  	let temp_flowchart = this.state.workflow.FlowChart
+  	console.log(temp_flowchart)
+  	
+  	for(i = 0; i < nodes.length; i++){
+  	
+  		if(name in temp_flowchart[nodes[i]].approvedBy){
+  			return nodes[i]
+  		}
+  	}
+  }
+  
+  
+  sendRequest = () => {
+  
+  	// Append in pending_request array
+  	// Append in User notifications
+  	
+  }
 
   handleSignClick = () => {
 
@@ -98,9 +127,80 @@ class CreatePDF extends React.Component{
     // check if all have approved at the same level.
     //broadcast to the next level.
     // at the end send update message to server along with the required arrays.
+    
+    let node_level = this.state.workflow.Path.length
+   	let path = this.state.workflow.Path
+    let current_node_key = this.state.workflow.Path[node_level - 1]
+    let currentNode = this.state.workflow.FlowChart[current_node_key]
+    
+    let nextNodes = this.state.workflow.nextNodes
+    
+    
+    
+    
+    
+    
+    
+    let name = this.props.userObj.name
+    let username = this.props.userObj.username
+    let esign = this.props.userObj.esign
+    console.log(this.state.signatures)
     this.setState({isSigned : true,
-    isApproved : true})
+		isApproved : true,
+
+    })
+    this.state.signatures[name] = esign
     console.log("in handlesignClick")
+    
+    
+    
+    
+    
+	if( nextNodes.length == 0){
+		if(username in currentNode.approvedBy){
+			currentNode.approvedBy[username] = true
+			this.state.workflow.FlowChart[current_node_key] = currentNode
+	
+			if(this.approvedByAll(currentNode.approvedBy)){
+				//send request to approvers of next child
+				console.log("Adding Next Nodes")
+				nextNodes = currentNode.nextNodes
+				this.state.workflow.nextNodes = nextNodes
+			}
+		}
+		
+		
+		
+	}
+	
+	else{
+		let next_node_key
+    	let nextNode
+		next_node_key = this.chooseNextNode(nextNodes, username)
+		nextNode = this.state.workflow.FlowChart[next_node_key]
+		nextNode.approvedBy[username] = true
+		path = [...path, next_node_key]
+		
+		this.state.workflow.nextNodes = []
+		this.state.workflow.FlowChart[next_node_key] = nextNode
+		
+		if(this.approvedByAll(nextNode.approvedBy)){
+				//send request to approvers of next child
+			console.log("Adding Next Nodes")
+			nextNodes = nextNode.nextNodes
+			this.state.workflow.nextNodes = nextNodes
+		}
+	}
+    	
+    this.state.workflow.Path = path
+    this.state.workflow.Signatures = this.state.signatures
+   
+   	console.log("New Workflow", this.state.workflow)
+    
+    api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
+    	console.log("Updated New Workflow", res)
+    })
+    
   }
 
   handleRejectClick = () => {
@@ -119,10 +219,10 @@ class CreatePDF extends React.Component{
         {
           this.state.comments?
           (<>
-          <ShowPDF userObj={this.props.userObj} isSigned={this.state.isSigned}/>
+          <ShowPDF formData = {this.state.workflow.FormData} signatures = {this.state.signatures} />
             <br/>
             
-            <AddComments json={{listitems : this.state.comments}} handleAddComment={this.handleAddComment}/>
+            <AddComments json={{listitems : this.state.comments}} handleAddComment={this.handleAddComment} />
             <br/>
 
         <br/>

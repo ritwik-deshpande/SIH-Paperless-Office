@@ -61,7 +61,7 @@ export default function SignIn({signin}) {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Username"
             autoComplete="email"
             autoFocus
             onChange = {handleChangeUsername}

@@ -8,8 +8,7 @@ class StatusComponent extends Component {
 
     state = {
         status:null,
-        flowchart : null,
-        form : null,
+        workflow :null,
         nodesList : [],
         workflowSteps : [],
         username :null,
@@ -21,9 +20,7 @@ class StatusComponent extends Component {
         .then(res => {
           console.log('The data received is',res.data[0])
           this.setState({
-            flowchart : res.data[0].FlowChart,
-            form : res.data[0].FormData,
-            title :res.data[0].Title
+ 	    workflow : res.data[0]
           })
 
           this.init()
@@ -41,71 +38,21 @@ class StatusComponent extends Component {
 
     init(){
 
-        let flowchart = this.state.flowchart
-
+      
+        let flowchart = this.state.workflow.FlowChart
         let nodesList = []
         let workflowSteps = []
-        for(var node in flowchart){
+	let Path = this.state.workflow.Path
+	let i = 0
 
-            if(flowchart[node].type.localeCompare("Start")==0){
+        for(i = 0;i < Path.length; i++){
+		let node = Path[i]
+		this.state.status = "begin"
+		nodesList = [...nodesList, flowchart[node] ]
+		workflowSteps = [...workflowSteps,flowchart[node].type]
+	}
 
-                if(this.requestAccepted(flowchart[node].requestAccepted)){
-
-                nodesList = [...nodesList,flowchart[node]]
-                workflowSteps = [...workflowSteps,flowchart[node].type]
-               
-                }
-                else{
-                    //sendRequest(flowchart[node].requestAccepted)
-                }
-                 break;
-          
-            }
-        }
-
-
-
-        let stop = false
-        console.log(nodesList)
-        if(nodesList.length == 0){
-            var nextNodes = []
-        }
-        else{
-        var nextNodes = nodesList[0].nextNodes
-        this.state.status="begin"
-        }
-
-        while(!stop){
-            let newNode = null
-            let breakflag = false
-            for(var node in nextNodes){
-                newNode = nextNodes[node]
-                if(this.requestAccepted(flowchart[nextNodes[node]].requestAccepted)){
-                    newNode = flowchart[nextNodes[node]]
-                    console.log(newNode)
-
-                    nodesList = [...nodesList,newNode]
-                    workflowSteps = [...workflowSteps,newNode.type]
-                    nextNodes = flowchart[nextNodes[node]].nextNodes
-                    
-                    
-                    console.log(nextNodes)
-                    breakflag = true
-                    break
-                }
-                
-            }
-            console.log("After for",newNode)
-            if(!breakflag){
-                    stop = true
-                    //sendRequest(newNode.requestAccepted)
-            }
-            else if(newNode.type.localeCompare("End")==0){
-                stop =true
-            }
-
-
-        }
+	
 
 
         console.log(nodesList)
@@ -127,7 +74,7 @@ class StatusComponent extends Component {
 
         
 
-        this.state.username= this.props.userObj.username
+        this.state.username = this.props.userObj.username
 
         
 
@@ -142,7 +89,7 @@ class StatusComponent extends Component {
             <div>  {!this.state.status ? <h1>Sorry WorkFlow not yet initialised</h1>:
             
             
-            <WorkFlowStatusUI title = {this.state.title} steps = {this.state.workflowSteps}  nodesList = {this.state.nodesList}/>}
+            <WorkFlowStatusUI workflow = {this.state.workflow} title = {this.state.title} steps = {this.state.workflowSteps}  nodesList = {this.state.nodesList}/>}
                 
             </div>
         )
