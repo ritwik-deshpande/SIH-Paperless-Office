@@ -25,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Comments({json}) {
   const classes = useStyles();
   const renderListItem = (obj) =>{
+	if(obj.length == 0){
+		return (<div> No Feedback </div>)
+	}
+	
     return(obj.map(item =>{
       return(
       <div key={item.id}>
@@ -43,6 +47,14 @@ export default function Comments({json}) {
                 color="textPrimary"
               >
                 {item.message}
+              </Typography><br/><br/><br/>
+	      <Typography
+                component="span"
+                variant="body3"
+                className={classes.inline}
+                color="textPrimary"
+              >
+                {item.timestamp}
               </Typography><br/>
               
             </React.Fragment>
@@ -56,13 +68,9 @@ export default function Comments({json}) {
   }
   return (
     <Paper >
-    <Typography
-        component="span"
-        variant="h4"
-        color="textPrimary"
-        >
-        Comments
-        </Typography>
+   <Typography variant="h6">
+	    Approvers Feedback
+	</Typography>
     <List className={classes.root} style={{maxHeight: 200,maxwidth:100, overflow: 'auto'}}>
 
       {renderListItem(json['listitems'])}

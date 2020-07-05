@@ -80,10 +80,29 @@ class CreatePDF extends React.Component{
         })
 
   }
+  
+  getTimestamp = () =>{
+
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug', 'Sep','Oct','Nov','Dec']
+
+
+    let date = new Date().getDate();
+    let month = new Date().getMonth();
+    let year = new Date().getYear() + 1900;
+    let hour = new Date().getHours()
+    let mins = new Date().getMinutes()
+
+    let timestamp = months[month-1]+"  "+date+ "  at  "+hour+":"+mins+",   " + year
+    return timestamp
+
+ }
 
   handleAddComment = (comment) => {
+    
+    let timestamp = this.getTimestamp()
+    
     console.log(comment)
-    this.setState({ comments: [...this.state.comments, {id:this.state.comments.length, name: this.props.userObj.name,message:comment}] })
+    this.setState({ comments: [...this.state.comments, {id:this.state.comments.length, name: this.props.userObj.name,message:comment, timestamp: timestamp }] })
     
   }
 
@@ -118,6 +137,7 @@ class CreatePDF extends React.Component{
   
   	// Append in pending_request array
   	// Append in User notifications
+        // Remove pending request from current user
   	
   }
 
@@ -158,15 +178,21 @@ class CreatePDF extends React.Component{
     
 	if( nextNodes.length == 0){
 		if(username in currentNode.approvedBy){
+
+                        
 			currentNode.approvedBy[username] = true
-			this.state.workflow.FlowChart[current_node_key] = currentNode
+			
 	
 			if(this.approvedByAll(currentNode.approvedBy)){
 				//send request to approvers of next child
+                                 
+                                let timestamp = this.getTimestamp()
+				currentNode.timestamp = timestamp								
 				console.log("Adding Next Nodes")
 				nextNodes = currentNode.nextNodes
 				this.state.workflow.nextNodes = nextNodes
 			}
+                        this.state.workflow.FlowChart[current_node_key] = currentNode
 		}
 		
 		
@@ -176,26 +202,34 @@ class CreatePDF extends React.Component{
 	else{
 		let next_node_key
     	let nextNode
+                // remove pending requests from all other next Nodes! 
+                    
 		next_node_key = this.chooseNextNode(nextNodes, username)
 		nextNode = this.state.workflow.FlowChart[next_node_key]
 		nextNode.approvedBy[username] = true
 		path = [...path, next_node_key]
 		
 		this.state.workflow.nextNodes = []
-		this.state.workflow.FlowChart[next_node_key] = nextNode
+		
 		
 		if(this.approvedByAll(nextNode.approvedBy)){
 				//send request to approvers of next child
+
+                        let timestamp = this.getTimestamp()
+		        nextNode.timestamp = timestamp
 			console.log("Adding Next Nodes")
 			nextNodes = nextNode.nextNodes
 			this.state.workflow.nextNodes = nextNodes
 		}
+                this.state.workflow.FlowChart[next_node_key] = nextNode
 	}
+    
     	
     this.state.workflow.Path = path
     this.state.workflow.Signatures = this.state.signatures
+    this.state.workflow.Comments = this.state.comments
    
-   	console.log("New Workflow", this.state.workflow)
+   console.log("New Workflow", this.state.workflow)
     
     api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
@@ -236,14 +270,16 @@ class CreatePDF extends React.Component{
             >
           Approve and add e-signature
         </Button>
-        <Button
+
+
+        <Button style ={{ marginLeft : 800}}
         variant="contained"
         color="primary"
         //className={classes.button}
         startIcon={<ThumbDownIcon />}
         onClick = {this.handleRejectClick}
       >
-    Reject with feedback
+    Reject 
   </Button></>}
             </>):
             null

@@ -48,16 +48,27 @@ export default function ShowPDF({formData, signatures }){
 		let signs = []
 		for(var person in signatures){
 			console.log(signatures[person])
-			signs.push(<Page style={styles.page} size="A4">
-						<View style={styles.centerImage}>
-						  <Image style={styles.image} src={signatures[person]} />
-						</View>
-						<Text style={styles.text}>
-						  Signed by {person}
-						</Text>
-						</Page>)
+			signs.push(<><View >
+					  <Image style={styles.image} src={signatures[person]} />
+					</View>
+					<Text style={styles.text}>
+					  Signed by {person}
+					</Text></>)
 		}
 		return signs
+	}
+	function getContent(){
+		let content = []
+		for(var key in formData){
+
+		content.push(<><Text style={styles.text}>
+				    {key} :   {formData[key]}
+				  </Text>
+				  </>)
+
+		}
+		return content
+	
 	}
     
 
@@ -69,20 +80,16 @@ export default function ShowPDF({formData, signatures }){
           <Text style={styles.text}>
             Application Form for Sports Secretary
           </Text>
-          <Text style={styles.text}>
-            Our solutions enable customers to seamlessly add powerful PDF viewing,
-            editing, annotating, and form filling/signing into their app in under 15
-            minutes, saving months of development time and expense.
-          </Text>
-          <Text style={styles.text}>
-            Learn more at <Link src="https://pspdfkit.com/">pspdfkit.com</Link>
-          </Text>
-        </Page>
-            {
+          {
+		getContent()
+	  }
+	  {
             
             getSignatures()
             
             }
+        </Page>
+            
           </Document>
   </PDFViewer>
   <PDFDownloadLink document={ 
@@ -102,12 +109,13 @@ export default function ShowPDF({formData, signatures }){
           <Text style={styles.text}>
             Learn more at <Link src="https://pspdfkit.com/">pspdfkit.com</Link>
           </Text>
-    </Page>
-    {
+	{
             
             getSignatures()
             
             }
+    </Page>
+    
   </Document> } 
   fileName='output.pdf'>
     <br/>

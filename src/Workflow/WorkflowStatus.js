@@ -61,14 +61,56 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
+    const approvedByAll = (d) => {
+        for(var key in d){
+            if(!d[key]){
+              console.log(key, d[key])
+              return false
+            }
+        }
+        return true
+   }
+
+    const getStatus = () =>{
+    
+    	console.log(nodesList, steps.length)
+    
+     	if( nodesList[steps.length-1].type === "End" && approvedByAll(nodesList[steps.length-1].approvedBy)){
+     		return (
+     		    <Typography component="h1" variant="h4" align="center">
+				    Status : Completed
+				 </Typography>
+     		
+     		)
+     	}
+     	else{
+     	
+     		return (
+     		    <Typography component="h1" variant="h4" align="center">
+				    Status : In Progress...
+				 </Typography>
+     		
+     		)
+     	
+     	}
+
+
+	}
     return (
 	<div >
         <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg">
         
-        <Paper className={classes.paper} style = {{ marginleft : 100}}> 
-          <Typography component="h1" variant="h4" align="center">
-            WorkFlow Progress : {title}
+        <Paper className={classes.paper} > 
+         <div style={{ width: "1000" }}>
+          <Typography component="h1" variant="h4" align="center" >
+            WorkFlow Protocol for : {title}
           </Typography>
+          </div>
+	  {
+
+		getStatus()
+	  }
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
               <Step key={label}>
@@ -77,17 +119,6 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
             ))}
           </Stepper>
           <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  WorkFlow is completed 
-                </Typography>
-                <Typography variant="subtitle1">
-                We have emailed you the completion details, and will
-                  send you an update regarding the next steps.
-                </Typography>
-              </React.Fragment>
-            ) : (
               <div>
                 {getStepContent(activeStep, nodesList, workflow)}
 		<br/>
@@ -119,9 +150,9 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                   
                 </div>
               </div>
-            )}
           </React.Fragment>
         </Paper>
+        </Container>
         <Copyright />
 
 
