@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { FlowChart} from '@mrblenny/react-flow-chart/src';
+import { FlowChart, LinkDefault} from '@mrblenny/react-flow-chart/src';
 import * as actions from '@mrblenny/react-flow-chart/src/container/actions'
 import {  Page, SidebarItem } from './WorkflowComponents';
 import Typography from '@material-ui/core/Typography'
@@ -55,14 +55,14 @@ const countries = [
 let approver;
 
 function handleClickAddAprover(node){
-  console.log('approver',approver)
+  // console.log('approver',approver)
   if(node.properties.approvers.length>1){
     node.properties.approvers = node.properties.approvers + '-'+ approver
   }
   else{
     node.properties.approvers = approver
   }
-  console.log('The node is',node)
+  // console.log('The node is',node)
 
 }
 
@@ -71,7 +71,7 @@ function handleDelete(item,node){
 
   let approvers = node.properties.approvers
 
-  console.log('The approvers original',approvers)
+  // console.log('The approvers original',approvers)
 
   
   let i=0
@@ -103,7 +103,7 @@ function handleDelete(item,node){
     }
     i++
   }
-  console.log(start,end)
+  // console.log(start,end)
   let newapprovers = ''
 
   for(i=0;i<approvers.length;i++){
@@ -114,7 +114,7 @@ function handleDelete(item,node){
       newapprovers = newapprovers + approvers[i]
     }
   }
-  console.log('The new approvers',newapprovers)
+  // console.log('The new approvers',newapprovers)
   node.properties.approvers = newapprovers
 
 }
@@ -127,11 +127,11 @@ const NodeInnerCustom = ({ node, config }) => {
 
   const classes = useStyles();
   
-  console.log('the node',node)
+  // console.log('the node',node)
   
   const renderApprovers = (node) =>{
     let approverList = node.properties.approvers.split('-')
-    console.log('the approvers are',node.properties.approvers)
+    // console.log('the approvers are',node.properties.approvers)
     return approverList.map((item,index) => {return(<div> <p >{index +1} : {item}
     
     <Button   onClick = {() => handleDelete(item,node)}>X
@@ -198,7 +198,7 @@ class SelectedSidebar extends React.Component {
   state = cloneDeep(this.props.chartSimple)
 
   handleClick = (chart) =>{
-    console.log('The final workflow is',chart)
+    // console.log('The final workflow is',chart)
     this.props.save(chart);
 
   }
@@ -217,6 +217,11 @@ class SelectedSidebar extends React.Component {
             callbacks={stateActions}
             Components={{
             NodeInner: NodeInnerCustom,
+            Link: (props) => {
+              props = {...props,config:{showArrowHead:true}}
+              // console.log(props); 
+              // console.log(props.config.showArrowHead)
+              return(<LinkDefault {...props } />)}
           }}
           />
         </Content>

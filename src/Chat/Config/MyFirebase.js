@@ -9,6 +9,14 @@ const config = {
     messagingSenderId: "380021373381",
     appId: "1:380021373381:web:62dffd24653af63d6c33ac",
     measurementId: "G-S4K4YQTYB1"
+
+// apiKey: "AIzaSyDf_LAIJ5ZRxg4zB1RLQePdaF8Aze_l8v8",
+// authDomain: "digidocs-db5cd.firebaseapp.com",
+// databaseURL: "https://digidocs-db5cd.firebaseio.com",
+// projectId: "digidocs-db5cd",
+// storageBucket: "digidocs-db5cd.appspot.com",
+// messagingSenderId: "108690708237",
+// appId: "1:108690708237:web:f50c4f55a4e31e3990c244"
 }
 firebase.initializeApp(config)
 firebase.firestore().settings({

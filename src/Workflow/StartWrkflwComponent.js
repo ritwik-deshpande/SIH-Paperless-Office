@@ -80,6 +80,7 @@ class StartWrkflwComponent extends Component
       
       let payload = {
 
+        "id" : 123,
         "FormData" : this.state.FormData,
         "FlowChart" : this.state.FlowChart,
         "Comments" : [],
@@ -89,13 +90,12 @@ class StartWrkflwComponent extends Component
         "Title": this.state.selectedTitle,
 
       }
-      console.log("The Payload")
-      console.log(payload);
+      console.log("The Payload",payload);
 
 
 
 
-      api.workflow("Workflow").post(payload).then(res =>{
+      api.workflow("workflow").post(payload).then(res =>{
         console.log(res);
         this.props.history.push("/status?title="+this.state.selectedTitle)
       })
