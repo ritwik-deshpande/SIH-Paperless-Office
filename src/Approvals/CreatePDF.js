@@ -141,6 +141,8 @@ class CreatePDF extends React.Component{
   	
   }
 
+  
+
   handleSignClick = () => {
 
     // add the content for approval.
@@ -149,16 +151,11 @@ class CreatePDF extends React.Component{
     // at the end send update message to server along with the required arrays.
     
     let node_level = this.state.workflow.Path.length
-   	let path = this.state.workflow.Path
+    let path = this.state.workflow.Path
     let current_node_key = this.state.workflow.Path[node_level - 1]
     let currentNode = this.state.workflow.FlowChart[current_node_key]
     
     let nextNodes = this.state.workflow.nextNodes
-    
-    
-    
-    
-    
     
     
     let name = this.props.userObj.name
@@ -201,7 +198,7 @@ class CreatePDF extends React.Component{
 	
 	else{
 		let next_node_key
-    	let nextNode
+    		let nextNode
                 // remove pending requests from all other next Nodes! 
                     
 		next_node_key = this.chooseNextNode(nextNodes, username)
@@ -222,10 +219,11 @@ class CreatePDF extends React.Component{
 			this.state.workflow.nextNodes = nextNodes
 		}
                 this.state.workflow.FlowChart[next_node_key] = nextNode
+		
+    		this.state.workflow.Path = path
 	}
     
     	
-    this.state.workflow.Path = path
     this.state.workflow.Signatures = this.state.signatures
     this.state.workflow.Comments = this.state.comments
    
@@ -241,9 +239,47 @@ class CreatePDF extends React.Component{
 
     // add the content for Rejection.
     //notifies the owner.
-    this.setState({isSigned : true,
-    isApproved : true})
+    
     console.log("in handlesignClick")
+
+
+    let node_level = this.state.workflow.Path.length
+    let path = this.state.workflow.Path
+    let current_node_key = this.state.workflow.Path[node_level - 1]
+    let currentNode = this.state.workflow.FlowChart[current_node_key]
+    
+    let nextNodes = this.state.workflow.nextNodes
+    
+    let name = this.props.userObj.name
+    let username = this.props.userObj.username
+   
+    console.log("in handlesignClick")
+	
+	if(nextNodes.length != 0){
+		let next_node_key
+    		let nextNode
+                // remove pending requests from all other next Nodes! 
+                    
+		next_node_key = this.chooseNextNode(nextNodes, username)
+
+		path = [...path, next_node_key]
+		
+		this.state.workflow.nextNodes = []
+		
+                this.state.workflow.Path = path
+		
+	}
+    
+    	
+    this.state.workflow.Comments = this.state.comments
+    this.state.workflow.isRejected = true
+
+   
+   console.log("New Workflow", this.state.workflow)
+    
+   api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
+    	console.log("Updated New Workflow", res)
+    })
   }
 
   render(){
@@ -272,7 +308,7 @@ class CreatePDF extends React.Component{
         </Button>
 
 
-        <Button style ={{ marginLeft : 800}}
+        <Button style ={{ marginLeft : 700}}
         variant="contained"
         color="primary"
         //className={classes.button}

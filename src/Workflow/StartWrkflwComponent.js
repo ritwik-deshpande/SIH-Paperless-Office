@@ -100,7 +100,6 @@ class StartWrkflwComponent extends Component
       
       let payload = {
 
-        "id" : 123,
         "FormData" : this.state.FormData,
         "FlowChart" : this.state.FlowChart,
         "Comments" : [],

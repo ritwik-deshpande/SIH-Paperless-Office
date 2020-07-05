@@ -16,9 +16,10 @@ class ApproveComponent extends React.Component{
       
     }
     componentDidMount(){
+        console.log(this.props.userObj)
         api.pending_request().get(this.props.userObj.id)
         .then(res => {
-          console.log('The data received is',res.data[0])
+          console.log('The data received is',res.data)
           this.setState({
               json : res.data,
               

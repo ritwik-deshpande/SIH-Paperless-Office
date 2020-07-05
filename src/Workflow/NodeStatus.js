@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider'
 import ShowPDF from '../Approvals/ShowPDF'
 import Comments from '../utils/Comments';
 import useStyles from '../Style'
+import Button from '@material-ui/core/Button';
 
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -19,6 +20,10 @@ export default function NodeStatus({workflow, node}) {
 
     const requestAccepted = true
     console.log("the Node is",node)
+    
+    const handleModify = () => {
+        // Open Form
+    };
 
     function getListItems(){
     
@@ -63,8 +68,18 @@ export default function NodeStatus({workflow, node}) {
         <div>    
                 <ShowPDF  formData = {workflow.FormData} signatures = {workflow.Signatures} />
                 
+                
+
+ 		  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleModify}
+                    style = {{marginLeft : 1000}}
+                    className={classes.button}
+                  >MODIFY DOCUMENT </Button>
+                  
                 <br/>
-                <br/>
+ 		<br/>
 		
                 <br/>
                 <Typography variant="h6">
