@@ -29,11 +29,11 @@ function Copyright() {
 
 
 
-function getStepContent(step,nodesList) {
+function getStepContent(step,nodesList, workflow) {
 
   console.log(step,nodesList)
 
-  return <NodeStatus node = {nodesList[step]}/>
+  return <NodeStatus workflow ={workflow} node = {nodesList[step]}/>
   // switch (step) {
   //   case 0:
   //     return <NodeStatus />;
@@ -46,7 +46,7 @@ function getStepContent(step,nodesList) {
   // }
 }
 
-export default function WorkflowStatus({title,steps,nodesList}) {
+export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
 
 
     console.log(title,steps,nodesList)
@@ -62,12 +62,10 @@ export default function WorkflowStatus({title,steps,nodesList}) {
         setActiveStep(activeStep - 1);
     };
     return (
-        <main className={classes.content}>
+	<div >
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
         
-         <main className = {classes.layout}>
-        <Paper className={classes.paper}> 
+        <Paper className={classes.paper} style = {{ marginleft : 100}}> 
           <Typography component="h1" variant="h4" align="center">
             WorkFlow Progress : {title}
           </Typography>
@@ -90,8 +88,11 @@ export default function WorkflowStatus({title,steps,nodesList}) {
                 </Typography>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep,nodesList)}
+              <div>
+                {getStepContent(activeStep, nodesList, workflow)}
+		<br/>
+		<br/>
+		
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -117,14 +118,14 @@ export default function WorkflowStatus({title,steps,nodesList}) {
                   >Next </Button>}
                   
                 </div>
-              </React.Fragment>
+              </div>
             )}
           </React.Fragment>
         </Paper>
         <Copyright />
-      </main>
-      </Container>
-      </main>
+
+
+      </div>
             
     )
 }

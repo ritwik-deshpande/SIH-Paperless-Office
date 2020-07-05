@@ -7,14 +7,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider'
-import ShowPDF from '../Approvals/CreatePDF'
+import ShowPDF from '../Approvals/ShowPDF'
+import Comments from '../utils/Comments';
 import useStyles from '../Style'
 
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-export default function NodeStatus({node}) {
+export default function NodeStatus({workflow, node}) {
     const classes = useStyles();
+
     const requestAccepted = true
     console.log("the Node is",node)
 
@@ -55,36 +57,30 @@ export default function NodeStatus({node}) {
 
 
     return (
-        <div className ={classes.root}>
+        <div >
 
         
-        <div>
-{/*             
-                <Typography variant="h6" gutterBottom>
-
-                    {node.type}
-
+        <div>    
+                <ShowPDF  formData = {workflow.FormData} signatures = {workflow.Signatures} />
                 
-                </Typography> */}
-               
-                <Grid container spacing={3}>
-                <ShowPDF/>
-                </Grid>
                 <br/>
                 <br/>
+		
                 <br/>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6">
                     Approvers Status
                 </Typography>
                 {
                     getListItems()
 
                 }
-                </div>
+      
 
                 <br/>
                 <br/>
-
+		<Comments json={{listitems : workflow.Comments}}/>
+		
+	 </div>
                 {/* <Typography variant="h6" gutterBottom>
 
                     Initiated at TimeStamp : {node.timestamp}

@@ -1,6 +1,6 @@
 const initState = {
 
-    userObj: {
+   /* userObj: {
         "id": 0,
         "name": "Ritwik",
         "username": "rd",
@@ -24,9 +24,9 @@ const initState = {
             "content":"Chaitya Chheda BT16CSE073 Stage 1 request for approval for application for Sports Secretary is yet to be approved by you. Due data 07/07/2020"
           }
         }
-      },
-    //userObj: null,
-    loggedIn : true
+      },*/
+    userObj: null,
+    loggedIn : false
 
 }
 

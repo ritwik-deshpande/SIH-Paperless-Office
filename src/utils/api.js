@@ -46,8 +46,15 @@ export default {
     getWorkFlow(url){
       return {
         get :(username,title) =>{ return `${Endpoint}/${url}?User=${username}&Title=${title}`},
-        getByid : (id) => {return `${Endpoint}/${url}?wrkflwid=${id}`}
+        getByid : (id) => {return `${Endpoint}/${url}?id=${id}`}
       }
+    },
+    updateWorkFlow(url, id){
+	return{
+	 put : (payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
+		
+	}
+	
     },
 
     saveMenu(url,id){

@@ -51,7 +51,7 @@ class StartWrkflwComponent extends Component
         CustomForm:null,
         CustomFlowChart:null,
         FlowChart : null,
-        user: this.props.userObj.name,
+        user: this.props.userObj.username,
         selectedTitle : "",
       };
       console.log(this.state);
@@ -63,6 +63,26 @@ class StartWrkflwComponent extends Component
     return timestamp
   }  
 
+
+  initPath(){
+
+        let flowchart = this.state.FlowChart
+	let Path = []
+        let nodesList = []
+        for(var node in flowchart){
+	    if(flowchart[node].type.localeCompare("Start")==0){
+	       Path = [...nodesList, node]
+	       break;
+	    }
+            
+       }
+	// Plz write send request function
+        //sendRequest(flowchart[Path[0].approvers])
+
+	return Path
+
+  }
+	
 
   postRequest = () =>{
     //TODO: Create post request to db.json
@@ -84,10 +104,14 @@ class StartWrkflwComponent extends Component
         "FormData" : this.state.FormData,
         "FlowChart" : this.state.FlowChart,
         "Comments" : [],
+	"Path": this.initPath(),
+	"chooseNextNodes":[],
+	"Signatures":[],
         "approvedBy": [],
         "isSigned" : false,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
+	"id" : this.getID()
 
       }
       console.log("The Payload",payload);
