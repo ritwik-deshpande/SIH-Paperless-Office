@@ -66,7 +66,7 @@ class CreatePDF extends React.Component{
   }
 
   componentDidMount(){
-    axios.get(api.getWorkFlow("workflow").getByid(this.props.item.wrkflwid))
+    axios.get(api.getWorkFlow("workflow").getByid(this.props.item.id))
         .then(res => {
           console.log('The data received is',res.data[0])
           if(res.data && res.data[0])

@@ -34,7 +34,7 @@ class FormComponent extends Component{
     this.props.save(formData)
   }
     componentDidMount(){
-      axios.get(api.forms("Forms").get(this.props.title))
+      api.forms().get(this.props.title)
       .then(res => {
         console.log(res.data[0].schema)
         this.setState({

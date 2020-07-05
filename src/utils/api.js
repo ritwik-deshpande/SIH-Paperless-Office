@@ -15,15 +15,23 @@ export default {
         delete: ({ id }) =>  axios.delete(`${url}/${id}`)
       }
     },
-    pending_request(){
+    users(){
       return {
-        get : (id) => {return `${Endpoint}/${"pending_requests"}?id=${id}`}
+        getByid :(id) => axios.get(`${Endpoint}/users/${id}`),
+        get :(username) => axios.get(`${Endpoint}/users?username=${username}`),
+        update : (id,payload) => axios.put(`${Endpoint}/users/${id}`,payload)
       }
     },
-    forms(url){
+    pending_request(){
+      return {
+        get : (id) => axios.get(`${Endpoint}/pending_requests/${id}`)
+      }
+    },
+    forms(){
       return {
 
-        get : (title) => {return `${Endpoint}/${url}?title=${title}`}
+        get : (title) => axios.get(`${Endpoint}/forms?title=${title}`),
+        //post :(payload) => axios.post(`${Endpoint}/forms`,payload)
       }
     },
     flowChart(url){
@@ -32,16 +40,9 @@ export default {
         get : (title) => {return `${Endpoint}/${url}?title=${title}`}
       }
     },
-    menu(url){
-      return `${Endpoint}/${url}`
+    menu(){
+      return axios.get(`${Endpoint}/menu`)
       
-    },
-
-    users(url){
-      return {
-        get :(username) => {return `${Endpoint}/${url}?username=${username}`},
-        update : (id) => {return `${Endpoint}/${url}/${id}`}
-      }
     },
     getWorkFlow(url){
       return {

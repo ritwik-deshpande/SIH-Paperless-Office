@@ -30,7 +30,7 @@ class StartWrkflwComponent extends Component
 {
 
   componentDidMount(){
-    axios.get(api.menu("menu"))
+   api.menu()
     .then(res => {
       console.log(res.data[0])
       this.setState({
@@ -195,7 +195,7 @@ class StartWrkflwComponent extends Component
     }
     else{
 
-      api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
+      api.saveCustomForm().post(this.state.CustomForm).then(res =>{
         console.log(res);
         
       })
