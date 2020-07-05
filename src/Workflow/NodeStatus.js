@@ -78,15 +78,27 @@ export default function NodeStatus({workflow, node}) {
 
                 <br/>
                 <br/>
+
+		 <Typography variant="h6">
+		{node.timestamp === "" ? <> Pending Approvals </> :<>
+
+                         Completed on : {node.timestamp}
+			</>}
+                
+                </Typography> 
+
+		<br/>
+                <br/>
+
 		<Comments json={{listitems : workflow.Comments}}/>
+
+		
+
+		
 		
 	 </div>
-                {/* <Typography variant="h6" gutterBottom>
-
-                    Initiated at TimeStamp : {node.timestamp}
 
                 
-                </Typography> */}
                
 
        </div>

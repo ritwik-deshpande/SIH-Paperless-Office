@@ -10,7 +10,6 @@ import useStyles from '../Style'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-
 const Outer = styled.div`
   padding: 10px;
 `
@@ -215,7 +214,11 @@ class SelectedSidebar extends React.Component {
             initialValue={chart}
             chart={chart}
             callbacks={stateActions}
+	    config={{
+	    showArrowHead: true,
+	  }}
             Components={{
+
             NodeInner: NodeInnerCustom,
             Link: (props) => {
               props = {...props,config:{showArrowHead:true}}
