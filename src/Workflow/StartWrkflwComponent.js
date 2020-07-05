@@ -30,7 +30,7 @@ class StartWrkflwComponent extends Component
 {
 
   componentDidMount(){
-    axios.get(api.menu("menu"))
+   api.menu()
     .then(res => {
       console.log(res.data[0])
       this.setState({
@@ -100,6 +100,7 @@ class StartWrkflwComponent extends Component
       
       let payload = {
 
+        "id" : 123,
         "FormData" : this.state.FormData,
         "FlowChart" : this.state.FlowChart,
         "Comments" : [],
@@ -113,13 +114,12 @@ class StartWrkflwComponent extends Component
 	"id" : this.getID()
 
       }
-      console.log("The Payload")
-      console.log(payload);
+      console.log("The Payload",payload);
 
 
 
 
-      api.workflow("Workflow").post(payload).then(res =>{
+      api.workflow("workflow").post(payload).then(res =>{
         console.log(res);
         this.props.history.push("/status?title="+this.state.selectedTitle)
       })
@@ -195,7 +195,7 @@ class StartWrkflwComponent extends Component
     }
     else{
 
-      api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
+      api.saveCustomForm().post(this.state.CustomForm).then(res =>{
         console.log(res);
         
       })

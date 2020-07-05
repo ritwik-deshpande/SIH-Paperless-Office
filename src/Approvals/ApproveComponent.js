@@ -10,17 +10,17 @@ class ApproveComponent extends React.Component{
       this.state = {
         showPDF: false,
         item :null,
-        json : {listitems: ['a']},
+        json : {requests: ['a']},
         dataloaded: false
       };
       
     }
     componentDidMount(){
-        axios.get(api.pending_request().get(this.props.userObj.id))
+        api.pending_request().get(this.props.userObj.id)
         .then(res => {
           console.log('The data received is',res.data[0])
           this.setState({
-              json : res.data[0],
+              json : res.data,
               
           })
         })
@@ -38,7 +38,7 @@ class ApproveComponent extends React.Component{
         return(
             <div>
                 <h1>API TEST </h1>
-            {this.state.json.listitems ?(this.state.showPDF? 
+            {this.state.json.requests ?(this.state.showPDF? 
             
             (<CreatePDF item={this.state.item} />) 
 

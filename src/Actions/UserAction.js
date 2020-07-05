@@ -20,7 +20,7 @@ export const GetUser = (username, password) => {
         }
         else{
 
-            axios.get(api.users("users").get(username)).then(
+            api.users().get(username).then(
                 res =>{
                     console.log("The user",res.data[0])
     
@@ -46,7 +46,8 @@ export const GetUser = (username, password) => {
 export const saveSign = (userObj) =>{
     return (dispatch, getState) =>
     {
-        axios.put(api.users("users").update(userObj.id),userObj).then(
+        console.log(userObj)
+        api.users().update(userObj.id,userObj).then(
             res =>{
               console.log(res)
               console.log("Saved ESIGN")

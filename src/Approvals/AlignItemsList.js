@@ -68,7 +68,7 @@ export default function AlignItemsList({Click,json}) {
     
     <List className={classes.root}>
 
-      {renderListItem(json['listitems'])}
+      {renderListItem(json['requests'])}
 
     </List>
   );
