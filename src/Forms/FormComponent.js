@@ -36,7 +36,6 @@ class FormComponent extends Component{
     componentDidMount(){
       api.forms().getByid(this.props.id)
       .then(res => {
-        console.log(res.data.schema)
         this.setState({
           schema : res.data.schema,
           uiSchema : res.data.uiSchema
@@ -48,7 +47,7 @@ class FormComponent extends Component{
         let log = (type) => console.log.bind(console, type);
 
         return(
-            <div className="container">
+            <div>
              
                 <Form schema={this.state.schema}
                     uiSchema={this.state.uiSchema}

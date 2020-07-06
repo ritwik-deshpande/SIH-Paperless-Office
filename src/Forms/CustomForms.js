@@ -57,14 +57,8 @@ const myCustoms = [
         container : < TestComponent/>,
         preview : < TestPreview/>,
         toolbox : {
-            title : 'Test',
-            icon : 'fa fa-user',
-            name : 'CUSTOM_COM'
         },
         states : {
-            toolType: 'CUSTOM_COM',
-            num1 : 1,
-            num2 : 2
         }
     }
 ]
@@ -81,7 +75,7 @@ class CustomForms extends React.Component {
         title: "Admission Cancellation",
         schema: {
           title: "Admission Cancellation",
-          description: "A Custom Form Created",
+          description: "Please Enter your Data ",
           type: "object",
           required: [],
           properties: {
@@ -90,11 +84,12 @@ class CustomForms extends React.Component {
                 items: {
                 type: "string",
                 format: "data-url"
-                    },
-                }
-            }
-        }
-        }
+                },
+             }
+           }
+        },
+	uiSchema :{}
+      }
     }
 
     constructor(){
@@ -114,8 +109,7 @@ class CustomForms extends React.Component {
                         debug={false}
                         updateOnMount={true}
                         updateForm={this.updateForm}
-                        onSave={this.save}
-                        custom={ myCustoms } />
+                        onSave={this.save} />
                 </div>
                 <div className="col-md-5">
                     <ToolBox custom={ myCustoms } />
@@ -129,21 +123,99 @@ class CustomForms extends React.Component {
     reformatForm = (form) => {
 
 
-        for(let attribute in form){
-            console.log("The atrribute ")
+   		for(let attribute in form){
+	       		console.log("The atrribute ")
 
-            let formattr = { type:"string",title :form[attribute].title}
-            console.log(formattr)
-            // let form = [...this.state.form,this.state.formData]
-            if(form[attribute].validation.isRequired){
-                this.state.form.schema.required = [...this.state.form.schema.required,form[attribute].name]
-            }
+		    	if( form[attribute].toolType === "CHECK_BOXES"){
+			let formattr = { type:"array",title :form[attribute].title, items: { type: "string", enum: [] }, uniqueItems:true}
+			
+			let i = 0
+			
+			for(i = 0 ; i< form[attribute].checkBoxes.length; i++)
+			{
+				formattr.items.enum.push( form[attribute].checkBoxes[i].title )
+				
+			}
+			
+			 console.log(formattr)
+            
+			    if(form[attribute].validation.isRequired){
+				this.state.form.schema.required = [...this.state.form.schema.required,form[attribute].name]
+			    }
+			     this.state.form.schema.properties[form[attribute].name ] = formattr 
+			     this.state.form.uiSchema[form[attribute].name] =  {"ui:widget": "checkboxes"}
+
+			}
+			if( form[attribute].toolType === "SINGLE_FIELD"){
+				let formattr = { type:"string",title :form[attribute].title }
+				console.log(formattr)
+				
+				if(form[attribute].validation.isRequired){
+				    this.state.form.schema.required = [...this.state.form.schema.required,form[attribute].name]
+				}
+				 this.state.form.schema.properties[form[attribute].name ] = formattr
 
 
-            console.log(this.state.form)
-            this.state.form.schema.properties[form[attribute].name ] = formattr 
-            console.log(this.state.form)
+			}
+			if( form[attribute].toolType === "PARAGRAPH"){
+
+				let formattr = { type:"string",title :form[attribute].title }
+				console.log(formattr)
+				
+				 this.state.form.schema.properties[form[attribute].name ] = formattr
+
+				this.state.form.uiSchema[form[attribute].name] = {"ui:widget": "textarea","ui:options": {"rows": 5} }
+
+	
+			}
+			if( form[attribute].toolType === "RADIO_BUTTONS"){
+			
+			
+				let formattr = { type:"string",title :form[attribute].title, enum: [] }
+			
+				let i = 0
+			
+				for(i = 0 ; i< form[attribute].radios.length; i++)
+				{
+					formattr.enum.push( form[attribute].radios[i].title )
+				
+				}
+			
+				 console.log(formattr)
+		        
+				if(form[attribute] && form[attribute].validation.isRequired){
+				    this.state.form.schema.required = [...this.state.form.schema.required,form[attribute].name]
+				}
+				 this.state.form.schema.properties[form[attribute].name ] = formattr 
+				 this.state.form.uiSchema[form[attribute].name] =  {"ui:widget": "radio"}
+
+
+			}
+			if ( form[attribute].toolType === "SELECT_FIELD" ){
+			
+				let formattr = { type:"string",title :form[attribute].title, enum: [] }
+			
+				let i = 0
+			
+				for(i = 0 ; i< form[attribute].options.length; i++)
+				{
+					formattr.enum.push( form[attribute].options[i].title )
+				
+				}
+			
+				 console.log(formattr)
+		        
+				if(form[attribute] && form[attribute].validation.isRequired){
+				    this.state.form.schema.required = [...this.state.form.schema.required,form[attribute].name]
+				}
+				 this.state.form.schema.properties[form[attribute].name ] = formattr 
+			
+			}
+		
+           
+           
         }
+         console.log("The form is  ",this.state.form)
 
         return this.state.form
     }

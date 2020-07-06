@@ -58,6 +58,12 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
         setActiveStep(activeStep + 1);
     };
 
+    
+  
+    const handleEnd = () => {
+        alert("WorkFlow Ended !")
+    };
+
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
@@ -124,18 +130,24 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
 		<br/>
 		<br/>
 		
+
+		
+		
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
+                    <Button onClick={handleBack} variant="contained"
+                    color="primary"
+                    className={classes.button}>
                       Back
                     </Button>
                   )}
                   
-                    {activeStep === steps.length - 1 && steps.length != 1 ? 
+                    {activeStep === steps.length - 1  ? 
                     
                       <Button
                     variant="contained"
                     color="primary"
+		    style = {{marginLeft :1000}}
                     disabled = "true"
                     onClick={handleNext}
                     
@@ -143,12 +155,23 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                   >Next </Button> : <Button
                     variant="contained"
                     color="primary"
+                    style = {{marginLeft :1000}}
                     onClick={handleNext}
-                    
                     className={classes.button}
                   >Next </Button>}
+   		  { workflow.isRejected ? 
+		<div>
+		<br/>
+		  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleEnd}
+                    className={classes.button}
+                  >TERMINATE WORKFLOW </Button>
                   
-                </div>
+                </div> : null}
+                  
+                </div> 
               </div>
           </React.Fragment>
         </Paper>

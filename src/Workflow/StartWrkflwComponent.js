@@ -194,7 +194,8 @@ class StartWrkflwComponent extends Component
     }
     else{
 
-      api.forms().post(this.state.CustomForm).then(res =>{
+
+      api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
         console.log(res);
         
       })
