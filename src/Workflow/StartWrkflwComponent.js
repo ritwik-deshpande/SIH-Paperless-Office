@@ -120,7 +120,7 @@ class StartWrkflwComponent extends Component
 
       api.workflow("workflow").post(payload).then(res =>{
         console.log(res);
-        this.props.history.push("/status?title="+this.state.selectedTitle)
+        this.props.history.push("/status?id="+this.state.id)
       })
 
     }
@@ -195,7 +195,7 @@ class StartWrkflwComponent extends Component
     else{
 
 
-      api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
+      api.forms().post(this.state.CustomForm).then(res =>{
         console.log(res);
         
       })

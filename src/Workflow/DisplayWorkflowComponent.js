@@ -25,7 +25,7 @@ class DisplayWorkflow extends React.Component{
                   "id": "node1", 
                   "type": "Start",
                   "properties": {
-                    "approvers": "RB Keskar-Manish Kurehkar"
+                    "approvers": "AP001-AP002"
                   },
                   "position": {
                     "x": 300,

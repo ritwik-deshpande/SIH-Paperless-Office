@@ -105,7 +105,11 @@ class StatusComponent extends Component {
         // this.state.title = this.props.location.search.split("=")[1]
         // console.log(this.state.username,this.state.title)
         // console.log(this.state.workflowSteps,this.state.nodesList)
-
+        if(!this.state.id && this.props.location.search.localeCompare("") !==0 && this.props.location.search.split("=")[1])
+        {
+            console.log("in something")
+            this.setState({id:this.props.location.search.split("=")[1]})
+        }
         return (
             <div>  
                <h1>API test</h1>

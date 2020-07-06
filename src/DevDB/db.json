@@ -39,14 +39,16 @@
             "title": "Application for Sports Secretary"
           },
           {
-
             "id": 178,
             "title": "Application for Student President"
           },
           {
             "id": 383,
             "title": "Fees Refund"
-
+          },
+          {
+            "id": 837,
+            "title": "changed wrklfw"
           }
         ]
       }
@@ -94,7 +96,8 @@
           "status": "Threatened by the party"
         }
       ]
-    }],
+    }
+  ],
   "pending_requests": [
     {
       "id": "2040",
@@ -289,8 +292,8 @@
       }
     },
     {
-      "id": 4,
-      "name": "Padole",
+      "id": "DIR01",
+      "name": "Pramod Padole",
       "username": "PD",
       "emailID": "ritwikdeshpande01@gmail.com",
       "address": "Andheri",
@@ -572,6 +575,43 @@
           }
         }
       }
+    },
+    {
+      "id": 837,
+      "title": "changed wrklfw",
+      "schema": {
+        "title": "changed wrklfw",
+        "description": "Please Enter your Data ",
+        "type": "object",
+        "required": [],
+        "properties": {
+          "Upload_Documents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "data-url"
+            }
+          },
+          "Name": {
+            "type": "string",
+            "title": "Title"
+          },
+          "Gender": {
+            "type": "string",
+            "title": "Gender",
+            "enum": [
+              "Male",
+              "Female",
+              "Other"
+            ]
+          }
+        }
+      },
+      "uiSchema": {
+        "Gender": {
+          "ui:widget": "radio"
+        }
+      }
     }
   ],
   "Workflow": [
@@ -726,6 +766,96 @@
       "User": "rd",
       "Title": "Fees Refund",
       "id": 751
+    },
+    {
+      "FormData": {
+        "Name": "Chaitya",
+        "Gender": "Male"
+      },
+      "FlowChart": {
+        "node1": {
+          "requestAccepted": {
+            "AP001": false,
+            "AP002": false
+          },
+          "approvedBy": {
+            "AP001": false,
+            "AP002": false
+          },
+          "nextNodes": [
+            "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45"
+          ],
+          "timestamp": "",
+          "type": "Start"
+        },
+        "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45": {
+          "requestAccepted": {
+            "HOD001": false
+          },
+          "approvedBy": {
+            "HOD001": false
+          },
+          "nextNodes": [],
+          "timestamp": "",
+          "type": "Intermediate Nodes"
+        }
+      },
+      "Comments": [],
+      "Path": [
+        "node1"
+      ],
+      "chooseNextNodes": [],
+      "Signatures": [],
+      "approvedBy": [],
+      "isSigned": false,
+      "User": "rd",
+      "Title": "changed wrklfw",
+      "id": 612
+    },
+    {
+      "FormData": {
+        "Name": "n",
+        "Gender": "Male"
+      },
+      "FlowChart": {
+        "node1": {
+          "requestAccepted": {
+            "AP001": false,
+            "AP002": false
+          },
+          "approvedBy": {
+            "AP001": false,
+            "AP002": false
+          },
+          "nextNodes": [
+            "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45"
+          ],
+          "timestamp": "",
+          "type": "Start"
+        },
+        "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45": {
+          "requestAccepted": {
+            "HOD001": false
+          },
+          "approvedBy": {
+            "HOD001": false
+          },
+          "nextNodes": [],
+          "timestamp": "",
+          "type": "Intermediate Nodes"
+        }
+      },
+      "Comments": [],
+      "Path": [
+        "node1"
+      ],
+      "chooseNextNodes": [],
+      "Signatures": [],
+      "approvedBy": [],
+      "isSigned": false,
+      "User": "rd",
+      "Title": "changed wrklfw",
+      "id": 620
     }
   ],
   "FlowChart": [
@@ -1405,6 +1535,95 @@
         "selected": {
           "type": "node",
           "id": "node2"
+        },
+        "hovered": {}
+      }
+    },
+    {
+      "id": 837,
+      "title": "changed wrklfw",
+      "chart": {
+        "offset": {
+          "x": 0,
+          "y": 0
+        },
+        "nodes": {
+          "node1": {
+            "id": "node1",
+            "type": "Start",
+            "properties": {
+              "approvers": "AP001-AP002"
+            },
+            "position": {
+              "x": 300,
+              "y": 100
+            },
+            "ports": {
+              "port2": {
+                "id": "port2",
+                "type": "output",
+                "position": {
+                  "x": 110,
+                  "y": 276
+                }
+              }
+            },
+            "size": {
+              "width": 220,
+              "height": 276
+            }
+          },
+          "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45": {
+            "id": "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45",
+            "position": {
+              "x": 431,
+              "y": 406
+            },
+            "orientation": 0,
+            "type": "Intermediate Nodes",
+            "ports": {
+              "port1": {
+                "id": "port1",
+                "type": "input",
+                "position": {
+                  "x": 110,
+                  "y": 0
+                }
+              },
+              "port2": {
+                "id": "port2",
+                "type": "output",
+                "position": {
+                  "x": 110,
+                  "y": 224
+                }
+              }
+            },
+            "properties": {
+              "approvers": "HOD001"
+            },
+            "size": {
+              "width": 220,
+              "height": 224
+            }
+          }
+        },
+        "links": {
+          "464ed4e6-407a-4f4d-babc-ae8489df903f": {
+            "id": "464ed4e6-407a-4f4d-babc-ae8489df903f",
+            "from": {
+              "nodeId": "node1",
+              "portId": "port2"
+            },
+            "to": {
+              "nodeId": "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45",
+              "portId": "port1"
+            }
+          }
+        },
+        "selected": {
+          "type": "node",
+          "id": "d51c2f48-d4d6-4dd3-a24e-d8e2101a3c45"
         },
         "hovered": {}
       }

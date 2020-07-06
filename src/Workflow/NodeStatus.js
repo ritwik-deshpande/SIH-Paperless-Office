@@ -18,6 +18,14 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 export default function NodeStatus({workflow, node}) {
     const classes = useStyles();
 
+    const mapIdtoUser={
+        'DIR01' : 'Pramod Padole',
+        'HOD001' : 'Umesh Deshpande',
+        'AP001' : 'Ravindra Keskar',
+        'AP002' : 'Anil Mokhade',
+        'AP003' : 'Manish Kurhekar',
+        
+    }
     const requestAccepted = true
     console.log("the Node is",node)
     
@@ -35,7 +43,7 @@ export default function NodeStatus({workflow, node}) {
                     <ListItemIcon>
                     <AccountCircle />
                     </ListItemIcon>
-                    <ListItemText primary={approver} />
+                    <ListItemText primary={mapIdtoUser[approver]} />
                     <ListItemIcon>
                         <CheckCircleIcon />
                     </ListItemIcon>
@@ -48,7 +56,7 @@ export default function NodeStatus({workflow, node}) {
                     <ListItemIcon>
                     <AccountCircle />
                     </ListItemIcon>
-                    <ListItemText primary={approver} />
+                    <ListItemText primary={mapIdtoUser[approver]} />
                     <ListItemIcon>
                         <HourglassEmptyIcon />
                     </ListItemIcon>
