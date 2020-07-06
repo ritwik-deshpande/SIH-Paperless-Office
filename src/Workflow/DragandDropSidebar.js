@@ -214,17 +214,10 @@ class SelectedSidebar extends React.Component {
             initialValue={chart}
             chart={chart}
             callbacks={stateActions}
-	    config={{
-	    showArrowHead: true,
-	  }}
+	    
             Components={{
 
             NodeInner: NodeInnerCustom,
-            Link: (props) => {
-              props = {...props,config:{showArrowHead:true}}
-              // console.log(props); 
-              // console.log(props.config.showArrowHead)
-              return(<LinkDefault {...props } />)}
           }}
           />
         </Content>

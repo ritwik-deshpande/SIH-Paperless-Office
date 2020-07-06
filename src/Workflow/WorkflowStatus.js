@@ -142,7 +142,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                     </Button>
                   )}
                   
-                    {activeStep === steps.length - 1 && steps.length != 1 ? 
+                    {activeStep === steps.length - 1  ? 
                     
                       <Button
                     variant="contained"

@@ -37,6 +37,7 @@ class FormComponent extends Component{
       api.forms().get(this.props.title)
       .then(res => {
         console.log(res.data[0].schema)
+	console.log(res.data[0].uiSchema)
         this.setState({
           schema : res.data[0].schema,
           uiSchema : res.data[0].uiSchema
@@ -48,7 +49,7 @@ class FormComponent extends Component{
         let log = (type) => console.log.bind(console, type);
 
         return(
-            <div className="container">
+            <div>
              
                 <Form schema={this.state.schema}
                     uiSchema={this.state.uiSchema}
