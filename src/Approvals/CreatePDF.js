@@ -26,24 +26,6 @@ import AddComments from "./Comments";
 import api from '../utils/api';
 import ShowPDF from "./ShowPDF";
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
-
-
-const json ={
-
-  listitems : [{id:1, name:'Dustin Henderson', message: 'never ending story. turn around and look at what tyou see.<br/>In her face something never ending story. turn around and look at what tyou see.<br/>In her face something'},
-            {id:2, name: 'Will Byers', message: 'Approved by Chief PD'},
-            {id:3, name: 'Mike Wheeler', message: 'Threatened by the party'},
-            {id:4, name:'Dustin Henderson', message: 'never ending story'},
-            {id:5, name: 'Will Byers', message: 'Approved by Chief PD'},
-            {id:6, name: 'Mike Wheeler', message: 'Threatened by the party'}
-            ]
-}
-
 class CreatePDF extends React.Component{
 
   constructor(props){

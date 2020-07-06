@@ -30,7 +30,7 @@ class StartWrkflwComponent extends Component
 {
 
   componentDidMount(){
-   api.menu()
+   api.menu().get()
     .then(res => {
       console.log(res.data[0])
       this.setState({
@@ -43,6 +43,7 @@ class StartWrkflwComponent extends Component
   constructor(props){
       super(props);
       this.state = {
+        id : this.getID(),
         customWorkflow:"Empty",
         anchorEl:null,
         menu:null,
@@ -53,6 +54,7 @@ class StartWrkflwComponent extends Component
         FlowChart : null,
         user: this.props.userObj.username,
         selectedTitle : "",
+        selectedId : 0,
       };
       console.log(this.state);
   }
@@ -67,10 +69,10 @@ class StartWrkflwComponent extends Component
   initPath(){
 
         let flowchart = this.state.FlowChart
-	let Path = []
+        let Path = []
         let nodesList = []
         for(var node in flowchart){
-	    if(flowchart[node].type.localeCompare("Start")==0){
+	      if(flowchart[node].type.localeCompare("Start")===0){
 	       Path = [...nodesList, node]
 	       break;
 	    }
@@ -94,8 +96,6 @@ class StartWrkflwComponent extends Component
     {
       alert("Please Save the FlowChart First");
     }
-
-
     else{
       
       let payload = {
@@ -103,14 +103,14 @@ class StartWrkflwComponent extends Component
         "FormData" : this.state.FormData,
         "FlowChart" : this.state.FlowChart,
         "Comments" : [],
-	"Path": this.initPath(),
-	"chooseNextNodes":[],
-	"Signatures":[],
+        "Path": this.initPath(),
+        "chooseNextNodes":[],
+        "Signatures":[],
         "approvedBy": [],
         "isSigned" : false,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
-	"id" : this.getID()
+	      "id" : this.state.id
 
       }
       console.log("The Payload",payload);
@@ -132,13 +132,13 @@ class StartWrkflwComponent extends Component
 
     console.log("The form",Form)
 
-    if(this.state.customWorkflow.localeCompare("Empty")== 0){
+    if(this.state.customWorkflow.localeCompare("Empty")=== 0){
       alert("Please Give the name of your Custom WorkFlow");
     }
     else{
      Form.title = this.state.customWorkflow
 
-     Form.id = this.getID()
+     Form.id = this.state.id
      Form.schema.title = this.state.customWorkflow
       console.log("Saving Form",Form)
 
@@ -167,7 +167,7 @@ class StartWrkflwComponent extends Component
       }
       NewFlowChart.title = this.state.customWorkflow
 
-      NewFlowChart.id = this.getID()
+      NewFlowChart.id = this.state.id
       NewFlowChart.chart = FlowChart
       console.log("Saving FlowChart ",NewFlowChart)
 
@@ -194,12 +194,13 @@ class StartWrkflwComponent extends Component
     }
     else{
 
+
       api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
         console.log(res);
         
       })
 
-      api.saveCustomFlowChart("FlowChart").post(this.state.CustomFlowChart).then(res =>{
+      api.flowChart().post(this.state.CustomFlowChart).then(res =>{
         console.log(res);
         
       })
@@ -208,10 +209,10 @@ class StartWrkflwComponent extends Component
 
 
       console.log("Original Menu",this.state.menu)
-      this.state.menu.contents.Custom = [...this.state.menu.contents.Custom , {id: this.getID(),title:this.state.customWorkflow}]
+      this.state.menu.contents.Custom = [...this.state.menu.contents.Custom , {id: this.state.id,title:this.state.customWorkflow}]
       console.log("Saving new menu",this.state.menu)
       console.log(this.state.menu.id)
-      api.saveMenu("menu",this.state.menu.id).put(this.state.menu).then(res =>{
+      api.menu().put(this.state.menu.id,this.state.menu).then(res =>{
         console.log(res);
         this.setState({
           showFormandWrkflw: false
@@ -247,9 +248,10 @@ class StartWrkflwComponent extends Component
     })
   }
 
-  handleClick = (title) =>{
+  handleClick = (id,title) =>{
     console.log(title);
     this.setState({selectedTitle : title,
+      selectedId : id,
     showFormandWrkflw  :true});
     this.handleClose()
       //this.props.history.push("/Form")
@@ -311,11 +313,11 @@ class StartWrkflwComponent extends Component
           console.log("Returning academic cancellation")
           return( <div>
             
-            <FormComponent title={this.state.selectedTitle} save={this.saveFormData} />
+            <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
 
             <br/>
 
-            <DisplayWorkflow title={this.state.selectedTitle} save={this.saveFlowChartData}/>
+            <DisplayWorkflow title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFlowChartData}/>
          <br/>
             <Button
               variant="contained"

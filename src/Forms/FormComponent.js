@@ -34,13 +34,11 @@ class FormComponent extends Component{
     this.props.save(formData)
   }
     componentDidMount(){
-      api.forms().get(this.props.title)
+      api.forms().getByid(this.props.id)
       .then(res => {
-        console.log(res.data[0].schema)
-	console.log(res.data[0].uiSchema)
         this.setState({
-          schema : res.data[0].schema,
-          uiSchema : res.data[0].uiSchema
+          schema : res.data.schema,
+          uiSchema : res.data.uiSchema
         })
       })
     }

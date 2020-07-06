@@ -34,18 +34,18 @@ class Root extends React.Component {
                         <Route
                             absolute
                             path="/chat"
-                            render={props => <Login showToast={this.showToast} {...props} />}
+                            render={props => <Login showToast={this.showToast} userObj={this.props.userObj}{...props} />}
                         />
                         <Route
                             
                             path="/main"
-                            render={props => <Main showToast={this.showToast} {...props} />}
+                            render={props => <Main showToast={this.showToast} userObj={this.props.userObj} {...props} />}
                         />
                         <Route
                             
                             path="/profile"
                             render={props => (
-                                <Profile showToast={this.showToast} {...props} />
+                                <Profile showToast={this.showToast} userObj={this.props.userObj}{...props} />
                             )}
                         />
                     </Switch>

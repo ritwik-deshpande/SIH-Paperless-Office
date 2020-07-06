@@ -39,12 +39,14 @@
             "title": "Application for Sports Secretary"
           },
           {
+
             "id": 178,
             "title": "Application for Student President"
           },
           {
             "id": 383,
             "title": "Fees Refund"
+
           }
         ]
       }
@@ -69,6 +71,30 @@
       "postId": 1
     }
   ],
+  "my_workflows": [
+    {
+      "id": "20409",
+      "requests": [
+        {
+          "id": "5",
+          "subject": "Need Plancks constant",
+          "nameofSender": "Dustin Henderson",
+          "status": "never ending story"
+        },
+        {
+          "id": "1",
+          "subject": "Escape from Mind Flayer",
+          "nameofSender": "Will Byers",
+          "status": "Approved by Chief PD"
+        },
+        {
+          "id": "3",
+          "subject": "Want eleven to stop",
+          "nameofSender": "Mike Wheeler",
+          "status": "Threatened by the party"
+        }
+      ]
+    }],
   "pending_requests": [
     {
       "id": "2040",
@@ -498,6 +524,52 @@
         },
         "types": {
           "ui:widget": "checkboxes"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "qwerty",
+      "schema": {
+        "title": "qwerty",
+        "description": "A Custom Form Created",
+        "type": "object",
+        "required": [],
+        "properties": {
+          "Upload_Documents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "data-url"
+            }
+          },
+          "qwerty": {
+            "type": "string",
+            "title": "Title"
+          }
+        }
+      }
+    },
+    {
+      "id": 54,
+      "title": "test",
+      "schema": {
+        "title": "test",
+        "description": "A Custom Form Created",
+        "type": "object",
+        "required": [],
+        "properties": {
+          "Upload_Documents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "data-url"
+            }
+          },
+          "testField": {
+            "type": "string",
+            "title": "testField"
+          }
         }
       }
     }
