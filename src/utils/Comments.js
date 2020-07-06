@@ -47,7 +47,7 @@ export default function Comments({json}) {
                 color="textPrimary"
               >
                 {item.message}
-              </Typography><br/><br/><br/>
+              </Typography><br/>
 	      <Typography
                 component="span"
                 variant="body3"

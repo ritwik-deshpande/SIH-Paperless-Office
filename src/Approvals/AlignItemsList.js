@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '200%',
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
   inline: {
