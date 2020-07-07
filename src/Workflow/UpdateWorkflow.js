@@ -11,7 +11,7 @@ import CustomForm from '../Forms/CustomForms'
 import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
 import { connect } from 'react-redux'
-
+import Timestamp from '../utils/TimeStamp'
 
 
 class UpdateWorkflow extends Component
@@ -40,9 +40,11 @@ class UpdateWorkflow extends Component
     else{
       
       let payload = this.props.wrkflw
+      let old_object = JSON.parse(JSON.stringify(this.props.wrkflw))
+      console.log("The old object" ,old_object)
       
-      let version = payload.id
-      payload.id  = version.split('v')[0] + 'v' + (parseInt(version.split('v')[1]) + 1)
+      let old_version = payload.id
+      payload.id  = old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
 
        
       payload.FlowChart = this.state.FlowChart
@@ -50,15 +52,18 @@ class UpdateWorkflow extends Component
       
       console.log("The Payload",payload);
       console.log(this.props)
-      
+      payload.state = "active"
+      payload.start_timestamp = Timestamp.getTimestamp()
       
       
       
       
      api.workflow("workflow").post(payload).then(res =>{
         console.log(res);
+        console.log("Older version",old_object)
 		alert("Workflow Updated Successfully.\n Your new Workflow id is"+payload.id)
-        this.props.onUpdate(payload.id)
+
+        this.props.onUpdate(old_version, old_object)
       })
 
     }

@@ -9,7 +9,7 @@ export default {
     let hour = new Date().getHours()
     let mins = new Date().getMinutes()
 
-    let timestamp = months[month-1]+"  "+date+ "  at  "+hour+":"+mins+",   " + year
+    let timestamp = months[month]+"  "+date+ "  at  "+hour+":"+mins+",   " + year
     return timestamp
 
 

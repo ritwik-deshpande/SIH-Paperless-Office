@@ -16,7 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import UpdateWorkflow from './UpdateWorkflow'
-
+import Timestamp from '../utils/TimeStamp'
 
 class StatusComponent extends Component {
 
@@ -90,7 +90,15 @@ class StatusComponent extends Component {
 	
     };
     handleEnd = () => {
-        alert("WorkFlow Ended !")
+	this.state.workflow.status = "terminated"
+	this.state.workflow.end_timestamp = Timestamp.getTimestamp()
+	 api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
+	    	console.log("Updated New Workflow", res)
+		alert("WorkFlow Terminated !")
+		this.props.history.push('/')
+		
+	    })
+        
     };
 
 
@@ -100,10 +108,16 @@ class StatusComponent extends Component {
             id:e.target.value
         })
     }
-    handleOnUpdate = (newId) => {
+    handleOnUpdate = (old_version, old_object) => {
 
-	console.log("Handle Modify")
-	this.props.history.push('/')
+	console.log("Handle Modify",this.state.workflow,old_object)
+	old_object.status = "terminated"
+	old_object.end_timestamp = Timestamp.getTimestamp()
+	 api.updateWorkFlow("workflow", old_version).put(old_object).then( res => {
+	    	console.log("Updated New Workflow", res)
+		this.props.history.push('/')
+	    })
+	
    }
 
     handleSearch = (id) =>{
@@ -192,7 +206,8 @@ class StatusComponent extends Component {
             title = {this.state.title}
             steps = {this.state.workflowSteps} 
             nodesList = {this.state.nodesList}/>
-	    <div >
+            { this.state.workflow.status === "terminated" ? null
+	    :(<div >
 
   		  <Button
                     variant="contained"
@@ -209,7 +224,7 @@ class StatusComponent extends Component {
                   >END WORKFLOW</Button>
 		 
 
-		</div>
+		</div>)}
 	</div>)
 
   :  (<div> <UpdateWorkflow  selectedId = {this.state.workflow.componentId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />  </div>) ) )

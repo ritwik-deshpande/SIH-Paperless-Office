@@ -174,7 +174,6 @@ class CreatePDF extends React.Component{
 		if(this.approvedByAll(nextNode.approvedBy)){
 				//send request to approvers of next child
 
-<
       // let timestamp = this.getTimestamp()
 		  //  nextNode.timestamp = timestamp
 
