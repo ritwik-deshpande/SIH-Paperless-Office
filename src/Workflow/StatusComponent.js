@@ -154,7 +154,7 @@ class StatusComponent extends Component {
                   this.handleSearch(this.state.id)
                 }}
             >
-          Add comment
+          Get Status
         </Button>
         </form>
                 

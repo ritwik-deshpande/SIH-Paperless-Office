@@ -63,6 +63,7 @@ export default function NodeStatus({workflow, node}) {
                     <ListItemIcon>
                         <CheckCircleIcon />
                     </ListItemIcon>
+                    <ListItemText primary={node.timestamp[approver]} />
                     <Divider/>
                 </ListItem> )
             }
@@ -91,7 +92,7 @@ export default function NodeStatus({workflow, node}) {
         
         <div>    
             <ShowPDF  formData = {workflow.FormData} signatures = {workflow.Signatures} />
-            {workflow.FormData.Upload_Documents.map((uri,index)=>{
+            {(workflow.FormData.Upload_Documents)?(workflow.FormData.Upload_Documents.map((uri,index)=>{
                 return(<>
                 <br/><br/>
                 {index}.{" " + uri.split(';')[1]  + " : "}
@@ -115,7 +116,7 @@ export default function NodeStatus({workflow, node}) {
                 <br/><br/>
                 </>)
                 
-            })}
+            })):null}
             
  		    <Button
                     variant="contained"
@@ -135,26 +136,9 @@ export default function NodeStatus({workflow, node}) {
 
             <br/><br/>
 
-		    <Typography variant="h6">
-
-		    {node.timestamp === "" ? <> Pending Approvals </> :<>
-                Completed on : {node.timestamp}
-                </>
-            }   
-            </Typography> 
-
-		    <br/><br/>
-
 		<Comments json={{listitems : workflow.Comments}}/>
 
-		
-
-		
-		
 	 </div>
-
-                
-               
 
        </div>
     )

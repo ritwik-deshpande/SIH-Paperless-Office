@@ -81,25 +81,25 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
     
     	console.log(nodesList, steps.length)
     
-     	if( nodesList[steps.length-1].type === "End" && approvedByAll(nodesList[steps.length-1].approvedBy)){
-     		return (
-     		    <Typography component="h1" variant="h4" align="center">
-				    Status : Completed
-				 </Typography>
-     		
-     		)
-     	}
-     	else{
-     	
-     		return (
-     		    <Typography component="h1" variant="h4" align="center">
-				    Status : In Progress...
-				 </Typography>
-     		
-     		)
-     	
-     	}
-
+     	// if( nodesList[steps.length-1].type === "End" && approvedByAll(nodesList[steps.length-1].approvedBy)){
+     	// 	return (
+     	// 	    <Typography component="h1" variant="h4" align="center">
+			// 	    Status : Completed
+			// 	 </Typography>
+     	// 	)
+     	// }
+     	// else{
+     	// 	return (
+     	// 	    <Typography component="h1" variant="h4" align="center">
+			// 	    Status : In Progress...
+			// 	 </Typography>
+     	// 	)
+     	// }
+      return(
+        <Typography component="h1" variant="h4" align="center">
+			 	    Current Status : {workflow.status}
+			 	 </Typography>
+      )
 
 	}
     return (
@@ -110,7 +110,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
         <Paper className={classes.paper} > 
          <div style={{ width: "1000" }}>
           <Typography component="h1" variant="h4" align="center" >
-            WorkFlow Protocol for : {title}
+            {title}
           </Typography>
           </div>
 	  {
