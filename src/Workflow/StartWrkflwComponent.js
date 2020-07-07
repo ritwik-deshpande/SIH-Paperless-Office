@@ -113,7 +113,9 @@ class StartWrkflwComponent extends Component
 	"componentId": this.state.selectedId,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
+
 	"id" : this.state.id + "v0"
+
 
       }
       console.log("The Payload",payload);
@@ -124,7 +126,8 @@ class StartWrkflwComponent extends Component
       api.workflow("workflow").post(payload).then(res =>{
         console.log(res);
 	alert("Workflow Initiated successfully.\n Your Workflow id is"+payload.id)
-        this.props.history.push("/status")
+        this.props.history.push("/status?id="+this.state.id)
+
 
       })
 

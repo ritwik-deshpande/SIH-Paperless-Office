@@ -128,7 +128,7 @@ class CreatePDF extends React.Component{
     
     
     let name = this.props.userObj.name
-    let username = this.props.userObj.username
+    let id = this.props.userObj.id
     let esign = this.props.userObj.esign
     console.log(this.state.signatures)
     this.setState({isSigned : true,
@@ -138,41 +138,34 @@ class CreatePDF extends React.Component{
     this.state.signatures[name] = esign
     console.log("in handlesignClick")
     
-    
-    
-    
-    
 	if( nextNodes.length == 0){
-		if(username in currentNode.approvedBy){
+		if(id in currentNode.approvedBy){
 
                         
-			currentNode.approvedBy[username] = true
-			
+			currentNode.approvedBy[id] = true
+			currentNode.timestamp[id] = Timestamp.getTimestamp()
 	
 			if(this.approvedByAll(currentNode.approvedBy)){
-				//send request to approvers of next child
-                                 
-                                let timestamp = Timestamp.getTimestamp()
-				currentNode.timestamp = timestamp								
+
+				//send request to approvers of next child	
+
 				console.log("Adding Next Nodes")
 				nextNodes = currentNode.nextNodes
 				this.state.workflow.nextNodes = nextNodes
 			}
-                        this.state.workflow.FlowChart[current_node_key] = currentNode
+      this.state.workflow.FlowChart[current_node_key] = currentNode
 		}
 		
-		
-		
 	}
-	
 	else{
 		let next_node_key
-    		let nextNode
-                // remove pending requests from all other next Nodes! 
+    let nextNode
+    // remove pending requests from all other next Nodes! 
                     
-		next_node_key = this.chooseNextNode(nextNodes, username)
+		next_node_key = this.chooseNextNode(nextNodes, id)
 		nextNode = this.state.workflow.FlowChart[next_node_key]
-		nextNode.approvedBy[username] = true
+    nextNode.approvedBy[id] = true
+    nextNode.timestamp[id] = Timestamp.getTimestamp()
 		path = [...path, next_node_key]
 		
 		this.state.workflow.nextNodes = []
@@ -181,22 +174,24 @@ class CreatePDF extends React.Component{
 		if(this.approvedByAll(nextNode.approvedBy)){
 				//send request to approvers of next child
 
-                        let timestamp = Timestamp.getTimestamp()
-		        nextNode.timestamp = timestamp
+<
+      // let timestamp = this.getTimestamp()
+		  //  nextNode.timestamp = timestamp
+
 			console.log("Adding Next Nodes")
 			nextNodes = nextNode.nextNodes
 			this.state.workflow.nextNodes = nextNodes
 		}
-                this.state.workflow.FlowChart[next_node_key] = nextNode
+    this.state.workflow.FlowChart[next_node_key] = nextNode
 		
-    		this.state.workflow.Path = path
+    this.state.workflow.Path = path
 	}
     
     	
     this.state.workflow.Signatures = this.state.signatures
     this.state.workflow.Comments = this.state.comments
    
-   console.log("New Workflow", this.state.workflow)
+    console.log("New Workflow", this.state.workflow)
     
     api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
