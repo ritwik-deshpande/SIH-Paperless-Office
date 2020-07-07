@@ -15,6 +15,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
+import UpdateWorkflow from './UpdateWorkflow'
+
+
 class StatusComponent extends Component {
 
     state = {
@@ -25,6 +28,7 @@ class StatusComponent extends Component {
         workflowSteps : [],
         username :null,
         title:null,
+        updateWorkFlow :false,
         myWorkflow: false,
     }
 
@@ -74,6 +78,21 @@ class StatusComponent extends Component {
         toast.success("Workflow Loaded")
         
     }
+    
+    handleModify = () => {
+	console.log("Handle Modify")
+	this.setState({
+            updateWorkFlow : true
+        })
+
+	
+        
+	
+    };
+    handleEnd = () => {
+        alert("WorkFlow Ended !")
+    };
+
 
     handleChange = (e)=>{
         console.log(e.target.value)
@@ -81,6 +100,11 @@ class StatusComponent extends Component {
             id:e.target.value
         })
     }
+    handleOnUpdate = (newId) => {
+
+	console.log("Handle Modify")
+	this.props.history.push('/')
+   }
 
     handleSearch = (id) =>{
         this.setState({id:id})
@@ -154,18 +178,41 @@ class StatusComponent extends Component {
                   this.handleSearch(this.state.id)
                 }}
             >
-          Get Status
+
+          GET WORKFLOW STATUS
+
         </Button>
         </form>
                 
         {this.state.id ? 
             (!this.state.status ? <h1>Sorry WorkFlow not yet initialised</h1>
-            :
-            
+            : ( !this.state.updateWorkFlow ? 
+            (<div>
             <WorkFlowStatusUI workflow = {this.state.workflow} 
             title = {this.state.title}
             steps = {this.state.workflowSteps} 
-            nodesList = {this.state.nodesList}/>)
+            nodesList = {this.state.nodesList}/>
+	    <div >
+
+  		  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleModify}
+                    
+                  >MODIFY WORKFLOW </Button>
+		
+		  <Button
+                    variant="contained"
+                    color="secondary"
+		    style = {{marginLeft : 1000}}
+                    onClick={this.handleEnd}
+                  >END WORKFLOW</Button>
+		 
+
+		</div>
+	</div>)
+
+  :  (<div> <UpdateWorkflow  selectedId = {this.state.workflow.componentId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />  </div>) ) )
             
             : null}
             </div>

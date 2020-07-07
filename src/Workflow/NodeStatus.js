@@ -29,9 +29,6 @@ export default function NodeStatus({workflow, node}) {
     
     console.log("the Node is",node)
     
-    const handleModify = () => {
-        // Open Form
-    };
     const handleDownload = (uri,index) =>{
         const linkSource = uri;
         const downloadLink = document.createElement("a");
@@ -46,9 +43,10 @@ export default function NodeStatus({workflow, node}) {
         pdfWindow.document.write(
         "<iframe width='100%' height='100%' src='" 
      + uri+"'></iframe>"
-)
+        )
         
     }
+
     function getListItems(){
     
         let rows = []
@@ -116,15 +114,8 @@ export default function NodeStatus({workflow, node}) {
                 <br/><br/>
                 </>)
                 
+
             })):null}
-            
- 		    <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleModify}
-                    style = {{marginLeft : 1000}}
-                    className={classes.button}
-                  >MODIFY DOCUMENT </Button>
                   
             <br/><br/><br/>
             <Typography variant="h6">

@@ -24,6 +24,7 @@ import Header from './PDFComponents/Header';
 import Comments from '../utils/Comments';
 import AddComments from "./Comments";
 import api from '../utils/api';
+import Timestamp from '../utils/TimeStamp'
 import ShowPDF from "./ShowPDF";
 
 class CreatePDF extends React.Component{
@@ -63,25 +64,11 @@ class CreatePDF extends React.Component{
 
   }
   
-  getTimestamp = () =>{
-
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug', 'Sep','Oct','Nov','Dec']
-
-
-    let date = new Date().getDate();
-    let month = new Date().getMonth();
-    let year = new Date().getYear() + 1900;
-    let hour = new Date().getHours()
-    let mins = new Date().getMinutes()
-
-    let timestamp = months[month-1]+"  "+date+ "  at  "+hour+":"+mins+",   " + year
-    return timestamp
-
- }
+  
 
   handleAddComment = (comment) => {
     
-    let timestamp = this.getTimestamp()
+    let timestamp = Timestamp.getTimestamp()
     
     console.log(comment)
     this.setState({ comments: [...this.state.comments, {id:this.state.comments.length, name: this.props.userObj.name,message:comment, timestamp: timestamp }] })
@@ -156,10 +143,12 @@ class CreatePDF extends React.Component{
 
                         
 			currentNode.approvedBy[id] = true
-			currentNode.timestamp[id] = this.getTimestamp()
+			currentNode.timestamp[id] = Timestamp.getTimestamp()
 	
 			if(this.approvedByAll(currentNode.approvedBy)){
+
 				//send request to approvers of next child	
+
 				console.log("Adding Next Nodes")
 				nextNodes = currentNode.nextNodes
 				this.state.workflow.nextNodes = nextNodes
@@ -176,7 +165,7 @@ class CreatePDF extends React.Component{
 		next_node_key = this.chooseNextNode(nextNodes, id)
 		nextNode = this.state.workflow.FlowChart[next_node_key]
     nextNode.approvedBy[id] = true
-    nextNode.timestamp[id] = this.getTimestamp()
+    nextNode.timestamp[id] = Timestamp.getTimestamp()
 		path = [...path, next_node_key]
 		
 		this.state.workflow.nextNodes = []
@@ -185,8 +174,10 @@ class CreatePDF extends React.Component{
 		if(this.approvedByAll(nextNode.approvedBy)){
 				//send request to approvers of next child
 
+<
       // let timestamp = this.getTimestamp()
 		  //  nextNode.timestamp = timestamp
+
 			console.log("Adding Next Nodes")
 			nextNodes = nextNode.nextNodes
 			this.state.workflow.nextNodes = nextNodes

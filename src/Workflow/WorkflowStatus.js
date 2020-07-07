@@ -45,6 +45,7 @@ function getStepContent(step,nodesList, workflow) {
   //     throw new Error('Unknown step');
   // }
 }
+ 
 
 export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
 
@@ -103,6 +104,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
 
 	}
     return (
+        
 	<div >
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg">
@@ -159,17 +161,11 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                     onClick={handleNext}
                     className={classes.button}
                   >Next </Button>}
-   		  { workflow.isRejected ? 
 		<div>
 		<br/>
-		  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleEnd}
-                    className={classes.button}
-                  >TERMINATE WORKFLOW </Button>
+		
                   
-                </div> : null}
+                </div> 
                   
                 </div> 
               </div>
@@ -179,7 +175,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
         <Copyright />
 
 
-      </div>
+      </div> 
             
     )
 }
