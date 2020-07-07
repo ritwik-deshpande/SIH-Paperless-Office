@@ -189,6 +189,7 @@ export default function Dashboard({userObj}) {
       <Route exact path='/approve' render={()=> <ApproveComponent userObj={userObj}/>} />
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
+     
   
       </div>
        

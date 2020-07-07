@@ -6,6 +6,7 @@ import FormComponent from '../Forms/FormComponent'
 import DisplayWorkflow from './DisplayWorkflowComponent';
 import axios from 'axios';
 import api from '../utils/api';
+import Timestamp from '../utils/TimeStamp';
 import TextField from '@material-ui/core/TextField';
 import CustomForm from '../Forms/CustomForms'
 import Container from '@material-ui/core/Container';
@@ -106,11 +107,13 @@ class StartWrkflwComponent extends Component
         "Path": this.initPath(),
         "chooseNextNodes":[],
         "Signatures":[],
-        "approvedBy": [],
-        "isSigned" : false,
+        "status" : "active",
+	"begin_timestamp" : Timestamp.getTimestamp(),
+	"end_timestamp" : "",
+	"componentId": this.state.selectedId,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
-	      "id" : this.state.id
+	"id" : this.state.id + "v0"
 
       }
       console.log("The Payload",payload);
@@ -120,7 +123,9 @@ class StartWrkflwComponent extends Component
 
       api.workflow("workflow").post(payload).then(res =>{
         console.log(res);
-        this.props.history.push("/status?title="+this.state.selectedTitle)
+	alert("Workflow Initiated successfully.\n Your Workflow id is"+payload.id)
+        this.props.history.push("/status")
+
       })
 
     }
@@ -141,6 +146,7 @@ class StartWrkflwComponent extends Component
      Form.id = this.state.id
      Form.schema.title = this.state.customWorkflow
       console.log("Saving Form",Form)
+      alert("Saved Custom Form");
 
       this.setState({
         CustomForm: Form
@@ -175,7 +181,7 @@ class StartWrkflwComponent extends Component
         CustomFlowChart:NewFlowChart
       })
      
-     
+      alert("Saved Custom FlowChart");
 
     }
   }
@@ -195,7 +201,7 @@ class StartWrkflwComponent extends Component
     else{
 
 
-      api.saveCustomForm("Forms").post(this.state.CustomForm).then(res =>{
+      api.forms().post(this.state.CustomForm).then(res =>{
         console.log(res);
         
       })
@@ -214,6 +220,7 @@ class StartWrkflwComponent extends Component
       console.log(this.state.menu.id)
       api.menu().put(this.state.menu.id,this.state.menu).then(res =>{
         console.log(res);
+	alert("Saved Custom Workflow");
         this.setState({
           showFormandWrkflw: false
         })
@@ -230,6 +237,7 @@ class StartWrkflwComponent extends Component
   {
     console.log("Saving Form")
     console.log(FormData);
+    alert("Saved Form Response")
     this.setState({
       FormData : FormData
     })
@@ -241,7 +249,7 @@ class StartWrkflwComponent extends Component
   {
     console.log("Saving FlowChart")
     console.log(chart)
-
+    alert("Saved Flowchart Response")
     chart = ReformatWorkFlow.reformat(chart)
     this.setState({
       FlowChart : chart
@@ -310,7 +318,6 @@ class StartWrkflwComponent extends Component
             </div>)
         }
         else{
-          console.log("Returning academic cancellation")
           return( <div>
             
             <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />

@@ -21,9 +21,7 @@ export default function NodeStatus({workflow, node}) {
     const requestAccepted = true
     console.log("the Node is",node)
     
-    const handleModify = () => {
-        // Open Form
-    };
+   
 
     function getListItems(){
     
@@ -70,13 +68,7 @@ export default function NodeStatus({workflow, node}) {
                 
                 
 
- 		  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleModify}
-                    style = {{marginLeft : 1000}}
-                    className={classes.button}
-                  >MODIFY DOCUMENT </Button>
+ 		  
                   
                 <br/>
  		<br/>
