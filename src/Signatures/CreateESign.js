@@ -161,7 +161,7 @@ export default function CreateESign({userObj, saveUser}) {
 
       </Grid>
 	<Button variant="contained" color="primary" onClick = { updateUser } style={{ margin: 20 }} >
-          UPDATE PROFILE 
+          SAVE PROFILE 
         </Button>
       
       

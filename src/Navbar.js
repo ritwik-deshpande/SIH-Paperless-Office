@@ -45,7 +45,7 @@ function Listitems(props) {
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
-        <ListItemText primary="Update Profile" onClick={() => handleNavlink('/esign')}/>
+        <ListItemText primary="My Profile" onClick={() => handleNavlink('/esign')}/>
       </ListItem>
       
      

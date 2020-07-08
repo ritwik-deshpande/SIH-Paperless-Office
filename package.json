@@ -26,6 +26,7 @@
     "jquery-ui-timepicker-addon": "^1.6.3",
     "json-server": "^0.16.1",
     "material-ui": "^1.0.0-beta.47",
+    "material-ui-search-bar": "^1.0.0-beta.14",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.25.3",
     "popper.js": "^1.12.9",
