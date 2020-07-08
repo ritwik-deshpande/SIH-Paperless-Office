@@ -42,12 +42,21 @@ const Sidebar = styled.div`
   flex-direction: column;
   flex-shrink: 0;
 `
+const mapIdtoUser={
+  'DIR01' : 'Pramod Padole',
+  'HOD001' : 'Umesh Deshpande',
+  'AP001' : 'Ravindra Keskar',
+  'AP002' : 'Anil Mokhade',
+  'AP003' : 'Manish Kurhekar',
+  
+}
 
 const countries = [
-  { label: 'RB Keskar', phone: '376' },
-  { label: 'Manish Kurehkar', phone: '971' },
-  { label: 'UAD', phone: '93' },
-  { label: 'Mokhade', phone: '1-268' },
+  { name: 'Ravindra Keskar', id: 'AP001' },
+  { name: 'Manish Kurhekar', id: 'AP003' },
+  { name: 'Umesh Deshpande', id: 'HOD001' },
+  { name: 'Anil Mokhade', id: 'AP002' },
+  { name: 'Pramod Padole', id: 'DIR01'}
 ]
 
 
@@ -131,7 +140,7 @@ const NodeInnerCustom = ({ node, config }) => {
   const renderApprovers = (node) =>{
     let approverList = node.properties.approvers.split('-')
     // console.log('the approvers are',node.properties.approvers)
-    return approverList.map((item,index) => {return(<div> <p >{index +1} : {item}
+    return approverList.map((item,index) => {return(<div> <p >{index +1} : {mapIdtoUser[item]}
     
     <Button   onClick = {() => handleDelete(item,node)}>X
       </Button></p> 
@@ -160,13 +169,13 @@ const NodeInnerCustom = ({ node, config }) => {
               option: classes.option,
             }}
            
-            onChange = {(event,value) => {console.log('The value is',value); if(value!== null)approver = value.label}}
+            onChange = {(event,value) => {console.log('The value is',value); if(value!== null)approver = value.id}}
             autoHighlight
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => option.name}
             renderOption={(option) => (
               <React.Fragment>
-                {/* <span>{countryToFlag(option.code)}</span> */}
-                {option.label}
+                {/* <span style={{fontSize:10}}>{option.id, "  "}</span><br/> */}
+                <span style={{fontSize:14}}>{option.name}</span>
               </React.Fragment>
             )}
             renderInput={(params) => (
@@ -214,17 +223,10 @@ class SelectedSidebar extends React.Component {
             initialValue={chart}
             chart={chart}
             callbacks={stateActions}
-	    config={{
-	    showArrowHead: true,
-	  }}
+	    
             Components={{
 
             NodeInner: NodeInnerCustom,
-            Link: (props) => {
-              props = {...props,config:{showArrowHead:true}}
-              // console.log(props); 
-              // console.log(props.config.showArrowHead)
-              return(<LinkDefault {...props } />)}
           }}
           />
         </Content>

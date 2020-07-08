@@ -62,7 +62,7 @@ function Listitems(props) {
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="Status of WorkFlow" onClick={() => handleNavlink('/status?title=Application for Sports Secretary')} />
+        <ListItemText primary="Status of WorkFlow" onClick={() => handleNavlink('/status')} />
       </ListItem>
      
 

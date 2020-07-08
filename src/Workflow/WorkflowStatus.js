@@ -45,6 +45,7 @@ function getStepContent(step,nodesList, workflow) {
   //     throw new Error('Unknown step');
   // }
 }
+ 
 
 export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
 
@@ -81,28 +82,29 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
     
     	console.log(nodesList, steps.length)
     
-     	if( nodesList[steps.length-1].type === "End" && approvedByAll(nodesList[steps.length-1].approvedBy)){
-     		return (
-     		    <Typography component="h1" variant="h4" align="center">
-				    Status : Completed
-				 </Typography>
-     		
-     		)
-     	}
-     	else{
-     	
-     		return (
-     		    <Typography component="h1" variant="h4" align="center">
-				    Status : In Progress...
-				 </Typography>
-     		
-     		)
-     	
-     	}
-
+     	// if( nodesList[steps.length-1].type === "End" && approvedByAll(nodesList[steps.length-1].approvedBy)){
+     	// 	return (
+     	// 	    <Typography component="h1" variant="h4" align="center">
+			// 	    Status : Completed
+			// 	 </Typography>
+     	// 	)
+     	// }
+     	// else{
+     	// 	return (
+     	// 	    <Typography component="h1" variant="h4" align="center">
+			// 	    Status : In Progress...
+			// 	 </Typography>
+     	// 	)
+     	// }
+      return(
+        <Typography component="h1" variant="h4" align="center">
+			 	    Current Status : {workflow.status}
+			 	 </Typography>
+      )
 
 	}
     return (
+        
 	<div >
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg">
@@ -110,7 +112,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
         <Paper className={classes.paper} > 
          <div style={{ width: "1000" }}>
           <Typography component="h1" variant="h4" align="center" >
-            WorkFlow Protocol for : {title}
+            {title}
           </Typography>
           </div>
 	  {
@@ -142,7 +144,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                     </Button>
                   )}
                   
-                    {activeStep === steps.length - 1 && steps.length != 1 ? 
+                    {activeStep === steps.length - 1  ? 
                     
                       <Button
                     variant="contained"
@@ -159,17 +161,11 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                     onClick={handleNext}
                     className={classes.button}
                   >Next </Button>}
-   		  { workflow.isRejected ? 
 		<div>
 		<br/>
-		  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleEnd}
-                    className={classes.button}
-                  >TERMINATE WORKFLOW </Button>
+		
                   
-                </div> : null}
+                </div> 
                   
                 </div> 
               </div>
@@ -179,7 +175,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
         <Copyright />
 
 
-      </div>
+      </div> 
             
     )
 }

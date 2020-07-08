@@ -25,7 +25,7 @@ class DisplayWorkflow extends React.Component{
                   "id": "node1", 
                   "type": "Start",
                   "properties": {
-                    "approvers": "RB Keskar-Manish Kurehkar"
+                    "approvers": "AP001-AP002"
                   },
                   "position": {
                     "x": 300,
@@ -85,11 +85,11 @@ class DisplayWorkflow extends React.Component{
       console.log(this.props.title.localeCompare("Custom FlowChart"))
 
       if(this.props.title.localeCompare("Custom FlowChart")!= 0){
-        axios.get(api.flowChart("FlowChart").get(this.props.title))
+        api.flowChart().getByid(this.props.id)
         .then(res => {
-          console.log('The data received is',res.data[0])
+          console.log('The data received is',res.data)
           this.setState({
-            schema : res.data[0].chart,
+            schema : res.data.chart,
           })
         })
       }
@@ -112,7 +112,7 @@ class DisplayWorkflow extends React.Component{
             <br/>
             
             <Container maxWidth="lg">
-            {this.state.schema ? <DragAndDropSidebar title = {this.props.title} save = {this.props.save} chartSimple={this.state.schema}/>  :<div>
+            {this.state.schema ? <DragAndDropSidebar title = {this.props.title} id={this.props.id} save = {this.props.save} chartSimple={this.state.schema}/>  :<div>
               <h5>Initializing Workflow</h5>
             </div>}
              

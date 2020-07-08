@@ -17,7 +17,7 @@ class Main extends Component {
             currentPeerUser: null
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
-        this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
+        //this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
         this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
         this.listUser = []
     }
@@ -151,7 +151,7 @@ class Main extends Component {
                         ) : (
                             <WelcomeBoard
                                 currentUserNickname={this.currentUserNickname}
-                                currentUserAvatar={this.currentUserAvatar}
+                                //currentUserAvatar={this.currentUserAvatar}
                             />
                         )}
                     </div>

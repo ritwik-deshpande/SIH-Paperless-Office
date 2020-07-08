@@ -62,7 +62,7 @@ export default function NestedList({menu,Click}) {
          <div>
           <div className={classes.appBarSpacer} />
         <div key={form.id}>
-        <ListItem button className={classes.nested} onClick={()=>Click(form.title)}>
+        <ListItem button className={classes.nested} onClick={()=>Click(form.id,form.title)}>
           <ListItemIcon>
             <StarBorder />
           </ListItemIcon>

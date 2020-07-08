@@ -18,12 +18,34 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 export default function NodeStatus({workflow, node}) {
     const classes = useStyles();
 
-    const requestAccepted = true
+    const mapIdtoUser={
+        'DIR01' : 'Pramod Padole',
+        'HOD001' : 'Umesh Deshpande',
+        'AP001' : 'Ravindra Keskar',
+        'AP002' : 'Anil Mokhade',
+        'AP003' : 'Manish Kurhekar',
+        
+    }
+    
     console.log("the Node is",node)
     
-    const handleModify = () => {
-        // Open Form
-    };
+    const handleDownload = (uri,index) =>{
+        const linkSource = uri;
+        const downloadLink = document.createElement("a");
+        const fileName = uri.split(';')[1];
+
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    }
+    const handleView = (uri) =>{
+        let pdfWindow = window.open("")
+        pdfWindow.document.write(
+        "<iframe width='100%' height='100%' src='" 
+     + uri+"'></iframe>"
+        )
+        
+    }
 
     function getListItems(){
     
@@ -35,10 +57,11 @@ export default function NodeStatus({workflow, node}) {
                     <ListItemIcon>
                     <AccountCircle />
                     </ListItemIcon>
-                    <ListItemText primary={approver} />
+                    <ListItemText primary={mapIdtoUser[approver]} />
                     <ListItemIcon>
                         <CheckCircleIcon />
                     </ListItemIcon>
+                    <ListItemText primary={node.timestamp[approver]} />
                     <Divider/>
                 </ListItem> )
             }
@@ -48,7 +71,7 @@ export default function NodeStatus({workflow, node}) {
                     <ListItemIcon>
                     <AccountCircle />
                     </ListItemIcon>
-                    <ListItemText primary={approver} />
+                    <ListItemText primary={mapIdtoUser[approver]} />
                     <ListItemIcon>
                         <HourglassEmptyIcon />
                     </ListItemIcon>
@@ -66,55 +89,47 @@ export default function NodeStatus({workflow, node}) {
 
         
         <div>    
-                <ShowPDF  formData = {workflow.FormData} signatures = {workflow.Signatures} />
-                
+            <ShowPDF  formData = {workflow.FormData} signatures = {workflow.Signatures} />
+            {(workflow.FormData.Upload_Documents)?(workflow.FormData.Upload_Documents.map((uri,index)=>{
+                return(<>
+                <br/><br/>
+                {index}.{" " + uri.split(';')[1]  + " : "}
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleView(uri)}
+                style = {{marginLeft : 10}}
+                className={classes.button}>
+                View DOCUMENT 
+                </Button>
+
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleDownload(uri,index)}
+                style = {{marginLeft : 100}}
+                className={classes.button}>
+                    Download DOCUMENT
+                </Button>
+                <br/><br/>
+                </>)
                 
 
- 		  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleModify}
-                    style = {{marginLeft : 1000}}
-                    className={classes.button}
-                  >MODIFY DOCUMENT </Button>
+            })):null}
                   
-                <br/>
- 		<br/>
-		
-                <br/>
-                <Typography variant="h6">
-                    Approvers Status
-                </Typography>
-                {
-                    getListItems()
+            <br/><br/><br/>
+            <Typography variant="h6">
+                Approvers Status
+            </Typography>
+            {
+                getListItems()
+            }
 
-                }
-      
-
-                <br/>
-                <br/>
-
-		 <Typography variant="h6">
-		{node.timestamp === "" ? <> Pending Approvals </> :<>
-
-                         Completed on : {node.timestamp}
-			</>}
-                
-                </Typography> 
-
-		<br/>
-                <br/>
+            <br/><br/>
 
 		<Comments json={{listitems : workflow.Comments}}/>
 
-		
-
-		
-		
 	 </div>
-
-                
-               
 
        </div>
     )

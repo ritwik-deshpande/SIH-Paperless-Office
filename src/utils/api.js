@@ -27,27 +27,38 @@ export default {
         get : (id) => axios.get(`${Endpoint}/pending_requests/${id}`)
       }
     },
+    myworkflows(){
+      return {
+        get : (id) => axios.get(`${Endpoint}/my_workflows/${id}`)
+      }
+    },
     forms(){
       return {
 
         get : (title) => axios.get(`${Endpoint}/forms?title=${title}`),
-        //post :(payload) => axios.post(`${Endpoint}/forms`,payload)
+        getByid : (id) => axios.get(`${Endpoint}/forms/${id}`),
+        post :(payload) => axios.post(`${Endpoint}/forms`,payload)
+        
       }
     },
-    flowChart(url){
+    flowChart(){
       return{
 
-        get : (title) => {return `${Endpoint}/${url}?title=${title}`}
+        get : (title) => {return `${Endpoint}/flowchart?title=${title}`},
+        getByid : (id) => axios.get(`${Endpoint}/flowchart/${id}`),
+        post :(payload) => axios.post(`${Endpoint}/flowchart`,payload)
       }
     },
     menu(){
-      return axios.get(`${Endpoint}/menu`)
-      
-    },
-    getWorkFlow(url){
       return {
-        get :(username,title) =>{ return `${Endpoint}/${url}?User=${username}&Title=${title}`},
-        getByid : (id) => {return `${Endpoint}/${url}?id=${id}`}
+        get : () => axios.get(`${Endpoint}/menu`),
+        put :(id,payload) => axios.put(`${Endpoint}/menu/${id}`,payload)
+    }
+  },
+    getWorkFlow(){
+      return {
+        get :(username,title) =>{ return `${Endpoint}/workflow?User=${username}&Title=${title}`},
+        getByid : (id) => axios.get(`${Endpoint}/workflow/${id}`)
       }
     },
     updateWorkFlow(url, id){
@@ -63,17 +74,7 @@ export default {
         put :(payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
       }
     },
-    saveCustomFlowChart(url){
-      return {
-        post :(payload) => axios.post(`${Endpoint}/${url}`,payload)
-      }
-    },
-
-    saveCustomForm(url){
-      return {
-        post :(payload) => axios.post(`${Endpoint}/${url}`,payload)
-      }
-    },
+    
     workflow(url){
       return{
 
