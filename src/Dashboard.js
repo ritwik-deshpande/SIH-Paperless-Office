@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
 import MailIcon from '@material-ui/icons/Mail';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -116,11 +116,7 @@ export default function Dashboard({userObj}) {
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
             Name : {userObj.name}
           </Typography>
-          <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+         
 
 
           <IconButton color="inherit" onClick={handleClick}>
@@ -146,17 +142,7 @@ export default function Dashboard({userObj}) {
 
 		{getNotifications()}
 		
-		
-
-
 	</Popover>
-
-          <IconButton
-              edge="end"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -174,7 +160,7 @@ export default function Dashboard({userObj}) {
         </div>
         <Divider />
         <List>
-           <NavBar/>
+           <NavBar userObj = {userObj} open = {open}/>
            </List>
         <Divider/>
       </Drawer>
