@@ -34,26 +34,59 @@ import StatusComponent from './Workflow/StatusComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
 
+import {messaging } from './Chat/Config/MyFirebase'
+import firebase from 'firebase'
+
+
+
+// window.addEventListener('load', async () => {
+//   const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {
+//       updateViaCache: 'none'
+//   });
+// messaging.useServiceWorker(registration);
+// })
+
+
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
 export default function Dashboard({userObj}) {
 
 	
  const User = userObj
+ messaging.requestPermission()
+  .then( function(){
+    console.log('Have Permission')
+    return messaging.getToken()
+  })
+  .then(function(token) {
+    console.log(token)
+  })
+  .catch(function(err){
+    console.log(err)
+  })
 
+ messaging.onMessage(function(payload){
+  console.log(payload);
+  const n = {
+    title: payload.notification.title,
+    content : payload.notification.body
+  }
+  const temp = {...notifs, "n4" : n}
+  setNotifs(temp);
+})
 
  function getNotifications(){
   let notifications = []
 
-  for (var key in userObj.notifications){
+  for (var key in notifs){
 	console.log(key)
 	notifications.push(
 		<Card >
 		      <CardContent>
 			<Typography variant="h5" component = "h2">
-			  {userObj.notifications[key].title}
+			  {notifs[key].title}
 			</Typography>
 			<Typography className={classes.title} color="textSecondary" gutterBottom>
-			  {userObj.notifications[key].content}
+			  {notifs[key].content}
 			</Typography>
 		      </CardContent>
 			
@@ -69,7 +102,12 @@ export default function Dashboard({userObj}) {
 }
 
   const classes = useStyles();
+  const [notifs,setNotifs] = React.useState([]);
   const [open, setOpen] = React.useState(true);
+  if(localStorage.getItem("notifs"))
+  {
+    setNotifs(JSON.parse(localStorage.getItem("notifs")))
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };
