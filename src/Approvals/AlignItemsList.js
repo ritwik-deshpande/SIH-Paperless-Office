@@ -53,6 +53,7 @@ export default function AlignItemsList({Click,json}) {
                 {item.nameofSender}
               </Typography><br/>
               {item.status}
+               On: {item.ts}
             </React.Fragment>
           }
         />

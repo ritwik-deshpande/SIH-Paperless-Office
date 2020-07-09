@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
-
+import Timestamp from '../utils/TimeStamp'
 
 export default function Profile({userObj}) {
 
@@ -27,6 +27,22 @@ export default function Profile({userObj}) {
 
 		if(key.localeCompare("esign") && key.localeCompare("notifications") && key.localeCompare("password") ){
 	    		let field_key = key
+			if(key.localeCompare("avg_response_time") === 0)
+			{
+				fields.push(<ListItem>
+				<Typography gutterBottom variant="h5" component="h1" style={{ margin: 20 }}>
+				       Average Time for Approval:
+				</Typography>
+				<Typography gutterBottom variant="h5" component="h1" style={{ margin: 20 }}>
+					{Timestamp.conversion(userObj[field_key])}
+				</Typography>
+				</ListItem>
+				)
+
+			}
+			else{
+ 
+
 	    	
 	    		fields.push(<ListItem>
 				<Typography gutterBottom variant="h5" component="h1" style={{ margin: 20 }}>
@@ -37,6 +53,7 @@ export default function Profile({userObj}) {
 				</Typography>
 				</ListItem>
 				)
+			}
 			}
 
 		}
