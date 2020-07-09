@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { blue } from '@material-ui/core/colors';
+import { deepOrange } from '@material-ui/core/colors';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -111,6 +113,36 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
       height: 240,
     },
+    active: {
+      backgroundColor: 'blue',
+    },
+
+
+    loginbg: {
+      width: '100%',
+      height: '100%',
+      position: 'fixed',
+      zIndex: -1,
+      // backgroundColor: '#303f9f',
+      backgroundImage: 'linear-gradient(-45deg, #5c6bc0 30%, #1a237e 90%)',
+     
+    },
+    loginBox: {
+      paddingTop: theme.spacing(10),
+      paddingBottom: theme.spacing(4),
+      overflow: 'auto',
+    },
+    loginLogo: {
+      width: theme.spacing(10),
+      height: theme.spacing(10),
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      // color: '3949ab',
+      // backgroundColor: theme.palette.secondary.main,
+    //   color: theme.palette.getContrastText(deepOrange[500]),
+    // backgroundColor: deepOrange[500],
+    }
   }));
 
   export default useStyles
