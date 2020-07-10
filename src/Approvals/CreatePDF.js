@@ -51,7 +51,7 @@ class CreatePDF extends React.Component{
 
   componentDidMount(){
    console.log(this.props.item)
-    api.getWorkFlow().getByid(this.props.item.id)
+    api.workFlow().getByid(this.props.item.id)
         .then(res => {
           console.log('The data received is',res.data)
           if(res.data )
@@ -203,7 +203,7 @@ class CreatePDF extends React.Component{
    
     console.log("New Workflow", this.state.workflow)
     
-    api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
+    api.workFlow().put(this.state.workflow.id,this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
     })
     
@@ -264,7 +264,7 @@ class CreatePDF extends React.Component{
    
    console.log("New Workflow", this.state.workflow)
     
-   api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
+   api.workFlow().put(this.state.workflow.id,this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
     })
   }

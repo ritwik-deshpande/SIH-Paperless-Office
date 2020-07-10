@@ -56,3 +56,19 @@ export const saveSign = (userObj) =>{
           )
     }
 }
+
+export const logout = (userObj) =>{
+    return (dispatch, getState) =>
+    {
+        console.log(userObj)
+        dispatch({type:'USER_LOGOUT', payload:userObj})
+        // maybe send data 
+        // api.users().update(userObj.id,userObj).then(
+        //     res =>{
+        //       console.log(res)
+        //       console.log("Saved ESIGN")
+        //       dispatch({type:'SAVE_SIGN', payload:res.data})
+        //     }
+        //   )
+    }
+}

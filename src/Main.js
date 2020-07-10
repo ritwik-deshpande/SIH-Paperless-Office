@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Dashboard from './Dashboard'
 import SignIn from './SignIn'
 import { connect } from 'react-redux'
-import {GetUser} from './Actions/UserAction'
+import {GetUser, logout} from './Actions/UserAction'
 
 class Main extends Component {
 
@@ -14,12 +14,17 @@ class Main extends Component {
     this.props.getUser(username,password);
   }
 
+  SignOutFunction = () =>{
+
+    this.props.logout(this.props.userObj);
+  }
+
   render() {
     console.log(this.props)
       return (
         <div>
         {this.props.loggedIn ?  
-        <Dashboard userObj={this.props.userObj}/>  
+        <Dashboard userObj={this.props.userObj} logout= {this.SignOutFunction} />  
         : 
         <SignIn signin = {this.SignInFunction}/>}
         </div>
@@ -29,7 +34,8 @@ class Main extends Component {
 
 const mapDispatchtoProps = (dispatch) =>{
   return{
-    getUser : (username, password) => dispatch(GetUser(username,password))
+    getUser : (username, password) => dispatch(GetUser(username,password)),
+    logout : (userObj) => dispatch(logout(userObj))
     }
 }
 

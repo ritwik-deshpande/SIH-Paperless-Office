@@ -48,7 +48,7 @@ import firebase from 'firebase'
 
 
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
-export default function Dashboard({userObj}) {
+export default function Dashboard({userObj, logout}) {
 
 	
  const User = userObj
@@ -198,7 +198,7 @@ export default function Dashboard({userObj}) {
         </div>
         <Divider />
         <List>
-           <NavBar userObj = {userObj} open = {open}/>
+           <NavBar userObj = {userObj} open = {open} logout = {logout}/>
            </List>
         <Divider/>
       </Drawer>
