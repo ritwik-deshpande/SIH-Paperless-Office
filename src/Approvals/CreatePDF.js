@@ -26,6 +26,7 @@ import AddComments from "./Comments";
 import api from '../utils/api';
 import Timestamp from '../utils/TimeStamp'
 import ShowPDF from "./ShowPDF";
+import Typography from '@material-ui/core/Typography';
 
 class CreatePDF extends React.Component{
 
@@ -49,14 +50,15 @@ class CreatePDF extends React.Component{
   }
 
   componentDidMount(){
-    axios.get(api.getWorkFlow("workflow").getByid(this.props.item.id))
+   console.log(this.props.item)
+    api.getWorkFlow().getByid(this.props.item.id)
         .then(res => {
-          console.log('The data received is',res.data[0])
-          if(res.data && res.data[0])
+          console.log('The data received is',res.data)
+          if(res.data )
           {this.setState({
-            workflow : res.data[0],
-            comments : res.data[0].Comments,
-	    	signatures: res.data[0].Signatures
+            workflow : res.data,
+            comments : res.data.Comments,
+	    	signatures: res.data.Signatures
 
           })}
 
@@ -110,6 +112,15 @@ class CreatePDF extends React.Component{
   	
   }
 
+  getAvgResponseTime = (avg_response, no_of_approvals, new_response) => {
+
+	console.log(avg_response, new_response)
+	avg_response = Math.floor((avg_response * no_of_approvals + new_response)/(no_of_approvals + 1))
+
+	console.log(avg_response)
+	return avg_response
+  }
+
   
 
   handleSignClick = () => {
@@ -125,7 +136,7 @@ class CreatePDF extends React.Component{
     let currentNode = this.state.workflow.FlowChart[current_node_key]
     
     let nextNodes = this.state.workflow.nextNodes
-    
+    let userObj = this.props.userObj
     
     let name = this.props.userObj.name
     let id = this.props.userObj.id
@@ -164,8 +175,8 @@ class CreatePDF extends React.Component{
                     
 		next_node_key = this.chooseNextNode(nextNodes, id)
 		nextNode = this.state.workflow.FlowChart[next_node_key]
-    nextNode.approvedBy[id] = true
-    nextNode.timestamp[id] = Timestamp.getTimestamp()
+	    nextNode.approvedBy[id] = true
+	    nextNode.timestamp[id] = Timestamp.getTimestamp()
 		path = [...path, next_node_key]
 		
 		this.state.workflow.nextNodes = []
@@ -175,15 +186,15 @@ class CreatePDF extends React.Component{
 				//send request to approvers of next child
 
       // let timestamp = this.getTimestamp()
-		  //  nextNode.timestamp = timestamp
+			  //  nextNode.timestamp = timestamp
 
-			console.log("Adding Next Nodes")
-			nextNodes = nextNode.nextNodes
-			this.state.workflow.nextNodes = nextNodes
-		}
-    this.state.workflow.FlowChart[next_node_key] = nextNode
-		
-    this.state.workflow.Path = path
+				console.log("Adding Next Nodes")
+				nextNodes = nextNode.nextNodes
+				this.state.workflow.nextNodes = nextNodes
+			}
+	    this.state.workflow.FlowChart[next_node_key] = nextNode
+	
+	    this.state.workflow.Path = path
 	}
     
     	
@@ -195,6 +206,19 @@ class CreatePDF extends React.Component{
     api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
     })
+    
+     let response_time = Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.ts)
+     let avg_time = this.getAvgResponseTime(userObj.avg_response_time, userObj.no_of_approvals, response_time)
+
+	console.log(avg_time)
+	userObj.no_of_approvals = userObj.no_of_approvals + 1
+	userObj.avg_response_time = avg_time
+	console.log("the new user object", userObj)
+
+    api.users().update(userObj.id, userObj).then( res => {
+
+	console.log("Updated user sucessfully")
+   })
     
   }
 
@@ -252,14 +276,24 @@ class CreatePDF extends React.Component{
         {
           this.state.comments?
           (<>
-          <ShowPDF formData = {this.state.workflow.FormData} signatures = {this.state.signatures} />
+           <br/>
+	   <br/>
+	   <br/>
+	   <Typography
+                component="h3"
+                variant="h5"
+  
+              >
+                STATUS OF WORKFLOW : {this.state.workflow.status} 
+              </Typography>
+          <ShowPDF formData = {this.state.workflow.FormData} title= { this.state.workflow.Title} signatures = {this.state.signatures} />
             <br/>
             
             <AddComments json={{listitems : this.state.comments}} handleAddComment={this.handleAddComment} />
             <br/>
 
         <br/>
-        {this.state.isApproved? null :<> 
+        {this.state.isApproved? <div style = {{ width : 1000}}></div>:<> 
         <Button
               variant="contained"
               color="primary"

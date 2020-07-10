@@ -20,7 +20,7 @@ import AddCommentIcon from '@material-ui/icons/AddComment';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Header from './PDFComponents/Header';
 
-export default function ShowPDF({formData, signatures }){
+export default function ShowPDF({formData, signatures, title }){
 
     
     /*const MyContent = (
@@ -60,12 +60,13 @@ export default function ShowPDF({formData, signatures }){
 	function getContent(){
 		let content = []
 		for(var key in formData){
+		if( key.localeCompare("Upload_Documents") !== 0){ 
 
-		content.push(<><Text style={styles.text}>
-				    {key} :   {formData[key]}
-				  </Text>
-				  </>)
-
+			content.push(<><Text style={styles.text}>
+					    {key} :   {formData[key]}
+					  </Text>
+					  </>)
+			}
 		}
 		return content
 	
@@ -78,45 +79,42 @@ export default function ShowPDF({formData, signatures }){
         <Page style={styles.page} size="A4">
           <Header/>
           <Text style={styles.text}>
+            {title }
+          </Text>
+          {
+		getContent()
+	  }
+	  
+        </Page>
+	<Page>
+        {
+            
+            getSignatures()
+            
+            }
+            </Page>
+          </Document>
+  </PDFViewer>
+  <PDFDownloadLink document={ 
+  	<Document>
+        <Page style={styles.page} >
+          <Header/>
+          <Text style={styles.text}>
             Application Form for Sports Secretary
           </Text>
           {
 		getContent()
 	  }
-	  {
-            
-            getSignatures()
-            
-            }
+	  
         </Page>
-            
-          </Document>
-  </PDFViewer>
-  <PDFDownloadLink document={ 
-  	<Document>
-    <Page style={styles.page} size="A4">
-          <Header/>
-          <Text style={styles.text}>
-            PSPDFKit GmbH is the leading cross-platform SDK solution for integrating
-            PDF support on all major platforms: iOS, Android, Windows, macOS, and on
-            Web (both server-based and standalone via WebAssembly).
-          </Text>
-          <Text style={styles.text}>
-            Our solutions enable customers to seamlessly add powerful PDF viewing,
-            editing, annotating, and form filling/signing into their app in under 15
-            minutes, saving months of development time and expense.
-          </Text>
-          <Text style={styles.text}>
-            Learn more at <Link src="https://pspdfkit.com/">pspdfkit.com</Link>
-          </Text>
+	<Page>
 	{
             
             getSignatures()
             
             }
-    </Page>
-    
-  </Document> } 
+            </Page>
+          </Document> } 
   fileName='output.pdf'>
     <br/>
     <Button

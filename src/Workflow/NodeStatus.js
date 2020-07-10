@@ -89,7 +89,7 @@ export default function NodeStatus({workflow, node}) {
 
         
         <div>    
-            <ShowPDF  formData = {workflow.FormData} signatures = {workflow.Signatures} />
+            <ShowPDF  formData = {workflow.FormData} title = {workflow.Title} signatures = {workflow.Signatures} />
             {(workflow.FormData.Upload_Documents)?(workflow.FormData.Upload_Documents.map((uri,index)=>{
                 return(<>
                 <br/><br/>
