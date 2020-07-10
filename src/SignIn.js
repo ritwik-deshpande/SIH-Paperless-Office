@@ -55,9 +55,10 @@ export default function SignIn({signin}) {
         {/* <Avatar alt="Remy Sharp" src="../logo192.png">
           DD
         </Avatar> */}
-        <img src="../logo512.png" className={classes.loginLogo}/>
+        <img src="../DigiDocsLogoW.png" className={classes.loginLogo}/>
         <Typography component="h1" variant="h4" align="center">
-          DigiDocs
+          <Box fontWeight={800} display="inline">Digi</Box>
+          <Box display="inline">Docs</Box>
         </Typography>
         <Box mt={4}>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
@@ -100,7 +101,7 @@ export default function SignIn({signin}) {
           
           </form>
         </Box>
-        <Box mt={8}>
+        <Box mt={4}>
           <Copyright />
         </Box>
       </div>

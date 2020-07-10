@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      padding: '0 8px',
+      padding: '0 6px',
       ...theme.mixins.toolbar,
     },
     appBar: {
@@ -49,12 +49,12 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       flexGrow: 1,
-      fontFamily:'Titillium Web'
     },
     drawerPaper: {
       position: 'relative',
       whiteSpace: 'nowrap',
       width: drawerWidth,
+      height: '100vh',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -62,11 +62,13 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaperClose: {
       overflowX: 'hidden',
+      height: '100vh',
+      flexShrink: 0,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      width: theme.spacing(7),
+      width: theme.spacing(5),
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9),
       },
@@ -98,9 +100,9 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
-     stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
+    stepper: {
+      padding: theme.spacing(3, 0, 5),
+    },
     layout: {
       width: '100%',
       [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
@@ -109,39 +111,33 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 'auto',
       },
     },
-    
     fixedHeight: {
       height: 240,
     },
-    active: {
-      backgroundColor: 'blue',
-    },
-
-
     loginbg: {
       width: '100%',
-      height: '100%',
-      position: 'fixed',
+      height: '100vh',
+      display: "flex",
+      flexGrow: 1,
+      // position: 'fixed',
       zIndex: -1,
       // backgroundColor: '#303f9f',
-      backgroundImage: 'linear-gradient(-45deg, #5c6bc0 30%, #1a237e 90%)',
-     
+      backgroundImage: 'linear-gradient(-45deg, #E0E0E0 30%, #C0C0C0 90%)',  
+      overflow: 'auto',
     },
     loginBox: {
-      paddingTop: theme.spacing(10),
-      paddingBottom: theme.spacing(4),
+      padding: theme.spacing(5, 3),
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
       overflow: 'auto',
     },
     loginLogo: {
-      width: theme.spacing(10),
+      width: theme.spacing(15),
       height: theme.spacing(10),
       display: 'block',
       marginLeft: 'auto',
       marginRight: 'auto',
-      // color: '3949ab',
-      // backgroundColor: theme.palette.secondary.main,
-    //   color: theme.palette.getContrastText(deepOrange[500]),
-    // backgroundColor: deepOrange[500],
     }
   }));
 

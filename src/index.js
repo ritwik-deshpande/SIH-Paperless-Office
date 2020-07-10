@@ -16,14 +16,43 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers/rootReducer';
 import thunk from 'redux-thunk';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#358873",
+      main: "#207567",
+      // dark: "#205072",
+    },
+    secondary: {
+      light: "#8DC3A7",
+      main: "#6BAF92",
+      dark: "#4E9C81",
+    },
+    action: {
+      hover: "#B4D6C1",
+      selected: "#8DC3A7",
+      focus: "#8DC3A7",
+    },
+    background:{
+      paper: "#DFEAE2"
+    }
+  },
+  typography: {
+    fontFamily: "Helvetica",
+  },
+});
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-    <Main/>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Main/>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

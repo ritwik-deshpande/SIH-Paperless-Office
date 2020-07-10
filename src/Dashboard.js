@@ -33,6 +33,7 @@ import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
+import { Box } from '@material-ui/core';
 
 //connect returns a high order component in which we need to wrap the component we need the stroe in.
 export default function Dashboard({userObj}) {
@@ -98,7 +99,7 @@ export default function Dashboard({userObj}) {
     
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -110,7 +111,8 @@ export default function Dashboard({userObj}) {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            DigiDocs
+            <Box fontWeight={800} display="inline">Digi</Box>
+            <Box display="inline">Docs</Box>
           </Typography>
 
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
@@ -153,19 +155,18 @@ export default function Dashboard({userObj}) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
-        <List>
-           <NavBar userObj = {userObj} open = {open}/>
-           </List>
-        <Divider/>
+        {/* <Divider /> */}
+        
+          <NavBar userObj = {userObj} open = {open}/>
+        
+        {/* <Divider/> */}
       </Drawer>
-    
-      <div className={classes.appBarSpacer} />
+      <main className={classes.content}>
+      {/* <div className={classes.appBarSpacer} /> */}
 
       <Route exact path='/' component={LandingPage}/>
       <Route exact path='/viewDocs' component={FolderComponent} />
@@ -176,7 +177,7 @@ export default function Dashboard({userObj}) {
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
      
-  
+        </main>
       </div>
        
     
