@@ -36,7 +36,7 @@ import Root from './Chat/Component/Root/Root'
 
 import {messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
-
+import Calendar from './Calendar/Calendar'
 
 
 // window.addEventListener('load', async () => {
