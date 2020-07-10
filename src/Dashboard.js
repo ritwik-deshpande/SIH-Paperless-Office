@@ -206,7 +206,7 @@ export default function Dashboard({userObj}) {
       <main className={classes.content}>
       {/* <div className={classes.appBarSpacer} /> */}
 
-      <Route exact path='/' component={LandingPage}/>
+      <Route exact path='/' render ={() => <LandingPage userObj = {userObj}/> }/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />

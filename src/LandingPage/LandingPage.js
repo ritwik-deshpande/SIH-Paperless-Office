@@ -32,17 +32,46 @@ function Copyright() {
       </Typography>
     );
   }
-const MainComponent= () =>{
+const MainComponent= ({userObj}) =>{
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
         return(
 
+		<main>
+           <div className={classes.appBarSpacer} />
+            <Container maxWidth="lg" className={classes.container}>
+              <Grid container spacing={10}>
+                {/* On Time */}
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                  <OnTime />
+                </Grid>
+
+                {/* Due Soon */}
+                <Grid item lg={3} sm={6} xl={3} xs={12} >
+                  <DueSoon />
+                </Grid>
+                
+                {/* Over Due */}
+                {/*<Grid item lg={3} sm={6} xl={3} xs={12}>
+                  <OverDue />
+                </Grid>*/}
+                
+                <Grid item lg={10} sm={6} xl={3} xs={12}>
+                  <Calendar userObj = {userObj}  />
+                </Grid>
+        
+                <Grid item lg={10} md={6} xl={3} xs={12}>
+                  <NewsFeed />
+                </Grid>
+              </Grid>
+
+              <Box pt={4}>
+                <Copyright />
+              </Box>
+              </Container>
 		
-            <div> 
-		<div className={classes.appBarSpacer} />
-		<Calendar/> 
-	    </div>
+          </main>
            
         )
     }

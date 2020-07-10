@@ -40,7 +40,7 @@
     white-space: normal;
 }
 
-.block-events.e-schedule .template-wrap .employee-image.alice {
+.block-events.e-schedule .template-wrap .employee-image {
     background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/alice.png');
 }
 
