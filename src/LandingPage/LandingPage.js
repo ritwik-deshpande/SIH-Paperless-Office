@@ -58,7 +58,6 @@ const MainComponent= ({userObj}) =>{
                 </Grid>*/}
                 
                 <Grid item lg={10} sm={6} xl={3} xs={12}>
-                  <Calendar userObj = {userObj}  />
                 </Grid>
         
                 <Grid item lg={10} md={6} xl={3} xs={12}>
