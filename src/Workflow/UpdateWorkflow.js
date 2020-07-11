@@ -58,7 +58,7 @@ class UpdateWorkflow extends Component
       
       
       
-     api.workflow("workflow").post(payload).then(res =>{
+     api.workFlow().post(payload).then(res =>{
         console.log(res);
         console.log("Older version",old_object)
 		alert("Workflow Updated Successfully.\n Your new Workflow id is"+payload.id)

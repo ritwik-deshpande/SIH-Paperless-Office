@@ -92,7 +92,7 @@ class StatusComponent extends Component {
     handleEnd = () => {
 	this.state.workflow.status = "terminated"
 	this.state.workflow.end_timestamp = Timestamp.getTimestamp()
-	 api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
+	 api.workFlow().put(this.state.workflow.id,this.state.workflow).then( res => {
 	    	console.log("Updated New Workflow", res)
 		alert("WorkFlow Terminated !")
 		this.props.history.push('/')
@@ -113,14 +113,13 @@ class StatusComponent extends Component {
 	console.log("Handle Modify",this.state.workflow,old_object)
 	old_object.status = "terminated"
 	old_object.end_timestamp = Timestamp.getTimestamp()
-	 api.updateWorkFlow("workflow", old_version).put(old_object).then( res => {
+     api.workFlow().put(old_version,old_object).then( res => {
 	    	console.log("Updated New Workflow", res)
 		this.props.history.push('/')
 	    })
 	
    }
-
-    handleSearch = (curentWorkflow) =>{
+handleSearch = (curentWorkflow) =>{
 	this.setState({
 
 		status:null,
@@ -134,7 +133,7 @@ class StatusComponent extends Component {
 	
         
     }
-    handleGetWorkflow = (id) =>{
+ handleGetWorkflow = (id) =>{
 	this.setState({
 	id:id,
 	})
