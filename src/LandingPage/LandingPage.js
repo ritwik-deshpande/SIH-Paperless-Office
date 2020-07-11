@@ -9,6 +9,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import FormBuilder from 'react-form-builder2'
 import CustomForm from '../Forms/CustomForms'
+import Calendar from '../Calendar/Calendar'
 
 import {
   OnTime,
@@ -31,13 +32,14 @@ function Copyright() {
       </Typography>
     );
   }
-const MainComponent= () =>{
+const MainComponent= ({userObj}) =>{
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
         return(
-            <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
+
+		<main>
+           <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
               <Grid container spacing={10}>
                 {/* On Time */}
@@ -51,12 +53,12 @@ const MainComponent= () =>{
                 </Grid>
                 
                 {/* Over Due */}
-                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                {/*<Grid item lg={3} sm={6} xl={3} xs={12}>
                   <OverDue />
-                </Grid>
+                </Grid>*/}
                 
-                <Grid item lg={3} sm={6} xl={3} xs={12}>
-                  <MyCalendar />
+                <Grid item lg={10} sm={6} xl={3} xs={12}>
+                  <Calendar userObj = {userObj}  />
                 </Grid>
         
                 <Grid item lg={10} md={6} xl={3} xs={12}>
@@ -68,7 +70,9 @@ const MainComponent= () =>{
                 <Copyright />
               </Box>
               </Container>
+		
           </main>
+           
         )
     }
 

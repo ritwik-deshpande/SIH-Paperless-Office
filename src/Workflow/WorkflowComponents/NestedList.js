@@ -7,9 +7,24 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import AddIcon from '@material-ui/icons/Add';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+
+import Logo from './grid.jpg';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,6 +35,15 @@ const useStyles = makeStyles(theme => ({
     nested: {
       width: "100%",
       paddingLeft: theme.spacing(4),
+    },
+    gridList: {
+      width: 1150,
+      height: 850,
+      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+      transform: 'translateZ(0)',
+    },
+    media: {
+      height: 100,
     },
   }));
   
@@ -64,7 +88,7 @@ export default function NestedList({menu,Click}) {
         <div key={form.id}>
         <ListItem button className={classes.nested} onClick={()=>Click(form.id,form.title)}>
           <ListItemIcon>
-            <StarBorder />
+            <AddIcon />
           </ListItemIcon>
           <ListItemText primary={form.title} />
         </ListItem>
@@ -74,28 +98,37 @@ export default function NestedList({menu,Click}) {
     }
     
     return (
+      <div>
+       <br></br> 
+         <br></br>
+          <Typography className={classes.title} variant="h6" noWrap>
+              Create Workflow
+          </Typography>
+         <br></br> 
+         <br></br>
       
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-           
-          </ListSubheader>
-        }
-        className={classes.root}
-      >
-        
-        
-        {Object.keys(json).map(key => {
-          
+          <GridList cellHeight={500} spacing={30} cols={4} className={classes.gridList}>
+          {Object.keys(json).map(key => {
           return (
-          
           <div key={key}>
+            <Card>
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={Logo}
+                title="Create Workflow"
+              />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  info about type of workflows
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <GridListTile>
             <ListItem button onClick={() => handleClick(key)}>
               <ListItemIcon>
-                <InboxIcon />
               </ListItemIcon>
+                <InboxIcon />
               <ListItemText primary={key} />
               {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>}
             </ListItem>
@@ -107,6 +140,8 @@ export default function NestedList({menu,Click}) {
 
               </List>
             </Collapse>
+          </GridListTile> 
+          </Card>
           </div>
 
           );
@@ -131,6 +166,7 @@ export default function NestedList({menu,Click}) {
             </ListItem>
           </List>
       </Collapse> */}
-      </List> 
+       </GridList> 
+      </div>
     );
   }

@@ -34,13 +34,16 @@ import StatusComponent from './Workflow/StatusComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
 import {toast, ToastContainer} from 'react-toastify'
+import { Box } from '@material-ui/core';
 
 //import { Alert } from 'react-native';
 import {messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
-import Axios from 'axios';
+import Calendar from './Calendar/Calendar'
 
-messaging.requestPermission()
+export default function Dashboard({userObj, logout}) {
+
+ messaging.requestPermission()
   .then( function(){
     console.log('Have Permission')
     return messaging.getToken()
@@ -58,10 +61,6 @@ messaging.requestPermission()
 //   });
 // messaging.useServiceWorker(registration);
 // })
-
-
-//connect returns a high order component in which we need to wrap the component we need the stroe in.
-export default function Dashboard({userObj, logout}) { 
 
   const classes = useStyles();
   const [notifs,setNotifs] = React.useState([{
@@ -143,7 +142,7 @@ export default function Dashboard({userObj, logout}) {
   />
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -155,7 +154,8 @@ export default function Dashboard({userObj, logout}) {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            DigiDocs
+            <Box fontWeight={800} display="inline">Digi</Box>
+            <Box display="inline">Docs</Box>
           </Typography>
 
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
@@ -213,21 +213,20 @@ export default function Dashboard({userObj, logout}) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
-        <List>
-           <NavBar userObj = {userObj} open = {open} logout = {logout}/>
-           </List>
-        <Divider/>
+        {/* <Divider /> */}
+        
+          <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+        
+        {/* <Divider/> */}
       </Drawer>
-    
-      <div className={classes.appBarSpacer} />
+      <main className={classes.content}>
+      {/* <div className={classes.appBarSpacer} /> */}
 
-      <Route exact path='/' component={LandingPage}/>
+      <Route exact path='/' render ={() => <LandingPage userObj = {userObj}/> }/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
@@ -236,7 +235,7 @@ export default function Dashboard({userObj, logout}) {
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
      
-  
+        </main>
       </div>
        
     

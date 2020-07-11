@@ -136,9 +136,13 @@ class StatusComponent extends Component {
     Click = () =>{
         this.setState({myWorkflow:true})
     }
+
+   
+
+
+
 //    let url = http://localhost:3030/workflow?User=rd&&Title=Application%20for%20Sports%20Secretary
     render() {
-
         // this.state.username = this.props.userObj.username
         // this.state.title = this.props.location.search.split("=")[1]
         // console.log(this.state.username,this.state.title)
@@ -157,18 +161,34 @@ class StatusComponent extends Component {
                         position={toast.POSITION.BOTTOM_RIGHT}
                     />
                  
-                 <ListItem alignItems="flex-start">
+                 {/* <ListItem alignItems="flex-start">
         
         <ListItemText primary={ "Show My Workflows"} />
         <IconButton color="primary" onClick={()=>this.Click()}>
                 <ExpandMoreIcon style={{ fontSize: 40 }} />
                 </IconButton>
-      </ListItem>
-                 
-                {this.state.myWorkflow ? 
+      </ListItem> */}
+                <br></br>
+                {/* <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<ExpandMoreIcon style={{ fontSize: 40 }} />}
+                    onClick={()=>this.Click()}
+                    style= {
+                        {
+                            
+                        }
+                    }
+                >
+                    Show My Workflows
+                </Button> */}
+                <br/><br/>
+                
+                <MyWorkflow userObj={this.props.userObj} handleSubmit={this.handleSearch}/>
+                {/* {this.state.myWorkflow ? 
                 <MyWorkflow userObj={this.props.userObj} handleSubmit={this.handleSearch}/>
                 
-    :null}
+    :null} */}
                 <br/><br/>
                 <h5>Or<br/> Enter a workflow id:</h5>
                 <form //className={classes.root} 
