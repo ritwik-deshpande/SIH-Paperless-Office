@@ -68,5 +68,11 @@ export default {
         put :(payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
       }
     },
+
+    notification(){
+      return {
+        get : (id) => axios.get(`${Endpoint}/notifications/${id}`)
+    }
+    }
           
 }

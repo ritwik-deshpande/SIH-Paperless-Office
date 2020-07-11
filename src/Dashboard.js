@@ -33,26 +33,14 @@ import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
+import {toast, ToastContainer} from 'react-toastify'
 
+//import { Alert } from 'react-native';
 import {messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
+import Axios from 'axios';
 
-
-
-// window.addEventListener('load', async () => {
-//   const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {
-//       updateViaCache: 'none'
-//   });
-// messaging.useServiceWorker(registration);
-// })
-
-
-//connect returns a high order component in which we need to wrap the component we need the stroe in.
-export default function Dashboard({userObj, logout}) {
-
-	
- const User = userObj
- messaging.requestPermission()
+messaging.requestPermission()
   .then( function(){
     console.log('Have Permission')
     return messaging.getToken()
@@ -64,50 +52,65 @@ export default function Dashboard({userObj, logout}) {
     console.log(err)
   })
 
- messaging.onMessage(function(payload){
-  console.log(payload);
-  const n = {
-    title: payload.notification.title,
-    content : payload.notification.body
-  }
-  const temp = {...notifs, "n4" : n}
-  setNotifs(temp);
-})
-
- function getNotifications(){
-  let notifications = []
-
-  for (var key in notifs){
-	console.log(key)
-	notifications.push(
-		<Card >
-		      <CardContent>
-			<Typography variant="h5" component = "h2">
-			  {notifs[key].title}
-			</Typography>
-			<Typography className={classes.title} color="textSecondary" gutterBottom>
-			  {notifs[key].content}
-			</Typography>
-		      </CardContent>
-			
-		      <CardActions>
-			<Button size="small">Learn More</Button>
-		      </CardActions>
-		</Card>)
-
-	}
-	return notifications
+// window.addEventListener('load', async () => {
+//   const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {
+//       updateViaCache: 'none'
+//   });
+// messaging.useServiceWorker(registration);
+// })
 
 
-}
+//connect returns a high order component in which we need to wrap the component we need the stroe in.
+export default function Dashboard({userObj, logout}) { 
 
   const classes = useStyles();
-  const [notifs,setNotifs] = React.useState([]);
+  const [notifs,setNotifs] = React.useState([{
+    
+    title: "Demo Notification",
+    content : "demo content for testing notification feature"
+  }]);
+  const [pushNotif,setPushNotifs] = React.useState({});
   const [open, setOpen] = React.useState(true);
-  if(localStorage.getItem("notifs"))
+  
+  const handleNotif= (n) =>
   {
-    setNotifs(JSON.parse(localStorage.getItem("notifs")))
+    console.log([n,...notifs])
+          setNotifs([n,...notifs])
   }
+  React.useEffect(() => {
+    
+      api.notification().get(userObj.id)
+      .then(
+        (res) => {
+          setNotifs(res.data.notifs)
+        }
+      )
+    
+    const unsubscribe = messaging.onMessage(async payload => {
+      console.log(payload)
+      const n = {
+            title: payload.notification.title,
+            content : payload.notification.body
+          }
+      setPushNotifs(n)
+    });
+
+    return unsubscribe;
+  }, []);
+  React.useEffect(() => {
+    
+    setNotifs([pushNotif, ...notifs ])
+}, [pushNotif]);
+  // messaging.onMessage(function(payload){
+  //   console.log(payload);
+  //   const n = {
+  //     title: payload.notification.title,
+  //     content : payload.notification.body
+  //   }
+  //   setNotifs([n,...notifs])
+    
+    
+  // })
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -133,7 +136,11 @@ export default function Dashboard({userObj, logout}) {
   return (
     
     <BrowserRouter>
-    
+    <ToastContainer
+      autoClose={2000}
+      hideProgressBar={true}
+      position={toast.POSITION.BOTTOM_RIGHT}
+  />
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -178,7 +185,22 @@ export default function Dashboard({userObj, logout}) {
 		}}
 		>
 
-		{getNotifications()}
+		{notifs.map((value)=>{
+  return(<Card >
+      <CardContent>
+        <Typography variant="h5" component = "h2">
+          {value.title}
+        </Typography>
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          {value.content}
+        </Typography>
+            </CardContent>
+        
+            <CardActions>
+        <Button size="small">Learn More</Button>
+            </CardActions>
+      </Card>)
+    })}
 		
 	</Popover>
         </Toolbar>
