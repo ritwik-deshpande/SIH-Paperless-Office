@@ -29,7 +29,7 @@ export default {
     },
     myworkflows(){
       return {
-        get : (id) => axios.get(`${Endpoint}/my_workflows/${id}`)
+        get : (username) => axios.get(`${Endpoint}/workflow/?User=${username}`)
       }
     },
     forms(){

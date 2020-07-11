@@ -17,6 +17,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import Timestamp from '../utils/TimeStamp'
 
+
 export default function Profile({userObj}) {
 
 
@@ -82,6 +83,7 @@ export default function Profile({userObj}) {
 	<img src = {userObj.esign} alt ="Electroni Signature"></img>
 	</ListItem>
     	</List>
+	
 
 	</div>
 

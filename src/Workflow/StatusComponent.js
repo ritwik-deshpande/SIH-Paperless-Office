@@ -120,8 +120,24 @@ class StatusComponent extends Component {
 	
    }
 
-    handleSearch = (id) =>{
-        this.setState({id:id})
+    handleSearch = (curentWorkflow) =>{
+	this.setState({
+
+		status:null,
+		id: curentWorkflow.id,
+		workflow:curentWorkflow,
+		title: curentWorkflow.Title,
+		username: curentWorkflow.User
+	}, () => {this.init() })
+	
+        console.log(this.state)
+	
+        
+    }
+    handleGetWorkflow = (id) =>{
+	this.setState({
+	id:id,
+	})
         api.getWorkFlow().getByid(id).then(res => {
             //console.log('The data received is',res.data)
             if(res && res.data)
@@ -132,6 +148,8 @@ class StatusComponent extends Component {
             })
         this.init()}
         })
+
+
     }
     Click = () =>{
         this.setState({myWorkflow:true})
@@ -209,7 +227,7 @@ class StatusComponent extends Component {
               //className={classes.button}
               startIcon={<AddCommentIcon />}
               onClick={() => {
-                  this.handleSearch(this.state.id)
+                  this.handleGetWorkflow(this.state.id)
                 }}
             >
 
