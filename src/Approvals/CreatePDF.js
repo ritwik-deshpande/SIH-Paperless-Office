@@ -149,34 +149,45 @@ class CreatePDF extends React.Component{
     this.state.signatures[name] = esign
     console.log("in handlesignClick")
     
+    
 	if( nextNodes.length == 0){
 		if(id in currentNode.approvedBy){
 
                         
 			currentNode.approvedBy[id] = true
+                         // set pending request of current child as Approved
 			currentNode.timestamp[id] = Timestamp.getTimestamp()
 	
 			if(this.approvedByAll(currentNode.approvedBy)){
 
 				//send request to approvers of next child	
-
+				 
 				console.log("Adding Next Nodes")
-				nextNodes = currentNode.nextNodes
-				this.state.workflow.nextNodes = nextNodes
+				if(currentNode.type === "End"){
+					 this.state.workflow.status = "Completed"
+					 this.state.workflow.nextNodes = []
+					 this.state.workflow.end_timestamp = Timestamp.getTimestamp()
+				}
+				else{
+					nextNodes = currentNode.nextNodes
+					this.state.workflow.nextNodes = nextNodes
+				}
 			}
-      this.state.workflow.FlowChart[current_node_key] = currentNode
+      		this.state.workflow.FlowChart[current_node_key] = currentNode
 		}
 		
 	}
 	else{
 		let next_node_key
-    let nextNode
-    // remove pending requests from all other next Nodes! 
+        let nextNode
+        
                     
 		next_node_key = this.chooseNextNode(nextNodes, id)
+		// remove pending requests from all other next Nodes after chosing the nextNode 
 		nextNode = this.state.workflow.FlowChart[next_node_key]
-	    nextNode.approvedBy[id] = true
-	    nextNode.timestamp[id] = Timestamp.getTimestamp()
+		    nextNode.approvedBy[id] = true
+		    nextNode.timestamp[id] = Timestamp.getTimestamp()
+		 // set pending request of current child as Approved
 		path = [...path, next_node_key]
 		
 		this.state.workflow.nextNodes = []
@@ -185,12 +196,17 @@ class CreatePDF extends React.Component{
 		if(this.approvedByAll(nextNode.approvedBy)){
 				//send request to approvers of next child
 
-      // let timestamp = this.getTimestamp()
-			  //  nextNode.timestamp = timestamp
-
 				console.log("Adding Next Nodes")
-				nextNodes = nextNode.nextNodes
-				this.state.workflow.nextNodes = nextNodes
+				if(nextNode.type === "End"){
+					 this.state.workflow.status = "Completed"
+					 this.state.workflow.nextNodes = []
+					 this.state.workflow.end_timestamp = Timestamp.getTimestamp()
+				}
+				else{
+					nextNodes = nextNode.nextNodes
+					this.state.workflow.nextNodes = nextNodes
+				}
+				
 			}
 	    this.state.workflow.FlowChart[next_node_key] = nextNode
 	
@@ -200,12 +216,17 @@ class CreatePDF extends React.Component{
     	
     this.state.workflow.Signatures = this.state.signatures
     this.state.workflow.Comments = this.state.comments
-   
+    this.state.workflow.Feedback = "Approved by "+ name
+    this.state.workflow.Feedback_ts = Timestamp.getTSObj()
+    	
     console.log("New Workflow", this.state.workflow)
     
     api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
     })
+    
+    
+    //Updating Average Response Time
     
      let response_time = Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.ts)
      let avg_time = this.getAvgResponseTime(userObj.avg_response_time, userObj.no_of_approvals, response_time)
@@ -236,7 +257,7 @@ class CreatePDF extends React.Component{
     let currentNode = this.state.workflow.FlowChart[current_node_key]
     
     let nextNodes = this.state.workflow.nextNodes
-    
+    let userObj = this.props.userObj
     let name = this.props.userObj.name
     let username = this.props.userObj.username
    
@@ -260,13 +281,31 @@ class CreatePDF extends React.Component{
     	
     this.state.workflow.Comments = this.state.comments
     this.state.workflow.isRejected = true
-
+    this.state.workflow.Feedback = "Rejected by:"+ name
+    this.state.workflow.Feedback_ts = Timestamp.getTSObj()
    
    console.log("New Workflow", this.state.workflow)
     
    api.updateWorkFlow("workflow", this.state.workflow.id).put(this.state.workflow).then( res => {
     	console.log("Updated New Workflow", res)
     })
+    
+    
+    
+    //Updating Average Response Time
+    
+     let response_time = Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.ts)
+     let avg_time = this.getAvgResponseTime(userObj.avg_response_time, userObj.no_of_approvals, response_time)
+
+	console.log(avg_time)
+	userObj.no_of_approvals = userObj.no_of_approvals + 1
+	userObj.avg_response_time = avg_time
+	console.log("the new user object", userObj)
+
+    api.users().update(userObj.id, userObj).then( res => {
+
+	console.log("Updated user sucessfully")
+   })
   }
 
   render(){
