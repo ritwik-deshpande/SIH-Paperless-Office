@@ -40,6 +40,7 @@ import { Box } from '@material-ui/core';
 import {messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
 import Calendar from './Calendar/Calendar'
+import AnalyticDashboard from './Analytics/AnalyticDashbard';
 
 export default function Dashboard({userObj, logout}) {
 
@@ -234,6 +235,7 @@ export default function Dashboard({userObj, logout}) {
       <Route exact path='/approve' render={()=> <ApproveComponent userObj={userObj}/>} />
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
+      <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
      
         </main>
       </div>

@@ -137,7 +137,7 @@ handleSearch = (curentWorkflow) =>{
 	this.setState({
 	id:id,
 	})
-        api.getWorkFlow().getByid(id).then(res => {
+        api.workFlow().getByid(id).then(res => {
             //console.log('The data received is',res.data)
             if(res && res.data)
             {this.setState({

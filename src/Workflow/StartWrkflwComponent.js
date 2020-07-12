@@ -98,7 +98,17 @@ class StartWrkflwComponent extends Component
       alert("Please Save the FlowChart First");
     }
     else{
-      
+      var reqs = [];
+      for (var k in this.state.FlowChart){
+        console.log(k)
+        if(this.state.FlowChart[k].type === "Start")
+        {
+          reqs = Object.keys(this.state.FlowChart[k].approvedBy)
+          // Object.keys(this.state.FlowChart[k].approvedBy)
+          console.log(reqs)
+          break;
+        }
+      }
       let payload = {
 
         "FormData" : this.state.FormData,
@@ -108,25 +118,23 @@ class StartWrkflwComponent extends Component
         "nextNodes":[],
         "Signatures":{},
         "status" : "active",
-	"begin_timestamp" : Timestamp.getTimestamp(),
-	"end_timestamp" : "",
-	"componentId": this.state.selectedId,
+        "begin_timestamp" : Timestamp.getTimestamp(),
+        "end_timestamp" : "",
+        "componentId": this.state.selectedId,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
 
-	"id" : this.state.id + "v0"
-
+	      "id" : this.state.id + "v0",
+        "cancel_requests" : [],
+        "send_requests" : reqs
 
       }
       console.log("The Payload",payload);
 
-
-
-
       api.workFlow().post(payload).then(res =>{
-        console.log(res);
-	alert("Workflow Initiated successfully.\n Your Workflow id is"+payload.id)
-        this.props.history.push("/status?id="+this.state.id)
+      console.log(res);
+      alert("Workflow Initiated successfully.\n Your Workflow id is"+payload.id)
+      this.props.history.push("/status?id="+this.state.id+"v0")
 
 
       })
@@ -203,20 +211,13 @@ class StartWrkflwComponent extends Component
     }
     else{
 
-
       api.forms().post(this.state.CustomForm).then(res =>{
         console.log(res);
-        
       })
 
       api.flowChart().post(this.state.CustomFlowChart).then(res =>{
         console.log(res);
-        
       })
-
-
-
-
       console.log("Original Menu",this.state.menu)
       this.state.menu.contents.Custom = [...this.state.menu.contents.Custom , {id: this.state.id,title:this.state.customWorkflow}]
       console.log("Saving new menu",this.state.menu)
@@ -228,13 +229,8 @@ class StartWrkflwComponent extends Component
           showFormandWrkflw: false
         })
       })
-
     }
-
-    
-    
   }
-
 
   saveFormData = (FormData) =>
   {
@@ -246,8 +242,6 @@ class StartWrkflwComponent extends Component
     })
   }
   
-
-
   saveFlowChartData = (chart) =>
   {
     console.log("Saving FlowChart")
