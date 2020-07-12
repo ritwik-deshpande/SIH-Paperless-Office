@@ -144,7 +144,7 @@ const classes = useStyles();
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText primary="LogOut" />
+            <ListItemText primary="LogOut" onClick={ () => props.logout()}/>
           </ListItem>
         </Tooltip>
 

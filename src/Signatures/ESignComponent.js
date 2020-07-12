@@ -6,6 +6,7 @@ import SearchBar from 'material-ui-search-bar'
 import api from '../utils/api'
 import Button from '@material-ui/core/Button';
 import Profile from './Profile'
+import Calendar from '../Calendar/Calendar'
 
 class ESignComponent extends React.Component{
 
@@ -125,6 +126,7 @@ class ESignComponent extends React.Component{
 		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> : 
 		<div>
 		<Profile userObj = {this.state.viewProfile} />
+		<Calendar userObj = {this.state.viewProfile}  />
 		
 		{ !this.state.cannotUpdate ?
 		<Button variant="contained" color="primary" onClick = { this.onUpdateClick } style={{ margin: 20 }} >

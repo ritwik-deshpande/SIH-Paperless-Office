@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getQueriesForElement } from "@testing-library/react";
 
 const Endpoint = "http://localhost:3030"
 
@@ -29,7 +28,7 @@ export default {
     },
     myworkflows(){
       return {
-        get : (id) => axios.get(`${Endpoint}/my_workflows/${id}`)
+        get : (username) => axios.get(`${Endpoint}/workflow/?User=${username}`)
       }
     },
     forms(){
@@ -55,31 +54,25 @@ export default {
         put :(id,payload) => axios.put(`${Endpoint}/menu/${id}`,payload)
     }
   },
-    getWorkFlow(){
+    workFlow(){
       return {
         get :(username,title) =>{ return `${Endpoint}/workflow?User=${username}&Title=${title}`},
-        getByid : (id) => axios.get(`${Endpoint}/workflow/${id}`)
+        getByid : (id) => axios.get(`${Endpoint}/workflow/${id}`),
+        post : (payload) => axios.post(`${Endpoint}/workflow`,payload),
+        put : (id,payload) => axios.put(`${Endpoint}/workflow/${id}`,payload)
       }
     },
-    updateWorkFlow(url, id){
-	return{
-	 put : (payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
-		
-	}
-	
-    },
-
+    
     saveMenu(url,id){
       return {
         put :(payload) => axios.put(`${Endpoint}/${url}/${id}`,payload)
       }
     },
-    
-    workflow(url){
-      return{
 
-        post : (payload) => axios.post(`${Endpoint}/${url}`,payload)
-
-      }
-    },        
+    notification(){
+      return {
+        get : (id) => axios.get(`${Endpoint}/notifications/${id}`)
+    }
+    }
+          
 }

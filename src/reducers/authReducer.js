@@ -21,6 +21,13 @@ if(sessionStorage.getItem("user"))
 const authReducer = (state = initState, action) =>{
 
     switch (action.type){
+        case 'USER_LOGOUT' :
+            sessionStorage.removeItem("user")
+            return{
+                ...state,
+                userObj : null,
+                loggedIn : false,
+            }
         case 'USER_VERIFIED':
             console.log("user verified :" + action.payload)
             sessionStorage.setItem("user",JSON. stringify(action.payload))
