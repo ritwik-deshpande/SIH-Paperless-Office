@@ -294,8 +294,9 @@ class StartWrkflwComponent extends Component
       console.log(this.state)
 
       if(this.state.showFormandWrkflw){
-
-        if(this.state.selectedTitle.localeCompare("Start a Custom WorkFlow") == 0){
+	console.log("this .title", this.state.selectedTitle)
+        if(this.state.selectedTitle.localeCompare("SCW") == 0){
+		console.log("Inside CUstom component")
             return (<div>
 		<br/>
      		<h2> BUILD YOUR OWN WORKFLOW </h2>

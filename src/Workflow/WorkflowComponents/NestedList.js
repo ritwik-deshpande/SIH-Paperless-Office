@@ -125,7 +125,7 @@ export default function NestedList({menu,Click}) {
           <div key={key}>
           {key === 'New' ? 
             (<Card className={classes.newCard}>
-                <IconButton aria-label="previous" onClick={()=>Click(key.id, "Start a Custom Workflow")}>
+                <IconButton aria-label="previous" onClick={()=>Click(key.id, "SCW")}>
                   <AddCircleIcon className={classes.button} color="primary" fontSize='large'/>
                 </IconButton>
             
