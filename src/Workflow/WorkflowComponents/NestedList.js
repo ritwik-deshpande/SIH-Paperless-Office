@@ -24,28 +24,34 @@ import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+import useStyles from '../../Style'
 
-
-const useStyles = makeStyles(theme => ({
-    root: {
-      width: "150%",
-      maxWidth: 300,
-      backgroundColor: theme.palette.background.paper,
-    },
-    nested: {
-      width: "100%",
-      paddingLeft: theme.spacing(4),
-    },
-    gridList: {
-      width: 1150,
-      height: 850,
-      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-      transform: 'translateZ(0)',
-    },
-    media: {
-      height: 100,
-    },
-  }));
+// const useStyles = makeStyles(theme => ({
+    // root: {
+    //   width: "150%",
+    //   maxWidth: 300,
+    //   backgroundColor: theme.palette.background.paper,
+    // },
+    // nested: {
+    //   width: "100%",
+    //   paddingLeft: theme.spacing(4),
+    // },
+    // gridList: {
+    //   width: 1150,
+    //   height: 850,
+    //   // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    //   transform: 'translateZ(0)',
+    // },
+    // media: {
+    //   height: 100,
+    // },
+  // }));
   
 // const json ={
 //   New:[{id : 1, title: "Start a Custom WorkFlow"}],
@@ -61,16 +67,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function NestedList({menu,Click}) {
     const classes = useStyles();
+    const [openBox, setOpenBox] = React.useState(false);
 
+    const handleClose = () => {
+      setOpenBox(false);
+    };
 
     const json = menu.contents
-
 
     console.log("The json is ")
     console.log(menu)
     const [open, setOpen] = React.useState("")
     const handleClick = (key) => {
-      
+      setOpenBox(true)
       if(open.localeCompare(key) === 0)
       {
         setOpen("")
@@ -83,8 +92,8 @@ export default function NestedList({menu,Click}) {
     const renderListItem = (obj) =>{
       return(obj.map(form =>{
         return(
-         <div>
-          <div className={classes.appBarSpacer} />
+        //  <div>
+        //   {/* <div className={classes.appBarSpacer} /> */}
         <div key={form.id}>
         <ListItem button className={classes.nested} onClick={()=>Click(form.id,form.title)}>
           <ListItemIcon>
@@ -92,7 +101,7 @@ export default function NestedList({menu,Click}) {
           </ListItemIcon>
           <ListItemText primary={form.title} />
         </ListItem>
-      </div>
+      {/* </div> */}
       </div>
       )}))
     }
@@ -125,21 +134,37 @@ export default function NestedList({menu,Click}) {
               </CardContent>
             </CardActionArea>
             <GridListTile>
+            {/* <ListItem button onClick={() => handleClick(key)}> */}
             <ListItem button onClick={() => handleClick(key)}>
               <ListItemIcon>
               </ListItemIcon>
                 <InboxIcon />
               <ListItemText primary={key} />
-              {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>}
+              {/* {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>} */}
             </ListItem>
 
-            <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
+            {/* <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
             
                 { renderListItem(json[key]) }
 
               </List>
-            </Collapse>
+            </Collapse> */}
+            { open.localeCompare(key) === 0 ? 
+            <Dialog onClose={handleClose} scroll='paper' aria-labelledby="customized-dialog-title" open={openBox}>
+              <DialogTitle >
+                <Typography variant="h6" display='inline'>{key}</Typography>
+                <IconButton className={classes.closeButton} onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              </DialogTitle>
+              <DialogContent dividers>
+                <List component="div">
+                  { renderListItem(json[key]) }
+                </List>
+              </DialogContent>
+            </Dialog>
+             : ""} 
           </GridListTile> 
           </Card>
           </div>

@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
+      ...theme.mixins.toolbar,
     },
     media: {
       height: 90,
@@ -73,7 +74,10 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(9),
       },
     },
-    appBarSpacer: theme.mixins.toolbar,
+    appBarSpacer: {
+      marginTop: theme.spacing(2),
+      ...theme.mixins.toolbar,
+    },
     content: {
       flexGrow: 1,
       height: '100vh',
@@ -90,8 +94,9 @@ const useStyles = makeStyles((theme) => ({
       overflow: 'auto',
     },
     avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+      // margin: theme.spacing(1),
+      color: theme.palette.getContrastText(theme.palette.grey[600]),
+      backgroundColor: theme.palette.grey[600],
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -101,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(3, 0, 2),
     },
     stepper: {
-      padding: theme.spacing(3, 0, 5),
+      padding: theme.spacing(2, 'auto'),
     },
     layout: {
       width: '100%',
@@ -114,6 +119,31 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
       height: 240,
     },
+
+    nested: {
+      width: "100%",
+      paddingLeft: theme.spacing(2),
+    },
+    gridList: {
+      width: 1150,
+      height: 850,
+      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+      transform: 'translateZ(0)',
+    },
+    media: {
+      height: 100,
+    },
+    dialogBox: {   
+      margin: 0,
+      padding: theme.spacing(2),
+    },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+    },
+
     loginbg: {
       width: '100%',
       height: '100vh',

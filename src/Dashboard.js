@@ -69,7 +69,7 @@ export default function Dashboard({userObj, logout}) {
     content : "demo content for testing notification feature"
   }]);
   const [pushNotif,setPushNotifs] = React.useState({});
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   
   const handleNotif= (n) =>
   {
@@ -153,13 +153,14 @@ export default function Dashboard({userObj, logout}) {
           >
             <MenuIcon />
           </IconButton>
+          {open ? "" :
+            <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
+              <Box fontWeight={800} display="inline">Digi</Box>
+              <Box display="inline">Docs</Box>
+            </Typography>
+          }
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            <Box fontWeight={800} display="inline">Digi</Box>
-            <Box display="inline">Docs</Box>
-          </Typography>
-
-          <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            Name : {userObj.name}
+            Welcome,<Box fontWeight={600} display="inline">{userObj.name}</Box>
           </Typography>
          
 
@@ -224,7 +225,7 @@ export default function Dashboard({userObj, logout}) {
         {/* <Divider/> */}
       </Drawer>
       <main className={classes.content}>
-      {/* <div className={classes.appBarSpacer} /> */}
+      <div className={classes.appBarSpacer} />
 
       <Route exact path='/' render ={() => <LandingPage userObj = {userObj}/> }/>
       <Route exact path='/viewDocs' component={FolderComponent} />
