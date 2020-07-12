@@ -20,6 +20,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import IconButton from '@material-ui/core/IconButton';
 
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -45,6 +47,16 @@ const useStyles = makeStyles(theme => ({
     media: {
       height: 100,
     },
+    button:{
+     
+    height: 50,
+    width: 50,
+    },
+    newCard: {
+      height: 200,
+      maxWidth: 300,
+      backgroundColor: "#FFF",
+    }
   }));
   
 // const json ={
@@ -79,7 +91,7 @@ export default function NestedList({menu,Click}) {
         setOpen(key)
       }
     };
-    
+
     const renderListItem = (obj) =>{
       return(obj.map(form =>{
         return(
@@ -111,37 +123,52 @@ export default function NestedList({menu,Click}) {
           {Object.keys(json).map(key => {
           return (
           <div key={key}>
-            <Card>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={Logo}
-                title="Create Workflow"
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  info about type of workflows
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <GridListTile>
-            <ListItem button onClick={() => handleClick(key)}>
-              <ListItemIcon>
-              </ListItemIcon>
-                <InboxIcon />
-              <ListItemText primary={key} />
-              {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>}
-            </ListItem>
-
-            <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
+          {key === 'New' ? 
+            (<Card className={classes.newCard}>
+                <IconButton aria-label="previous" onClick={()=>Click(key.id, "Start a Custom Workflow")}>
+                  <AddCircleIcon className={classes.button} color="primary" fontSize='large'/>
+                </IconButton>
             
-                { renderListItem(json[key]) }
+              <CardContent>
+                  <Typography variant="subtitle1" color="#000" align = 'center'>
+                    Create From Scratch
+                  </Typography>
+              </CardContent>
+             
+               
+            </Card>)
+        : (<Card>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={Logo}
+            title="Create Workflow"
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              info about type of workflows
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <GridListTile>
+        <ListItem button onClick={() => handleClick(key)}>
+          <ListItemIcon>
+          </ListItemIcon>
+            <InboxIcon />
+          <ListItemText primary={key} />
+          {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>}
+        </ListItem>
 
-              </List>
-            </Collapse>
-          </GridListTile> 
-          </Card>
+        <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+        
+            { renderListItem(json[key]) }
+
+          </List>
+        </Collapse>
+      </GridListTile> 
+      </Card>)}
+            
           </div>
 
           );
