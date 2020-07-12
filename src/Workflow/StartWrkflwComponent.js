@@ -12,6 +12,7 @@ import CustomForm from '../Forms/CustomForms'
 import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
 import { connect } from 'react-redux'
+import WorkflowNode from '../utils/WorkflowNode'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +45,7 @@ class StartWrkflwComponent extends Component
   constructor(props){
       super(props);
       this.state = {
-        id : this.getID(),
+        id : Timestamp.getTSID(),
         customWorkflow:"Empty",
         anchorEl:null,
         menu:null,
@@ -60,11 +61,7 @@ class StartWrkflwComponent extends Component
       console.log(this.state);
   }
   
-  getID(){
-    let timestamp = new Date().getUTCMilliseconds();
-    console.log(timestamp)
-    return timestamp
-  }  
+  
 
 
   initPath(){
@@ -85,6 +82,8 @@ class StartWrkflwComponent extends Component
 	return Path
 
   }
+  
+  
 	
 
   postRequest = () =>{
@@ -110,7 +109,10 @@ class StartWrkflwComponent extends Component
         "status" : "active",
 	"begin_timestamp" : Timestamp.getTimestamp(),
 	"end_timestamp" : "",
-	"componentId": this.state.selectedId,
+	"formId": this.state.selectedId,
+	"flowchartId": this.state.selectedId,
+        "Feedback" : "",
+	"Feedback_ts": 0,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
 
@@ -118,9 +120,11 @@ class StartWrkflwComponent extends Component
 
 
       }
+      payload["send_requests"] = WorkflowNode.getApprovers(payload.FlowChart[payload.Path[0]])
       console.log("The Payload",payload);
 
-
+      payload.Feedback =  "Workflow Initiated"
+      payload.Feedback_ts = Timestamp.getTimestamp()
 
 
       api.workFlow().post(payload).then(res =>{
@@ -293,7 +297,10 @@ class StartWrkflwComponent extends Component
 
         if(this.state.selectedTitle.localeCompare("Start a Custom WorkFlow") == 0){
             return (<div>
-     
+		<br/>
+     		<h2> BUILD YOUR OWN WORKFLOW </h2>
+		<br/>
+		<br/>
          <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth
 
            onChange = {this.handleChange}
