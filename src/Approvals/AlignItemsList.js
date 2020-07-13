@@ -31,6 +31,7 @@ import useStyles from "../Style";
 import DoubleArrowTwoToneIcon from "@material-ui/icons/DoubleArrowTwoTone";
 import Avatar from "@material-ui/core/Avatar";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import CreateIcon from "@material-ui/icons/Create";
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -69,8 +70,7 @@ const tableColumns = [
 	{ title: "Workflow ID", field: "id" },
 	{ title: "Workflow Name", field: "wname" },
 	{ title: "Sender Name", field: "sender" },
-	{ title: "Status", field: "status" },
-	{ title: "Feedback", field: "feedback" },
+	{ title: "Request Feedback", field: "feedback" },
 	{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
 ];
 
@@ -84,89 +84,97 @@ const tableColumns = [
 //             nameofSender: 'Mike Wheeler', status: 'Threatened by the party'}]
 // }
 
-const tableData = [
-	{
-		id: "1",
-		wname: "Need Plancks Constant",
-		sender: "Dustin Henderson",
-		status: "Never Ending Story",
-		feedback: "Approved",
-		time: 10,
-	},
-	{
-		id: "2",
-		wname: "Escape from Mind Flayer",
-		sender: "Will Byers",
-		status: "Approved by Chief PD",
-		feedback: "Approved",
-		time: 33,
-	},
-	{
-		id: "3",
-		wname: "Want Eleven To Stop",
-		sender: "Mike Wheeler",
-		status: "Threatened by party",
-		feedback: "Intermediate",
-		time: 2,
-	},
-];
-export default function AlignItemsList({ Click, json }) {
-	const classes = useStyles();
+//const tableData = [
+// { id: '1', wname: 'Need Plancks Constant', sender: 'Dustin Henderson', feedback: 'Approved', time: 10},
+// { id: '2', wname: 'Escape from Mind Flayer', sender: 'Will Byers', feedback: 'Approved', time: 33},
+//{ id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', feedback: 'Rejected', time: 2},
+//]
+export default function AlignItemsList({ Click, requestTable }) {
 	const tableclasses = useTableStyles();
-	const renderListItem = (obj) => {
-		return obj.map((item) => {
-			return (
-				<div key={item.id}>
-					<ListItem alignItems="flex-start">
-						<ListItemAvatar>
-							<Avatar
-								alt={item.nameofSender}
-								src="/static/images/avatar/1.jpg"
-							/>
-						</ListItemAvatar>
-						<ListItemText
-							primary={item.subject}
-							secondary={
-								<React.Fragment>
-									<Typography
-										component="span"
-										variant="body2"
-										className={classes.inline}
-										color="textPrimary">
-										{item.nameofSender}
-									</Typography>
-									<br />
-									{item.status}
-									On: {item.ts}
-								</React.Fragment>
-							}
-						/>
-						<IconButton color="primary" onClick={() => Click(item)}>
-							<DoubleArrowTwoToneIcon style={{ fontSize: 40 }} />
-						</IconButton>
-					</ListItem>
-					<Divider variant="inset" component="li" />
-				</div>
-			);
-		});
-	};
+	// const renderListItem = (obj) =>{
+	//   return(obj.map(item =>{
+	//     return(
+	//     <div key={item.id}>
+	//     <ListItem alignItems="flex-start">
+	//       <ListItemAvatar>
+	//         <Avatar alt={item.nameofSender} src="/static/images/avatar/1.jpg" />
+	//       </ListItemAvatar>
+	//       <ListItemText
+	//         primary={ item.subject }
+	//         secondary={
+	//           <React.Fragment>
+	//             <Typography
+	//               component="span"
+	//               variant="body2"
+	//               className={classes.inline}
+	//               color="textPrimary"
+	//             >
+	//               {item.nameofSender}
+	//             </Typography><br/>
+	//             {item.status}
+	//              On: {item.ts}
+	//           </React.Fragment>
+	//         }
+	//       />
+	//       <IconButton color="primary" onClick={()=>Click(item)}>
+	//       <DoubleArrowTwoToneIcon style={{ fontSize: 40 }} />
+	//       </IconButton>
+	//     </ListItem>
+	//     <Divider variant="inset" component="li" />
+	//   </div>
+	//   )}))
+	// }
 	return (
-		// <div className={tableclasses.root}>
-		// 	<MaterialTable
-		// 		icons={tableIcons}
-		// 		title="Approve Documents"
-		// 		columns={tableColumns}
-		// 		data={tableData}
-		// 		actions={[
-		// 			{
-		// 				icon: "view",
-		// 				tooltip: "Approve Document",
-		// 				onClick: (event, rowData) => {
-		// 					alert(
-		// 						"You want to approve document with " +
-		// 							rowData.id +
-		// 							". Please wait kaps is working on it"
-		// 					);
+		<div className={tableclasses.root}>
+			<MaterialTable
+				icons={tableIcons}
+				title="Approve Documents"
+				columns={tableColumns}
+				data={requestTable}
+				actions={[
+					{
+						icon: "view",
+						tooltip: "Approve Document",
+						onClick: (event, rowData) => {
+							alert("You want to approve document with " + rowData.id);
+
+							Click(rowData.item);
+						},
+					},
+				]}
+				components={{
+					Action: (props) => (
+						<IconButton
+							onClick={(event) => props.action.onClick(event, props.data)}
+							color="primary"
+							variant="contained"
+							style={{ textTransform: "none" }}
+							size="small">
+							<CreateIcon />
+						</IconButton>
+					),
+				}}
+				options={{
+					search: true,
+					sorting: true,
+					actionsColumnIndex: -1,
+					headerStyle: {
+						backgroundColor: "#4E9C81",
+						color: "#FFF",
+						fontWeight: "bold",
+						fontSize: "15px",
+					},
+					rowStyle: {
+						backgroundColor: "#FBFBFB",
+						color: "#000",
+						fontSize: "14px",
+					},
+				}}
+			/>
+		</div>
+		// <List className={classes.root}>
+
+		//   {renderListItem(json['requests'])}
 
 		// 					Click(rowData.id);
 		// 				},
@@ -202,6 +210,6 @@ export default function AlignItemsList({ Click, json }) {
 		// 		}}
 		// 	/>
 		// </div>
-		<List className={classes.root}>{renderListItem(json["requests"])}</List>
+		// <List className={classes.root}>{renderListItem(json["requests"])}</List>
 	);
 }
