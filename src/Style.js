@@ -151,6 +151,12 @@ const useStyles = makeStyles((theme) => ({
 	media: {
 		height: 100,
 	},
+	newCard: {
+		height: 200,
+		maxWidth: 300,
+		backgroundColor: "#FFF",
+	},
+
 	dialogBox: {
 		// margin: 0,
 		// padding: theme.spacing(2),

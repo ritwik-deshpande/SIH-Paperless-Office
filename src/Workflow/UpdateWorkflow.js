@@ -12,6 +12,8 @@ import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
 import { connect } from 'react-redux'
 import Timestamp from '../utils/TimeStamp'
+import WorkflowNode from '../utils/WorkflowNode'
+import _ from 'lodash'
 
 
 class UpdateWorkflow extends Component
@@ -22,60 +24,111 @@ class UpdateWorkflow extends Component
       this.state = {
         FormData : null,
         FlowChart : null,
-        selectedTitle : "",
-        selectedId : this.props.selectedId
+        selectedTitle : this.props.selectedTitle,
+        formId : this.props.formId,
+	    flowchartId :this.props.flowchartId,
+	    
       };
       console.log(this.state);
   }
+	
+    initPath(){
+
+        let flowchart = this.state.FlowChart
+        let Path = []
+        let nodesList = []
+        for(var node in flowchart){
+	      if(flowchart[node].type.localeCompare("Start")===0){
+	       Path = [...nodesList, node]
+	       break;
+	    }
+            
+       }
+	// Plz write send request function
+        //sendRequest(flowchart[Path[0].approvers])
+
+	return Path
+
+  }
+
+
+	
 	postRequest = () =>{
-    //TODO: Create post request to db.json
-    if(!this.state.FormData)
+	let old_object = JSON.parse(JSON.stringify(this.props.wrkflw))
+	let old_version =  old_object.id
+	let payload = JSON.parse(JSON.stringify(this.props.wrkflw))
+	let old_path = old_object.Path
+	let alert_msg = ""
+	if(!this.state.FormData)
     {
       alert("Please Submit the Form First");
     }
-    else if(!this.state.FlowChart)
-    {
-      alert("Please Save the FlowChart First");
-    }
-    else{
-      
-      let payload = this.props.wrkflw
-      let old_object = JSON.parse(JSON.stringify(this.props.wrkflw))
-      console.log("The old object" ,old_object)
-      
-      let old_version = payload.id
-      payload.id  = old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
+	else{
+	
+		if(!this.state.FlowChart){
+	
+			 payload.id = old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
+			 payload.FormData = this.state.FormData
+			 payload["send_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
+			 payload.Feedback =  "Form Data Updated"
+			 alert_msg = "Workflow Updated with same current Progress.\n Your new Workflow id is"+payload.id
+		}
+		else{	
+		
+			  payload = {
 
-       
-      payload.FlowChart = this.state.FlowChart
-      payload.FormData = this.state.FormData
-      
-      console.log("The Payload",payload);
-      console.log(this.props)
-      payload.state = "active"
-      payload.start_timestamp = Timestamp.getTimestamp()
-      
-      
-      
-      
-     api.workFlow().post(payload).then(res =>{
-        console.log(res);
-        console.log("Older version",old_object)
-		alert("Workflow Updated Successfully.\n Your new Workflow id is"+payload.id)
+				"FormData" : this.state.FormData,
+				"FlowChart" : this.state.FlowChart,
+				"Comments" : [],
+				"Path": this.initPath(),
+				"nextNodes":[],
+				"Signatures":{},
+				"status" : "active",
+				"begin_timestamp" : Timestamp.getTimestamp(),
+				"end_timestamp" : "",
+				"formId": this.props.formId,
+				"flowchartId" :this.state.flowchartId,
+				"Feedback" : "",
+				"Feedback_ts": 0,
+				"User":old_object.User,
+				"Title": old_object.Title,
 
-        this.props.onUpdate(old_version, old_object)
-      })
+				"id" : old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
 
-    }
-    
-    
-  }
+
+			  }
+			  console.log("The Payload",payload);
+			  payload["send_requests"] = WorkflowNode.getApprovers(payload.FlowChart[payload.Path[0]])
+			  
+				payload.Feedback =  "Workflow Initiated"
+				alert_msg = "Workflow Updated and Restarted .\n Your new Workflow id is"+payload.id
+		 }
+		 
+		 payload.Feedback_ts = Timestamp.getTimestamp()
+		 
+		 old_object.Feedback = "Updated to version "+payload.id
+		 old_object.Feedback_ts = Timestamp.getTSObj()
+		 
+		 old_object["cancel_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
+	
+		 console.log("The old object", old_object)
+		 console.log("The payload", payload)
+			 
+			   api.workFlow().post(payload).then(res =>{
+					console.log(res);
+					console.log("Older version",old_object)
+						alert(alert_msg)
+
+					this.props.onUpdate(old_version, old_object)
+				  }) 
+    	}
+     }
 
 	  saveFormData = (FormData) =>
 	  {
 		console.log("Saving Form")
 		console.log(FormData);
-		alert("Saved Form Response")
+		alert("Updated Form Response")
 		this.setState({
 		  FormData : FormData
 		})
@@ -87,11 +140,30 @@ class UpdateWorkflow extends Component
 	  {
 		console.log("Saving FlowChart")
 		console.log(chart)
-		alert("Saved Flowchart Response")
-		chart = ReformatWorkFlow.reformat(chart)
-		this.setState({
-		  FlowChart : chart
-		})
+		// Update Flowchart Table
+		
+		
+		
+		let reformated_chart = ReformatWorkFlow.reformat(chart)
+		console.log("Workflow is changed, Saving updated structure")
+			let NewFlowChart = {
+		    "id":1,
+		    "title":"FlowChart",
+		    "chart":chart,
+		  }
+		  NewFlowChart.title = this.props.wrkflw.Title
+
+		  NewFlowChart.id = Timestamp.getTSID()
+		  this.setState({
+			  FlowChart : reformated_chart,
+			  flowchartId : NewFlowChart.id
+		  })
+		  console.log(NewFlowChart)
+		  api.flowChart().post(NewFlowChart).then(res =>{
+		    console.log(res);
+		    alert("Updated Flowchart")
+		  })
+		
 	  }
 	
 	render(){
@@ -99,15 +171,15 @@ class UpdateWorkflow extends Component
 		return(
 		<div>
 			<Container maxWidth="lg">
-			
+			<h2> DEFAULT WORKFLOW TEMPLATE</h2>
 			
 			<div>
             
-            <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
+            <FormComponent title={this.state.selectedTitle} id={this.state.formId} save={this.saveFormData} />
 
             <br/>
 
-            <DisplayWorkflow title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFlowChartData}/>
+            <DisplayWorkflow setoriginalFlowchart = {this.handler} title={this.state.selectedTitle} id={this.state.flowchartId} save={this.saveFlowChartData}/>
          <br/>
             <Button
               variant="contained"

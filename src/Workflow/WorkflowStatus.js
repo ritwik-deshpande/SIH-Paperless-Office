@@ -174,9 +174,6 @@ export default function WorkflowStatus({ workflow, title, steps, nodesList }) {
                     onClick={handleNext}
                     className={classes.button}
                   >Next </Button>} */}
-							<div>
-								<br />
-							</div>
 						</div>
 					</div>
 				</React.Fragment>
