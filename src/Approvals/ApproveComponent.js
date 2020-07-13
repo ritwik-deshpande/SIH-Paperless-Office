@@ -10,8 +10,7 @@ class ApproveComponent extends React.Component{
       this.state = {
         showPDF: false,
         item :null,
-        json : {requests: ['a']},
-        dataloaded: false
+        requestTable : null
       };
       
     }
@@ -22,10 +21,28 @@ class ApproveComponent extends React.Component{
           console.log('The data received is',res.data)
           this.setState({
               json : res.data,
-              
+              requestTable : this.createRequestTable(res.data)
           })
+          
         })
 
+    }
+    createRequestTable(pending_requests){
+    	let tableData = []
+    	for(var index in pending_requests.requests)
+    	{
+    		tableData.push({
+    			id : pending_requests.requests[index].id,
+    			wname: pending_requests.requests[index].subject,
+    			sender:pending_requests.requests[index].nameofSender,
+    			feedback: pending_requests.requests[index].status,
+    			time: pending_requests.requests[index].ts,
+    			item: pending_requests.requests[index]
+    		})
+    	}
+    	return tableData
+    	
+    
     }
     handleClick = (item) => {
         
@@ -38,15 +55,14 @@ class ApproveComponent extends React.Component{
     render(){
         return(
             <div>
-                <h1>API TEST </h1>
-            {this.state.json.requests ?(this.state.showPDF? 
+            {this.state.requestTable ?(this.state.showPDF? 
             
             (<CreatePDF item={this.state.item} />) 
 
             : 
-            (<AlignItemsList Click={this.handleClick} userObj={this.props.userObj} json={this.state.json}/>)
+            (<AlignItemsList Click={this.handleClick} userObj={this.props.userObj} requestTable={this.state.requestTable}/>)
             )
-        : null}
+        : <div> Fetching Approval Requests</div>}
             
             
             </div>

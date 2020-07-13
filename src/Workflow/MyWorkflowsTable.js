@@ -91,7 +91,7 @@ export default function WorkflowTable({Click,myworkflowsTable}) {
         {
           icon: 'view',
           tooltip: 'View Workflow',
-          onClick: (event, rowData) => {alert("You want to view workflow " + rowData.id + ". Please wait kaps is working on it") 
+          onClick: (event, rowData) => {
           
           			Click(rowData.index_no)
           		}

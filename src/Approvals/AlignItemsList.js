@@ -31,6 +31,8 @@ import useStyles from '../Style'
 import DoubleArrowTwoToneIcon from '@material-ui/icons/DoubleArrowTwoTone'
 import Avatar from '@material-ui/core/Avatar'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import CreateIcon from '@material-ui/icons/Create'
+
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -66,8 +68,7 @@ const tableColumns = [
   { title: 'Workflow ID', field: 'id' },
   { title: 'Workflow Name', field: 'wname' },
   { title: 'Sender Name', field: 'sender' },
-  { title: 'Status', field: 'status' },
-  { title: 'Feedback', field: 'feedback' },
+  { title: 'Request Feedback', field: 'feedback' },
   { title: 'Last Updated On', field: 'time'},  // add type: 'numeric' if required
   ]
 
@@ -83,12 +84,12 @@ const tableColumns = [
 // }
 
 
-  const tableData = [
-    { id: '1', wname: 'Need Plancks Constant', sender: 'Dustin Henderson', status: 'Never Ending Story', feedback: 'Approved', time: 10},
-    { id: '2', wname: 'Escape from Mind Flayer', sender: 'Will Byers', status: 'Approved by Chief PD', feedback: 'Approved', time: 33},
-    { id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', status: 'Threatened by party', feedback: 'Intermediate', time: 2},
-  ]
-export default function AlignItemsList({Click,json}) {
+  //const tableData = [
+   // { id: '1', wname: 'Need Plancks Constant', sender: 'Dustin Henderson', feedback: 'Approved', time: 10},
+   // { id: '2', wname: 'Escape from Mind Flayer', sender: 'Will Byers', feedback: 'Approved', time: 33},
+    //{ id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', feedback: 'Rejected', time: 2},
+  //]
+export default function AlignItemsList({Click,requestTable}) {
 
 	const tableclasses = useTableStyles();
   // const renderListItem = (obj) =>{
@@ -130,14 +131,14 @@ export default function AlignItemsList({Click,json}) {
       icons={tableIcons}
       title="Approve Documents"
       columns={tableColumns}
-      data={tableData}
+      data={requestTable}
       actions={[
         {
           icon: 'view',
           tooltip: 'Approve Document',
-          onClick: (event, rowData) => {alert("You want to approve document with " + rowData.id + ". Please wait kaps is working on it") 
+          onClick: (event, rowData) => {alert("You want to approve document with " + rowData.id) 
           
-          			Click(rowData.id)
+          			Click(rowData.item)
           		}
         }
       ]}   
@@ -150,7 +151,7 @@ export default function AlignItemsList({Click,json}) {
             style={{textTransform: 'none'}}
             size="small"
           >
-            <VerifiedUserIcon />
+            <CreateIcon />
           </IconButton>
         ),
       }}     

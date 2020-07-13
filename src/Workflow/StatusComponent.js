@@ -161,17 +161,20 @@ handleSearch = (curentWorkflow) =>{
     handleGetWorkflow = (id) =>{
         this.state.open=true;
         this.setState({
-        id:id,
+        	id:id,
+		status : null
         })
             api.workFlow().getByid(id).then(res => {
-                //console.log('The data received is',res.data)
+                console.log('The data received is',res.data)
                 if(res && res.data)
-                {this.setState({
-            workflow : res.data,
-            title: res.data.Title,
-            username : res.data.User
-                })
-            this.init()}
+                {
+			this.setState({
+			    workflow : res.data,
+			    title: res.data.Title,
+			    username : res.data.User
+		        }, () => {this.init()} )
+
+            	}
             })
 
 
@@ -277,7 +280,28 @@ handleSearch = (curentWorkflow) =>{
         
         <Dialog fullScreen open={this.state.open} onClose={this.handleClose} TransitionComponent={Transition}>       
         {this.state.id ? 
-            (!this.state.status ? <h1>Sorry WorkFlow not yet initialised</h1>
+            (!this.state.status ? (<div>
+					<AppBar className={classes.appBar}>
+					    <Toolbar className={classes.toolbar}>
+						<Box display='flex' flexGrow={1}>
+						<Button edge="start" autoFocus color="inherit" onClick={this.handleClose} startIcon={<ArrowBackIosIcon/>}>
+						    Go Back
+						</Button>
+						</Box>
+					    </Toolbar>
+					</AppBar>
+					
+       					 <div className={classes.appBarSpacer} />
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<Typography component="h1" variant="h5" align="center">
+				 	    Workflow Not Found 
+				 	 </Typography>
+				   </div>)
+
+
             : ( !this.state.updateWorkFlow ? 
             (<div>
                 <AppBar className={classes.appBar}>
@@ -288,7 +312,7 @@ handleSearch = (curentWorkflow) =>{
                             Go Back
                         </Button>
                         </Box>
-                        { (this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") ? null
+                        { ((this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") || (this.state.workflow.User !== this.props.userObj.username ))? null
                             :(<div >
                         <ButtonGroup variant="text" >
                             <Box pr={3}>
