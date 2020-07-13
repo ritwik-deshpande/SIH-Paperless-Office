@@ -75,7 +75,7 @@ const MainComponent= ({userObj}) =>{
 
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <OverDue />
-                <Grid item lg={10} sm={6} xl={3} xs={12}>          
+                </Grid >          
 			
             
                 
@@ -83,11 +83,16 @@ const MainComponent= ({userObj}) =>{
                 <PagesSaved/>
                 </Grid>
         	
-		            <Todo />
+		           
                 <Grid item lg={10} md={6} xl={3} xs={12}>
                   <NewsFeed />
                 </Grid>
               </Grid>
+
+		<br/>
+		<br/>
+		<br/>
+		 <Todo />
 
               <Box pt={4}>
                 <Copyright />
