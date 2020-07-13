@@ -41,6 +41,7 @@ import {messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
 import Calendar from './Calendar/Calendar'
 import AnalyticDashboard from './Analytics/AnalyticDashbard';
+import FirepadEditor from './TextEditor/Firepad';
 
 export default function Dashboard({userObj, logout}) {
 
@@ -236,6 +237,7 @@ export default function Dashboard({userObj, logout}) {
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
+      <Route exact path='/editor' component={() => <FirepadEditor userObj={userObj} />}/>
      
         </main>
       </div>
