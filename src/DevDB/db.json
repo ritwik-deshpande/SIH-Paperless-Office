@@ -69,25 +69,6 @@
       ]
     }
   ],
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    },
-    {
-      "id": 2,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
   "my_workflows": [
     {
       "id": "20409",
@@ -122,6 +103,20 @@
           "subject": "SIH Reimbursement",
           "nameofSender": "Ritwik Deshpande",
           "ts": "Jul 9 at 14:46, 2020",
+          "status": "Pending"
+        },
+        {
+          "id": "157v0",
+          "subject": "SIH Reimbursement",
+          "nameofSender": "Ritwik Deshpande",
+          "ts": "Jul 12 at 22:37, 2020",
+          "status": "Pending"
+        },
+        {
+          "id": "50v0",
+          "subject": "Student President",
+          "nameofSender": "Ritwik Deshpande",
+          "ts": "Jul 12 at 22:37, 2020",
           "status": "Pending"
         }
       ]
@@ -318,7 +313,9 @@
           "title": "Pending Approval for Application of Sports Secretary",
           "content": "Chaitya Chheda BT16CSE073 Stage 1 request for approval for application for Sports Secretary is yet to be approved by you. Due data 07/07/2020"
         }
-      }
+      },
+      "no_of_approvals": 1,
+      "avg_response_time": 4819649
     },
     {
       "id": "AP003",

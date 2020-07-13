@@ -38,15 +38,7 @@ class CreatePDF extends React.Component{
     comments : null,
 	workflow : null,
     signatures : null
-    // comments : [{id:1, name:'Dustin Henderson', message: 'never ending story. turn around and look at what tyou see.<br/>In her face something never ending story. turn around and look at what tyou see.<br/>In her face something'},
-    // {id:2, name: 'Will Byers', message: 'Approved by Chief PD'},
-    // {id:3, name: 'Mike Wheeler', message: 'Threatened by the party'},
-    // {id:4, name:'Dustin Henderson', message: 'never ending story'},
-    // {id:5, name: 'Will Byers', message: 'Approved by Chief PD'},
-    // {id:6, name: 'Mike Wheeler', message: 'Threatened by the party'}
-    // ]
-    };
-    console.log("in Create PDF")
+    }
   }
 
   componentDidMount(){
@@ -171,7 +163,14 @@ class CreatePDF extends React.Component{
 				else{
 					nextNodes = currentNode.nextNodes
 					this.state.workflow.nextNodes = nextNodes
-				}
+        }
+        var reqs = []
+        console.log("Next nide ki value : " + nextNodes)
+        this.state.workflow.nextNodes.forEach((value) => {
+            console.log(value)
+            reqs = Object.keys((this.state.workflow.FlowChart)[value].approvedBy)
+          })
+          this.state.workflow.send_requests = reqs;
 			}
       		this.state.workflow.FlowChart[current_node_key] = currentNode
 		}
@@ -199,15 +198,25 @@ class CreatePDF extends React.Component{
 				console.log("Adding Next Nodes")
 				if(nextNode.type === "End"){
 					 this.state.workflow.status = "Completed"
-					 this.state.workflow.nextNodes = []
+           this.state.workflow.nextNodes = []
+           this.state.send_requests = []
 					 this.state.workflow.end_timestamp = Timestamp.getTimestamp()
 				}
 				else{
 					nextNodes = nextNode.nextNodes
-					this.state.workflow.nextNodes = nextNodes
-				}
+          this.state.workflow.nextNodes = nextNodes
+        
+        }
+        var reqs = []
+        console.log("Next nide ki value : " + nextNodes)
+        this.state.workflow.nextNodes.forEach((value) => {
+            console.log(value)
+            reqs = Object.keys((this.state.workflow.FlowChart)[value].approvedBy)
+          })
+          this.state.workflow.send_requests = reqs;
 				
-			}
+      }
+      
 	    this.state.workflow.FlowChart[next_node_key] = nextNode
 	
 	    this.state.workflow.Path = path
