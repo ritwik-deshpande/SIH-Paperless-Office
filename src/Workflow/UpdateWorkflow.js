@@ -14,7 +14,8 @@ import { connect } from 'react-redux'
 import Timestamp from '../utils/TimeStamp'
 import WorkflowNode from '../utils/WorkflowNode'
 import _ from 'lodash'
-
+import useStyles from '../Style';
+import {withStyles} from '@material-ui/core'
 
 class UpdateWorkflow extends Component
 {
@@ -70,7 +71,7 @@ class UpdateWorkflow extends Component
 			 payload.id = old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
 			 payload.FormData = this.state.FormData
 			 payload["send_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
-			 payload.Feedback =  "Form Data Updated"
+			 payload.Feedback =  "Resumed Workflow, Form Data Updated"
 			 alert_msg = "Workflow Updated with same current Progress.\n Your new Workflow id is"+payload.id
 		}
 		else{	
@@ -100,11 +101,11 @@ class UpdateWorkflow extends Component
 			  console.log("The Payload",payload);
 			  payload["send_requests"] = WorkflowNode.getApprovers(payload.FlowChart[payload.Path[0]])
 			  
-				payload.Feedback =  "Workflow Initiated"
+				payload.Feedback =  "New Workflow Initiated"
 				alert_msg = "Workflow Updated and Restarted .\n Your new Workflow id is"+payload.id
 		 }
 		 
-		 payload.Feedback_ts = Timestamp.getTimestamp()
+		 payload.Feedback_ts = Timestamp.getTSObj()
 		 
 		 old_object.Feedback = "Updated to version "+payload.id
 		 old_object.Feedback_ts = Timestamp.getTSObj()
@@ -167,12 +168,17 @@ class UpdateWorkflow extends Component
 	  }
 	
 	render(){
-
+		const {classes} = this.props
 		return(
 		<div>
-			<Container maxWidth="lg">
-			<h2> DEFAULT WORKFLOW TEMPLATE</h2>
 			
+      			
+			<Container maxWidth="lg">
+			
+			<br/>
+			<br/>
+			<br/>
+			<br/>
 			<div>
             
             <FormComponent title={this.state.selectedTitle} id={this.state.formId} save={this.saveFormData} />
@@ -205,5 +211,5 @@ const mapStatetoProps = (state) =>{
       loggedIn : state.auth.loggedIn
     }
   }
-  export default connect(mapStatetoProps, null)(UpdateWorkflow);
+  export default connect(mapStatetoProps, null)(withStyles(useStyles)(UpdateWorkflow));
 

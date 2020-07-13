@@ -11,7 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import NodeStatus from './NodeStatus'
 
 import useStyles from '../Style'
-
+import { Box, Grid } from '@material-ui/core';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
 
@@ -86,7 +88,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
      	// 	)
      	// }
       return(
-        <Typography component="h1" variant="h4" align="center">
+        <Typography component="h1" variant="h5" align="center">
 			 	    Current Status : {workflow.status}
 			 	 </Typography>
       )
@@ -98,16 +100,16 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg">
         
-        <Paper className={classes.paper} > 
-         <div style={{ width: "1000" }}>
-          <Typography component="h1" variant="h4" align="center" >
+        {/* <Paper className={classes.paper} >  */}
+         {/* <div style={{ width: "1000" }}> */}
+          <Typography component="h1" variant="h4" align="center" className={classes.title}>
             {title}
           </Typography>
-          </div>
-	  {
+          {/* </div> */}
+          {
 
-		getStatus()
-	  }
+          getStatus()
+          }
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
               <Step key={label}>
@@ -124,16 +126,43 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
 
 		
 		
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
+                <div>
+                  {/* <Box display='flex' flexGrow={1}> */}
+                  <Grid
+                      container
+                      direction="row"
+                      justify="space-between"
+                      alignItems="center"
+                    >
+                    <Button 
+                      onClick={handleBack} 
+                      variant="contained"
+                      color="primary"
+                      disabled={activeStep === 0}
+                      startIcon={<NavigateBeforeIcon/>}>
+                        Back
+                    </Button>
+                  {/* </Box>
+                  <Box> */}
+                    <Button
+                      onClick={handleNext} 
+                      variant="contained"
+                      color="primary"
+                      disabled={activeStep === steps.length - 1}
+                      endIcon={<NavigateNextIcon/>}>
+                        Next
+                    </Button>
+                  {/* </Box> */}
+                  </Grid>
+                  {/* {activeStep !== 0 && (
                     <Button onClick={handleBack} variant="contained"
                     color="primary"
                     className={classes.button}>
                       Back
                     </Button>
-                  )}
+                  )} */}
                   
-                    {activeStep === steps.length - 1  ? 
+                    {/* {activeStep === steps.length - 1  ? 
                     
                       <Button
                     variant="contained"
@@ -149,7 +178,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                     style = {{marginLeft :1000}}
                     onClick={handleNext}
                     className={classes.button}
-                  >Next </Button>}
+                  >Next </Button>} */}
 		<div>
 		<br/>
 		
@@ -159,7 +188,7 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
                 </div> 
               </div>
           </React.Fragment>
-        </Paper>
+        {/* </Paper> */}
         </Container>
 
 

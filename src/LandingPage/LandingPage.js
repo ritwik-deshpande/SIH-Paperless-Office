@@ -39,7 +39,7 @@ const MainComponent= ({userObj}) =>{
         return(
 
 		<main>
-           <div className={classes.appBarSpacer} />
+           <div/>
             <Container maxWidth="lg" className={classes.container}>
               <Grid container spacing={10}>
                 {/* On Time */}

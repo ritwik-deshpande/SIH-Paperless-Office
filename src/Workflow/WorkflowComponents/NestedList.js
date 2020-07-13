@@ -21,11 +21,17 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import IconButton from '@material-ui/core/IconButton';
-
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+//import useStyles from '../../Style'
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -73,16 +79,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function NestedList({menu,Click}) {
     const classes = useStyles();
+    const [openBox, setOpenBox] = React.useState(false);
 
+    const handleClose = () => {
+      setOpenBox(false);
+    };
 
     const json = menu.contents
-
 
     console.log("The json is ")
     console.log(menu)
     const [open, setOpen] = React.useState("")
     const handleClick = (key) => {
-      
+      setOpenBox(true)
       if(open.localeCompare(key) === 0)
       {
         setOpen("")
@@ -95,8 +104,8 @@ export default function NestedList({menu,Click}) {
     const renderListItem = (obj) =>{
       return(obj.map(form =>{
         return(
-         <div>
-          <div className={classes.appBarSpacer} />
+        //  <div>
+        //   {/* <div className={classes.appBarSpacer} /> */}
         <div key={form.id}>
         <ListItem button className={classes.nested} onClick={()=>Click(form.id,form.title)}>
           <ListItemIcon>
@@ -104,7 +113,7 @@ export default function NestedList({menu,Click}) {
           </ListItemIcon>
           <ListItemText primary={form.title} />
         </ListItem>
-      </div>
+      {/* </div> */}
       </div>
       )}))
     }
@@ -134,8 +143,6 @@ export default function NestedList({menu,Click}) {
                     Create From Scratch
                   </Typography>
               </CardContent>
-             
-               
             </Card>)
         : (<Card>
         <CardActionArea>
@@ -151,48 +158,45 @@ export default function NestedList({menu,Click}) {
           </CardContent>
         </CardActionArea>
         <GridListTile>
-        <ListItem button onClick={() => handleClick(key)}>
-          <ListItemIcon>
-          </ListItemIcon>
-            <InboxIcon />
-          <ListItemText primary={key} />
-          {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>}
-        </ListItem>
-
-        <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-        
-            { renderListItem(json[key]) }
-
-          </List>
-        </Collapse>
-      </GridListTile> 
-      </Card>)}
-            
-          </div>
-
-          );
-        })}
-        
-        
-
-        {/* <ListItem button onClick={handleClick}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Hostel Section" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+                                 
+            {/* <ListItem button onClick={() => handleClick(key)}> */}
+            <ListItem button onClick={() => handleClick(key)}>
               <ListItemIcon>
-                <StarBorder />
               </ListItemIcon>
-              <ListItemText primary="Starred" />
+                <InboxIcon />
+              <ListItemText primary={key} />
+              {/* {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>} */}
             </ListItem>
-          </List>
-      </Collapse> */}
+
+            {/* <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+            
+                { renderListItem(json[key]) }
+
+              </List>
+            </Collapse> */}
+            { open.localeCompare(key) === 0 ? 
+            <Dialog onClose={handleClose} scroll='paper' aria-labelledby="customized-dialog-title" open={openBox}>
+              <DialogTitle >
+                <Typography variant="h6" display='inline'>{key}</Typography>
+                <IconButton className={classes.closeButton} onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              </DialogTitle>
+              <DialogContent dividers>
+                <List component="div">
+                  { renderListItem(json[key]) }
+                </List>
+              </DialogContent>
+            </Dialog>
+             : ""} 
+          </GridListTile> 
+          </Card>)}
+                               
+                             
+          </div>) })}
+        
+        
        </GridList> 
       </div>
     );
