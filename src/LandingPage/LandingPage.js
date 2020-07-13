@@ -10,8 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import FormBuilder from 'react-form-builder2'
 import CustomForm from '../Forms/CustomForms'
 import Calendar from '../Calendar/Calendar'
+
 import NumberCard from '../Analytics/NumberCard'
 import PagesSaved from './pagesSaved'
+
+import Todo from '../TODO/Main'
+
+
 import {
   
   OnTime,
@@ -67,14 +72,18 @@ const MainComponent= ({userObj}) =>{
                 
                 
                 {/* Over Due */}
+
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <OverDue />
-                </Grid>
+                <Grid item lg={10} sm={6} xl={3} xs={12}>          
+			
+            
                 
                 <Grid item lg={6} sm={6} xl={3} xs={12}>
                 <PagesSaved/>
                 </Grid>
-        
+        	
+		            <Todo />
                 <Grid item lg={10} md={6} xl={3} xs={12}>
                   <NewsFeed />
                 </Grid>
