@@ -322,8 +322,7 @@ handleSearch = (curentWorkflow) =>{
                 </Box>
             </Toolbar>
         </AppBar>
-        <UpdateWorkflow  selectedId = {this.state.workflow.componentId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />  
-        
+        <UpdateWorkflow  selectedTitle= {this.state.workflow.Title} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
         </div>) ) )
         
             : null}

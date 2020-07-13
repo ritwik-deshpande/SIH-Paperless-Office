@@ -15,18 +15,7 @@ import { Box, Grid } from '@material-ui/core';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          DigiDocs 2020
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+
 
 
 
@@ -201,7 +190,6 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
           </React.Fragment>
         {/* </Paper> */}
         </Container>
-        <Copyright />
 
 
       </div> 

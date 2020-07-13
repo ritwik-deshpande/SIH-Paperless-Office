@@ -44,6 +44,11 @@ export default {
 
 	return new Date().getTime()
    },
+   getTSID(){
+    let timestamp = new Date().getUTCMilliseconds();
+    console.log(timestamp)
+    return timestamp
+  }  ,
 
     conversion(ms) { 
   

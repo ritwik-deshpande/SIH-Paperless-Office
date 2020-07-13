@@ -20,6 +20,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import IconButton from '@material-ui/core/IconButton';
 
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -32,26 +34,38 @@ import CloseIcon from '@material-ui/icons/Close';
 import { withStyles } from '@material-ui/core/styles';
 import useStyles from '../../Style'
 
-// const useStyles = makeStyles(theme => ({
-    // root: {
-    //   width: "150%",
-    //   maxWidth: 300,
-    //   backgroundColor: theme.palette.background.paper,
-    // },
-    // nested: {
-    //   width: "100%",
-    //   paddingLeft: theme.spacing(4),
-    // },
-    // gridList: {
-    //   width: 1150,
-    //   height: 850,
-    //   // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    //   transform: 'translateZ(0)',
-    // },
-    // media: {
-    //   height: 100,
-    // },
-  // }));
+
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      width: "150%",
+      maxWidth: 300,
+      backgroundColor: theme.palette.background.paper,
+    },
+    nested: {
+      width: "100%",
+      paddingLeft: theme.spacing(4),
+    },
+    gridList: {
+      width: 1150,
+      height: 850,
+      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+      transform: 'translateZ(0)',
+    },
+    media: {
+      height: 100,
+    },
+    button:{
+     
+    height: 50,
+    width: 50,
+    },
+    newCard: {
+      height: 200,
+      maxWidth: 300,
+      backgroundColor: "#FFF",
+    }
+  }));
   
 // const json ={
 //   New:[{id : 1, title: "Start a Custom WorkFlow"}],
@@ -88,7 +102,7 @@ export default function NestedList({menu,Click}) {
         setOpen(key)
       }
     };
-    
+
     const renderListItem = (obj) =>{
       return(obj.map(form =>{
         return(
@@ -120,20 +134,33 @@ export default function NestedList({menu,Click}) {
           {Object.keys(json).map(key => {
           return (
           <div key={key}>
-            <Card>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={Logo}
-                title="Create Workflow"
-              />
+          {key === 'New' ? 
+            (<Card className={classes.newCard}>
+                <IconButton aria-label="previous" onClick={()=>Click(key.id, "SCW")}>
+                  <AddCircleIcon className={classes.button} color="primary" fontSize='large'/>
+                </IconButton>
+            
               <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  info about type of workflows
-                </Typography>
+                  <Typography variant="subtitle1" color="#000" align = 'center'>
+                    Create From Scratch
+                  </Typography>
               </CardContent>
-            </CardActionArea>
-            <GridListTile>
+            </Card>)
+        : (<Card>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={Logo}
+            title="Create Workflow"
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              info about type of workflows
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <GridListTile>
+                                 
             {/* <ListItem button onClick={() => handleClick(key)}> */}
             <ListItem button onClick={() => handleClick(key)}>
               <ListItemIcon>
@@ -166,11 +193,10 @@ export default function NestedList({menu,Click}) {
             </Dialog>
              : ""} 
           </GridListTile> 
-          </Card>
-          </div>
-
-          );
-        })}
+          </Card>)
+                               
+                             
+          </div>)})}
         
         
 
