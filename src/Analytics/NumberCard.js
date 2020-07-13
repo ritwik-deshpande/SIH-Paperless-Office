@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     },
     gridList: {
       width: 1150,
-      height: 850,
+      height: 300,
       // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
       transform: 'translateZ(0)',
     },
@@ -41,8 +41,8 @@ export default function NumberCard({data}) {
     const classes = useStyles();
     return(
         <>
-        <h1 style={{marginTop:10}}>test api </h1>
-        <GridList cellHeight={500} spacing={30} cols={4} className={classes.gridList}>
+        <h1 style={{marginTop:10}}></h1>
+        <GridList cellHeight={200} spacing={30} cols={4} className={classes.gridList}>
         {Object.keys(data).map(key => {
           return (
           <div key={key}>

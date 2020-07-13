@@ -10,8 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import FormBuilder from 'react-form-builder2'
 import CustomForm from '../Forms/CustomForms'
 import Calendar from '../Calendar/Calendar'
-
+import NumberCard from '../Analytics/NumberCard'
+import PagesSaved from './pagesSaved'
 import {
+  
   OnTime,
   DueSoon,
   OverDue,
@@ -32,6 +34,13 @@ function Copyright() {
       </Typography>
     );
   }
+
+  const numberCardData = {
+    pending : 24,
+    completed : 100,
+    terminated : 25,
+    active : 5
+}
 const MainComponent= ({userObj}) =>{
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -41,9 +50,13 @@ const MainComponent= ({userObj}) =>{
 		<main>
            <div/>
             <Container maxWidth="lg" className={classes.container}>
+            
               <Grid container spacing={10}>
+              <Grid item lg={10} md={6} xl={3} xs={12}>
+                  <NumberCard  data={numberCardData}/>
+                </Grid>
                 {/* On Time */}
-                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                {/* <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <OnTime />
                 </Grid>
 
@@ -52,12 +65,14 @@ const MainComponent= ({userObj}) =>{
                   <DueSoon />
                 </Grid>
                 
-                {/* Over Due */}
-                {/*<Grid item lg={3} sm={6} xl={3} xs={12}>
-                  <OverDue />
-                </Grid>*/}
                 
-                <Grid item lg={10} sm={6} xl={3} xs={12}>
+                {/* Over Due */}
+                <Grid item lg={3} sm={6} xl={3} xs={12}>
+                  <OverDue />
+                </Grid>
+                
+                <Grid item lg={6} sm={6} xl={3} xs={12}>
+                <PagesSaved/>
                 </Grid>
         
                 <Grid item lg={10} md={6} xl={3} xs={12}>
