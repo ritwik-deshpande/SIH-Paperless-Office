@@ -62,7 +62,7 @@ class MyWorkflow extends React.Component{
             
             (<WorkflowTable Click={this.handleClick} userObj={this.props.userObj} myworkflowsTable={this.state.tableData}/>)
             
-        : null}
+        : <div> Fetching My Workflows </div>}
             
             
             </div>

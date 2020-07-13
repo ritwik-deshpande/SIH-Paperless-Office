@@ -13,18 +13,7 @@ import NodeStatus from './NodeStatus'
 import useStyles from '../Style'
 
 
-function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          DigiDocs 2020
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+
 
 
 
@@ -172,7 +161,6 @@ export default function WorkflowStatus({workflow ,title,steps,nodesList}) {
           </React.Fragment>
         </Paper>
         </Container>
-        <Copyright />
 
 
       </div> 

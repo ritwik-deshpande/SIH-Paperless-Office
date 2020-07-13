@@ -12,6 +12,7 @@ import CustomForm from '../Forms/CustomForms'
 import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
 import { connect } from 'react-redux'
+import WorkflowNode from '../utils/WorkflowNode'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +45,7 @@ class StartWrkflwComponent extends Component
   constructor(props){
       super(props);
       this.state = {
-        id : this.getID(),
+        id : Timestamp.getTSID(),
         customWorkflow:"Empty",
         anchorEl:null,
         menu:null,
@@ -60,11 +61,7 @@ class StartWrkflwComponent extends Component
       console.log(this.state);
   }
   
-  getID(){
-    let timestamp = new Date().getUTCMilliseconds();
-    console.log(timestamp)
-    return timestamp
-  }  
+  
 
 
   initPath(){
@@ -85,6 +82,8 @@ class StartWrkflwComponent extends Component
 	return Path
 
   }
+  
+  
 	
 
   postRequest = () =>{
@@ -118,9 +117,12 @@ class StartWrkflwComponent extends Component
         "nextNodes":[],
         "Signatures":{},
         "status" : "active",
-        "begin_timestamp" : Timestamp.getTimestamp(),
-        "end_timestamp" : "",
-        "componentId": this.state.selectedId,
+	"begin_timestamp" : Timestamp.getTimestamp(),
+	"end_timestamp" : "",
+	"formId": this.state.selectedId,
+	"flowchartId": this.state.selectedId,
+        "Feedback" : "",
+	"Feedback_ts": 0,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
 
@@ -129,7 +131,12 @@ class StartWrkflwComponent extends Component
         "send_requests" : reqs
 
       }
+      payload["send_requests"] = WorkflowNode.getApprovers(payload.FlowChart[payload.Path[0]])
       console.log("The Payload",payload);
+
+      payload.Feedback =  "Workflow Initiated"
+      payload.Feedback_ts = Timestamp.getTimestamp()
+
 
       api.workFlow().post(payload).then(res =>{
       console.log(res);
@@ -284,10 +291,14 @@ class StartWrkflwComponent extends Component
       console.log(this.state)
 
       if(this.state.showFormandWrkflw){
-
-        if(this.state.selectedTitle.localeCompare("Start a Custom WorkFlow") == 0){
+	console.log("this .title", this.state.selectedTitle)
+        if(this.state.selectedTitle.localeCompare("SCW") == 0){
+		console.log("Inside CUstom component")
             return (<div>
-     
+		<br/>
+     		<h2> BUILD YOUR OWN WORKFLOW </h2>
+		<br/>
+		<br/>
          <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth
 
            onChange = {this.handleChange}
