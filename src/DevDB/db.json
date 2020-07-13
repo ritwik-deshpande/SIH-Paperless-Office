@@ -943,17 +943,94 @@
       ],
       "nextNodes": [],
       "Signatures": {},
-      "status": "active",
+      "status": "terminated",
       "begin_timestamp": "Jul 13 at 0:33, 2020",
-      "end_timestamp": "",
+      "end_timestamp": "Jul 13 at 12:7, 2020",
       "formId": 383,
       "flowchartId": 383,
-      "Feedback": "Workflow Initiated",
-      "Feedback_ts": "Jul 13 at 0:33, 2020",
+      "Feedback": "Updated to version 348v1",
+      "Feedback_ts": 1594622264835,
       "User": "rd",
       "Title": "Fees Refund",
       "id": "348v0",
       "send_requests": [
+        "AP001",
+        "AP003"
+      ],
+      "cancel_requests": [
+        "AP001",
+        "AP003"
+      ]
+    },
+    {
+      "FormData": {
+        "FullName": "Ritwik",
+        "department": "CSE",
+        "Gender": "Male",
+        "Reason": "COVID' 19",
+        "types": [
+          "Mess"
+        ]
+      },
+      "FlowChart": {
+        "node1": {
+          "approvedBy": {
+            "AP001": false,
+            "AP003": false
+          },
+          "timestamp": {
+            "AP001": null,
+            "AP003": null
+          },
+          "nextNodes": [
+            "78fb2fed-324b-4a3b-9fa9-b0bf3c433518"
+          ],
+          "type": "Start"
+        },
+        "78fb2fed-324b-4a3b-9fa9-b0bf3c433518": {
+          "approvedBy": {
+            "AP002": false
+          },
+          "nextNodes": [],
+          "timestamp": {
+            "AP002": null
+          },
+          "type": "Intermediate Nodes"
+        },
+        "node2": {
+          "approvedBy": {
+            "HOD001": false
+          },
+          "timestamp": {
+            "HOD001": null
+          },
+          "nextNodes": [
+            "78fb2fed-324b-4a3b-9fa9-b0bf3c433518"
+          ],
+          "type": "End"
+        }
+      },
+      "Comments": [],
+      "Path": [
+        "node1"
+      ],
+      "nextNodes": [],
+      "Signatures": {},
+      "status": "terminated",
+      "begin_timestamp": "Jul 13 at 0:33, 2020",
+      "end_timestamp": "Jul 13 at 12:52, 2020",
+      "formId": 383,
+      "flowchartId": 383,
+      "Feedback": "Terminated by User",
+      "Feedback_ts": 1594624932905,
+      "User": "rd",
+      "Title": "Fees Refund",
+      "id": "348v1",
+      "send_requests": [
+        "AP001",
+        "AP003"
+      ],
+      "cancel_requests": [
         "AP001",
         "AP003"
       ]

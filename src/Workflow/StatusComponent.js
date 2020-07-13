@@ -24,7 +24,7 @@ import Typography from '@material-ui/core/Typography';
 import { AppBar, withStyles, Toolbar, ButtonGroup, Box, TextField, Grid } from '@material-ui/core'
 import useStyles from '../Style';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import WorkflowNode from '../utils/WorkflowNode'
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
@@ -104,6 +104,12 @@ class StatusComponent extends Component {
     handleEnd = () => {
 	this.state.workflow.status = "terminated"
 	this.state.workflow.end_timestamp = Timestamp.getTimestamp()
+	this.state.workflow.Feedback = "Terminated by User"
+	this.state.workflow.Feedback_ts = Timestamp.getTSObj()
+	let Path = this.state.workflow.Path
+
+        this.state.workflow["cancel_requests"] = WorkflowNode.getApprovers(this.state.workflow.FlowChart[Path[Path.length - 1]])
+	
 	 api.workFlow().put(this.state.workflow.id,this.state.workflow).then( res => {
 	    	console.log("Updated New Workflow", res)
 		alert("WorkFlow Terminated !")
@@ -157,7 +163,7 @@ handleSearch = (curentWorkflow) =>{
         this.setState({
         id:id,
         })
-            api.getWorkFlow().getByid(id).then(res => {
+            api.workFlow().getByid(id).then(res => {
                 //console.log('The data received is',res.data)
                 if(res && res.data)
                 {this.setState({
@@ -282,7 +288,7 @@ handleSearch = (curentWorkflow) =>{
                             Go Back
                         </Button>
                         </Box>
-                        { this.state.workflow.status === "terminated" ? null
+                        { (this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") ? null
                             :(<div >
                         <ButtonGroup variant="text" >
                             <Box pr={3}>
