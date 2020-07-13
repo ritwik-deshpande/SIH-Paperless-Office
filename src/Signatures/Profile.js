@@ -66,7 +66,7 @@ export default function Profile({userObj}) {
 
 	 <div >
 
-      	<div className={classes.appBarSpacer} />
+      	{/* <div className={classes.appBarSpacer} /> */}
 
 
 	<Typography gutterBottom variant="h5" component="h1" style={{ margin: 20 }}>

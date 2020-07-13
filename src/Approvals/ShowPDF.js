@@ -117,14 +117,14 @@ export default function ShowPDF({formData, signatures, title }){
           </Document> } 
   fileName='output.pdf'>
     <br/>
-    <Button
+    {/* <Button
           variant="contained"
           color="secondary"
           // className={this.classes.button}
           startIcon={<GetAppIcon />}
         >
       Download
-    </Button>
+    </Button> */}
   </PDFDownloadLink>
 
     </>)
