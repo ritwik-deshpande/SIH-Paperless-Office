@@ -32,6 +32,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "../Style";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import WorkflowNode from '../utils/WorkflowNode'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -102,6 +103,10 @@ class StatusComponent extends Component {
 	handleEnd = () => {
 		this.state.workflow.status = "terminated";
 		this.state.workflow.end_timestamp = Timestamp.getTimestamp();
+		this.state.workflow.Feedback = "Terminated by User"
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
+		let Path = this.state.workflow.Path
+		this.state.workflow["cancel_requests"] = WorkflowNode.getApprovers(this.state.workflow.FlowChart[Path[Path.length - 1]])
 		api
 			.workFlow()
 			.put(this.state.workflow.id, this.state.workflow)
@@ -160,9 +165,10 @@ class StatusComponent extends Component {
 		this.state.open = true;
 		this.setState({
 			id: id,
+			status : null
 		});
 		api
-			.getWorkFlow()
+			.workFlow()
 			.getByid(id)
 			.then((res) => {
 				//console.log('The data received is',res.data)
@@ -171,8 +177,8 @@ class StatusComponent extends Component {
 						workflow: res.data,
 						title: res.data.Title,
 						username: res.data.User,
-					});
-					this.init();
+					}, ()=> { this.init() } );
+					
 				}
 			});
 	};
@@ -197,55 +203,15 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				{/* <h1>API test</h1> */}
-				{/* <ToastContainer
-                        autoClose={2000}
-                        hideProgressBar={true}
-                        position={toast.POSITION.BOTTOM_RIGHT}
-                    /> */}
-
-				{/* <ListItem alignItems="flex-start">
-        
-        <ListItemText primary={ "Show My Workflows"} />
-        <IconButton color="primary" onClick={()=>this.Click()}>
-                <ExpandMoreIcon style={{ fontSize: 40 }} />
-                </IconButton>
-      </ListItem> */}
-				{/* <br></br> */}
-				{/* <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<ExpandMoreIcon style={{ fontSize: 40 }} />}
-                    onClick={()=>this.Click()}
-                    style= {
-                        {
-                            
-                        }
-                    }
-                >
-                    Show My Workflows
-                </Button> */}
-				{/* <br/><br/> */}
-
+			
 				<MyWorkflow
 					userObj={this.props.userObj}
 					handleSubmit={this.handleSearch}
 				/>
-				{/* {this.state.myWorkflow ? 
-                <MyWorkflow userObj={this.props.userObj} handleSubmit={this.handleSearch}/>
-                
-    :null} */}
-				{/* <form className={classes.form} 
-                noValidate autoComplete="off"> */}
+			
 				<Box m={2} p={2}>
 					<Grid container spacing={3}>
-						{/* <Input //className={classes.button} 
-                    onChange = {this.handleChange}
-                    value = {this.state.id}
-                    name='comment' 
-                    fullWidth='true'
-                    placeholder='Add the id you wanna search for' 
-                    inputProps={{ 'aria-label': 'description' }} /> */}
+						
 						<Grid item xs>
 							{/* <Box m={2} p={2}> */}
 							<TextField
@@ -286,8 +252,26 @@ class StatusComponent extends Component {
 						},
 					}}>
 					{this.state.id ? (
-						!this.state.status ? (
-							<h1>Sorry WorkFlow not yet initialised</h1>
+						!this.state.status ? (<div>
+					<AppBar className={classes.appBar}>
+					    <Toolbar className={classes.toolbar}>
+						<Box display='flex' flexGrow={1}>
+						<Button edge="start" autoFocus color="inherit" onClick={this.handleClose} startIcon={<ArrowBackIosIcon/>}>
+						    Go Back
+						</Button>
+						</Box>
+					    </Toolbar>
+					</AppBar>
+
+       					 <div className={classes.appBarSpacer} />
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<Typography component="h1" variant="h5" align="center">
+				 	    Workflow Not Found 
+				 	 </Typography>
+				   </div>
 						) : !this.state.updateWorkFlow ? (
 							<div className={classes.root}>
 								<AppBar className={classes.appBar}>
@@ -302,7 +286,7 @@ class StatusComponent extends Component {
 												Go Back
 											</Button>
 										</Box>
-										{this.state.workflow.status === "terminated" ? null : (
+										{(this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") || (this.state.workflow.User !== this.props.userObj.username ) ? null : (
 											<div>
 												<ButtonGroup variant="text">
 													<Box pr={3}>
@@ -343,11 +327,7 @@ class StatusComponent extends Component {
 										</Box>
 									</Toolbar>
 								</AppBar>
-								<UpdateWorkflow
-									selectedId={this.state.workflow.componentId}
-									wrkflw={this.state.workflow}
-									onUpdate={this.handleOnUpdate}
-								/>
+								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
 							</div>
 						)
 					) : null}

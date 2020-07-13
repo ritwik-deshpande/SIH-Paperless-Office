@@ -27,7 +27,7 @@ class UpdateWorkflow extends Component
         FlowChart : null,
         selectedTitle : this.props.selectedTitle,
         formId : this.props.formId,
-	    flowchartId :this.props.flowchartId,
+	flowchartId :this.props.flowchartId,
 	    
       };
       console.log(this.state);
@@ -185,7 +185,7 @@ class UpdateWorkflow extends Component
 
             <br/>
 
-            <DisplayWorkflow setoriginalFlowchart = {this.handler} title={this.state.selectedTitle} id={this.state.flowchartId} save={this.saveFlowChartData}/>
+            <DisplayWorkflow title={this.state.selectedTitle} id={this.state.flowchartId} save={this.saveFlowChartData}/>
          <br/>
             <Button
               variant="contained"

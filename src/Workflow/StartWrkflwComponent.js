@@ -131,7 +131,6 @@ class StartWrkflwComponent extends Component
         "send_requests" : reqs
 
       }
-      payload["send_requests"] = WorkflowNode.getApprovers(payload.FlowChart[payload.Path[0]])
       console.log("The Payload",payload);
 
       payload.Feedback =  "Workflow Initiated"

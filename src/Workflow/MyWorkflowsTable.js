@@ -92,8 +92,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 						onClick: (event, rowData) => {
 							alert(
 								"You want to view workflow " +
-									rowData.id +
-									". Please wait kaps is working on it"
+									rowData.id
 							);
 
 							Click(rowData.index_no);

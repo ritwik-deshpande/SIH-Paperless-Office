@@ -165,7 +165,14 @@ class CreatePDF extends React.Component {
 						nextNodes = currentNode.nextNodes;
 						this.state.workflow.nextNodes = nextNodes;
 					}
-				}
+					  
+					var reqs = []
+					console.log("Next nide ki value : " + nextNodes)
+					this.state.workflow.nextNodes.forEach((value) => {
+					    console.log(value)
+					    reqs = Object.keys((this.state.workflow.FlowChart)[value].approvedBy)
+					  })
+					  this.state.workflow.send_requests = reqs;}
 				this.state.workflow.FlowChart[current_node_key] = currentNode;
 			}
 		} else {
@@ -188,16 +195,29 @@ class CreatePDF extends React.Component {
 				console.log("Adding Next Nodes");
 				if (nextNode.type === "End") {
 					this.state.workflow.status = "Completed";
-					this.state.workflow.nextNodes = [];
+					this.state.workflow.nextNodes = []
+           				this.state.send_requests = []
 					this.state.workflow.end_timestamp = Timestamp.getTimestamp();
 				} else {
 					nextNodes = nextNode.nextNodes;
 					this.state.workflow.nextNodes = nextNodes;
 				}
+
+			
+				var reqs = []
+				console.log("Next nide ki value : " + nextNodes)
+				this.state.workflow.nextNodes.forEach((value) => {
+				    console.log(value)
+				    reqs = Object.keys((this.state.workflow.FlowChart)[value].approvedBy)
+				  })
+				this.state.workflow.send_requests = reqs;
+
+
 			}
 			this.state.workflow.FlowChart[next_node_key] = nextNode;
 
 			this.state.workflow.Path = path;
+			
 		}
 
 		this.state.workflow.Signatures = this.state.signatures;
