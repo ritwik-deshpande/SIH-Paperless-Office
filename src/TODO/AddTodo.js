@@ -33,14 +33,9 @@ class AddTodo extends Component {
 	}
 
 	render() {
-		 const {
-      handleClick, 
-    } = this.props;
+		const { handleClick,} = this.props;
 		return(
 				<div >
-
-
-
 				<Grid container spacing={3}>
 						
 						<Grid item xs>

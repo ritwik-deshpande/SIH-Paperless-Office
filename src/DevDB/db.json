@@ -113,6 +113,23 @@
       ]
     }
   ],
+  "todo_list": [
+    {
+      "id": "20409",
+      "items": [
+        {
+          "id": "59c1a942-c9fd-40b9-9338-2f2e785579e2",
+          "task": "Library Registration",
+          "checked": true
+        },
+        {
+          "id": "ad4461c2-a096-4e2c-9e09-45c617645713",
+          "task": "Course Registration",
+          "checked": false
+        }
+      ]
+    }
+  ],
   "pending_requests": [
     {
       "id": "AP001",

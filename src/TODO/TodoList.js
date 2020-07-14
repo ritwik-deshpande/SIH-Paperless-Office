@@ -9,11 +9,7 @@ class TodoList extends Component {
     super(props);
   }
   render() {
-    const {
-      handleRemove,
-      handleCheck,
-      todos,
-    } = this.props;
+    const {handleRemove,handleCheck,todos,} = this.props;
 
     var todoNode = todos.map((todo) => {
     return (

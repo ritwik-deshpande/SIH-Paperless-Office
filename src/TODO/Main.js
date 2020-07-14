@@ -7,7 +7,7 @@ import uuid from 'uuid';
 //internal dependecies
 import AddTodo from './AddTodo';
 import TodoList from './TodoList';
-
+import api from "../utils/api";
 
 
 class Main extends Component {
@@ -17,11 +17,30 @@ class Main extends Component {
       todos: [],
       open: false,
     }
-    this.handleClick = this.handleClick.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
   }
-  handleClick(todo) {
+
+  componentDidMount(){
+	
+	api.todo_list().get(this.props.userid).then( res => {
+		console.log(res.data)
+		this.setState({
+			todos : res.data.items
+		})	
+	})
+  }
+
+  componentWillUnmount(){
+   
+   	let payload = {
+   		id : this.props.userid,
+   		items : this.state.todos
+   	}
+	api.todo_list().update(this.props.userid, payload).then( res => {
+		console.log("Updated TODO list")	
+	})
+  }
+
+  handleClick= (todo) => {
     console.log(this.state)
     this.setState({
       todos: [
@@ -36,7 +55,7 @@ class Main extends Component {
     })
   }
 
-  handleRemove(id) {
+  handleRemove = (id) => {
       const finalTodos = this.state.todos.filter((todo) => {
         if(todo.id != id) return todo
       });
@@ -46,7 +65,7 @@ class Main extends Component {
       });
   }
 
-  handleCheck(id) {
+  handleCheck = (id) => {
     // console.log('shah')
     const finalTodos = this.state.todos.map((todo) => {
         if(todo.id === id){
@@ -70,8 +89,8 @@ class Main extends Component {
     return (
        <Paper 
           style={{paddingBottom: '20px', width: '70'}}>
-          <div 
-          >
+          <div >
+			
             <div>
               <h1 style={{ textAlign: 'center'}}>
                 TODO List 
@@ -79,13 +98,15 @@ class Main extends Component {
             </div>
            
           </div>
-          
+          {this.state.todos.length === 0 ? <div style={{marginLeft :60}}> No items in TODO List </div> : <div>
           <TodoList 
             todos={this.state.todos}
             handleRemove={this.handleRemove} 
             handleCheck={this.handleCheck} 
           />
+          </div>}
           <br />
+          
           <div style={{marginLeft: '5%'}}>
            <AddTodo handleClick={this.handleClick}/>
           </div>

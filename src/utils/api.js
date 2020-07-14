@@ -26,6 +26,12 @@ export default {
         get : (id) => axios.get(`${Endpoint}/pending_requests/${id}`)
       }
     },
+    todo_list(){
+      return {
+        get : (id) => axios.get(`${Endpoint}/todo_list/${id}`),
+	update :(id, payload) => axios.put(`${Endpoint}/todo_list/${id}`,payload)
+      }
+    },
     myworkflows(){
       return {
         get : (username) => axios.get(`${Endpoint}/workflow/?User=${username}`)

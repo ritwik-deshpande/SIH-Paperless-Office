@@ -92,7 +92,7 @@ const MainComponent= ({userObj}) =>{
 		<br/>
 		<br/>
 		<br/>
-		 <Todo />
+		 <Todo userid = {userObj.id}/>
 
               <Box pt={4}>
                 <Copyright />
