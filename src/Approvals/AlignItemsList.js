@@ -57,14 +57,14 @@ const tableIcons = {
 	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-const useTableStyles = makeStyles((theme) => ({
-	root: {
-		width: "100%",
-		paddingLeft: "20px",
-		paddingRight: "10px",
-		paddingTop: "20px",
-	},
-}));
+// const useTableStyles = makeStyles((theme) => ({
+// 	// root: {
+// 	// 	width: "100%",
+// 	// 	paddingLeft: "20px",
+// 	// 	paddingRight: "10px",
+// 	// 	paddingTop: "20px",
+// 	// },
+// }));
 
 const tableColumns = [
 	{ title: "Workflow ID", field: "id" },
@@ -90,7 +90,8 @@ const tableColumns = [
 //{ id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', feedback: 'Rejected', time: 2},
 //]
 export default function AlignItemsList({ Click, requestTable }) {
-	const tableclasses = useTableStyles();
+	// const tableclasses = useTableStyles();
+	const classes = useStyles();
 	// const renderListItem = (obj) =>{
 	//   return(obj.map(item =>{
 	//     return(
@@ -125,7 +126,7 @@ export default function AlignItemsList({ Click, requestTable }) {
 	//   )}))
 	// }
 	return (
-		<div className={tableclasses.root}>
+		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
 				title="Approve Documents"

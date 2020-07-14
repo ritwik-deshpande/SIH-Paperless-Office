@@ -89,7 +89,7 @@ export default function WorkflowStatus({ workflow, title, steps, nodesList }) {
 		// 	)
 		// }
 		return (
-			<Typography component="h1" variant="h5" align="center">
+			<Typography component="h1" variant="h5" align="center" style={{textTransform:"capitalize"}}>
 				Current Status : {workflow.status}
 			</Typography>
 		);
@@ -104,7 +104,7 @@ export default function WorkflowStatus({ workflow, title, steps, nodesList }) {
 					component="h1"
 					variant="h4"
 					align="center"
-					className={classes.title}>
+					className={classes.subtitle}>
 					{title}
 				</Typography>
 				{/* </div> */}

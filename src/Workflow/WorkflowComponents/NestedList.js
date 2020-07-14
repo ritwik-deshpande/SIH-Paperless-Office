@@ -32,6 +32,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import useStyles from "../../Style";
+import { Grid, Container, Box } from "@material-ui/core";
 
 // const useStyles = makeStyles(theme => ({
 //     root: {
@@ -123,38 +124,47 @@ export default function NestedList({ menu, Click }) {
 		<div>
 			{/* <br></br>
 			<br></br> */}
-			<Typography className={classes.title} variant="h6" noWrap>
+			<Typography className={classes.subtitle} variant="h6" noWrap>
 				Start Workflow
 			</Typography>
 			<br></br>
 			<br></br>
 
-			<GridList
+				
+
+			{/* <GridList
 				cellHeight={500}
 				spacing={30}
 				cols={4}
-				className={classes.gridList}>
+				className={classes.gridList}> */}
+			<Grid container alignContent="center" justify="space-around" alignItems="stretch" align="center" spacing={5}>
 				{Object.keys(json).map((key) => {
 					return (
-						<div key={key}>
+						<React.Fragment>
 							{key === "New" ? (
-								<Card className={classes.newCard}>
-									<IconButton
-										aria-label="previous"
-										onClick={() => Click(key.id, "SCW")}
-										align="center">
-										<AddCircleIcon color="primary" fontSize="large" />
-									</IconButton>
+								<Grid item key={key} xs={12} sm={6} md={3} container alignItems="stretch">
+									<Card className={classes.gridCard} >
+										<CardActionArea onClick={() => Click(key.id, "SCW")} style={{height: "100%"}}>
+										{/* <IconButton
+											aria-label="previous"
+											onClick={() => Click(key.id, "SCW")}
+										align="center"> */}
+											<AddCircleIcon color="primary" style={{fontSize: 50 }} />
+										{/* </IconButton> */}
 
-									<CardContent>
-										<Typography variant="subtitle1" align="center">
-											Create From Scratch
-										</Typography>
-									</CardContent>
-								</Card>
+											<CardContent>
+												<Typography variant="subtitle1" align="center">
+													Create From Scratch
+												</Typography>
+											</CardContent>
+										</CardActionArea>
+										
+									</Card>	
+								</Grid>
 							) : (
-								<Card>
-									<CardActionArea>
+							<Grid item key={key} xs={12} sm={6} md={3}>
+								<Card className={classes.gridCard}>
+									<CardActionArea onClick={() => handleClick(key)}>
 										<CardMedia
 											className={classes.media}
 											image={Logo}
@@ -164,20 +174,29 @@ export default function NestedList({ menu, Click }) {
 											<Typography
 												variant="body2"
 												color="textSecondary"
-												component="p">
+												component="p"
+												align="center">
 												info about type of workflows
 											</Typography>
+											<Box mt={2}>
+												<InboxIcon color="primary" fontSize="medium" align="center"/>
+												<Typography variant="subtitle1" align="center" display="inline" style={{paddingLeft: '8px'}}>
+													{key}
+												</Typography>
+											</Box>
 										</CardContent>
 									</CardActionArea>
-									<GridListTile>
+									{/* <GridListTile> */}
 										{/* <ListItem button onClick={() => handleClick(key)}> */}
-										<ListItem button onClick={() => handleClick(key)}>
-											<ListItemIcon></ListItemIcon>
+										{/* <ListItem button onClick={() => handleClick(key)} alignItems="center">
+											<ListItemIcon>
 											<InboxIcon />
-											<ListItemText primary={key} />
+											</ListItemIcon>
+											
+											<ListItemText primary={key} /> */}
 											{/* {open.localeCompare(key) === 0 ? <ExpandLess /> : <ExpandMore/>} */}
-										</ListItem>
-
+										{/* </ListItem> */}
+										
 										{/* <Collapse in={open.localeCompare(key) === 0} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
             
@@ -210,10 +229,12 @@ export default function NestedList({ menu, Click }) {
 										) : (
 											""
 										)}
-									</GridListTile>
+									{/* </GridListTile> */}
 								</Card>
+							</Grid>
+							
 							)}
-						</div>
+						</React.Fragment>
 					);
 				})}
 
@@ -234,7 +255,8 @@ export default function NestedList({ menu, Click }) {
             </ListItem>
           </List>
       </Collapse> */}
-			</GridList>
+	  		</Grid>
+			{/* </GridList> */}
 		</div>
 	);
 }

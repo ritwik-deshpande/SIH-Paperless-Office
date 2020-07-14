@@ -1,4 +1,4 @@
-  
+ 
 import React from 'react';
 import clsx from 'clsx';
 
@@ -162,7 +162,7 @@ export default function Dashboard({userObj, logout}) {
             </Typography>
           }
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            Welcome,<Box fontWeight={600} display="inline">{userObj.name}</Box>
+            Welcome,<Box fontWeight={600} display="inline">{" "+userObj.name}</Box>
           </Typography>
          
 
