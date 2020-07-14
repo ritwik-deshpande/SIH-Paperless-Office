@@ -60,6 +60,12 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		flexGrow: 1,
 	},
+	subtitle: {
+		flexGrow: 1,
+		color: theme.palette.primary.light,
+		fontWeight: "bold",
+		textTransform: "capitalize",
+	},
 	drawerPaper: {
 		position: "relative",
 		whiteSpace: "nowrap",
@@ -151,10 +157,10 @@ const useStyles = makeStyles((theme) => ({
 	media: {
 		height: 100,
 	},
-	newCard: {
-		height: 200,
-		maxWidth: 300,
-		backgroundColor: "#FFF",
+	gridCard: {
+		margin: 'auto',
+		width: "100%",
+		height: "100%",
 	},
 
 	dialogBox: {
