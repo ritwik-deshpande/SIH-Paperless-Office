@@ -78,6 +78,13 @@ import { Grid, Container, Box } from "@material-ui/core";
 // {id :2, title: "No Dues Form"}]
 
 export default function NestedList({ menu, Click }) {
+
+	const InfomationOfWorkflows = {
+		"Academics": "Please read general instruction of Workflow. Check avaliability of Academic Dean before initiating workflow. Insure all nessecary documents are attached",
+		"Store": "Please read general instruction of Workflow. Check avaliability of Academic Dean before initiating workflow. Insure all nessecary documents are attached",
+		"Custom":"Please verify if the approvers are free and flowchart created is validated by the higher authority.Insure all nessecary documents are attached ",
+	}
+
 	const classes = useStyles();
 	const [openBox, setOpenBox] = React.useState(false);
 
@@ -175,8 +182,9 @@ export default function NestedList({ menu, Click }) {
 												variant="body2"
 												color="textSecondary"
 												component="p"
-												align="center">
-												info about type of workflows
+												align="center"
+												style={{height :"90"}}>
+												{InfomationOfWorkflows[key] }
 											</Typography>
 											<Box mt={2}>
 												<InboxIcon color="primary" fontSize="medium" align="center"/>

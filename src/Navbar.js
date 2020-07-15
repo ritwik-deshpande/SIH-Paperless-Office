@@ -21,7 +21,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
-
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 
 function Listitems(props) {
@@ -34,6 +34,7 @@ function Listitems(props) {
   pageDict['/getForm']=5;
   pageDict['/approve']=6;
   pageDict['/chat']=7;
+  pageDict['/analytics']=8;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(pageDict[props.history.location.pathname]);
 
@@ -136,11 +137,20 @@ const classes = useStyles();
             <ListItemText primary="Chat" />
           </ListItem>
         </Tooltip>
+ 
+	<Tooltip title={props.open ? "" : "Analytics"}>
+          <ListItem button selected={selectedIndex===8} onClick={() => handleNavlink('/analytics',8)}>
+            <ListItemIcon>
+              <AssessmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Analytics" />
+          </ListItem>
+        </Tooltip>
       
         <Divider/>
 
         <Tooltip title={props.open ? "" : "LogOut"}>
-          <ListItem button selected={selectedIndex===8}>
+          <ListItem button selected={selectedIndex===9}>
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>

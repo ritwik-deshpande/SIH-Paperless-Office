@@ -2,6 +2,8 @@ import React from 'react'
 import NumberCard from './NumberCard'
 import BarChart from "./graphs/BarChart";
 import LineChart from './graphs/LineChart';
+import PiChart from './graphs/PiChart'
+
 const datas = [
     [10, 30, 40, 20],
     [10, 40, 30, 20, 50, 10],
@@ -49,6 +51,7 @@ class AnalyticDashboard extends React.Component{
             <LineChart width={600} height={270} data={lineData}/>
             <button onClick={this.changeData}>Change Data</button>
             <BarChart width={600} height={400} data={this.state.barChartData} />
+	    <PiChart />
             </>
         )
     }
