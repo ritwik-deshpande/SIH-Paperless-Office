@@ -75,7 +75,7 @@ class CustomForms extends React.Component {
         title: "Admission Cancellation",
         schema: {
           title: "Admission Cancellation",
-          description: "Please Enter your Data ",
+          description: "Please Enter your Details ",
           type: "object",
           required: [],
           properties: {
