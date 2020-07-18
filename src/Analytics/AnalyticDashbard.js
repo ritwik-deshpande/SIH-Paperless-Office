@@ -2,7 +2,12 @@ import React from 'react'
 import NumberCard from './NumberCard'
 import BarChart from "./graphs/BarChart";
 import LineChart from './graphs/LineChart';
+<<<<<<< HEAD
 import Sunburstchart from './graphs/sunburst'
+=======
+import PiChart from './graphs/PiChart'
+
+>>>>>>> 3aa3844d56089705a828fc4504f2f28ef981a349
 const datas = [
     [10, 30, 40, 20],
     [10, 40, 30, 20, 50, 10],
@@ -45,12 +50,21 @@ class AnalyticDashboard extends React.Component {
 
         return (
             <>
+<<<<<<< HEAD
                 <NumberCard data={this.state.numberCardData} />
                 <h2>Graphs with React</h2>
                 <LineChart width={600} height={270} data={lineData} />
                 <button onClick={this.changeData}>Change Data</button>
                 <BarChart width={600} height={400} data={this.state.barChartData} />
                 <Sunburstchart />
+=======
+            <NumberCard data={this.state.numberCardData}/>
+            <h2>Graphs with React</h2>
+            <LineChart width={600} height={270} data={lineData}/>
+            <button onClick={this.changeData}>Change Data</button>
+            <BarChart width={600} height={400} data={this.state.barChartData} />
+	    <PiChart />
+>>>>>>> 3aa3844d56089705a828fc4504f2f28ef981a349
             </>
         )
     }

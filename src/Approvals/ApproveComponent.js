@@ -53,21 +53,23 @@ class ApproveComponent extends React.Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Container className={classes.container}>
-					{this.state.requestTable ? (
-						this.state.showPDF ? (
+				{/* <Container className={classes.container}> */}
+				{this.state.requestTable ? (
+					this.state.showPDF ? (
+						<Container className={classes.container}>
 							<CreatePDF item={this.state.item} />
-						) : (
-							<AlignItemsList
-								Click={this.handleClick}
-								userObj={this.props.userObj}
-								requestTable={this.state.requestTable}
-							/>
-						)
+						</Container>
 					) : (
-						<div> Fetching Approval Requests</div>
-					)}
-				</Container>
+						<AlignItemsList
+							Click={this.handleClick}
+							userObj={this.props.userObj}
+							requestTable={this.state.requestTable}
+						/>
+					)
+				) : (
+					<div> Fetching Approval Requests</div>
+				)}
+				{/* </Container> */}
 			</div>
 		);
 	}

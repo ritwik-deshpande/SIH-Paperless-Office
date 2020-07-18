@@ -1,0 +1,33 @@
+{
+ "children": [
+  {
+   "name": "Academics",
+   "hex": "#12939A",
+   "children":  [
+      {"name": "Library Registration", "hex": "#12939A", "value": 3938},
+      {"name": "CommunityStructure", "hex": "#12939A", "value": 3812},
+      {"name": "HierarchicalCluster", "hex": "#12939A", "value": 6714},
+      {"name": "MergeEdge", "hex": "#12939A", "value": 743}
+     ]
+    },
+    {
+     "name": "Hostel",
+     "hex": "#00039A",
+     "children": [
+      {"name": "Fees Payments", "hex": "#00039A", "value": 3534},
+      {"name": "Fees Reimbursement", "hex": "#00039A", "value": 5731},
+      {"name": "Hostel Allotment", "hex": "#00039A", "value": 7840}
+     ]
+    },
+    {
+     "name": "Custom",
+     "hex": "#A2300A",
+     "children": [
+      {"name": "Application For Sports Secretary", "hex": "#A2300A", "value": 7074},
+      {"name": "SIH Reimbursement", "hex": "#A2300A", "value": 7074}
+     ]
+    }
+  ]
+}
+
+ 

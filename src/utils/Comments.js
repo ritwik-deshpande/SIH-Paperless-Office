@@ -49,7 +49,7 @@ export default function Comments({ json }) {
 									<br />
 									<Typography
 										component="span"
-										variant="body3"
+										variant="body2"
 										className={classes.inline}
 										color="textPrimary">
 										{item.timestamp}
