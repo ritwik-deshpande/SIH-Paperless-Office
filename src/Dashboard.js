@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 3aa3844d56089705a828fc4504f2f28ef981a349
 import React from 'react';
 import clsx from 'clsx';
 
@@ -168,86 +164,6 @@ export default function Dashboard({ userObj, logout }) {
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               Welcome,<Box fontWeight={600} display="inline">{userObj.name}</Box>
             </Typography>
-<<<<<<< HEAD
-
-
-
-            <IconButton color="inherit" onClick={handleClick}>
-              <Badge badgeContent={Object.keys(userObj.notifications).length} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-
-            <Popover
-              id={id}
-              open={notify}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            >
-
-              {notifs.map((value) => {
-                return (<Card >
-                  <CardContent>
-                    <Typography variant="h5" component="h2">
-                      {value.title}
-                    </Typography>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                      {value.content}
-                    </Typography>
-                  </CardContent>
-
-                  <CardActions>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>)
-              })}
-
-            </Popover>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          {/* <Divider /> */}
-
-          <NavBar userObj={userObj} open={open} logout={logout} />
-
-          {/* <Divider/> */}
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-
-          <Route exact path='/' render={() => <LandingPage userObj={userObj} />} />
-          <Route exact path='/viewDocs' component={FolderComponent} />
-          <Route exact path='/getForm' component={StartWrkflwComponent} />
-          <Route exact path='/Form' component={FormComponent} />
-          <Route exact path='/esign' render={() => <ESignComponent userObj={userObj} />} />
-          <Route exact path='/approve' render={() => <ApproveComponent userObj={userObj} />} />
-          <Route exact path='/status' component={StatusComponent} />
-          <Route exact path='/chat' component={() => <Root userObj={userObj} />} />
-          <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />} />
-          <Route exact path='/editor' component={() => <FirepadEditor userObj={userObj} />} />
-          <Route exact path='/email' component={() => <MyMails userObj={userObj} />} />
-          <Route exact path='/compose' component={() => <ComposeMail userObj={userObj} />} />
-
-=======
           }
           <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
             Welcome,<Box fontWeight={600} display="inline">{" "+userObj.name}</Box>
@@ -328,7 +244,6 @@ export default function Dashboard({ userObj, logout }) {
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
       <Route exact path='/editor' component={() => <FirepadEditor userObj={userObj} />}/>
      
->>>>>>> 3aa3844d56089705a828fc4504f2f28ef981a349
         </main>
       </div>
 
