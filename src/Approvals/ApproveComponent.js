@@ -36,7 +36,7 @@ class ApproveComponent extends React.Component {
 				wname: pending_requests.requests[index].subject,
 				sender: pending_requests.requests[index].nameofSender,
 				feedback: pending_requests.requests[index].status,
-				time: pending_requests.requests[index].ts,
+				time: pending_requests.requests[index].receivedon,
 				item: pending_requests.requests[index],
 			});
 		}

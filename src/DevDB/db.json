@@ -162,8 +162,8 @@
           "id": "222v0",
           "subject": "Application for Sports Secretary",
           "nameofSender": "Ritwik Deshpande",
-          "ts": "Jul 9 at 14:46, 2020",
-          "status": "Pending"
+          "receivedon": "Jul 9 at 14:46, 2020",
+          "status": "pending"
         }
       ]
     },
@@ -174,8 +174,8 @@
           "id": "222v0",
           "subject": "Application for Sports Secretary",
           "nameofSender": "Ritwik Deshpande",
-          "ts": "Jul 9 at 14:46, 2020",
-          "status": "Pending"
+          "receivedon": "Jul 9 at 14:46, 2020",
+          "status": "pending"
         }
       ]
     },
@@ -1176,21 +1176,21 @@
       ],
       "nextNodes": [],
       "Signatures": {},
-      "status": "active",
+      "status": "terminated",
       "begin_timestamp": "Jul 13 at 20:43, 2020",
-      "end_timestamp": "",
+      "end_timestamp": "Jul 19 at 22:59, 2020",
       "formId": 383,
       "flowchartId": 383,
-      "Feedback": "Workflow Initiated",
-      "Feedback_ts": "Jul 13 at 20:43, 2020",
+      "Feedback": "Terminated by User",
+      "Feedback_ts": "Jul 19 at 22:59, 2020",
       "User": "rd",
       "Title": "Fees Refund",
       "id": "748v0",
-      "cancel_requests": [],
-      "send_requests": [
+      "cancel_requests": [
         "AP001",
         "AP003"
-      ]
+      ],
+      "send_requests": []
     },
     {
       "FormData": {

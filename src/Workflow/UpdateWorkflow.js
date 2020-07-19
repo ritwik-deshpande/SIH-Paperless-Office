@@ -105,11 +105,11 @@ class UpdateWorkflow extends Component
 				alert_msg = "Workflow Updated and Restarted .\n Your new Workflow id is"+payload.id
 		 }
 		 
-		 payload.Feedback_ts = Timestamp.getTSObj()
-		 
+		 payload.Feedback_ts = Timestamp.getTimestamp()
+		 payload["cancel_requests"] = []
 		 old_object.Feedback = "Updated to version "+payload.id
-		 old_object.Feedback_ts = Timestamp.getTSObj()
-		 
+		 old_object.Feedback_ts = Timestamp.getTimestamp()
+		 old_object["send_requests"] = [] 
 		 old_object["cancel_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
 	
 		 console.log("The old object", old_object)
