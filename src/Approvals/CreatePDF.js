@@ -28,7 +28,14 @@ import Timestamp from "../utils/TimeStamp";
 import ShowPDF from "./ShowPDF";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "../Style";
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { Box } from "@material-ui/core";
+import WorkflowNode from "../utils/WorkflowNode"
 
 class CreatePDF extends React.Component {
 	constructor(props) {
@@ -36,6 +43,8 @@ class CreatePDF extends React.Component {
 		this.state = {
 			isSigned: false,
 			isApproved: false,
+			openDialog : false,
+			pin: null,
 			comments: null,
 			workflow: null,
 			signatures: null,
@@ -101,12 +110,28 @@ class CreatePDF extends React.Component {
 		let i = 0;
 		let temp_flowchart = this.state.workflow.FlowChart;
 		console.log(temp_flowchart);
+		let cancel_reqs = []
+		let return_json ={
+			next_node_key : null,
+			cancel_reqs: null
+		}
 
+		let return_node
 		for (i = 0; i < nodes.length; i++) {
 			if (name in temp_flowchart[nodes[i]].approvedBy) {
-				return nodes[i];
+				return_node = nodes[i];
+			}
+			else{
+				console.log(nodes[i])
+				console.log(WorkflowNode.getApprovers(temp_flowchart[nodes[i]]))
+				cancel_reqs = cancel_reqs.concat(WorkflowNode.getApprovers(temp_flowchart[nodes[i]]))
 			}
 		}
+		
+		return_json.next_node_key = return_node
+		return_json.cancel_reqs = cancel_reqs
+		
+		return return_json
 	};
 
 	sendRequest = () => {
@@ -124,8 +149,51 @@ class CreatePDF extends React.Component {
 		console.log(avg_response);
 		return avg_response;
 	};
+	handleSignClick = () =>{
+		console.log("Open Dialog")
+	
+		this.setState({
+			openDialog : true,
+			isApproved: true
+		})
+	
+	}
+	
+	handleSubmit = () => {
+		console.log("Compare",this.state.pin,this.props.userObj.pin)
+	
+		if(this.state.pin.localeCompare(this.props.userObj.pin) == 0){
+			this.setState({
+				openDialog : false
+			})
+			if(this.state.isApproved){
+				alert("Approving Document")
+				this.approveDocument()
+			}
+			else{
+				alert("Rejecting Document")
+				this.rejectDocument()
+			}
+		}
+		else{
+			alert("Invalid user PIN")
+		}
+	}
+	handleChange = (e) => {
+		console.log(e.target.value);
+		this.setState({
+			pin: e.target.value,
+		});
+	};
+	
+	handleClose = () => {
+		this.setState({
+			openDialog : false,
+			isApproved: false
+		})
+	}	
 
-	handleSignClick = () => {
+	approveDocument = () => {
 		// add the content for approval.
 		// check if all have approved at the same level.
 		//broadcast to the next level.
@@ -143,7 +211,7 @@ class CreatePDF extends React.Component {
 		let id = this.props.userObj.id;
 		let esign = this.props.userObj.esign;
 		console.log(this.state.signatures);
-		this.setState({ isSigned: true, isApproved: true });
+		this.setState({ isSigned: true });
 		this.state.signatures[name] = esign;
 		console.log("in handlesignClick");
 
@@ -170,7 +238,7 @@ class CreatePDF extends React.Component {
 					console.log("Next nide ki value : " + nextNodes)
 					this.state.workflow.nextNodes.forEach((value) => {
 					    console.log(value)
-					    reqs = Object.keys((this.state.workflow.FlowChart)[value].approvedBy)
+					    reqs = reqs.concat(Object.keys((this.state.workflow.FlowChart)[value].approvedBy))
 					  })
 					  this.state.workflow.send_requests = reqs;}
 				this.state.workflow.FlowChart[current_node_key] = currentNode;
@@ -178,8 +246,14 @@ class CreatePDF extends React.Component {
 		} else {
 			let next_node_key;
 			let nextNode;
-
-			next_node_key = this.chooseNextNode(nextNodes, id);
+		    let retval ;
+			retval = this.chooseNextNode(nextNodes, id);
+			
+			next_node_key = retval.next_node_key
+			console.log("JSON",retval)
+			console.log("Cancel requests", retval.cancel_reqs)
+			
+			this.state.workflow.cancel_requests = retval.cancel_reqs
 			// remove pending requests from all other next Nodes after chosing the nextNode
 			nextNode = this.state.workflow.FlowChart[next_node_key];
 			nextNode.approvedBy[id] = true;
@@ -208,7 +282,7 @@ class CreatePDF extends React.Component {
 				console.log("Next nide ki value : " + nextNodes)
 				this.state.workflow.nextNodes.forEach((value) => {
 				    console.log(value)
-				    reqs = Object.keys((this.state.workflow.FlowChart)[value].approvedBy)
+				    reqs = reqs.concat(Object.keys((this.state.workflow.FlowChart)[value].approvedBy))
 				  })
 				this.state.workflow.send_requests = reqs;
 
@@ -223,7 +297,7 @@ class CreatePDF extends React.Component {
 		this.state.workflow.Signatures = this.state.signatures;
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.Feedback = "Approved by " + name;
-		this.state.workflow.Feedback_ts = Timestamp.getTSObj();
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
 
 		console.log("New Workflow", this.state.workflow);
 
@@ -256,8 +330,15 @@ class CreatePDF extends React.Component {
 				console.log("Updated user sucessfully");
 			});
 	};
-
+	
 	handleRejectClick = () => {
+		this.setState({
+			openDialog : true,
+			isApproved: false
+		})
+	}
+
+	rejectDocument = () => {
 		// add the content for Rejection.
 		//notifies the owner.
 
@@ -272,7 +353,8 @@ class CreatePDF extends React.Component {
 		let userObj = this.props.userObj;
 		let name = this.props.userObj.name;
 		let username = this.props.userObj.username;
-
+		let id = this.props.userObj.id;
+		let retval;
 		console.log("in handlesignClick");
 
 		if (nextNodes.length != 0) {
@@ -280,7 +362,11 @@ class CreatePDF extends React.Component {
 			let nextNode;
 			// remove pending requests from all other next Nodes!
 
-			next_node_key = this.chooseNextNode(nextNodes, username);
+			retval = this.chooseNextNode(nextNodes, id);
+			
+			next_node_key = retval.next_node_key
+			
+			this.state.workflow.cancel_requests = retval.cancel_reqs
 
 			path = [...path, next_node_key];
 
@@ -292,7 +378,7 @@ class CreatePDF extends React.Component {
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.isRejected = true;
 		this.state.workflow.Feedback = "Rejected by:" + name;
-		this.state.workflow.Feedback_ts = Timestamp.getTSObj();
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
 
 		console.log("New Workflow", this.state.workflow);
 
@@ -354,9 +440,36 @@ class CreatePDF extends React.Component {
 						<br />
 
 						<br />
+						<Dialog open={this.state.openDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+							<DialogTitle id="form-dialog-title">Authenticate using PIN</DialogTitle>
+							<DialogContent>
+							  <DialogContentText>
+								Enter your 4 digit PIN to add your E-Signature on the Document.
+							  </DialogContentText>
+							  <TextField
+								autoFocus
+								margin="dense"
+								id="name"
+								label="PIN"
+								type="text"
+								onChange={this.handleChange}
+								fullWidth
+							  />
+							</DialogContent>
+							<DialogActions>
+							  <Button onClick={this.handleClose} color="primary">
+								Cancel
+							  </Button>
+							  <Button onClick={this.handleSubmit} color="primary">
+								SUBMIT
+							  </Button>
+							</DialogActions>
+						  </Dialog>
+						
+						
 						{this.state.isApproved ? (
 							<div style={{ width: 1000 }}></div>
-						) : (
+						) : (<>
 							<Box display="flex" p={1} mb={1}>
 								<Box flexGrow={1}>
 									<Button
@@ -379,6 +492,10 @@ class CreatePDF extends React.Component {
 									</Button>
 								</Box>
 							</Box>
+						
+						
+						</>
+						
 						)}
 					</>
 				) : null}

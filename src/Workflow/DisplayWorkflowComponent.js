@@ -108,7 +108,7 @@ class DisplayWorkflow extends React.Component{
         <div >
           <br/>
           <br/>
-            <h4>{this.props.title}  Flowchart</h4>
+            <h4>FLOWCHART</h4>
             <br/>
             
             <Container maxWidth="lg">
