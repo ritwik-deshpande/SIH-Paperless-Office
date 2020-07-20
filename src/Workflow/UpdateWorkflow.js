@@ -185,7 +185,7 @@ class UpdateWorkflow extends Component
 
             <br/>
 
-            <DisplayWorkflow title={this.state.selectedTitle} id={this.state.flowchartId} save={this.saveFlowChartData}/>
+            <DisplayWorkflow modify={"modify"} title={this.state.selectedTitle} id={this.state.flowchartId} save={this.saveFlowChartData}/>
          <br/>
             <Button
               variant="contained"

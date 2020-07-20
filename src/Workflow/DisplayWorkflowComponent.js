@@ -108,11 +108,11 @@ class DisplayWorkflow extends React.Component{
         <div >
           <br/>
           <br/>
-            <h4>FLOWCHART</h4>
+            <h4>FLOWCHART </h4>
             <br/>
             
             <Container maxWidth="lg">
-            {this.state.schema ? <DragAndDropSidebar title = {this.props.title} id={this.props.id} save = {this.props.save} chartSimple={this.state.schema}/>  :<div>
+            {this.state.schema ? <DragAndDropSidebar modify = {this.props.modify} title = {this.props.title} id={this.props.id} save = {this.props.save} chartSimple={this.state.schema}/>  :<div>
               <h5>Initializing Workflow</h5>
             </div>}
              

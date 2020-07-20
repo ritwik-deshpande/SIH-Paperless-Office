@@ -230,7 +230,7 @@ class StartWrkflwComponent extends Component
       console.log(this.state.menu.id)
       api.menu().put(this.state.menu.id,this.state.menu).then(res =>{
         console.log(res);
-	alert("Saved Custom Workflow");
+	alert("Created a Custom Workflow Successfully");
         this.setState({
           showFormandWrkflw: false
         })
@@ -317,7 +317,7 @@ class StartWrkflwComponent extends Component
               color="primary"
               onClick = {this.saveCustomWorkFlow}>
             
-              Save WorkFlow
+              Create WorkFlow
             </Button>   
 
          
