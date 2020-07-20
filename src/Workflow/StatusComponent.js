@@ -106,6 +106,7 @@ class StatusComponent extends Component {
 		this.state.workflow.Feedback = "Terminated by User"
 		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
 		let Path = this.state.workflow.Path
+		this.state.workflow.send_requests = []
 		this.state.workflow["cancel_requests"] = WorkflowNode.getApprovers(this.state.workflow.FlowChart[Path[Path.length - 1]])
 		api
 			.workFlow()
@@ -113,7 +114,7 @@ class StatusComponent extends Component {
 			.then((res) => {
 				console.log("Updated New Workflow", res);
 				alert("WorkFlow Terminated !");
-				this.props.history.push("/");
+				window.location.reload(true)
 			});
 	};
 
@@ -132,7 +133,7 @@ class StatusComponent extends Component {
 			.put(old_version, old_object)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
-				this.props.history.push("/");
+				window.location.reload(true)
 			});
 	};
 	handleSearch = (curentWorkflow) => {

@@ -214,7 +214,9 @@ class CreatePDF extends React.Component {
 		this.setState({ isSigned: true });
 		this.state.signatures[name] = esign;
 		console.log("in handlesignClick");
-
+		this.state.workflow.send_requests = []
+		this.state.workflow.cancel_requests = []
+		
 		if (nextNodes.length == 0) {
 			if (id in currentNode.approvedBy) {
 				currentNode.approvedBy[id] = true;
@@ -300,18 +302,21 @@ class CreatePDF extends React.Component {
 		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
 
 		console.log("New Workflow", this.state.workflow);
+		window.location.reload(true)
 
+		
 		api
 			.workFlow()
 			.put(this.state.workflow.id, this.state.workflow)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
+				
 			});
 
 		//Updating Average Response Time
 
 		let response_time =
-			Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.ts);
+			Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.receivedon);
 		let avg_time = this.getAvgResponseTime(
 			userObj.avg_response_time,
 			userObj.no_of_approvals,
@@ -356,6 +361,8 @@ class CreatePDF extends React.Component {
 		let id = this.props.userObj.id;
 		let retval;
 		console.log("in handlesignClick");
+		this.state.workflow.send_requests = []
+		this.state.workflow.cancel_requests = []
 
 		if (nextNodes.length != 0) {
 			let next_node_key;
@@ -377,22 +384,24 @@ class CreatePDF extends React.Component {
 
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.isRejected = true;
-		this.state.workflow.Feedback = "Rejected by:" + name;
+		this.state.workflow.Feedback = "Rejected by " + name;
 		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
 
 		console.log("New Workflow", this.state.workflow);
+		window.location.reload(true)
 
 		api
 			.workFlow()
 			.put(this.state.workflow.id, this.state.workflow)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
+				
 			});
 
 		//Updating Average Response Time
 
 		let response_time =
-			Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.ts);
+			Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.receivedon);
 		let avg_time = this.getAvgResponseTime(
 			userObj.avg_response_time,
 			userObj.no_of_approvals,
@@ -467,8 +476,32 @@ class CreatePDF extends React.Component {
 						  </Dialog>
 						
 						
-						{this.state.isApproved ? (
-							<div style={{ width: 1000 }}></div>
+						{this.state.isApproved || this.props.item.status !== "pending" ? (
+							<Box display="flex" p={1} mb={1}>
+								<Box flexGrow={1}>
+									<Button
+										variant="contained"
+										color="primary"
+										//className={classes.button}
+										startIcon={<ThumbUpIcon />}
+										disabled
+										onClick={this.handleSignClick}
+										>
+										Approve and add e-signature
+									</Button>
+								</Box>
+								<Box>
+									<Button
+										variant="contained"
+										color="primary"
+										//className={classes.button}
+										startIcon={<ThumbDownIcon />}
+										disabled
+										onClick={this.handleRejectClick}>
+										Reject
+									</Button>
+								</Box>
+							</Box>
 						) : (<>
 							<Box display="flex" p={1} mb={1}>
 								<Box flexGrow={1}>
