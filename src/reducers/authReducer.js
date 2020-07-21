@@ -30,7 +30,7 @@ const authReducer = (state = initState, action) =>{
             }
         case 'USER_VERIFIED':
             console.log("user verified :" + action.payload)
-            sessionStorage.setItem("user",JSON. stringify(action.payload))
+            sessionStorage.setItem("user",JSON.stringify(action.payload))
             return{
                 ...state,
                 userObj : action.payload,
@@ -44,6 +44,7 @@ const authReducer = (state = initState, action) =>{
                 loggedIn : false,
             }
         case 'SAVE_SIGN':
+	    sessionStorage.setItem("user",JSON.stringify(action.payload))
             return{
                 ...state,
                 userObj: action.payload,

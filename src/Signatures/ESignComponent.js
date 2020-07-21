@@ -26,16 +26,10 @@ class ESignComponent extends React.Component{
 
     updateUser= (userObj) =>{
     
-        this.setState({
-			userObj : userObj,
-			updateProfile : false,
-			
-		})
-    
+    	console.log("New Object", userObj)
     	
-    	this.props.saveSign(userObj)
-    	alert("Updated User Successfully !")
-    
+        this.props.saveSign(userObj)
+        
     }
     onUpdateClick = () => {
 

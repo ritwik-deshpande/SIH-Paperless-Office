@@ -53,11 +53,14 @@ export const saveSign = (userObj) =>{
     return (dispatch, getState) =>
     {
         console.log(userObj)
+	
         api.users().update(userObj.id,userObj).then(
             res =>{
               console.log(res)
               console.log("Saved ESIGN")
               dispatch({type:'SAVE_SIGN', payload:res.data})
+	      alert("Updated User Successfully !")
+              window.location.reload(true)
             }
           )
     }
