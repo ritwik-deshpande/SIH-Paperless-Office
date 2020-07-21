@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import {GetUser, logout} from './Actions/UserAction'
 
 class Main extends Component {
-
+  
   SignInFunction = (username,password) =>{
-
+  
 
     console.log("The username"+username)
     console.log("The password"+password)
