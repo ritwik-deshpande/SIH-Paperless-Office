@@ -36,7 +36,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Box } from "@material-ui/core";
 import WorkflowNode from "../utils/WorkflowNode"
-
+var bcrypt = require('bcryptjs');
 
 const mapIdtoRoles ={
 	GRP000: "Directors",
@@ -198,7 +198,7 @@ class CreatePDF extends React.Component {
 	handleSubmit = () => {
 		console.log("Compare",this.state.pin,this.props.userObj.pin)
 	
-		if(this.state.pin.localeCompare(this.props.userObj.pin) == 0){
+		if(bcrypt.compareSync(this.state.pin, this.props.userObj.pin)){
 			this.setState({
 				openDialog : false
 			})
