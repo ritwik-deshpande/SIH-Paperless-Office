@@ -60,15 +60,15 @@ const countries = [
 ]
 
 
-let approver;
+let approver = {};
 
 function handleClickAddAprover(node){
   // console.log('approver',approver)
   if(node.properties.approvers.length>1){
-    node.properties.approvers = node.properties.approvers + '-'+ approver
+    node.properties.approvers = node.properties.approvers + '-'+ approver[node.id]
   }
   else{
-    node.properties.approvers = approver
+    node.properties.approvers = approver[node.id]
   }
   // console.log('The node is',node)
 
@@ -169,7 +169,7 @@ const NodeInnerCustom = ({ node, config }) => {
               option: classes.option,
             }}
            
-            onChange = {(event,value) => {console.log('The value is',value); if(value!== null)approver = value.id}}
+            onChange = {(event,value) => {console.log('The value is',value); if(value!== null)approver[node.id] = value.id}}
             autoHighlight
             getOptionLabel={(option) => option.name}
             renderOption={(option) => (
@@ -203,6 +203,23 @@ const NodeInnerCustom = ({ node, config }) => {
 
 
 class SelectedSidebar extends React.Component {
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.onCero, true);
+  }
+  
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onCero, true);
+  }
+
+  onCero = (e) => {
+    
+    if (e.keyCode === 8 || e.keyCode === 46 ) {
+      //e.preventDefault()
+      e.stopPropagation()
+      alert(e.keyCode);
+    }
+  };
   state = cloneDeep(this.props.chartSimple)
 
   handleClick = (chart) =>{
@@ -260,9 +277,9 @@ class SelectedSidebar extends React.Component {
         }}
       />
       
-      <Sidebar>
+      
       <Message>
-              
+
                 Click on the Nodes or Link to Delete.
                
               </Message>
@@ -275,10 +292,12 @@ class SelectedSidebar extends React.Component {
                 We can re-use the onDeleteKey action. This will delete whatever is selected.
                 Otherwise, we have access to the state here so we can do whatever we want.
               */}
+              {(chart.selected.id === "node1" ||chart.selected.id === "node2" ) ? null:
               <Button variant="contained" color="primary" onClick={() => stateActions.onDeleteKey({})}>Delete</Button>
+              }
             </Message>
           : (null) }
-        </Sidebar>
+        
     </Sidebar> 
         
       <br>

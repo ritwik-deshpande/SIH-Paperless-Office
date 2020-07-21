@@ -16,7 +16,6 @@
     "@types/styled-components": "^5.0.1",
     "aws-sdk": "^2.716.0",
     "axios": "^0.19.2",
-    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.4.1",
     "brace": "^0.11.1",
@@ -69,6 +68,7 @@
     "redux-thunk": "^2.3.0",
     "resolve-url-loader": "^3.1.1",
     "styled-components": "^5.0.1",
+    "sunburst-chart": "^1.11.1",
     "typescript": "^3.8.3"
   },
   "scripts": {

@@ -24,84 +24,84 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import NavBar from './Navbar'
 import useStyles from './Style'
 import LandingPage from './LandingPage/LandingPage'
-import {Route,BrowserRouter} from 'react-router-dom'
+import { Route, BrowserRouter } from 'react-router-dom'
 import FolderComponent from './ViewDocs/Folders'
-import FormComponent  from "./Forms/FormComponent";
+import FormComponent from "./Forms/FormComponent";
 import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 import ApproveComponent from './Approvals/ApproveComponent';
 import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
-import {toast, ToastContainer} from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { Box } from '@material-ui/core';
 
 //import { Alert } from 'react-native';
-import {messaging } from './Chat/Config/MyFirebase'
+import { messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
 import Calendar from './Calendar/Calendar'
 import AnalyticDashboard from './Analytics/AnalyticDashbard';
 import FirepadEditor from './TextEditor/Firepad';
+import MyMails from './Email/MyMails'
+import ComposeMail from './Email/ComposeMail'
+export default function Dashboard({ userObj, logout }) {
 
-export default function Dashboard({userObj, logout}) {
+  messaging.requestPermission()
+    .then(function () {
+      console.log('Have Permission')
+      return messaging.getToken()
+    })
+    .then(function (token) {
+      console.log(token)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
 
- messaging.requestPermission()
-  .then( function(){
-    console.log('Have Permission')
-    return messaging.getToken()
-  })
-  .then(function(token) {
-    console.log(token)
-  })
-  .catch(function(err){
-    console.log(err)
-  })
-
-// window.addEventListener('load', async () => {
-//   const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {
-//       updateViaCache: 'none'
-//   });
-// messaging.useServiceWorker(registration);
-// })
+  // window.addEventListener('load', async () => {
+  //   const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {
+  //       updateViaCache: 'none'
+  //   });
+  // messaging.useServiceWorker(registration);
+  // })
 
   const classes = useStyles();
-  const [notifs,setNotifs] = React.useState([{
-    
+  const [notifs, setNotifs] = React.useState([{
+
     title: "Demo Notification",
-    content : "demo content for testing notification feature"
+    content: "demo content for testing notification feature"
   }]);
-  const [pushNotif,setPushNotifs] = React.useState({});
+  const [pushNotif, setPushNotifs] = React.useState({});
   const [open, setOpen] = React.useState(false);
-  
-  const handleNotif= (n) =>
-  {
-    console.log([n,...notifs])
-          setNotifs([n,...notifs])
+
+  const handleNotif = (n) => {
+    console.log([n, ...notifs])
+    setNotifs([n, ...notifs])
   }
   React.useEffect(() => {
-    
-      api.notification().get(userObj.id)
+
+    api.notification().get(userObj.id)
       .then(
         (res) => {
           setNotifs(res.data.notifs)
         }
       )
-    
+
     const unsubscribe = messaging.onMessage(async payload => {
       console.log(payload)
       const n = {
-            title: payload.notification.title,
-            content : payload.notification.body
-          }
+        title: payload.notification.title,
+        content: payload.notification.body
+      }
       setPushNotifs(n)
     });
 
     return unsubscribe;
   }, []);
   React.useEffect(() => {
-    
-    setNotifs([pushNotif, ...notifs ])
-}, [pushNotif]);
+
+    setNotifs([pushNotif, ...notifs])
+  }, [pushNotif]);
   // messaging.onMessage(function(payload){
   //   console.log(payload);
   //   const n = {
@@ -109,8 +109,8 @@ export default function Dashboard({userObj, logout}) {
   //     content : payload.notification.body
   //   }
   //   setNotifs([n,...notifs])
-    
-    
+
+
   // })
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,7 +118,7 @@ export default function Dashboard({userObj, logout}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
- 
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -132,39 +132,36 @@ export default function Dashboard({userObj, logout}) {
   const notify = Boolean(anchorEl);
   const id = notify ? 'simple-popover' : undefined;
 
-//console.log("The user object is", userObj)
-
   return (
-    
+
     <BrowserRouter>
-    <ToastContainer
-      autoClose={2000}
-      hideProgressBar={true}
-      position={toast.POSITION.BOTTOM_RIGHT}
-  />
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          {open ? "" :
-            <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-              <Box fontWeight={800} display="inline">Digi</Box>
-              <Box display="inline">Docs</Box>
-            </Typography>
-          }
-          <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            Welcome,<Box fontWeight={600} display="inline">{" "+userObj.name}</Box>
-          </Typography>
-         
+      <ToastContainer
+        autoClose={2000}
+        hideProgressBar={true}
+        position={toast.POSITION.BOTTOM_RIGHT}
+      />
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            >
+              <MenuIcon />
+            </IconButton>
+            {open ? "" :
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                <Box fontWeight={800} display="inline">Digi</Box>
+                <Box display="inline">Docs</Box>
+              </Typography>
+            }
+            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+              Welcome,<Box fontWeight={600} display="inline">{userObj.name}</Box>
+            </Typography>        
 
 
           <IconButton color="inherit" onClick={handleClick}>
@@ -238,17 +235,17 @@ export default function Dashboard({userObj, logout}) {
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
-      <Route exact path='/editor' component={() => <FirepadEditor userObj={userObj} />}/>
+      
      
         </main>
       </div>
-       
-    
-   
-  
+
+
+
+
     </BrowserRouter>
 
 
-   
+
   );
 }

@@ -117,12 +117,12 @@ class StartWrkflwComponent extends Component
         "nextNodes":[],
         "Signatures":{},
         "status" : "active",
-	"begin_timestamp" : Timestamp.getTimestamp(),
-	"end_timestamp" : "",
-	"formId": this.state.selectedId,
-	"flowchartId": this.state.selectedId,
+        "begin_timestamp" : Timestamp.getTimestamp(),
+        "end_timestamp" : "",
+        "formId": this.state.selectedId,
+        "flowchartId": this.state.selectedId,
         "Feedback" : "",
-	"Feedback_ts": 0,
+	      "Feedback_ts": 0,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
 
@@ -218,22 +218,28 @@ class StartWrkflwComponent extends Component
     else{
 
       api.forms().post(this.state.CustomForm).then(res =>{
-        console.log(res);
-      })
+        console.log("res of forms post ",res);
+        if(res && res.data)
+        {
+          api.flowChart().post(this.state.CustomFlowChart).then(res =>{
+            console.log("res of flowchart post",res);
+            if(res && res.data)
+            {
+              console.log("Original Menu",this.state.menu)
+              this.state.menu.contents.Custom = [...this.state.menu.contents.Custom , {id: this.state.id,title:this.state.customWorkflow}]
+              console.log("Saving new menu",this.state.menu)
+              console.log(this.state.menu.id)
+              api.menu().put(this.state.menu.id,this.state.menu).then(res =>{
+                console.log(res);
+              alert("Saved Custom Workflow");
+                this.setState({
+                  showFormandWrkflw: false
+                })
+              })
 
-      api.flowChart().post(this.state.CustomFlowChart).then(res =>{
-        console.log(res);
-      })
-      console.log("Original Menu",this.state.menu)
-      this.state.menu.contents.Custom = [...this.state.menu.contents.Custom , {id: this.state.id,title:this.state.customWorkflow}]
-      console.log("Saving new menu",this.state.menu)
-      console.log(this.state.menu.id)
-      api.menu().put(this.state.menu.id,this.state.menu).then(res =>{
-        console.log(res);
-	alert("Created a Custom Workflow Successfully");
-        this.setState({
-          showFormandWrkflw: false
-        })
+            }
+          })
+        }
       })
     }
   }
@@ -286,8 +292,8 @@ class StartWrkflwComponent extends Component
 
   renderWorkFlow(){
 
-      console.log("the state ")
-      console.log(this.state)
+      //console.log("the state ")
+      //console.log(this.state)
 
       if(this.state.showFormandWrkflw){
 	console.log("this .title", this.state.selectedTitle)

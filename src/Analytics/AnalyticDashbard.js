@@ -10,7 +10,7 @@ const datas = [
     [60, 30, 40, 20, 30]
 ]
 
-const lineData =[
+const lineData = [
     { a: 1, b: 3 },
     { a: 2, b: 6 },
     { a: 3, b: 2 },
@@ -20,31 +20,31 @@ const lineData =[
 var i = 0;
 
 
-class AnalyticDashboard extends React.Component{
+class AnalyticDashboard extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            numberCardData : {
-                pending : 24,
-                completed : 100,
-                terminated : 25,
-                active : 5
+            numberCardData: {
+                pending: 24,
+                completed: 100,
+                terminated: 25,
+                active: 5
             },
-            barChartData : datas[0],
+            barChartData: datas[0],
 
         }
     }
     changeData = () => {
         this.setState({
-            barChartData : datas[i++]
+            barChartData: datas[i++]
         })
-        if(i === datas.length) i = 0;
+        if (i === datas.length) i = 0;
     }
-    render(){
+    render() {
 
-        return(
+        return (
             <>
             <NumberCard data={this.state.numberCardData}/>
             <h2>Graphs with React</h2>
