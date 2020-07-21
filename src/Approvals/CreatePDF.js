@@ -460,7 +460,7 @@ class CreatePDF extends React.Component {
 								margin="dense"
 								id="name"
 								label="PIN"
-								type="text"
+								type="password"
 								onChange={this.handleChange}
 								fullWidth
 							  />
@@ -476,7 +476,7 @@ class CreatePDF extends React.Component {
 						  </Dialog>
 						
 						
-						{this.state.isApproved || this.props.item.status !== "pending" ? (
+						{this.state.isApproved || this.props.item.status !== "Pending" ? (
 							<Box display="flex" p={1} mb={1}>
 								<Box flexGrow={1}>
 									<Button

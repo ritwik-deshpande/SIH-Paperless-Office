@@ -240,6 +240,8 @@ class SelectedSidebar extends React.Component {
             initialValue={chart}
             chart={chart}
             callbacks={stateActions}
+            config={{ smartRouting: true,
+		showArrowHead: true }}
 	    
             Components={{
 
@@ -247,7 +249,11 @@ class SelectedSidebar extends React.Component {
           }}
           />
         </Content>
-       <Sidebar>
+	
+    
+     {this.props.title.localeCompare("Custom FlowChart") == 0 || this.props.modify ?
+
+       (<><Sidebar>
          <Message>
       
         Drag and drop these items onto the canvas.
@@ -255,7 +261,6 @@ class SelectedSidebar extends React.Component {
       </Message>
       <SidebarItem
         type="Intermediate Nodes"
-        approvers = ''
         ports={ {
           port1: {
             id: 'port1',
@@ -295,11 +300,15 @@ class SelectedSidebar extends React.Component {
         
     </Sidebar> 
         
-      </Page>
       <br>
       </br>
-      
-      {this.props.title.localeCompare("Custom FlowChart") == 0?<Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
+      </>): <></>}
+
+	</Page>
+	
+      {this.props.title.localeCompare("Custom FlowChart") == 0 || this.props.modify ?
+	
+      <Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
         Save Flow Chart
       </Button> : <Button variant="contained" color="primary" onClick = {() => this.handleClick(chart)}>
         Submit Flow Chart
@@ -311,3 +320,4 @@ class SelectedSidebar extends React.Component {
 }
 
 export default SelectedSidebar;
+

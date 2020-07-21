@@ -323,7 +323,7 @@ class StartWrkflwComponent extends Component
               color="primary"
               onClick = {this.saveCustomWorkFlow}>
             
-              Save WorkFlow
+              Create WorkFlow
             </Button>   
 
          
