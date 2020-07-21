@@ -8,7 +8,6 @@ class Main extends Component {
 
   SignInFunction = (id,password) =>{
 
-
     console.log("The id"+id)
     console.log("The password"+password)
     this.props.getUser(id,password);
