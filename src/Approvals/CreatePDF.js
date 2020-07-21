@@ -37,6 +37,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Box } from "@material-ui/core";
 import WorkflowNode from "../utils/WorkflowNode"
 
+
+const mapIdtoRoles ={
+	GRP000: "Directors",
+	GRP001: "Deans" ,
+	GRP002: "Associate Deans",
+	GRP003: "Head of Department",
+	GRP004: "Student Council",
+	GRP006: "Assistant Professors",
+	GRP007: "Teaching Assistants",
+	GRP008: "Security Section",
+	GRP009: "Student Mentor Coordinator",
+	GRP010: "HR manager",
+	GRP011: "Accountants",
+	GRP012: "Academics",
+	GRP013: "Hostel Section",  
+	GRP014: "Health Center",
+
+}
 class CreatePDF extends React.Component {
 	constructor(props) {
 		super(props);
@@ -106,6 +124,21 @@ class CreatePDF extends React.Component {
 		}
 		return true;
 	};
+
+	isUserInGroup = (node, name) =>{
+
+		let temp_flowchart = this.state.workflow.FlowChart;
+		for(let approver  in temp_flowchart[node].approvedBy )
+		{
+			if(mapIdtoRoles[approver] && this.props.userObj.roles.includes(mapIdtoRoles[approver]))
+			{
+				console.log("approver", approver)
+				return approver;
+			}
+		}
+		return null;
+	}
+
 	chooseNextNode = (nodes, name) => {
 		let i = 0;
 		let temp_flowchart = this.state.workflow.FlowChart;
@@ -119,6 +152,9 @@ class CreatePDF extends React.Component {
 		let return_node
 		for (i = 0; i < nodes.length; i++) {
 			if (name in temp_flowchart[nodes[i]].approvedBy) {
+				return_node = nodes[i];
+			}
+			else if(this.isUserInGroup(nodes[i],name)){
 				return_node = nodes[i];
 			}
 			else{
@@ -210,10 +246,10 @@ class CreatePDF extends React.Component {
 		let name = this.props.userObj.name;
 		let id = this.props.userObj.id;
 		let esign = this.props.userObj.esign;
-		console.log(this.state.signatures);
+		// console.log(this.state.signatures);
 		this.setState({ isSigned: true });
 		this.state.signatures[name] = esign;
-		console.log("in handlesignClick");
+		// console.log("in handlesignClick");
 		this.state.workflow.send_requests = []
 		this.state.workflow.cancel_requests = []
 		
@@ -222,29 +258,36 @@ class CreatePDF extends React.Component {
 				currentNode.approvedBy[id] = true;
 				// set pending request of current child as Approved
 				currentNode.timestamp[id] = Timestamp.getTimestamp();
-
-				if (this.approvedByAll(currentNode.approvedBy)) {
-					//send request to approvers of next child
-
-					console.log("Adding Next Nodes");
-					if (currentNode.type === "End") {
-						this.state.workflow.status = "Completed";
-						this.state.workflow.nextNodes = [];
-						this.state.workflow.end_timestamp = Timestamp.getTimestamp();
-					} else {
-						nextNodes = currentNode.nextNodes;
-						this.state.workflow.nextNodes = nextNodes;
-					}
-					  
-					var reqs = []
-					console.log("Next nide ki value : " + nextNodes)
-					this.state.workflow.nextNodes.forEach((value) => {
-					    console.log(value)
-					    reqs = reqs.concat(Object.keys((this.state.workflow.FlowChart)[value].approvedBy))
-					  })
-					  this.state.workflow.send_requests = reqs;}
-				this.state.workflow.FlowChart[current_node_key] = currentNode;
 			}
+			else if(this.isUserInGroup(current_node_key, id))
+			{
+				let group = this.isUserInGroup(current_node_key, id)
+				console.log("group", group)
+				currentNode.approvedBy[group] = true;
+				// set pending request of current child as Approved
+				currentNode.timestamp[group] = Timestamp.getTimestamp();
+			}
+			if (this.approvedByAll(currentNode.approvedBy)) {
+				//send request to approvers of next child
+
+				console.log("Adding Next Nodes");
+				if (currentNode.type === "End") {
+					this.state.workflow.status = "Completed";
+					this.state.workflow.nextNodes = [];
+					this.state.workflow.end_timestamp = Timestamp.getTimestamp();
+				} else {
+					nextNodes = currentNode.nextNodes;
+					this.state.workflow.nextNodes = nextNodes;
+				}
+				  
+				var reqs = []
+				console.log("Next nide ki value : " + nextNodes)
+				this.state.workflow.nextNodes.forEach((value) => {
+					console.log(value)
+					reqs = reqs.concat(Object.keys((this.state.workflow.FlowChart)[value].approvedBy))
+				  })
+				  this.state.workflow.send_requests = reqs;}
+			this.state.workflow.FlowChart[current_node_key] = currentNode;
 		} else {
 			let next_node_key;
 			let nextNode;
@@ -258,8 +301,16 @@ class CreatePDF extends React.Component {
 			this.state.workflow.cancel_requests = retval.cancel_reqs
 			// remove pending requests from all other next Nodes after chosing the nextNode
 			nextNode = this.state.workflow.FlowChart[next_node_key];
-			nextNode.approvedBy[id] = true;
-			nextNode.timestamp[id] = Timestamp.getTimestamp();
+			current_node_key = next_node_key;
+			if(this.isUserInGroup(current_node_key, id))
+			{
+				let group = this.isUserInGroup(current_node_key, id)
+				nextNode.approvedBy[group] = true;
+				nextNode.timestamp[group] = Timestamp.getTimestamp();
+			}
+			else
+			{nextNode.approvedBy[id] = true;
+			nextNode.timestamp[id] = Timestamp.getTimestamp();}
 			// set pending request of current child as Approved
 			path = [...path, next_node_key];
 
@@ -300,7 +351,10 @@ class CreatePDF extends React.Component {
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.Feedback = "Approved by " + name;
 		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
-
+		if(this.isUserInGroup(current_node_key,id)){
+		
+			this.state.workflow.cancel_requests = this.state.workflow.cancel_requests.concat([this.isUserInGroup(current_node_key,id)+'-'+id])
+		}
 		console.log("New Workflow", this.state.workflow);
 		window.location.reload(true)
 
@@ -372,7 +426,7 @@ class CreatePDF extends React.Component {
 			retval = this.chooseNextNode(nextNodes, id);
 			
 			next_node_key = retval.next_node_key
-			
+			current_node_key = next_node_key;
 			this.state.workflow.cancel_requests = retval.cancel_reqs
 
 			path = [...path, next_node_key];
@@ -386,7 +440,10 @@ class CreatePDF extends React.Component {
 		this.state.workflow.isRejected = true;
 		this.state.workflow.Feedback = "Rejected by " + name;
 		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
-
+		if(this.isUserInGroup(current_node_key,id)){
+		
+			this.state.workflow.cancel_requests = this.state.workflow.cancel_requests.concat([this.isUserInGroup(current_node_key,id)+'-'+id])
+		}
 		console.log("New Workflow", this.state.workflow);
 		window.location.reload(true)
 

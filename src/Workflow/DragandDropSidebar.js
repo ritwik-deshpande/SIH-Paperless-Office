@@ -52,11 +52,26 @@ const mapIdtoUser={
 }
 
 const countries = [
-  { name: 'Ravindra Keskar', id: 'AP001' },
-  { name: 'Manish Kurhekar', id: 'AP003' },
-  { name: 'Umesh Deshpande', id: 'HOD001' },
-  { name: 'Anil Mokhade', id: 'AP002' },
-  { name: 'Pramod Padole', id: 'DIR01'}
+  { name: 'Ravindra Keskar', id: 'AP001', roles:["Assistant Professors","Student Mentor Coordinator","Academics"] },
+  { name: 'Manish Kurhekar', id: 'AP003',roles: ["Assistant Professors","Academics"] },
+  { name: 'Umesh Deshpande', id: 'HOD001', roles: ["Head of Department","Academics"] },
+  { name: 'Anil Mokhade', id: 'AP002',roles:["Assistant Professors","Academics"]  },
+  { name: 'Pramod Padole', id: 'DIR01',roles:["Directors","Academics"]},
+  { name: 'MHRD', id:'MHRD1', roles:[]},
+  {id: "GRP000", name: "Directors", roles: []},
+	{id: "GRP001", name: "Deans",roles: [] },
+	{id: "GRP002", name:"Associate Deans",roles: []},
+	{id:"GRP003", name: "Head of Department",roles: []},
+	{id:"GRP004", name: "Student Council",roles: []},
+	{id:"GRP006", name: "Assistant Professors",roles: []},
+	{id:"GRP007", name:"Teaching Assistants",roles: []},
+{	id: "GRP008", name:"Security Section",roles: []},
+	{id:"GRP009", name:"Student Mentor Coordinator",roles: []},
+	{id: "GRP010", name:"HR manager",roles: []},
+	{id :"GRP011",name: "Accountants",roles: []},
+	{id:'GRP012', name:"Academics",roles: []},
+	{id: 'GRP013', name:"Hostel Section",roles: []},  
+	{id:"GRP014", name:"Health Center",roles: []},
 ]
 
 
@@ -171,7 +186,7 @@ const NodeInnerCustom = ({ node, config }) => {
            
             onChange = {(event,value) => {console.log('The value is',value); if(value!== null)approver[node.id] = value.id}}
             autoHighlight
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.name+option.id+option.roles}
             renderOption={(option) => (
               <React.Fragment>
                 {/* <span style={{fontSize:10}}>{option.id, "  "}</span><br/> */}
@@ -179,6 +194,7 @@ const NodeInnerCustom = ({ node, config }) => {
               </React.Fragment>
             )}
             renderInput={(params) => (
+              
               <TextField
                 {...params}
                 size="small"
@@ -217,7 +233,7 @@ class SelectedSidebar extends React.Component {
     if (e.keyCode === 8 || e.keyCode === 46 ) {
       //e.preventDefault()
       e.stopPropagation()
-      alert(e.keyCode);
+      //alert(e.keyCode);
     }
   };
   state = cloneDeep(this.props.chartSimple)

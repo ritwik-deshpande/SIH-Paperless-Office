@@ -165,7 +165,7 @@ export default function Dashboard({ userObj, logout }) {
 
 
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge badgeContent={Object.keys(userObj.notifications).length} color="secondary">
+            <Badge badgeContent="" color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
