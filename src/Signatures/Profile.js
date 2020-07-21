@@ -26,7 +26,7 @@ export default function Profile({userObj}) {
 		let fields = []
 		for( var key in userObj){
 
-		if(key.localeCompare("esign") && key.localeCompare("notifications") && key.localeCompare("password") ){
+		if(key.localeCompare("esign") && key.localeCompare("notifications") && key.localeCompare("password") && key.localeCompare("pin")){
 	    		let field_key = key
 			if(key.localeCompare("avg_response_time") === 0)
 			{
@@ -80,7 +80,7 @@ export default function Profile({userObj}) {
 	       ESIGNATURE :
 	</Typography>
         
-	<img src = {userObj.esign} alt ="Electroni Signature"></img>
+	<img src = {userObj.esign} alt ="Electronic Signature"></img>
 	</ListItem>
     	</List>
 	
