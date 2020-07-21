@@ -1,15 +1,21 @@
 import api from '../utils/api'
 import axios from 'axios';
+var bcrypt = require('bcryptjs');
 
-export const GetUser = (username, password) => {
+export const GetUser = (id, password) => {
     return (dispatch, getState) =>{
 
         console.log("getstate : " ,getState().auth.loggedIn)
         let userObj = getState().auth.userObj
-
-        if( userObj && userObj.username.localeCompare(username)==0)
+        var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
+        var hash = bcrypt.hashSync(password, salt);
+        console.log(hash)
+        console.log("password", password)
+        if( userObj && userObj.id.localeCompare(id))
         {
-            if(password.localeCompare(userObj.password)==0){
+            
+            console.log("userobj", userObj.password)
+            if(bcrypt.compareSync(password, userObj.password)){
                     
                 dispatch({type: 'USER_VERIFIED',payload: userObj})
             }
@@ -20,19 +26,19 @@ export const GetUser = (username, password) => {
         }
         else{
 
-            api.users().get(username).then(
+            api.users().getByid(id).then(
                 res =>{
-                    console.log("The user",res.data[0])
+                    console.log("The user",res.data.password)
     
                     if(res.data.length== 0){
-                        alert("Invalid Username");
+                        alert("Invalid Id");
                     }
-                    else if(password.localeCompare(res.data[0].password)==0){
+                    else if(bcrypt.compareSync(password, res.data.password)){
                         
-                        dispatch({type: 'USER_VERIFIED',payload: res.data[0]})
+                        dispatch({type: 'USER_VERIFIED',payload: res.data})
                     }
                     else{
-                        dispatch({type: 'INVALID_PASSWORD',payload: res.data[0]})
+                        dispatch({type: 'INVALID_PASSWORD',payload: res.data})
                         alert("Invalid Password");
                     }
                 

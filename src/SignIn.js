@@ -28,12 +28,12 @@ function Copyright() {
 export default function SignIn({signin}) {
 
   const state ={
-    username:"empty",
+    id:"empty",
     password:"empty",
   }
 
-  const handleChangeUsername = (e) =>{
-    state.username = e.target.value;
+  const handleChangeId = (e) =>{
+    state.id = e.target.value;
   }
   const handleChangePassword = (e) =>{
     state.password = e.target.value;
@@ -41,8 +41,7 @@ export default function SignIn({signin}) {
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    // () => { signin(state.username,state.password) }
-    signin(state.username,state.password)
+    signin(state.id,state.password)
   }
 
   const classes = useStyles();
@@ -69,10 +68,10 @@ export default function SignIn({signin}) {
               fullWidth
               size="small"
               id="email"
-              label="Username"
+              label="ID"
               autoComplete="email"
               autoFocus
-              onChange = {handleChangeUsername}
+              onChange = {handleChangeId}
             />
             <TextField
               variant="outlined"
@@ -93,7 +92,6 @@ export default function SignIn({signin}) {
               fullWidth
               variant="contained"
               color="primary"
-              // onClick={() => { signin(state.username,state.password) } } 
               className={classes.submit}
             >
               Sign In
@@ -132,7 +130,7 @@ export default function SignIn({signin}) {
 //               label="Email Address"
 //               autoComplete="email"
 //               autoFocus
-//               onChange = {handleChangeUsername}
+//               onChange = {handleChangeId}
 //             />
 //             <TextField
 //               variant="outlined"
@@ -153,7 +151,7 @@ export default function SignIn({signin}) {
 //               fullWidth
 //               variant="contained"
 //               color="primary"
-//               onClick={() => { signin(state.username,state.password) } } 
+//               onClick={() => { signin(state.Id,state.password) } } 
 //               className={classes.submit}
 //             >
 //               Sign In

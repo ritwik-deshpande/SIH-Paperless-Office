@@ -132,8 +132,6 @@ export default function Dashboard({ userObj, logout }) {
   const notify = Boolean(anchorEl);
   const id = notify ? 'simple-popover' : undefined;
 
-  //console.log("The user object is", userObj)
-
   return (
 
     <BrowserRouter>
@@ -163,12 +161,7 @@ export default function Dashboard({ userObj, logout }) {
             }
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               Welcome,<Box fontWeight={600} display="inline">{userObj.name}</Box>
-            </Typography>
-          }
-          <Typography component="h1" variant="h6" color="inherit"  noWrap className={classes.title}>
-            Welcome,<Box fontWeight={600} display="inline">{" "+userObj.name}</Box>
-          </Typography>
-         
+            </Typography>        
 
 
           <IconButton color="inherit" onClick={handleClick}>
@@ -242,7 +235,7 @@ export default function Dashboard({ userObj, logout }) {
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
-      <Route exact path='/editor' component={() => <FirepadEditor userObj={userObj} />}/>
+      
      
         </main>
       </div>

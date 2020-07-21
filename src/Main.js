@@ -6,12 +6,12 @@ import {GetUser, logout} from './Actions/UserAction'
 
 class Main extends Component {
 
-  SignInFunction = (username,password) =>{
+  SignInFunction = (id,password) =>{
 
 
-    console.log("The username"+username)
+    console.log("The id"+id)
     console.log("The password"+password)
-    this.props.getUser(username,password);
+    this.props.getUser(id,password);
   }
 
   SignOutFunction = () =>{
@@ -34,7 +34,7 @@ class Main extends Component {
 
 const mapDispatchtoProps = (dispatch) =>{
   return{
-    getUser : (username, password) => dispatch(GetUser(username,password)),
+    getUser : (id, password) => dispatch(GetUser(id,password)),
     logout : (userObj) => dispatch(logout(userObj))
     }
 }
