@@ -31,13 +31,14 @@ const theme = createMuiTheme({
 			// dark: "#4E9C81",
 		},
 		action: {
-			// hover: "#B4D6C1",
+			hover: "#182f37",
 			selected: "#006A5C",
 			// focus: "#8DC3A7",
 		},
 		background: {
 			paper: "#fff",
 			default: "#f4f6f8", 
+			navBarListBg: "#0e1c21",
 		},
 	},
 	typography: {
@@ -47,7 +48,7 @@ const theme = createMuiTheme({
 		MuiCssBaseline: {
 		  '@global': {
 			'*': {
-			  'scrollbar-width': 'thin',
+			  'scrollbar-width': 'thin',  
 			},
 			'*::-webkit-scrollbar': {
 				width: '6px',

@@ -142,12 +142,12 @@ function Listitems(props) {
       {props.open ? (
         // <List>
         <div className={classes.navBarProfile}>
-        <Box pt={5}>
+        <Box pt={4}>
           <Typography color="inherit" align="center">
-            <Box fontSize={16}>
+            <Box fontSize={20} >
               {props.userObj.name}
             </Box>
-            <Box mt={1} fontSize={14}>
+            <Box mt={1} fontSize={16} fontWeight="Light" color="textSecondary">
               userBitwise@DigiDocs.com
             </Box>
           </Typography>
