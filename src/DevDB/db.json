@@ -1737,11 +1737,13 @@
         },
         "node2": {
           "approvedBy": {
-            "GRP003": true
+            "GRP003": true,
+            "AP001": false
           },
           "nextNodes": [],
           "timestamp": {
-            "GRP003": "Jul 21 at 23:20, 2020"
+            "GRP003": "Jul 21 at 23:20, 2020",
+            "AP001": "Jul 24 at 23:6, 2020"
           },
           "type": "End"
         }
@@ -1768,13 +1770,14 @@
       "end_timestamp": "Jul 21 at 23:20, 2020",
       "formId": 439,
       "flowchartId": 439,
-      "Feedback": "Approved by Umesh Deshpande",
-      "Feedback_ts": "Jul 21 at 23:20, 2020",
+      "Feedback": "Rejected by Ravindra Keskar",
+      "Feedback_ts": "Jul 24 at 23:6, 2020",
       "User": "rd",
       "Title": "Library Registration",
       "id": "536v0",
       "cancel_requests": [],
-      "send_requests": []
+      "send_requests": [],
+      "isRejected": true
     },
     {
       "FormData": {

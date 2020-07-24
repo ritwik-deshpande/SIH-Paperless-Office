@@ -43,6 +43,7 @@ class StatusComponent extends Component {
 		id: null,
 		status: null,
 		workflow: null,
+		searchId:"",
 		nodesList: [],
 		workflowSteps: [],
 		username: null,
@@ -120,9 +121,7 @@ class StatusComponent extends Component {
 
 	handleChange = (e) => {
 		console.log(e.target.value);
-		this.setState({
-			id: e.target.value,
-		});
+			this.state.searchId = e.target.value
 	};
 	handleOnUpdate = (old_version, old_object) => {
 		console.log("Handle Modify", this.state.workflow, old_object);
@@ -163,25 +162,32 @@ class StatusComponent extends Component {
 		});
 	};
 	handleGetWorkflow = (id) => {
-		this.state.open = true;
-		this.setState({
-			id: id,
-			status : null
-		});
-		api
-			.workFlow()
-			.getByid(id)
-			.then((res) => {
-				//console.log('The data received is',res.data)
-				if (res && res.data) {
-					this.setState({
-						workflow: res.data,
-						title: res.data.Title,
-						username: res.data.User,
-					}, ()=> { this.init() } );
+		this.state.id = null
+		if(id.localeCompare("")===0)
+		{
+			alert("Workflow Not Found");
+		}
+		else{
+			api
+				.workFlow()
+				.getByid(id)
+				.then((res) => {
+					console.log('The data received is',res.data)
+					if (res && res.data) {
+						this.setState({
+							workflow: res.data,
+							title: res.data.Title,
+							username: res.data.User,
+							id:id,
+							open:true
+						}, ()=> { this.init() } );
 					
-				}
-			});
+					}
+				})
+				.catch(err => {
+					alert("Workflow Not Found");
+				});
+		}
 	};
 	Click = () => {
 		this.setState({ myWorkflow: true });
@@ -193,13 +199,12 @@ class StatusComponent extends Component {
 		// this.state.title = this.props.location.search.split("=")[1]
 		// console.log(this.state.username,this.state.title)
 		// console.log(this.state.workflowSteps,this.state.nodesList)
-		if (
-			!this.state.id &&
-			this.props.location.search.localeCompare("") !== 0 &&
-			this.props.location.search.split("=")[1]
-		) {
-			console.log("in something");
-			this.setState({ id: this.props.location.search.split("=")[1] });
+		
+		if(this.state.id){
+			console.log("The id",this.state.id.length)
+		}
+		else{
+			console.log("id is false")
 		}
 		const { classes } = this.props;
 		return (
@@ -232,9 +237,9 @@ class StatusComponent extends Component {
 								//className={classes.button}
 								startIcon={<AddCommentIcon />}
 								onClick={() => {
-									this.handleGetWorkflow(this.state.id);
+									this.handleGetWorkflow(this.state.searchId);
 								}}>
-								GET WORKFLOW STATUS
+								GET OTHER WORKFLOWS
 							</Button>
 							{/* </Box> */}
 						</Grid>
@@ -252,28 +257,7 @@ class StatusComponent extends Component {
 							backgroundColor: "#FFF",
 						},
 					}}>
-					{this.state.id ? (
-						!this.state.status ? (<div>
-					<AppBar className={classes.appBar}>
-					    <Toolbar className={classes.toolbar}>
-						<Box display='flex' flexGrow={1}>
-						<Button edge="start" autoFocus color="inherit" onClick={this.handleClose} startIcon={<ArrowBackIosIcon/>}>
-						    Go Back
-						</Button>
-						</Box>
-					    </Toolbar>
-					</AppBar>
-
-       					 <div className={classes.appBarSpacer} />
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<Typography component="h1" variant="h5" align="center">
-				 	    Workflow Not Found 
-				 	 </Typography>
-				   </div>
-						) : !this.state.updateWorkFlow ? (
+					{this.state.id  ? [ !this.state.updateWorkFlow ? (
 							<div className={classes.root}>
 								<AppBar className={classes.appBar}>
 									<Toolbar className={classes.toolbar}>
@@ -284,7 +268,7 @@ class StatusComponent extends Component {
 												color="inherit"
 												onClick={this.handleClose}
 												startIcon={<ArrowBackIosIcon />}>
-												Go Back
+												Back
 											</Button>
 										</Box>
 										{(this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") || (this.state.workflow.User !== this.props.userObj.username ) ? null : (
@@ -323,15 +307,14 @@ class StatusComponent extends Component {
 												color="inherit"
 												onClick={this.handleClose}
 												startIcon={<ArrowBackIosIcon />}>
-												Go Back
+												Back
 											</Button>
 										</Box>
 									</Toolbar>
 								</AppBar>
 								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
 							</div>
-						)
-					) : null}
+						) ]: null}
 				</Dialog>
 			</div>
 		);
