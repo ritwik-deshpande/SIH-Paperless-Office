@@ -23,6 +23,28 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 
+import ReportIcon from '@material-ui/icons/Report';
+import CloseIcon from '@material-ui/icons/Close'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { IconButton } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import html2canvas from 'html2canvas';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Listitems(props) {
 
@@ -56,7 +78,50 @@ function Listitems(props) {
     
   }
 
-const classes = useStyles();
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+    takeSS();
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const [openSnackBar, setOpenSnackBar] = React.useState(false);
+
+  const handleSubmitReportForm = () => {
+    /* Submit Form Logic */
+    setOpenDialog(false)
+    setOpenSnackBar(true);
+  };
+
+  const handleCloseSnackBar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackBar(false);
+  };
+
+  const [imgData, setimgData] = React.useState(null);
+  const takeSS = () => {
+    html2canvas(document.getElementById("root")).then(function(canvas) {
+      setimgData(canvas.toDataURL("image/png"));
+      console.log("ImgData",imgData);
+      // Canvas2Image.saveAsPNG(canvas, 1400,720);
+    });
+  };
+
+  const [includeSS, setincludeSS] = React.useState(true);
+  const handleChange = (event) => {
+    setincludeSS(!includeSS);
+  };
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <div>
       {props.open ? <div className={classes.navBarLogo} >
@@ -149,12 +214,86 @@ const classes = useStyles();
       
         <Divider/>
 
+        <Tooltip title={props.open ? "" : "Report Error"}>
+          <ListItem button selected={selectedIndex===9} onClick={handleClickOpenDialog}>
+            <ListItemIcon>
+              <ReportIcon />
+            </ListItemIcon>
+            <ListItemText primary="Report Error"/>
+          </ListItem>
+        </Tooltip>
+
+        <Dialog open={openDialog} onClose={handleCloseDialog} fullScreen={fullScreen}>
+          <DialogTitle id="form-dialog-title">
+            Report Error
+            <IconButton aria-label="close" className={classes.closeButton} onClick={handleCloseDialog}>
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent dividers>
+            <DialogContentText>
+              We apologize for the inconvenience caused. Please fill in the details of the problem, so that we can assist better.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="userID"
+              label="Enter your User ID"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              margin="dense"
+              id="userName"
+              label="Enter your User Name"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              margin="dense"
+              id="workflowID"
+              label="Enter the Workflow ID"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              id="description"
+              label="Please describe the Problem here."
+              multiline
+              margin="dense"
+              rows={4}
+              fullWidth
+            />
+            <FormGroup>
+              <FormControlLabel
+                control={<Switch checked={includeSS} onChange={handleChange} aria-label="login switch" />}
+                label="Include screenshot"
+              />
+            </FormGroup>
+            {includeSS && (<img src={imgData} alt={imgData} width="400"/>)}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSubmitReportForm} color="primary">
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Snackbar open={openSnackBar} autoHideDuration={6000} onClose={handleCloseSnackBar}>
+          <Alert onClose={handleCloseSnackBar} severity="success">
+            Report Submitted. We will get back to you Soon!
+          </Alert>
+        </Snackbar>
+
+        
         <Tooltip title={props.open ? "" : "LogOut"}>
-          <ListItem button selected={selectedIndex===9}>
+          <ListItem button selected={selectedIndex===10}  onClick={ () => props.logout()}>
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText primary="LogOut" onClick={ () => props.logout()}/>
+            <ListItemText primary="LogOut"/>
           </ListItem>
         </Tooltip>
 

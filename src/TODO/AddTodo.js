@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid'
 import AddCommentIcon from "@material-ui/icons/AddComment";
+import { Box } from '@material-ui/core';
 
 class AddTodo extends Component {
 	
@@ -23,8 +24,8 @@ class AddTodo extends Component {
 	onClick() {
 		var todo = this.state.inputValue;
 		if(todo=='') return 
-		else {
-			
+		else 
+		{	
 			this.props.handleClick(todo);
 			this.setState({
 			inputValue: ''
@@ -33,39 +34,40 @@ class AddTodo extends Component {
 	}
 
 	render() {
-		const { handleClick,} = this.props;
+		const { handleClick } = this.props;
 		return(
-				<div >
-				<Grid container spacing={3}>
+			<Box>
+				<Grid container spacing={2} justify="space-evenly" alignItems="flex-end">
 						
-						<Grid item xs>
-							{/* <Box m={2} p={2}> */}
-							<TextField
-								defaultValue = {this.state.inputValue}
-								fullWidth
-								variant="outlined"
-								size="small"
-								label="Add to Your TODO List"
-								onChange={this.handleChange}
-							/>
-							{/* </Box> */}
-						</Grid>
-						<Grid item xs>
-							{/* <Box m={2} p={2}> */}
-							<Button
-								variant="contained"
-								color="primary"
-								//className={classes.button}
-								startIcon={<AddCommentIcon />}
-								onClick={this.onClick} >
-								ADD TODO
-							</Button>
-							{/* </Box> */}
-						</Grid>
+					<Grid item xs={12} sm={9}>
+						{/* <Box m={2} p={2}> */}
+						<TextField
+							defaultValue = {this.state.inputValue}
+							fullWidth
+							variant="outlined"
+							size="small"
+							label="Add to TODO List"
+							onChange={this.handleChange}
+						/>
+						{/* </Box> */}
 					</Grid>
-				
+					<Grid item xs={12} sm={3}>
+						{/* <Box m={2} p={2}> */}
+						<Button
+							fullWidth
+							variant="contained"
+							color="primary"
+							//className={classes.button}
+							startIcon={<AddCommentIcon />}
+							onClick={this.onClick} >
+							ADD 
+						</Button>
+						{/* </Box> */}
+					</Grid>
+				</Grid>
+			
 					
-				</div>
+			</Box>
 		)
 	}
 }

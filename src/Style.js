@@ -84,9 +84,9 @@ const useStyles = makeStyles((theme) => ({
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
 		}),
-		width: theme.spacing(5),
-		[theme.breakpoints.up("sm")]: {
-			width: theme.spacing(9),
+		width: 0,
+		[theme.breakpoints.up("md")]: {
+			width: theme.spacing(8),
 		},
 	},
 	appBarSpacer: {
@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "auto",
 	},
 	container: {
-		paddingTop: theme.spacing(4),
+		paddingTop: theme.spacing(2),
 		paddingBottom: theme.spacing(4),
 		overflow: "auto",
 	},
@@ -162,7 +162,33 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		height: "100%",
 	},
-
+	numCard: {
+		display: "flex",
+		width: "100%",
+		maxHeight: 250,
+	},
+	numCardDetails: {
+		display: 'flex',
+		// flexDirection: 'column'
+	},
+	numCardNumber: {
+		margin: "auto",
+		// flex: '1 0 auto',
+		padding: theme.spacing(1),
+		// alignItems: "flex-start",
+	},
+	numCardContent: {
+		textTransform: "capitalize",
+		margin: 'auto',
+		// justifyContent: 'flex-end',
+	},
+	toDoListBox: {
+		width: "100%",
+		height: "100%",
+		margin: "auto",
+		padding: theme.spacing(1),
+		overflow: "auto",
+	},
 	dialogBox: {
 		// margin: 0,
 		// padding: theme.spacing(2),
