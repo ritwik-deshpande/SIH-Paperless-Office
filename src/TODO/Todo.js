@@ -10,8 +10,8 @@ import { Box, ButtonGroup } from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
 
 const listElementStyles = {
-	fontSize: 18,
-	lineHeight: '24px',
+	fontSize: 12,
+	// lineHeight: '12px',
 }
 
 const listElementCheckedStyles = {
@@ -42,7 +42,7 @@ class Todo extends Component{
     } = this.props;
 
 		return(
-			<ListItem>
+			<ListItem dense>
 			
 			
 				<Checkbox
@@ -52,7 +52,7 @@ class Todo extends Component{
 				
 				<ListItemText  primary={todo} />
 				
-				<IconButton style={{ marginLeft: 70}} onClick={this.onClick} >
+				<IconButton onClick={this.onClick} >
 					<DeleteIcon/>
 				</IconButton>
 			

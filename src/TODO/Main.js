@@ -8,8 +8,19 @@ import uuid from 'uuid';
 import AddTodo from './AddTodo';
 import TodoList from './TodoList';
 import api from "../utils/api";
+import useStyles from "../Style" 
+import { withStyles, Typography, makeStyles, Divider, Box } from '@material-ui/core';
 
-
+const styles = theme => ({
+  toDoListBox: {
+		width: "100%",
+		height: "100%",
+		padding: theme.spacing(1),
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+	},
+});
 class Main extends Component {
   constructor() {
     super();
@@ -86,30 +97,34 @@ class Main extends Component {
 
   
   render() {
+    const {classes} = this.props
+    console.log("Classes in todo", classes)
     return (
-       <Paper 
-          style={{paddingBottom: '20px', width: '70'}}>
-          <div >
-			
+       <Paper className={classes.toDoListBox}>
+         <Typography variant="subtitle1" component="h4">
+              ToDo List
+            </Typography>
             <div>
-              <h1 style={{ textAlign: 'center'}}>
-                TODO List 
-              </h1>
-            </div>
+        {/* <Box display="flex" flexDirection="col"> */}
+          {/* <Box flexGrow={1}> */}
+            
            
-          </div>
-          {this.state.todos.length === 0 ? <div style={{marginLeft :60}}> No items in TODO List </div> : <div>
+          <Divider/>
+          {this.state.todos.length === 0 ? <Box m={2}> No items in TODO List </Box> : 
           <TodoList 
             todos={this.state.todos}
             handleRemove={this.handleRemove} 
             handleCheck={this.handleCheck} 
           />
-          </div>}
-          <br />
+          }
+          {/* </Box> */}
+            <Box alignSelf="flex-end">
           
-          <div style={{marginLeft: '5%'}}>
+          
            <AddTodo handleClick={this.handleClick}/>
-          </div>
+           </Box>
+           {/* </Box> */}
+           </div>
           <Snackbar
           open={this.state.open}
           message="TODO Item deleted"
@@ -125,5 +140,5 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withStyles(styles)(Main);
 
