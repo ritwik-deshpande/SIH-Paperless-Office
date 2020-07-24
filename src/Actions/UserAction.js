@@ -8,8 +8,7 @@ export const GetUser = (id, password) => {
         console.log("getstate : " ,getState().auth.loggedIn)
         let userObj = getState().auth.userObj
         var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
-        var hash = bcrypt.hashSync(password, salt);
-        console.log(hash)
+        
         console.log("password", password)
         if( userObj && userObj.id.localeCompare(id))
         {
@@ -34,13 +33,16 @@ export const GetUser = (id, password) => {
                         alert("Invalid Id");
                     }
                     else if(bcrypt.compareSync(password, res.data.password)){
-                        
+                        var hash = bcrypt.hashSync(res.data.pin, salt);
+                        console.log(hash)
                         dispatch({type: 'USER_VERIFIED',payload: res.data})
                     }
                     else{
                         dispatch({type: 'INVALID_PASSWORD',payload: res.data})
                         alert("Invalid Password");
                     }
+
+                    
                 
                 })
         }
