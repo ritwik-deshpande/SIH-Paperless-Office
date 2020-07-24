@@ -11,64 +11,90 @@ import Typography from '@material-ui/core/Typography';
 
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import { Grid, Paper, Box, useTheme } from '@material-ui/core';
+import useStyles from '../Style'
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      width: "150%",
-      maxWidth: 300,
-      backgroundColor: theme.palette.background.paper,
-    },
-    nested: {
-      width: "100%",
-      paddingLeft: theme.spacing(4),
-    },
-    gridList: {
-      width: 1150,
-      height: 300,
-      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-      transform: 'translateZ(0)',
-    },
-    media: {
-      height: 60,
-    },
-    number : {
-        alignContent : 'center',
-        alignItems : 'center',
-        height : 100,
-    }
-  }));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: 'flex',
+//   },
+//   details: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//   },
+//   content: {
+//     flex: '1 0 auto',
+//   },
+//   cover: {
+//     width: 151,
+//   },
+//   number : {
+//       alignContent : 'center',
+//       alignItems : 'center',
+//       height : 100,
+//   }
+//   }));
+// const theme = useTheme();
+const styles = theme => ({
+  numCardNumber: {
+		margin: "auto",
+    // flex: '1 0 auto',
+		padding: theme.spacing(1),
+		// alignItems: "flex-start",
+	},
+});
+
+const color = {};
+color['pending'] = "#ff9800";
+color['completed'] = "#4caf50";
+color['terminated'] = "#d32f2f";
+color['active'] = "#303f9f"
+
 export default function NumberCard({data}) {
     const classes = useStyles();
+    // const s = makeStyles(styles(useTheme()));
+    const cls = makeStyles(styles(useTheme()))();
+    const color = {};
+    color['pending'] = "#ff9800";
+    color['completed'] = "#4caf50";
+    color['terminated'] = "#d32f2f";
+    color['active'] = "#0288d1"
     return(
         <>
-        <h1 style={{marginTop:10}}></h1>
-        <GridList cellHeight={200} spacing={30} cols={4} className={classes.gridList}>
+        {/* <Grid container alignContent="center" justify="space-around" align="center" spacing={2}> */}
         {Object.keys(data).map(key => {
+          
           return (
-          <div key={key}>
-            <Card>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={Logo}
-                title={key}
-              />
-              <CardContent>
-                <Typography variant="h2" className={classes.number} color="textSecondary" component="h2">
-                  {data[key]}
-                </Typography>
-                <Typography variant="body" color="textSecondary" component="p">
-                  number of workflows {key}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-             
-          </Card>
-          </div>
+            <React.Fragment>
+              <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
+                <Paper className={classes.numCard}>
+                  <Grid item container >
+                    <Grid item xs={5} sm={5} md={5}>
+                    
+                    <Typography variant="h2" style={{color:color[key]}} className={cls.numCardNumber}>
+                      {data[key]}
+                    </Typography>
 
+                  </Grid>
+                  
+                  <Grid item xs={8} sm={7} md={8}>
+                  <Box className={classes.numCardContent} m={1} >
+                    <Typography component="h5" variant="h5">
+                      {key}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary">
+                      Worflows
+                    </Typography>
+                  </Box>
+                  {/* </Grid> */}
+                  </Grid>
+                  </Grid>
+              </Paper>
+            </Grid>
+        </React.Fragment>
           );
         })}
-        </GridList>
+        {/* </Grid> */}
         </>
     )
 }

@@ -42,6 +42,33 @@ const theme = createMuiTheme({
 	typography: {
 		fontFamily: "Helvetica",
 	},
+	overrides: {
+		MuiCssBaseline: {
+		  '@global': {
+			'*': {
+			  'scrollbar-width': 'thin',
+			},
+			'*::-webkit-scrollbar': {
+			  width: '8px',
+			},
+			/* Track */
+			'*::-webkit-scrollbar-track': {
+				background: "#f1f1f1",
+			},
+			
+			/* Handle */
+			'*::-webkit-scrollbar-thumb': {
+				background: "#888", 
+				borderRadius: "10px"
+			},
+			
+			/* Handle on hover */
+			'*::-webkit-scrollbar-thumb:hover': {
+				background: "#555",
+			},
+		  }
+		},
+	  }
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
