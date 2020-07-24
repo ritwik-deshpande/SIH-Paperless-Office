@@ -90,10 +90,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 						icon: "view",
 						tooltip: "View Workflow",
 						onClick: (event, rowData) => {
-							alert(
-								"You want to view workflow " +
-									rowData.id
-							);
+						
 
 							Click(rowData.index_no);
 						},
@@ -116,14 +113,13 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 					sorting: true,
 					actionsColumnIndex: -1,
 					headerStyle: {
-						backgroundColor: "#4E9C81",
+						backgroundColor: "#006a5c",
 						color: "#FFF",
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
 					rowStyle: {
-						backgroundColor: "#FBFBFB",
-						color: "#000",
+					
 						fontSize: "14px",
 					},
 				}}

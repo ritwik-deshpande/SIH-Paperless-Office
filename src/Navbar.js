@@ -42,7 +42,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
-
+import AvatarImage from './images/lodu.jpeg'
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -141,6 +141,7 @@ function Listitems(props) {
       
       {props.open ? (
         // <List>
+        
         <div className={classes.navBarProfile}>
         <Box pt={5}>
           <Typography color="inherit" align="center">
@@ -152,11 +153,15 @@ function Listitems(props) {
             </Box>
           </Typography>
 
-          <Avatar
-            alt={props.userObj.name}
-            src="../../public/logo192.png"
-            className={classes.navBarProfileLogo}
-          />
+          <div className="mb-3 mx-auto" align='center'>
+						<img
+						className="rounded-circle"
+						src={AvatarImage}
+			  			// src={userDetails.avatar}
+			  			//alt={userObj.name}
+			  			width="100"
+						/>
+		  			</div>
         </Box>
         </div>
       ) : (null

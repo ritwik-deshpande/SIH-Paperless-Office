@@ -111,7 +111,7 @@ class ESignComponent extends React.Component{
 		  />
 		  </Grid>
 			  <Grid item md={4}>
-		<Button variant="contained" color="primary" onClick = { this.handleSearch } style={{ marginLeft: 50 }} >
+		<Button variant="contained" color="secondary" onClick = { this.handleSearch } style={{ marginLeft: 10 }} >
 		  GET PROFILE 
 		</Button>
 		</Grid>
@@ -129,13 +129,14 @@ class ESignComponent extends React.Component{
 		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> : 
 		
 		<div>
-		<Profile userObj = {this.state.viewProfile} />
-		{/* <Calendar userObj = {this.state.viewProfile}  /> */}
-		
-		{ !this.state.cannotUpdate ?
+			{ !this.state.cannotUpdate ?
 		<Button variant="contained" color="primary" onClick = { this.onUpdateClick } style={{ margin: 20 }} >
 		  UPDATE YOUR PROFILE 
 		</Button> : null }
+		<Profile userObj = {this.state.viewProfile} />
+		{/* <Calendar userObj = {this.state.viewProfile}  /> */}
+		
+		
 
 		</div>
 		) : 
