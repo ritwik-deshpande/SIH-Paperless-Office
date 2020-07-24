@@ -148,7 +148,7 @@ function Listitems(props) {
               {props.userObj.name}
             </Box>
             <Box mt={1} fontSize={16} fontWeight="Light" color="textSecondary">
-              userBitwise@DigiDocs.com
+              ID:  {props.userObj.id}
             </Box>
           </Typography>
 
@@ -170,6 +170,8 @@ function Listitems(props) {
         //   </Box>
         // </Box>
       )}
+
+      
       <div className={classes.navBarLists}>
       <List component="nav">
         <Tooltip title={props.open ? "" : "Dashboard"}>
