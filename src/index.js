@@ -21,22 +21,23 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			light: "#358873",
-			main: "#207567",
+			// light: "#358873",
+			main: "#002A29",
 			// dark: "#205072",
 		},
 		secondary: {
-			light: "#8DC3A7",
-			main: "#6BAF92",
-			dark: "#4E9C81",
+			// light: "#8DC3A7",
+			main: "#006A5C",
+			// dark: "#4E9C81",
 		},
 		action: {
-			hover: "#B4D6C1",
-			selected: "#8DC3A7",
-			focus: "#8DC3A7",
+			// hover: "#B4D6C1",
+			selected: "#006A5C",
+			// focus: "#8DC3A7",
 		},
 		background: {
-			paper: "#EDF3EF", //#DFEAE2
+			paper: "#fff",
+			default: "#f4f6f8", 
 		},
 	},
 	typography: {
@@ -49,22 +50,23 @@ const theme = createMuiTheme({
 			  'scrollbar-width': 'thin',
 			},
 			'*::-webkit-scrollbar': {
-			  width: '8px',
+				width: '6px',
+				height: '6px'
 			},
 			/* Track */
 			'*::-webkit-scrollbar-track': {
-				background: "#f1f1f1",
+				background: "#0e1c21",
 			},
 			
 			/* Handle */
 			'*::-webkit-scrollbar-thumb': {
-				background: "#888", 
+				background: "#006A5C", 
 				borderRadius: "10px"
 			},
 			
 			/* Handle on hover */
 			'*::-webkit-scrollbar-thumb:hover': {
-				background: "#555",
+				background: "#005C50",
 			},
 		  }
 		},
