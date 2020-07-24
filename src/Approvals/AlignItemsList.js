@@ -137,8 +137,6 @@ export default function AlignItemsList({ Click, requestTable }) {
 						icon: "view",
 						tooltip: "Approve Document",
 						onClick: (event, rowData) => {
-							alert("You want to approve document with " + rowData.id);
-
 							Click(rowData.item);
 						},
 					},
@@ -160,14 +158,12 @@ export default function AlignItemsList({ Click, requestTable }) {
 					sorting: true,
 					actionsColumnIndex: -1,
 					headerStyle: {
-						backgroundColor: "#4E9C81",
+						backgroundColor: "#006a5c",
 						color: "#FFF",
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
 					rowStyle: {
-						backgroundColor: "#FBFBFB",
-						color: "#000",
 						fontSize: "14px",
 					},
 				}}

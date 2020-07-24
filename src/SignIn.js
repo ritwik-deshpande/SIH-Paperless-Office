@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import useStyles from './Style'
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 function Copyright() {
     return (
@@ -47,26 +49,23 @@ export default function SignIn({signin}) {
   const classes = useStyles();
 
   return (
-    <div className={classes.loginbg}>
-    <Container component="main" maxWidth="xs" className={classes.loginBox}>
-    <Paper elevation = {10}>
-      <div className={classes.paper}>
-        {/* <Avatar alt="Remy Sharp" src="../logo192.png">
-          DD
-        </Avatar> */}
-        <img src="../DigiDocsLogoW.png" className={classes.loginLogo}/>
-        <Typography component="h1" variant="h4" align="center">
-          <Box fontWeight={800} display="inline">Digi</Box>
-          <Box display="inline">Docs</Box>
-        </Typography>
-        <Box mt={4}>
-          <form className={classes.form} onSubmit={handleSubmit} noValidate>
-            <TextField
+    <Grid container component="main" className={classes.loginroot}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.loginimage} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.loginpaper}>
+          <Avatar className={classes.loginavatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.loginform} onSubmit={handleSubmit} noValidate>
+          <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              size="small"
               id="email"
               label="ID"
               autoComplete="email"
@@ -78,38 +77,138 @@ export default function SignIn({signin}) {
               margin="normal"
               required
               fullWidth
-              size="small"
               label="Password"
               type='password'
               id="password"
               onChange = {handleChangePassword}
               autoComplete="current-password"
-              
             />
-          
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              className={classes.loginsubmit}
             >
               Sign In
             </Button>
-          
+            
+            <Box mt={5}>
+              <Copyright />
+            </Box>
           </form>
-        </Box>
-        <Box mt={4}>
-          <Copyright />
-        </Box>
-      </div>
+        </div>
+        </Grid>
+        </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //   <div className={classes.loginbg}>
+  //   <Container component="main" maxWidth="xs" className={classes.loginBox}>
+  //   <Paper elevation = {10}>
+  //     <div className={classes.paper}>
+  //       {/* <Avatar alt="Remy Sharp" src="../logo192.png">
+  //         DD
+  //       </Avatar> */}
+  //       <img src="../DigiDocsLogoW.png" className={classes.loginLogo}/>
+  //       <Typography component="h1" variant="h4" align="center">
+  //         <Box fontWeight={800} display="inline">Digi</Box>
+  //         <Box display="inline">Docs</Box>
+  //       </Typography>
+  //       <Box mt={4}>
+  //         <form className={classes.form} onSubmit={handleSubmit} noValidate>
+  //           <TextField
+  //             variant="outlined"
+  //             margin="normal"
+  //             required
+  //             fullWidth
+  //             size="small"
+  //             id="email"
+  //             label="ID"
+  //             autoComplete="email"
+  //             autoFocus
+  //             onChange = {handleChangeId}
+  //           />
+  //           <TextField
+  //             variant="outlined"
+  //             margin="normal"
+  //             required
+  //             fullWidth
+  //             size="small"
+  //             label="Password"
+  //             type='password'
+  //             id="password"
+  //             onChange = {handleChangePassword}
+  //             autoComplete="current-password"
+              
+  //           />
+          
+  //           <Button
+  //             type="submit"
+  //             fullWidth
+  //             variant="contained"
+  //             color="primary"
+  //             className={classes.submit}
+  //           >
+  //             Sign In
+  //           </Button>
+          
+  //         </form>
+  //       </Box>
+  //       <Box mt={4}>
+  //         <Copyright />
+  //       </Box>
+  //     </div>
       
       
-      </Paper> 
-    </Container>
-    </div>
-  );
+  //     </Paper> 
+  //   </Container>
+  //   </div>
+   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //     return (
 //       <Container component="main" maxWidth="xs">
 //         <CssBaseline />

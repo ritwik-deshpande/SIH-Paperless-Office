@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import FormBuilder from 'react-form-builder2'
 import CustomForm from '../Forms/CustomForms'
 import Calendar from '../Calendar/Calendar'
-
+import Header from '../Header';
 import NumberCard from '../Analytics/NumberCard'
 import PagesSaved from './pagesSaved'
 
@@ -54,6 +54,7 @@ const MainComponent= ({userObj}) =>{
 
 		<main>
            <div/>
+           <Header title={'Welcome Back,' + userObj.name}/>
             <Container maxWidth="lg" className={classes.container}>
             
               <Grid container spacing={3}>

@@ -7,7 +7,9 @@ import api from '../utils/api'
 import Button from '@material-ui/core/Button';
 import Profile from './Profile'
 import Calendar from '../Calendar/Calendar'
-
+import Header from '../Header'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 class ESignComponent extends React.Component{
 
 
@@ -89,28 +91,35 @@ class ESignComponent extends React.Component{
     render(){
         return(
             <div>
-
-	 
-		<br/>
-		<br/>
-		<br/>
-
-		<br/>
-	
-		<br/>
-		 <SearchBar
+			<Header title="User Profile"/>
+		 
+			 <Paper style={{backgroundColor: '#002a29'}}>
+			 <Grid container spacing={3} direction="row"
+  justify="flex-start"
+  alignItems="flex-start"
+>
+				 <Grid item md={8}>
+		 	<SearchBar
 		    placeholder = "Search User Profile, Type in the ID"
 		    value = {this.state.value}
 		    onChange={(newValue) => this.handleChange(newValue)}
 		    onRequestSearch={() => this.handleSearch(this.state.value)}
 		    style={{
-			margin: 20,
-			width: 1000
+			width: '100%',
+			marginLeft: '20px'
 		      }}
 		  />
-		<Button variant="contained" color="primary" onClick = { this.handleSearch } style={{ marginLeft: 50 }} >
+		  </Grid>
+			  <Grid item md={4}>
+		<Button variant="contained" color="secondary" onClick = { this.handleSearch } style={{ marginLeft: 10 }} >
 		  GET PROFILE 
 		</Button>
+		</Grid>
+	</Grid>
+		</Paper>
+		<br></br>
+		<br></br>
+	
 
 		
                { this.state.userObj ?
@@ -118,14 +127,16 @@ class ESignComponent extends React.Component{
 		( this.state.updateProfile ?
 
 		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> : 
-		<div>
-		<Profile userObj = {this.state.viewProfile} />
-		<Calendar userObj = {this.state.viewProfile}  />
 		
-		{ !this.state.cannotUpdate ?
+		<div>
+			{ !this.state.cannotUpdate ?
 		<Button variant="contained" color="primary" onClick = { this.onUpdateClick } style={{ margin: 20 }} >
 		  UPDATE YOUR PROFILE 
 		</Button> : null }
+		<Profile userObj = {this.state.viewProfile} />
+		{/* <Calendar userObj = {this.state.viewProfile}  /> */}
+		
+		
 
 		</div>
 		) : 

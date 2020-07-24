@@ -21,6 +21,9 @@ import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Typography from "@material-ui/core/Typography";
+import Header from '../Header';
+import Paper from '@material-ui/core/Paper'
+
 import {
 	AppBar,
 	withStyles,
@@ -209,23 +212,19 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-			
-				<MyWorkflow
-					userObj={this.props.userObj}
-					handleSubmit={this.handleSearch}
-				/>
-			
-				<Box m={2} p={2}>
-					<Grid container spacing={3}>
+				<Header title={'My Workflows'}/>
+				<Paper style={{backgroundColor:'#002a29'}}>
+					<Grid container justify="center" spacing={3}>
 						
 						<Grid item xs>
 							{/* <Box m={2} p={2}> */}
 							<TextField
 								fullWidth
-								variant="outlined"
+								variant="filled"
 								size="small"
 								label="Enter Workflow ID to Search"
 								onChange={this.handleChange}
+								color="secondary"
 							/>
 							{/* </Box> */}
 						</Grid>
@@ -233,7 +232,7 @@ class StatusComponent extends Component {
 							{/* <Box m={2} p={2}> */}
 							<Button
 								variant="contained"
-								color="primary"
+								color="secondary"
 								//className={classes.button}
 								startIcon={<AddCommentIcon />}
 								onClick={() => {
@@ -244,7 +243,12 @@ class StatusComponent extends Component {
 							{/* </Box> */}
 						</Grid>
 					</Grid>
-				</Box>
+					</Paper>
+								<br></br>
+				<MyWorkflow
+					userObj={this.props.userObj}
+					handleSubmit={this.handleSearch}
+				/>
 				{/* </form>  */}
 
 				<Dialog
@@ -316,6 +320,7 @@ class StatusComponent extends Component {
 							</div>
 						) ]: null}
 				</Dialog>
+			
 			</div>
 		);
 	}
