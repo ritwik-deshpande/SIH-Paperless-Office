@@ -32,7 +32,7 @@ const style = theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3)
+        padding: theme.spacing(1)
     },
     title: {
         flexGrow: 1,
@@ -51,13 +51,18 @@ const style = theme => ({
         color: theme.palette.getContrastText(theme.palette.primary.main),
     },
     navBarLists: {
-        backgroundColor: "#0e1c21",
-        color: theme.palette.getContrastText("#0e1c21"),
+        backgroundColor: theme.palette.background.navBarListBg,
+        color: theme.palette.getContrastText(theme.palette.background.navBarListBg),
         maxHeight: "100vh",
-        // paddingTop: theme.spacing(4)
+        "& .Mui-selected": {
+            borderRadius: "1px 50px 50px 1px",
+          },
+          "& :hover": {
+            borderRadius: "1px 50px 50px 1px",
+        }
     },
     navBarIcons: {
-        color: theme.palette.getContrastText("#0e1c21")
+        color: theme.palette.getContrastText(theme.palette.background.navBarListBg)
     },
     navBarProfileLogo: {
         marginTop: theme.spacing(4),
