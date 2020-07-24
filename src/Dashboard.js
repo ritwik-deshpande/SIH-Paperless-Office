@@ -34,7 +34,7 @@ import StatusComponent from './Workflow/StatusComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
 import { toast, ToastContainer } from 'react-toastify'
-import { Box } from '@material-ui/core';
+import { Box, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
 //import { Alert } from 'react-native';
 import { messaging } from './Chat/Config/MyFirebase'
@@ -42,9 +42,12 @@ import firebase from 'firebase'
 import Calendar from './Calendar/Calendar'
 import AnalyticDashboard from './Analytics/AnalyticDashbard';
 import FirepadEditor from './TextEditor/Firepad';
-import MyMails from './Email/MyMails'
-import ComposeMail from './Email/ComposeMail'
-export default function Dashboard({ userObj, logout }) {
+import MyMails from './Email/MyMails';
+import ComposeMail from './Email/ComposeMail';
+import style from './StyleSheet';
+import Hidden from "@material-ui/core/Hidden";
+
+export default function Dashboard({ userObj, logout},props) {
 
   messaging.requestPermission()
     .then(function () {
@@ -65,7 +68,9 @@ export default function Dashboard({ userObj, logout }) {
   // messaging.useServiceWorker(registration);
   // })
 
-  const classes = useStyles();
+  // const classes = useStyles();
+  const { window } = props;
+  const classes = makeStyles(style(useTheme()))();
   const [notifs, setNotifs] = React.useState([{
 
     title: "Demo Notification",
@@ -112,12 +117,12 @@ export default function Dashboard({ userObj, logout }) {
 
 
   // })
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawerToggle = () => {
+    setOpen(!open);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -132,6 +137,7 @@ export default function Dashboard({ userObj, logout }) {
   const notify = Boolean(anchorEl);
   const id = notify ? 'simple-popover' : undefined;
 
+  const container = window !== undefined ? () => window().document.body : undefined;
   return (
 
     <BrowserRouter>
@@ -142,14 +148,14 @@ export default function Dashboard({ userObj, logout }) {
       />
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)}>
-          <Toolbar className={classes.toolbar}>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar >
             <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
             >
               <MenuIcon />
             </IconButton>
@@ -159,10 +165,11 @@ export default function Dashboard({ userObj, logout }) {
                 <Box display="inline">Docs</Box>
               </Typography>
             }
-            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+           
+            {/* <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
               Welcome,<Box fontWeight={600} display="inline">{userObj.name}</Box>
-            </Typography>        
-
+            </Typography>         */}
+           
 
           <IconButton color="inherit" onClick={handleClick}>
             <Badge badgeContent={notifs.length} color="secondary">
@@ -205,7 +212,7 @@ export default function Dashboard({ userObj, logout }) {
 	</Popover>
         </Toolbar>
       </AppBar>
-      <Drawer
+      {/* <Drawer
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
@@ -217,14 +224,59 @@ export default function Dashboard({ userObj, logout }) {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        {/* <Divider /> */}
+        
         
           <NavBar userObj = {userObj} open = {open} logout = {logout}/>
         
-        {/* <Divider/> */}
-      </Drawer>
+      </Drawer> */}
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={open}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper
+            }}
+            ModalProps={{
+              keepMounted: true // Better open performance on mobile.
+            }}
+          >
+            <div className={classes.toolbarIcon}>
+              <IconButton onClick={handleDrawerToggle} className={classes.navBarIcons}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+            <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
+              [classes.drawerClose]: !open
+            })}
+            classes={{
+              paper: clsx({
+                [classes.drawerClose]: !open
+              })
+            }}
+            
+          >
+            <div className={classes.toolbarIcon}>
+              <IconButton onClick={handleDrawerToggle} className={classes.navBarIcons}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+            {/* {!open && <div className={classes.appBarspacer} />} */}
+              <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+          </Drawer>
+        </Hidden>
+      </nav>
       <main className={classes.content}>
-      <div className={classes.appBarSpacer} />
+      <div className={classes.appBarspacer} />
 
       <Route exact path='/' render ={() => <LandingPage userObj = {userObj}/> }/>
       <Route exact path='/viewDocs' component={FolderComponent} />
