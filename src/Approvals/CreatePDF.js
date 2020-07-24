@@ -197,7 +197,8 @@ class CreatePDF extends React.Component {
 	
 	handleSubmit = () => {
 		console.log("Compare",this.state.pin,this.props.userObj.pin)
-	
+		//this.state.pin.localeCompare(this.props.userObj.pin) === 0
+		//
 		if(bcrypt.compareSync(this.state.pin, this.props.userObj.pin)){
 			this.setState({
 				openDialog : false
@@ -427,6 +428,17 @@ class CreatePDF extends React.Component {
 			
 			next_node_key = retval.next_node_key
 			current_node_key = next_node_key;
+			currentNode = this.state.workflow.FlowChart[current_node_key];
+			if(this.isUserInGroup(current_node_key, id))
+			{
+				let group = this.isUserInGroup(current_node_key, id)
+				currentNode.approvedBy[group] = false;
+				currentNode.timestamp[group] = Timestamp.getTimestamp();
+			}
+			else
+			{currentNode.approvedBy[id] = false;
+			currentNode.timestamp[id] = Timestamp.getTimestamp();}
+
 			this.state.workflow.cancel_requests = retval.cancel_reqs
 
 			path = [...path, next_node_key];
@@ -435,7 +447,21 @@ class CreatePDF extends React.Component {
 
 			this.state.workflow.Path = path;
 		}
+		else{
+		    	if(this.isUserInGroup(current_node_key, id))
+			{
+				let group = this.isUserInGroup(current_node_key, id)
+				console.log("group", group)
+				currentNode.approvedBy[group] = false;
+				currentNode.timestamp[group] = Timestamp.getTimestamp();
+			}
+			else{
+				currentNode.approvedBy[id] = false;
+				currentNode.timestamp[id] = Timestamp.getTimestamp();
+			}	
 
+		}
+		this.state.workflow.FlowChart[current_node_key] = currentNode
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.isRejected = true;
 		this.state.workflow.Feedback = "Rejected by " + name;
