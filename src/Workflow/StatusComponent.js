@@ -21,6 +21,9 @@ import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Typography from "@material-ui/core/Typography";
+import Header from '../Header';
+
+
 import {
 	AppBar,
 	withStyles,
@@ -204,14 +207,9 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-			
-				<MyWorkflow
-					userObj={this.props.userObj}
-					handleSubmit={this.handleSearch}
-				/>
-			
-				<Box m={2} p={2}>
-					<Grid container spacing={3}>
+				<Header title={'My Workflows'}/>
+				<br/><br/>
+					<Grid container justify="center" spacing={3}>
 						
 						<Grid item xs>
 							{/* <Box m={2} p={2}> */}
@@ -239,7 +237,11 @@ class StatusComponent extends Component {
 							{/* </Box> */}
 						</Grid>
 					</Grid>
-				</Box>
+		
+				<MyWorkflow
+					userObj={this.props.userObj}
+					handleSubmit={this.handleSearch}
+				/>
 				{/* </form>  */}
 
 				<Dialog

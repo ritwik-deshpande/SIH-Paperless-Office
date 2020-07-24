@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import LoginPhoto from './images/loginphoto.jpg'
 import { blue } from "@material-ui/core/colors";
 import { deepOrange } from "@material-ui/core/colors";
 
@@ -90,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	appBarSpacer: {
-		marginTop: theme.spacing(2),
+		marginTop: theme.spacing(0),
 		...theme.mixins.toolbar,
 	},
 	content: {
@@ -201,6 +202,37 @@ const useStyles = makeStyles((theme) => ({
 		top: theme.spacing(1),
 		color: theme.palette.grey[500],
 	},
+
+	//Login Styling items
+	loginroot: {
+		height: '100vh',
+	  },
+	  loginimage: {
+		backgroundImage: `url(${LoginPhoto})`,
+		backgroundRepeat: 'no-repeat',
+		backgroundColor:
+		  theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+		backgroundSize: 'cover',
+		backgroundPosition: 'center',
+	  },
+	  loginpaper: {
+		margin: theme.spacing(8, 4),
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	  },
+	  loginavatar: {
+		margin: theme.spacing(1),
+		backgroundColor: theme.palette.secondary.main,
+	  },
+	  loginform: {
+		width: '100%', // Fix IE 11 issue.
+		marginTop: theme.spacing(1),
+	  },
+	  loginsubmit: {
+		margin: theme.spacing(3, 0, 2),
+	  },
+
 
 	loginbg: {
 		width: "100%",
