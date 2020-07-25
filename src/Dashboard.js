@@ -49,18 +49,7 @@ import Hidden from "@material-ui/core/Hidden";
 
 export default function Dashboard({ userObj, logout},props) {
 
-  messaging.requestPermission()
-    .then(function () {
-      console.log('Have Permission')
-      return messaging.getToken()
-    })
-    .then(function (token) {
-      console.log(token)
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
-
+  
   // window.addEventListener('load', async () => {
   //   const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {
   //       updateViaCache: 'none'
@@ -72,25 +61,39 @@ export default function Dashboard({ userObj, logout},props) {
   const { window } = props;
   const classes = makeStyles(style(useTheme()))();
   const [notifs, setNotifs] = React.useState([{
-
     title: "Demo Notification",
     content: "demo content for testing notification feature"
   }]);
   const [pushNotif, setPushNotifs] = React.useState({});
   const [open, setOpen] = React.useState(false);
 
-  const handleNotif = (n) => {
-    console.log([n, ...notifs])
-    setNotifs([n, ...notifs])
-  }
+  
   React.useEffect(() => {
 
-    api.notification().get(userObj.id)
+    
+  messaging.requestPermission()
+    .then(function () {
+      console.log('Have Permission')
+      return messaging.getToken()
+    })
+    .then(function (token) {
+      
+      if(token){
+
+        sessionStorage.setItem("token", token)
+      
+      api.notification().get(userObj.id,token)
       .then(
         (res) => {
-          setNotifs(res.data.notifs)
+          setNotifs(res.data.notifs.reverse())
         }
       )
+      }
+      console.log(token)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
 
     const unsubscribe = messaging.onMessage(async payload => {
       console.log(payload)
@@ -172,7 +175,7 @@ export default function Dashboard({ userObj, logout},props) {
            
 
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge badgeContent={notifs.length} color="secondary">
+            <Badge color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>

@@ -23,7 +23,6 @@ function Copyright() {
 			<Link color="inherit" href="https://material-ui.com/">
 				DigiDocs 2020
 			</Link>{" "}
-			{new Date().getFullYear()}
 			{"."}
 		</Typography>
 	);

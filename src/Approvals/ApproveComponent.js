@@ -5,6 +5,7 @@ import api from "../utils/api";
 import axios from "axios";
 // import useStyles from "../Style";
 import { withStyles, Container } from "@material-ui/core";
+import Timestamp from "../utils/TimeStamp";
 
 class ApproveComponent extends React.Component {
 	constructor(props) {
@@ -30,13 +31,18 @@ class ApproveComponent extends React.Component {
 	}
 	createRequestTable(pending_requests) {
 		let tableData = [];
+		const displayPriority = {
+			'true' : "High",
+			'false' : "Normal"
+		}
 		for (var index in pending_requests.requests) {
 			tableData.push({
 				id: pending_requests.requests[index].id,
 				wname: pending_requests.requests[index].subject,
 				sender: pending_requests.requests[index].nameofSender,
 				feedback: pending_requests.requests[index].status,
-				time: pending_requests.requests[index].receivedon,
+				time: Timestamp.getTimestamp(parseInt( pending_requests.requests[index].receivedon,10)),
+				priority : displayPriority[pending_requests.requests[index].priority],
 				item: pending_requests.requests[index],
 			});
 		}

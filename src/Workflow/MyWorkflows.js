@@ -17,7 +17,7 @@ class MyWorkflow extends React.Component {
 	componentDidMount() {
 		api
 			.myworkflows()
-			.get(this.props.userObj.username)
+			.get(this.props.userObj.name)
 			.then((res) => {
 				console.log("The data received is", res.data);
 				this.setState({

@@ -1,5 +1,6 @@
 import api from '../utils/api'
 import axios from 'axios';
+import { setLogLevel } from 'firebase';
 var bcrypt = require('bcryptjs');
 
 export const GetUser = (id, password) => {
@@ -8,13 +9,12 @@ export const GetUser = (id, password) => {
         console.log("getstate : " ,getState().auth.loggedIn)
         let userObj = getState().auth.userObj
         var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
-        var hash = bcrypt.hashSync(password, salt);
-        console.log(hash)
+        
         console.log("password", password)
         if( userObj && userObj.id.localeCompare(id))
         {
             
-            console.log("userobj", userObj.password)
+            console.log("userobj", userObj)
             if(bcrypt.compareSync(password, userObj.password)){
                     
                 dispatch({type: 'USER_VERIFIED',payload: userObj})
@@ -28,19 +28,22 @@ export const GetUser = (id, password) => {
 
             api.users().getByid(id).then(
                 res =>{
-                    console.log("The user",res.data.password)
+                    console.log("The user",res.data)
     
                     if(res.data.length== 0){
                         alert("Invalid Id");
                     }
                     else if(bcrypt.compareSync(password, res.data.password)){
-                        
+                        var hash = bcrypt.hashSync('umesh', salt);
+                        console.log(hash)
                         dispatch({type: 'USER_VERIFIED',payload: res.data})
                     }
                     else{
                         dispatch({type: 'INVALID_PASSWORD',payload: res.data})
                         alert("Invalid Password");
                     }
+
+                    
                 
                 })
         }
@@ -70,6 +73,11 @@ export const logout = (userObj) =>{
     return (dispatch, getState) =>
     {
         console.log(userObj)
+        api.notification().delete(userObj.id,sessionStorage.getItem("token")).then(
+            res=>{
+                console.log(res.data);
+            }
+        )
         dispatch({type:'USER_LOGOUT', payload:userObj})
         // maybe send data 
         // api.users().update(userObj.id,userObj).then(

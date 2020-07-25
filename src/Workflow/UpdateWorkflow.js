@@ -67,10 +67,19 @@ class UpdateWorkflow extends Component
 	else{
 	
 		if(!this.state.FlowChart){
-	
+			let current_node_key = payload.Path[payload.Path.length-1];
+			payload["send_requests"] = []
+			for(let approver in  payload.FlowChart[current_node_key].approvedBy){
+
+				if(!payload.FlowChart[current_node_key].approvedBy[approver]){
+					payload.FlowChart[current_node_key].timestamp[approver] = null;
+				}
+				payload["send_requests"] = [...payload['send_requests'], approver];
+
+			}
 			 payload.id = old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
 			 payload.FormData = this.state.FormData
-			 payload["send_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
+			 
 			 payload.Feedback =  "Resumed Workflow, Form Data Updated"
 			 alert_msg = "Workflow Updated with same current Progress.\n Your new Workflow id is"+payload.id
 		}
@@ -85,7 +94,7 @@ class UpdateWorkflow extends Component
 				"nextNodes":[],
 				"Signatures":{},
 				"status" : "active",
-				"begin_timestamp" : Timestamp.getTimestamp(),
+				"begin_timestamp" : Timestamp.getTimestamp(new Date().getTime()),
 				"end_timestamp" : "",
 				"formId": this.props.formId,
 				"flowchartId" :this.state.flowchartId,
@@ -105,10 +114,10 @@ class UpdateWorkflow extends Component
 				alert_msg = "Workflow Updated and Restarted .\n Your new Workflow id is"+payload.id
 		 }
 		 
-		 payload.Feedback_ts = Timestamp.getTimestamp()
+		 payload.Feedback_ts = Timestamp.getTimestamp(new Date().getTime())
 		 payload["cancel_requests"] = []
 		 old_object.Feedback = "Updated to version "+payload.id
-		 old_object.Feedback_ts = Timestamp.getTimestamp()
+		 old_object.Feedback_ts = Timestamp.getTimestamp(new Date().getTime())
 		 old_object["send_requests"] = [] 
 		 old_object["cancel_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
 	

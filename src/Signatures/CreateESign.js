@@ -66,15 +66,14 @@ export default function CreateESign({userObj, saveUser}) {
   
   	if(field.localeCompare("password") === 0 ){
   	
-  		var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
-  		var hash_old_password =  bcrypt.hashSync(old_password, salt);
-        var hash_new_password =  bcrypt.hashSync(new_password, salt);  		
-  		console.log("Passwords", old_password,new_password)
-  		console.log("Passwords", hash_old_password,hash_new_password)
-  		if(hash_old_password.localeCompare(userObj.password) === 0){
-  			userObj.password = hash_new_password
+  		//var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
+  		// var hash_old_password =  bcrypt.hashSync(old_password, salt);
+        // var hash_new_password =  bcrypt.hashSync(new_password, salt);  		
+  		// console.log("Passwords", old_password,new_password)
+  		// console.log("Passwords", hash_old_password,hash_new_password)
+  		if(bcrypt.compareSync(old_password, userObj.password)){
+  			userObj.password = new_password
   			alert("Saved New Password")
-  			
   		}
   		else{
   			alert("Original Password in incorrect!")
@@ -83,13 +82,13 @@ export default function CreateESign({userObj, saveUser}) {
   	}
   	else{
   	
-  		var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
-  		var hash_old_pin =  bcrypt.hashSync(old_pin, salt);
-        var hash_new_pin =  bcrypt.hashSync(new_pin, salt);  		
-  		console.log("Passwords", old_pin,new_pin)
-  		console.log("Passwords", hash_old_pin,hash_new_pin)
-  		if(hash_old_pin.localeCompare(userObj.pin) === 0){
-  			userObj.pin = hash_new_pin
+  		// var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
+  		// var hash_old_pin =  bcrypt.hashSync(old_pin, salt);
+        // var hash_new_pin =  bcrypt.hashSync(new_pin, salt);  		
+  		// console.log("Passwords", old_pin,new_pin)
+  		// console.log("Passwords", hash_old_pin,hash_new_pin)
+  		if(bcrypt.compareSync(old_pin, userObj.pin)){
+  			userObj.pin = new_pin
   			alert("Saved New Pin")
   			
   		}

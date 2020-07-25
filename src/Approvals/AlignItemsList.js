@@ -73,7 +73,8 @@ const tableColumns = [
 	{ title: "Workflow Name", field: "wname" },
 	{ title: "Sender Name", field: "sender" },
 	{ title: "Request Feedback", field: "feedback" },
-	{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
+	{ title: "Last Updated On", field: "time" },
+	{ title: "Priority", field: "priority" } // add type: 'numeric' if required
 ];
 
 // const json ={

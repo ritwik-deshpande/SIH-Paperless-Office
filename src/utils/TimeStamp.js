@@ -1,13 +1,13 @@
 export default {
-    getTimestamp (){
+    getTimestamp (milliseconds){
 	    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug', 'Sep','Oct','Nov','Dec']
 
 
-	    let date = new Date().getDate();
-	    let month = new Date().getMonth();
-	    let year = new Date().getYear() + 1900;
-	    let hour = new Date().getHours()
-	    let mins = new Date().getMinutes()
+	    let date = new Date(milliseconds).getDate();
+	    let month = new Date(milliseconds).getMonth();
+	    let year = new Date(milliseconds).getYear() + 1900;
+	    let hour = new Date(milliseconds).getHours()
+	    let mins = new Date(milliseconds).getMinutes()
 
 	    let timestamp = months[month]+" "+date+ " at "+hour+":"+mins+", " + year
 	    
@@ -39,16 +39,24 @@ export default {
 
 	    return new Date(year,month,day,hour).getTime()
 
-	},
+    },
+    
+
+
    getTSObj(){
 
 	return new Date().getTime()
    },
+
+
+
    getTSID(){
     let timestamp = new Date().getUTCMilliseconds();
     console.log(timestamp)
     return timestamp
   }  ,
+
+
 
     conversion(ms) { 
   
