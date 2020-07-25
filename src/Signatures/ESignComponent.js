@@ -10,6 +10,9 @@ import Calendar from '../Calendar/Calendar'
 import Header from '../Header'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import style from '../StyleSheet'
+import { withStyles, Tooltip } from '@material-ui/core';
+
 class ESignComponent extends React.Component{
 
 
@@ -89,36 +92,32 @@ class ESignComponent extends React.Component{
 	}
 
     render(){
+		const { classes } = this.props 
         return(
             <div>
 			<Header title="User Profile"/>
 		 
-			 <Paper style={{backgroundColor: '#002a29'}}>
-			 <Grid container spacing={3} direction="row"
-  justify="flex-start"
-  alignItems="flex-start"
->
-				 <Grid item md={8}>
-		 	<SearchBar
-		    placeholder = "Search User Profile, Type in the ID"
-		    value = {this.state.value}
-		    onChange={(newValue) => this.handleChange(newValue)}
-		    onRequestSearch={() => this.handleSearch(this.state.value)}
-		    style={{
-			width: '100%',
-			marginLeft: '20px'
-		      }}
-		  />
-		  </Grid>
-			  <Grid item md={4}>
-		<Button variant="contained" color="secondary" onClick = { this.handleSearch } style={{ marginLeft: 10 }} >
-		  GET PROFILE 
-		</Button>
-		</Grid>
-	</Grid>
-		</Paper>
-		<br></br>
-		<br></br>
+			 <Paper className={classes.headerSearchBox} elevation={0} square>
+			 <Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">
+				 <Grid item xs={7} sm={8} md={10}>
+					<Tooltip title="Search a User by ID" arrow placement="top-start">
+						<SearchBar
+						placeholder = "Search a User by ID"
+						value = {this.state.value}
+						onChange={(newValue) => this.handleChange(newValue)}
+						onRequestSearch={() => this.handleSearch(this.state.value)}
+						fullWidth
+						/>
+					</Tooltip>
+				</Grid>
+			  	<Grid item xs={5} sm={4} md={2}>
+					<Button variant="contained" color="secondary" onClick = { this.handleSearch } fullWidth>
+					GET PROFILE 
+					</Button>
+				</Grid>
+			</Grid>
+			</Paper>
+		
 	
 
 		
@@ -129,13 +128,12 @@ class ESignComponent extends React.Component{
 		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> : 
 		
 		<div>
-			{ !this.state.cannotUpdate ?
-		<Button variant="contained" color="primary" onClick = { this.onUpdateClick } style={{ margin: 20 }} >
-		  UPDATE YOUR PROFILE 
-		</Button> : null }
-		<Profile userObj = {this.state.viewProfile} />
+			{ !this.state.cannotUpdate ?	
+			<Button variant="contained" color="primary" onClick = { this.onUpdateClick } style={{margin: "16px 26px"}}>
+			UPDATE YOUR PROFILE 
+			</Button> : null }
+			<Profile userObj = {this.state.viewProfile} />
 		{/* <Calendar userObj = {this.state.viewProfile}  /> */}
-		
 		
 
 		</div>
@@ -158,4 +156,4 @@ const mapDispatchtoProps = (dispatch) =>{
 }
 
 
-export default connect(null,mapDispatchtoProps)(ESignComponent)
+export default connect(null,mapDispatchtoProps)(withStyles(style,{ withTheme: true})(ESignComponent))

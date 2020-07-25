@@ -10,10 +10,11 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import NodeStatus from "./NodeStatus";
 
-import useStyles from "../Style";
-import { Box, Grid } from "@material-ui/core";
+// import useStyles from "../Style";
+import { Box, Grid, makeStyles, useTheme } from "@material-ui/core";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import style from '../StyleSheet'
 
 function Copyright() {
 	return (
@@ -47,7 +48,8 @@ function getStepContent(step, nodesList, workflow) {
 export default function WorkflowStatus({ workflow, title, steps, nodesList }) {
 	console.log(title, steps, nodesList);
 
-	const classes = useStyles();
+	// const classes = useStyles();
+	const classes = makeStyles(style(useTheme()))();
 	const [activeStep, setActiveStep] = React.useState(steps.length - 1);
 
 	const handleNext = () => {
@@ -95,9 +97,9 @@ export default function WorkflowStatus({ workflow, title, steps, nodesList }) {
 		);
 	};
 	return (
-		<div>
+		<div >
 			<div className={classes.appBarSpacer} />
-			<Container maxWidth="lg">
+			<Container >
 				{/* <Paper className={classes.paper} >  */}
 				{/* <div style={{ width: "1000" }}> */}
 				<Typography

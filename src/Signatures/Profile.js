@@ -2,12 +2,12 @@
 import React, { Component } from 'react'
 import SignaturePad from 'react-signature-canvas'
 import styles from './styles.module.css'
-import useStyles from '../Style'
+// import useStyles from '../Style'
 //import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 //import Card from '@material-ui/core/Card';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -32,7 +32,8 @@ import {
 
 
 export default function Profile({userObj}) {
-	const classes = useStyles();
+	// const classes = useStyles();
+	const theme= useTheme();
 	function displayProfile(){
 		let fields = []
 		for( var key in userObj)
@@ -122,12 +123,12 @@ export default function Profile({userObj}) {
 	function displayFullInfo(){
 		let fields = []
 		fields.push(<div>
-		<Card small className="mb-4">
-    		<CardHeader className="border-bottom" style ={{ backgroundColor: '#002a29' }}>
-      		<Typography variant="h6" style={{color: '#fff'}}>General Information</Typography>
+		<Card small >
+    		<CardHeader style ={{ backgroundColor: theme.palette.primary.main, color: theme.palette.getContrastText(theme.palette.primary.main) }}>
+      		<Typography variant="h6" >General Information</Typography>
     		</CardHeader>
     		<ListGroup flush>
-      			<ListGroupItem className="p-3">
+      			<ListGroupItem >
         		<Row>
           			<Col>
 					  	<Row>

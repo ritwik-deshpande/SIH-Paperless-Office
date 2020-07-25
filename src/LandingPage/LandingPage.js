@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from '@material-ui/core/Box';
-import useStyles from '../Style'
+// import useStyles from '../Style'
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -47,15 +47,18 @@ function Copyright() {
     active : 5
 }
 const MainComponent= ({userObj}) =>{
-    const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    // const classes = useStyles();
+    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
         return(
 
 		<main>
-           <div/>
-           <Header title={'Welcome Back,' + userObj.name}/>
-            <Container maxWidth="lg" className={classes.container}>
+           {/* <div/> */}
+           {/* <Grid container> */}
+            <Header title={'Welcome Back,' + userObj.name}/>
+           {/* </Grid> */}
+           
+            <Container maxWidth="lg">
             
               <Grid container spacing={3}>
                 {/* <Grid item container spacing={2}> */}

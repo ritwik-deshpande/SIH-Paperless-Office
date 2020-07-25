@@ -22,7 +22,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import NavBar from './Navbar'
-import useStyles from './Style'
+// import useStyles from './Style'
 import LandingPage from './LandingPage/LandingPage'
 import { Route, BrowserRouter } from 'react-router-dom'
 import FolderComponent from './ViewDocs/Folders'
@@ -276,7 +276,7 @@ export default function Dashboard({ userObj, logout},props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-      <div className={classes.appBarspacer} />
+      <div className={classes.appBarSpacer} />
 
       <Route exact path='/' render ={() => <LandingPage userObj = {userObj}/> }/>
       <Route exact path='/viewDocs' component={FolderComponent} />
