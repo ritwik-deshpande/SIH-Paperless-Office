@@ -334,14 +334,8 @@ class StartWrkflwComponent extends Component
            onChange = {this.handleChange}
          />
          
-		<TextField required id="standard-required" label="General Instructions" fullWidth
-
-		       onChange = {this.handleChangeInstruction}
-		     />
-		<FormControlLabel
-		    control={<Checkbox checked={this.state.uploadDocuments} onChange={this.handleCheck}  />}
-		    label="Upload Documents Feature"
-		  />
+		
+		
 
           <CustomForm  uploadDocuments={this.state.uploadDocuments} save ={this.saveCustomForm}/>   
 		<br/> */}
@@ -349,7 +343,16 @@ class StartWrkflwComponent extends Component
           <Header title="Build Your Own Workflow"/>
           <Container style={{margin: "16px 0px"}}>
           <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth onChange = {this.handleChange}/>
+
+			<TextField required id="standard-required" label="General Instructions" fullWidth
+
+		       onChange = {this.handleChangeInstruction}
+		     />
           
+			<FormControlLabel
+		    control={<Checkbox checked={this.state.uploadDocuments} onChange={this.handleCheck}  />}
+		    label="Upload Documents Feature"
+		  />
 
             <CustomForm  save ={this.saveCustomForm}/>   
 

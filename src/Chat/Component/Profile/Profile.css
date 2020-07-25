@@ -17,8 +17,8 @@
 .header {
     font-weight: bold;
     font-size: 20px;
-    color: #203152;
-    background-color: #f5a623;
+    color: #ffffff;
+    background-color: #002a29;
     padding: 20px;
     box-shadow: 0px 4px 4px #808888;
 }
@@ -34,7 +34,7 @@
 
 .textLabel {
     font-weight: bold;
-    color: #203152;
+    color: #006a5c;
     font-style: italic;
     font-size: 18px;
     margin-top: 50px;
@@ -45,7 +45,7 @@
     width: 500px;
     align-self: center;
     border: none;
-    background-color: #203152;
+    background-color: #006a5c;
     border-radius: 3px;
     height: 50px;
     display: flex;
@@ -61,9 +61,9 @@ input::placeholder {
 }
 
 .btnUpdate {
-    background-color: #f5a623;
+    background-color: #002a29;
     border: none;
-    color: #203152;
+    color: #ffffff;
     padding: 10px;
     width: 200px;
     text-align: center;

@@ -10,7 +10,7 @@ function Header(props)
   return (
     <React.Fragment>
       {/* <Paper className={classes.headerBox} elevation={0} square> */}
-        <Grid container wrap="nowrap" className={classes.headerBox} alignItems="flex-end" justify="center">
+        <Grid container wrap="nowrap" className={classes.headerBox} alignItems="center" justify="center">
           <Grid item xs>
             <Typography variant="h4" className={classes.headerTitle}>{title}</Typography>
           </Grid>

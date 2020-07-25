@@ -2,13 +2,13 @@
     text-align: center;
     flex-direction: column;
     display: flex;
-    padding-top: 50px;
+
 }
 
 .header {
     font-weight: bold;
     font-size: 20px;
-    color: #203152;
+    color: #fff;
     background-color: #f5a623;
     padding: 20px;
     box-shadow: 0 4px 4px #808888;
@@ -45,6 +45,7 @@
 .icProfile {
     width: 25px;
     height: 25px;
+    color: #fff;
     position: absolute;
     right: 0;
     margin-right: 80px;
