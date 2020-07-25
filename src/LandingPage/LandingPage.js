@@ -57,7 +57,7 @@ const MainComponent= ({userObj}) =>{
            {/* <Grid container> */}
             <Header title={'Welcome Back,' + userObj.name}/>
            {/* </Grid> */}
-           
+           <br/>
             <Container maxWidth="lg">
             
               <Grid container spacing={3}>

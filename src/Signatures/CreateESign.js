@@ -5,7 +5,8 @@ import useStyles from '../Style'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
+import LockIcon from '@material-ui/icons/Lock';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,6 +14,24 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ClearIcon from '@material-ui/icons/Clear';
+import SaveIcon from '@material-ui/icons/Save';
+import {
+	Card,
+	CardHeader,
+	ListGroup,
+	ListGroupItem,
+	Row,
+	Col,
+	Form,
+	Container,
+	FormGroup,
+	FormInput,
+	FormSelect,
+	FormTextarea,
+  } from "shards-react";
+
+
 var bcrypt = require('bcryptjs');
 
 export default function CreateESign({userObj, saveUser}) {
@@ -138,7 +157,6 @@ export default function CreateESign({userObj, saveUser}) {
  }
 
  function getFields(){
-
     let fields = []
     for (var key in userObj){
     	if(key.localeCompare("id") != 0  && key.localeCompare("username") && key.localeCompare("esign") && key.localeCompare("notifications") && key.localeCompare("password") && key.localeCompare("pin")){
@@ -161,30 +179,204 @@ export default function CreateESign({userObj, saveUser}) {
     }
     
     return fields
-    	
-
-
-
  }
+
+
+
+ function editFields(){
+	let fields = []
+	fields.push(
+	<Card small className="mb-4">
+    	<CardHeader style ={{ backgroundColor: '#002a29' }}>
+		<Typography variant="h6" style={{color: '#fff'}}>Update Profile</Typography>
+    	</CardHeader>
+		<ListGroup flush>
+      	<ListGroupItem className="p-3">
+        <Row>
+          <Col>
+            <Form>
+              <Row form>
+				  {/* Full Name */}
+				  <Col md="12" className="form-group">
+                  	<TextField
+						id="name"
+						label="Full Name"
+						fullWidth
+          				margin="normal"
+						defaultValue={userObj["name"]}
+						onChange={e => { handleFieldChange(e, "name") }}
+	      			/>
+                	</Col>
+              </Row>
+			  
+			  <Row form>
+                {/* Email */}
+                <Col md="6" className="form-group">
+				<TextField
+						id="emailID"
+						label="Email ID"
+						fullWidth
+          				margin="normal"
+						defaultValue={userObj["emailID"]}
+						onChange={e => { handleFieldChange(e, "emailID") }}
+	      			/>
+                </Col>
+                {/* Contact */}
+                <Col md="6" className="form-group">
+				<TextField
+						id="contact"
+						label="Contact"
+						fullWidth
+          				margin="normal"
+						defaultValue={userObj["contact"]}
+						onChange={e => { handleFieldChange(e, "contact") }}
+	      			/>
+                </Col>
+              </Row>
+
+			  <Row form>
+                {/* Address */}
+                <Col md="12" className="form-group">
+				<TextField
+						id="address"
+						label="Address"
+						fullWidth
+          				margin="normal"
+						defaultValue={userObj["address"]}
+						onChange={e => { handleFieldChange(e, "address") }}
+	      			/>
+                </Col>
+              </Row>
+
+			  <Row form>
+                {/* Roles */}
+                <Col md="8" className="form-group">
+				<TextField
+						id="roles"
+						label="Roles"
+						fullWidth
+          				margin="normal"
+						defaultValue={userObj["roles"]}
+						onChange={e => { handleFieldChange(e, "roles") }}
+	      			/>
+                </Col>
+				<Col md="4" className="form-group">
+				<TextField
+						id="branch"
+						label="Branch"
+						fullWidth
+          				margin="normal"
+						defaultValue={userObj["branch"]}
+						onChange={e => { handleFieldChange(e, "branch") }}
+	      			/>
+                </Col>
+              </Row>
+			  <Button variant="contained" color="secondary"  onClick={ () => setOpenDialog("password") } startIcon={<LockIcon/>}>
+              Update Password
+            	</Button>
+            
+			<Button variant="contained" color="secondary"  onClick={ () => setOpenDialog("pin") } style={{marginLeft: '20px'}} startIcon={<VpnKeyIcon/>} >
+              	Update Pin
+            </Button>
+			
+			  </Form>
+			  </Col>
+			  </Row>
+			  </ListGroupItem>
+			  </ListGroup>
+			  </Card>)
+			  return fields;
+ }
+
+
+function updateSign(){
+	let fields = []
+	fields.push(
+	<Card small className="mb-4">
+    	<CardHeader style ={{ backgroundColor: '#002a29' }}>
+		<Typography variant="h6" style={{color: '#fff'}}>Update E-Signature</Typography>
+    	</CardHeader>
+		<Container>
+		<ListGroup flush>
+      	<ListGroupItem className="p-3">
+		  <Row>
+          	<Col>
+					  	<Row>
+                		{/* Info (Help) */}
+                			<Col md="12" className="form-group">
+							<Typography gutterBottom variant="h6" component="h6">
+                			Note: To Update your E-Signature you can either Sign on the Canvas or upload an image of your E-Signature
+              				</Typography>
+                			</Col>
+              			</Row>
+
+						  <Row>
+							<Col md="6" className="form-group">
+								<Card className={classes.cardDim}>
+									<Typography gutterBottom variant="h5" component="h2">
+										Sign on the Canvas
+									</Typography>
+									<div className={styles.sigContainer}>
+									<SignaturePad canvasProps={{className: styles.sigPad}}
+										ref={(ref) => { sigPad = ref }} />
+									</div>
+									</Card>
+									<br/>
+									<Button variant="outlined" color="secondary" onClick={clear} startIcon={<ClearIcon/>}>
+              						Clear
+            						</Button>
+									<Button variant="contained" color="secondary"  onClick={getSign} style={{marginLeft:'40px'}} startIcon={<SaveIcon/>}>
+              						Save Sign
+            						</Button>
+							</Col>
+
+							<Col md="6" className="form-group">
+								<Card className={classes.cardDim}>
+            					{userObj.esign.localeCompare("Empty") == 0 ?  <Typography gutterBottom variant="h5" component="h2">
+            						ESIGNATURE  : ESIGN NOT CREATED
+          						</Typography> : <div><Typography gutterBottom variant="h5" component="h2">
+            						Current E-Signature
+          						</Typography>
+          						<img src = {userObj.esign} alt ="Original Signature"></img>
+          						</div>}
+        						</Card>
+        						<input label = "Upload E-Signature" type = "file" accept =".png" onChange ={e => handleChange(e.target.files[0])}/>
+        						<Button variant="contained" color="secondary"  onClick = {getSignImage} startIcon={<startIcon/>}>
+          							Save Uploaded E-Signature</Button>
+						  	</Col>
+						  </Row>
+			</Col>
+		</Row>
+			</ListGroupItem>
+			</ListGroup>
+			</Container>
+			</Card>)
+						  return fields;
+}
+
 
   return (
     <div >
+<br/>
+		<Container fluid className="main-content-container px-4">
+		<Row>
+			<Col lg="12">
+				{editFields()}
+      		</Col>
+		</Row>
+		<Row>
+			<Col lg="12">
+				{updateSign()}
+			</Col>
+		</Row>
+		<Button variant="contained" color="primary" size="large" onClick = { updateUser } endIcon={<SaveIcon/>}style={{ margin: 20 }} >
+          SAVE PROFILE 
+        </Button>
+		</Container>
+      {/* <div className={classes.appBarSpacer} /> */}
 
-      <div className={classes.appBarSpacer} />
-	 <form className={classes.root} >
-	<div>
-	<Typography gutterBottom variant="h5" component="h1" style={{ margin: 20 }}>
-                UPDATE PROFILE
-        </Typography>
-        
-        {getFields()}
- 
-	
-	</div>
-	</form>
-
-        <Grid container spacing={10} style={{ margin: 20 }}>
-        <Typography gutterBottom variant="h5" component="h5">
+        {/* <Grid container spacing={10} style={{ margin: 20 }}>
+        <Typography gutterBottom variant="h6" component="h6">
                 To Update your ESignature you can either Sign on the Canvas or upload an Image of your ESignature
               </Typography>
 	
@@ -236,24 +428,7 @@ export default function CreateESign({userObj, saveUser}) {
         
        
 
-      </Grid>
-
-
-		 	<Button variant="contained" color="primary"  onClick={ () => setOpenDialog("password") } style={{ margin: 20 }}>
-              UPDATE PASSWORD
-            </Button>
-            <br/>
-			<br/>
-			<Button variant="contained" color="primary"  onClick={ () => setOpenDialog("pin") } style={{ margin: 20 }}>
-              UPDATE PIN
-            </Button>
-			<br/>
-			<br/>
-
-	<Button variant="contained" color="primary" onClick = { updateUser } style={{ margin: 20 }} >
-          SAVE PROFILE 
-        </Button>
-      
+      </Grid> */}
 
 	<Dialog open={openDialog} onClose={closeDialog} aria-labelledby="form-dialog-title">
 		{(openDialog && openDialog.localeCompare("password") === 0 )? 
