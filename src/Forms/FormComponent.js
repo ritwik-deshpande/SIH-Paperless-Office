@@ -30,6 +30,7 @@ class FormComponent extends Component{
 
   onSubmit = ({formData}, e) => {
   
+    formData["Instructions"] = this.state.schema.description
     console.log("Data submitted: ",  formData);
     this.props.save(formData)
   }

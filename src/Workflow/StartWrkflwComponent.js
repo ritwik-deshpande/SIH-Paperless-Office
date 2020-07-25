@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
 import { connect } from 'react-redux'
 import WorkflowNode from '../utils/WorkflowNode'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,6 +56,9 @@ class StartWrkflwComponent extends Component
         CustomForm:null,
         CustomFlowChart:null,
         FlowChart : null,
+	instructions :"",
+	uploadDocuments : false,
+		priority:false,
         user: this.props.userObj.username,
         selectedTitle : "",
         selectedId : 0,
@@ -123,6 +128,7 @@ class StartWrkflwComponent extends Component
         "flowchartId": this.state.selectedId,
         "Feedback" : "",
 	      "Feedback_ts": 0,
+		"priority": this.state.priority,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
 
@@ -152,6 +158,7 @@ class StartWrkflwComponent extends Component
 
   saveCustomForm = (Form) => {
 
+	Form.schema.description = this.state.instructions
     console.log("The form",Form)
 
     if(this.state.customWorkflow.localeCompare("Empty")=== 0){
@@ -278,9 +285,26 @@ class StartWrkflwComponent extends Component
   handleListClick = (event) =>{
     this.setState({anchorEl : event.currentTarget});
   }
+	
+ handleCheck = (e) => {
+		this.setState({
+			uploadDocuments: e.target.checked
+	}) 	
 
+  }
+  handleCheckPriority = (e) => {
+		this.setState({
+			priority: e.target.checked
+	}) 	
+
+  }
   handleChange = (e) =>{
       this.state.customWorkflow = e.target.value;
+  }
+
+  handleChangeInstruction = (e) =>{
+
+	this.state.instructions = e.target.value
   }
 
   handleClose = () => {
@@ -304,13 +328,21 @@ class StartWrkflwComponent extends Component
      		<h2> BUILD YOUR OWN WORKFLOW </h2>
 		<br/>
 		<br/>
-         <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth
+         <TextField required id="standard-required" label="WorkFlow Name" fullWidth
 
            onChange = {this.handleChange}
          />
          
+		<TextField required id="standard-required" label="General Instructions" fullWidth
 
-          <CustomForm  save ={this.saveCustomForm}/>   
+		       onChange = {this.handleChangeInstruction}
+		     />
+		<FormControlLabel
+		    control={<Checkbox checked={this.state.uploadDocuments} onChange={this.handleCheck}  />}
+		    label="Upload Documents Feature"
+		  />
+
+          <CustomForm  uploadDocuments={this.state.uploadDocuments} save ={this.saveCustomForm}/>   
 
           <DisplayWorkflow title="Custom FlowChart" save={this.saveCustomFlowChart}/>   
 
@@ -336,6 +368,11 @@ class StartWrkflwComponent extends Component
             <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
 
             <br/>
+			<FormControlLabel
+		    control={<Checkbox checked={this.state.priority} onChange={this.handleCheckPriority}  />}
+		    label="High Priority (Urgent Requirement)"
+		  />
+			<br/>
 
             <DisplayWorkflow title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFlowChartData}/>
          <br/>
