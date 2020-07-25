@@ -11,7 +11,7 @@ import LayersIcon from '@material-ui/icons/Layers';
 import { withRouter } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import useStyles from './Style'
+// import useStyles from './Style'
 import Typography from '@material-ui/core/Typography';
 import ChatIcon from '@material-ui/icons/Chat';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -32,7 +32,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { IconButton } from '@material-ui/core';
+import { IconButton, makeStyles, Avatar } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -41,6 +41,8 @@ import html2canvas from 'html2canvas';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import style from './StyleSheet';
+import AvatarImage from './images/lodu.jpeg'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -118,29 +120,67 @@ function Listitems(props) {
     setincludeSS(!includeSS);
   };
 
-  const classes = useStyles();
+  // const classes = useStyles();
+  const classes = makeStyles(style(useTheme()))();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <div>
-      {props.open ? <div className={classes.navBarLogo} >
-        <img src="../DigiDocsLogoW.png" className={classes.loginLogo}/>
+      {/* {props.open ? <div className={classes.navBarProfile} >
+        {/* <img src="../DigiDocsLogoW.png" className={classes.loginLogo}/> */}
         {/* <Typography component="h3" variant="h6" color="inherit"  noWrap className={classes.title}>
                 Welcome, {props.userObj.name}
         </Typography>  */}
-        <Typography component="h1" variant="h4" align="center">
+        {/* <Typography component="h1" variant="h4" align="center" color="inherit">
           <Box fontWeight={800} display="inline">Digi</Box>
           <Box display="inline">Docs</Box>
-        </Typography>
-        <br/>
-  	  <Divider/>
-      </div>: null }
+        </Typography> */}
+        {/* <br/> */}
+  	  {/* <Divider/> */}
+      {/* </div>: null } */} 
+      
+      {props.open ? (
+        // <List>
+        
+        <div className={classes.navBarProfile}>
+        <Box pt={4}>
+          <Typography color="inherit" align="center">
+            <Box fontSize={20} >
+              {props.userObj.name}
+            </Box>
+            <Box mt={1} fontSize={16} fontWeight="Light" color="textSecondary">
+              ID:  {props.userObj.id}
+            </Box>
+          </Typography>
 
-      <List component="nav">
+          <div align='center'>
+						<img
+						  className={classes.navBarProfileLogo}
+						  src={AvatarImage}
+			  			alt={props.userObj.name}
+						/>
+		  		</div>
+        </Box>
+        </div>
+      ) : (null
+        // <Box>
+        //   <Box align="center" pt={10}>
+        //     <Avatar
+        //       alt={props.userObj.name}
+        //       src="../../public/logo512.png"
+        //       // className={classes.navBarProfileLogo}
+        //     />
+        //   </Box>
+        // </Box>
+      )}
+
+      
+      <div className={classes.navBarLists}>
+      <List component="nav" className={classes.navBarListItems}>
         <Tooltip title={props.open ? "" : "Dashboard"}>
-          <ListItem button selected={selectedIndex===1} onClick={() => handleDashboard(1)} >
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===1)} selected={selectedIndex===1} onClick={() => handleDashboard(1)} >
+            <ListItemIcon className={classes.navBarIcons}>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
@@ -148,8 +188,8 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "My Profile"}>
-          <ListItem button selected={selectedIndex===2} onClick={() => handleNavlink('/esign',2)}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===2)} selected={selectedIndex===2} onClick={() => handleNavlink('/esign',2)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <AccountCircle />
             </ListItemIcon>
             <ListItemText primary="My Profile"/>
@@ -157,8 +197,8 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "My Documents"}>
-          <ListItem button selected={selectedIndex===3} onClick={() => handleNavlink('/viewDocs',3)}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===3)} selected={selectedIndex===3} onClick={() => handleNavlink('/viewDocs',3)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <FolderIcon />
             </ListItemIcon>
             <ListItemText primary="My Documents" /> 
@@ -166,8 +206,8 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "My Workflows"}>
-          <ListItem button selected={selectedIndex===4} onClick={() => handleNavlink('/status',4)}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/status',4)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <WorkIcon />
             </ListItemIcon>
             <ListItemText primary="My WorkFlows"/>
@@ -177,8 +217,8 @@ function Listitems(props) {
         <Divider/>
         
         <Tooltip title={props.open ? "" : "Start a Workflow"}>
-          <ListItem button selected={selectedIndex===5} onClick={() => handleNavlink('/getForm',5)}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===5)} selected={selectedIndex===5} onClick={() => handleNavlink('/getForm',5)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <PlayCircleFilledWhiteIcon />
             </ListItemIcon>
             <ListItemText primary="Start a Workflow"/>
@@ -186,8 +226,8 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "Approve Documents"}>
-          <ListItem button selected={selectedIndex===6} onClick={() => handleNavlink('/approve',6)}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===6)} selected={selectedIndex===6} onClick={() => handleNavlink('/approve',6)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <CreateIcon />
             </ListItemIcon>
             <ListItemText primary="Approve Documents" />
@@ -195,17 +235,17 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "Chat"}>
-          <ListItem button selected={selectedIndex===7} onClick={() => handleNavlink('/chat',7)}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===7)} selected={selectedIndex===7} onClick={() => handleNavlink('/chat',7)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <ChatIcon />
             </ListItemIcon>
             <ListItemText primary="Chat" />
           </ListItem>
         </Tooltip>
  
-	<Tooltip title={props.open ? "" : "Analytics"}>
-          <ListItem button selected={selectedIndex===8} onClick={() => handleNavlink('/analytics',8)}>
-            <ListItemIcon>
+	      <Tooltip title={props.open ? "" : "Analytics"}>
+          <ListItem button={!(selectedIndex===8)} selected={selectedIndex===8} onClick={() => handleNavlink('/analytics',8)}>
+            <ListItemIcon className={classes.navBarIcons}>
               <AssessmentIcon />
             </ListItemIcon>
             <ListItemText primary="Analytics" />
@@ -215,8 +255,8 @@ function Listitems(props) {
         <Divider/>
 
         <Tooltip title={props.open ? "" : "Report Error"}>
-          <ListItem button selected={selectedIndex===9} onClick={handleClickOpenDialog}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===9)} selected={selectedIndex===9} onClick={handleClickOpenDialog}>
+            <ListItemIcon className={classes.navBarIcons}>
               <ReportIcon />
             </ListItemIcon>
             <ListItemText primary="Report Error"/>
@@ -287,19 +327,16 @@ function Listitems(props) {
           </Alert>
         </Snackbar>
 
-        
         <Tooltip title={props.open ? "" : "LogOut"}>
-          <ListItem button selected={selectedIndex===10}  onClick={ () => props.logout()}>
-            <ListItemIcon>
+          <ListItem button={!(selectedIndex===10)} selected={selectedIndex===10}  onClick={ () => props.logout()}>
+            <ListItemIcon className={classes.navBarIcons}>
               <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText primary="LogOut"/>
           </ListItem>
         </Tooltip>
-
-        
-
      </List>
+     </div>
   	</div>
   )
 }

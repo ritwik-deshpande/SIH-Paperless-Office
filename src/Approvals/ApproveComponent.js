@@ -3,7 +3,7 @@ import AlignItemsList from "../Approvals/AlignItemsList";
 import CreatePDF from "./CreatePDF";
 import api from "../utils/api";
 import axios from "axios";
-import useStyles from "../Style";
+// import useStyles from "../Style";
 import { withStyles, Container } from "@material-ui/core";
 import Timestamp from "../utils/TimeStamp";
 
@@ -53,13 +53,12 @@ class ApproveComponent extends React.Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div>
+			<main>
 				{/* <Container className={classes.container}> */}
 				{this.state.requestTable ? (
 					this.state.showPDF ? (
-						<Container className={classes.container}>
+						
 							<CreatePDF item={this.state.item} />
-						</Container>
 					) : (
 						<AlignItemsList
 							Click={this.handleClick}
@@ -71,8 +70,8 @@ class ApproveComponent extends React.Component {
 					<div> Fetching Approval Requests</div>
 				)}
 				{/* </Container> */}
-			</div>
+			</main>
 		);
 	}
 }
-export default withStyles(useStyles)(ApproveComponent);
+export default ApproveComponent;

@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from '@material-ui/core/Box';
-import useStyles from '../Style'
+// import useStyles from '../Style'
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import FormBuilder from 'react-form-builder2'
 import CustomForm from '../Forms/CustomForms'
 import Calendar from '../Calendar/Calendar'
-
+import Header from '../Header';
 import NumberCard from '../Analytics/NumberCard'
 import PagesSaved from './pagesSaved'
 
@@ -47,14 +47,18 @@ function Copyright() {
     active : 5
 }
 const MainComponent= ({userObj}) =>{
-    const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    // const classes = useStyles();
+    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
         return(
 
 		<main>
-           <div/>
-            <Container maxWidth="lg" className={classes.container}>
+           {/* <div/> */}
+           {/* <Grid container> */}
+            <Header title={'Welcome Back,' + userObj.name}/>
+           {/* </Grid> */}
+           
+            <Container maxWidth="lg">
             
               <Grid container spacing={3}>
                 {/* <Grid item container spacing={2}> */}

@@ -75,17 +75,11 @@ class CustomForms extends React.Component {
         title: "Admission Cancellation",
         schema: {
           title: "Admission Cancellation",
-          description: "Please Enter your Details ",
+          description: "Enter Details",
           type: "object",
           required: [],
           properties: {
-              Upload_Documents: {
-                type: "array",
-                items: {
-                type: "string",
-                format: "data-url"
-                },
-             }
+             
            }
         },
 	uiSchema :{}
@@ -121,6 +115,17 @@ class CustomForms extends React.Component {
     }
 
     reformatForm = (form) => {
+
+		if(this.props.uploadDocuments){
+			this.state.form.schema.properties["Upload_Documents"] =  {
+										type: "array",
+										items: {
+										type: "string",
+										format: "data-url"
+										},
+									     }
+		
+		}
 
 
    		for(let attribute in form){

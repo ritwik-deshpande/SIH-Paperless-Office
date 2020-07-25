@@ -25,6 +25,8 @@ import { Box, ButtonGroup } from "@material-ui/core";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { green } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
+import CancelIcon from '@material-ui/icons/Cancel';
 
 export default function NodeStatus({ workflow, node }) {
 	const classes = useStyles();
@@ -59,7 +61,7 @@ export default function NodeStatus({ workflow, node }) {
 		let rows = [];
 
 		for (var approver in node.approvedBy) {
-			if (node.approvedBy[approver]) {
+			if ( node.approvedBy[approver] && node.timestamp[approver] ) {
 				rows.push(
 					<ListItem>
 						<ListItemIcon>
@@ -82,7 +84,32 @@ export default function NodeStatus({ workflow, node }) {
 						<Divider />
 					</ListItem>
 				);
-			} else {
+			} else if( !node.approvedBy[approver] && node.timestamp[approver]) {
+				rows.push(
+					<ListItem>
+						<ListItemIcon>
+							<AccountCircle />
+						</ListItemIcon>
+						<ListItemText primary={mapIdtoUser[approver]} />
+
+						<Box display="flex" justifyContent="flex-end">
+							<Box>
+								<ListItemIcon>
+									<CancelIcon style={{ color: red[600] }} />
+								</ListItemIcon>
+							</Box>
+							<Box>
+								<ListItemText
+									style={{ color: red[600] }}
+									primary={node.timestamp[approver]}
+								/>
+							</Box>
+						</Box>
+						<Divider />
+					</ListItem>
+				);
+			}
+			else{
 				rows.push(
 					<ListItem>
 						<ListItemIcon>

@@ -34,8 +34,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Box } from "@material-ui/core";
-import WorkflowNode from "../utils/WorkflowNode"
+import { Box, Container } from "@material-ui/core";
+import WorkflowNode from "../utils/WorkflowNode";
+import HeaderBanner from '../Header';
 var bcrypt = require('bcryptjs');
 
 const mapIdtoRoles ={
@@ -197,7 +198,8 @@ class CreatePDF extends React.Component {
 	
 	handleSubmit = () => {
 		console.log("Compare",this.state.pin,this.props.userObj.pin)
-	
+		//this.state.pin.localeCompare(this.props.userObj.pin) === 0
+		//
 		if(bcrypt.compareSync(this.state.pin, this.props.userObj.pin)){
 			this.setState({
 				openDialog : false
@@ -427,6 +429,17 @@ class CreatePDF extends React.Component {
 			
 			next_node_key = retval.next_node_key
 			current_node_key = next_node_key;
+			currentNode = this.state.workflow.FlowChart[current_node_key];
+			if(this.isUserInGroup(current_node_key, id))
+			{
+				let group = this.isUserInGroup(current_node_key, id)
+				currentNode.approvedBy[group] = false;
+				currentNode.timestamp[group] = Timestamp.getTimestamp();
+			}
+			else
+			{currentNode.approvedBy[id] = false;
+			currentNode.timestamp[id] = Timestamp.getTimestamp();}
+
 			this.state.workflow.cancel_requests = retval.cancel_reqs
 
 			path = [...path, next_node_key];
@@ -435,7 +448,21 @@ class CreatePDF extends React.Component {
 
 			this.state.workflow.Path = path;
 		}
+		else{
+		    	if(this.isUserInGroup(current_node_key, id))
+			{
+				let group = this.isUserInGroup(current_node_key, id)
+				console.log("group", group)
+				currentNode.approvedBy[group] = false;
+				currentNode.timestamp[group] = Timestamp.getTimestamp();
+			}
+			else{
+				currentNode.approvedBy[id] = false;
+				currentNode.timestamp[id] = Timestamp.getTimestamp();
+			}	
 
+		}
+		this.state.workflow.FlowChart[current_node_key] = currentNode
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.isRejected = true;
 		this.state.workflow.Feedback = "Rejected by " + name;
@@ -479,17 +506,19 @@ class CreatePDF extends React.Component {
 	};
 
 	render() {
-		const { classes } = this.props;
+		// const { classes } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				{this.state.comments ? (
 					<>
 						{/* <br/>
 	   <br/>
 	   <br/> */}
-						<Typography component="h3" variant="h5" className={classes.title}>
-							STATUS OF WORKFLOW : {this.state.workflow.status}
-						</Typography>
+	   					<HeaderBanner title={"Status Of Workflow : "+this.state.workflow.status} />
+						{/* // <Typography component="h3" variant="h5" className={classes.title}>
+						// 	STATUS OF WORKFLOW : {this.state.workflow.status}
+						// </Typography> */}
+						<Container>
 						<Box m={2} p={1}>
 							<ShowPDF
 								formData={this.state.workflow.FormData}
@@ -582,14 +611,15 @@ class CreatePDF extends React.Component {
 									</Button>
 								</Box>
 							</Box>
-						
+							
 						
 						</>
 						
 						)}
+						</Container>
 					</>
 				) : null}
-			</div>
+			</React.Fragment>
 		);
 	}
 }
@@ -600,4 +630,4 @@ const mapStatetoProps = (state) => {
 		loggedIn: state.auth.loggedIn,
 	};
 };
-export default connect(mapStatetoProps, null)(withStyles(useStyles)(CreatePDF));
+export default connect(mapStatetoProps, null)(CreatePDF);

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
@@ -27,11 +27,13 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Divider from "@material-ui/core/Divider";
-import useStyles from "../Style";
+// import useStyles from "../Style";
 import DoubleArrowTwoToneIcon from "@material-ui/icons/DoubleArrowTwoTone";
 import Avatar from "@material-ui/core/Avatar";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import CreateIcon from "@material-ui/icons/Create";
+import style from "../StyleSheet";
+import Header from "../Header";
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -91,7 +93,8 @@ const tableColumns = [
 //]
 export default function AlignItemsList({ Click, requestTable }) {
 	// const tableclasses = useTableStyles();
-	const classes = useStyles();
+	// const classes = useStyles();
+	const classes = makeStyles(style(useTheme()))();
 	// const renderListItem = (obj) =>{
 	//   return(obj.map(item =>{
 	//     return(
@@ -126,10 +129,12 @@ export default function AlignItemsList({ Click, requestTable }) {
 	//   )}))
 	// }
 	return (
+		<React.Fragment>
+		<Header title="Approve Documents"/>
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
-				title="Approve Documents"
+				title=""
 				columns={tableColumns}
 				data={requestTable}
 				actions={[
@@ -137,8 +142,6 @@ export default function AlignItemsList({ Click, requestTable }) {
 						icon: "view",
 						tooltip: "Approve Document",
 						onClick: (event, rowData) => {
-							alert("You want to approve document with " + rowData.id);
-
 							Click(rowData.item);
 						},
 					},
@@ -160,19 +163,18 @@ export default function AlignItemsList({ Click, requestTable }) {
 					sorting: true,
 					actionsColumnIndex: -1,
 					headerStyle: {
-						backgroundColor: "#4E9C81",
+						backgroundColor: "#006a5c",
 						color: "#FFF",
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
 					rowStyle: {
-						backgroundColor: "#FBFBFB",
-						color: "#000",
 						fontSize: "14px",
 					},
 				}}
 			/>
 		</div>
+		</React.Fragment>
 		// <List className={classes.root}>
 
 		//   {renderListItem(json['requests'])}

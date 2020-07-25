@@ -13,6 +13,9 @@ import Container from '@material-ui/core/Container';
 import ReformatWorkFlow from '../utils/ReformatWorkflow'
 import { connect } from 'react-redux'
 import WorkflowNode from '../utils/WorkflowNode'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Header from '../Header';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,6 +57,9 @@ class StartWrkflwComponent extends Component
         CustomForm:null,
         CustomFlowChart:null,
         FlowChart : null,
+	instructions :"",
+	uploadDocuments : false,
+		priority:false,
         user: this.props.userObj.username,
         selectedTitle : "",
         selectedId : 0,
@@ -123,6 +129,7 @@ class StartWrkflwComponent extends Component
         "flowchartId": this.state.selectedId,
         "Feedback" : "",
 	      "Feedback_ts": 0,
+		"priority": this.state.priority,
         "User":this.state.user,
         "Title": this.state.selectedTitle,
 
@@ -152,6 +159,7 @@ class StartWrkflwComponent extends Component
 
   saveCustomForm = (Form) => {
 
+	Form.schema.description = this.state.instructions
     console.log("The form",Form)
 
     if(this.state.customWorkflow.localeCompare("Empty")=== 0){
@@ -278,9 +286,26 @@ class StartWrkflwComponent extends Component
   handleListClick = (event) =>{
     this.setState({anchorEl : event.currentTarget});
   }
+	
+ handleCheck = (e) => {
+		this.setState({
+			uploadDocuments: e.target.checked
+	}) 	
 
+  }
+  handleCheckPriority = (e) => {
+		this.setState({
+			priority: e.target.checked
+	}) 	
+
+  }
   handleChange = (e) =>{
       this.state.customWorkflow = e.target.value;
+  }
+
+  handleChangeInstruction = (e) =>{
+
+	this.state.instructions = e.target.value
   }
 
   handleClose = () => {
@@ -299,43 +324,68 @@ class StartWrkflwComponent extends Component
 	console.log("this .title", this.state.selectedTitle)
         if(this.state.selectedTitle.localeCompare("SCW") == 0){
 		console.log("Inside CUstom component")
-            return (<div>
-		<br/>
+            return (<React.Fragment>
+		{/* <br/>
      		<h2> BUILD YOUR OWN WORKFLOW </h2>
 		<br/>
 		<br/>
-         <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth
+         <TextField required id="standard-required" label="WorkFlow Name" fullWidth
 
            onChange = {this.handleChange}
          />
          
+		<TextField required id="standard-required" label="General Instructions" fullWidth
 
-          <CustomForm  save ={this.saveCustomForm}/>   
+		       onChange = {this.handleChangeInstruction}
+		     />
+		<FormControlLabel
+		    control={<Checkbox checked={this.state.uploadDocuments} onChange={this.handleCheck}  />}
+		    label="Upload Documents Feature"
+		  />
 
-          <DisplayWorkflow title="Custom FlowChart" save={this.saveCustomFlowChart}/>   
+          <CustomForm  uploadDocuments={this.state.uploadDocuments} save ={this.saveCustomForm}/>   
+		<br/> */}
+          <main>
+          <Header title="Build Your Own Workflow"/>
+          <Container style={{margin: "16px 0px"}}>
+          <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth onChange = {this.handleChange}/>
+          
 
-              <br/>
-              <br/>
-              <br/>
+            <CustomForm  save ={this.saveCustomForm}/>   
 
-              <Button
-              variant="contained"
-              color="primary"
-              onClick = {this.saveCustomWorkFlow}>
-            
-              Create WorkFlow
-            </Button>   
+            <DisplayWorkflow title="Custom FlowChart" save={this.saveCustomFlowChart}/>   
 
-         
+                <br/>
+                <br/>
+                <br/>
 
-            </div>)
+                <Button
+                variant="contained"
+                color="primary"
+                onClick = {this.saveCustomWorkFlow}>
+              
+                Create WorkFlow
+              </Button>   
+
+          </Container>
+          </main>
+          </React.Fragment>)
         }
         else{
-          return( <div>
+          return( 
+            <React.Fragment>
+            <main>
+            <Header title="Start Your Workflow"/>
+           <Container style={{margin: "16px 0px"}}>
             
             <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
 
             <br/>
+			<FormControlLabel
+		    control={<Checkbox checked={this.state.priority} onChange={this.handleCheckPriority}  />}
+		    label="High Priority (Urgent Requirement)"
+		  />
+			<br/>
 
             <DisplayWorkflow title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFlowChartData}/>
          <br/>
@@ -346,16 +396,18 @@ class StartWrkflwComponent extends Component
             
               Start WorkFlow
             </Button>
-          </div>
+          </Container>
+          </main>
+          </React.Fragment>
           )
         }
       }
       else{
        
-        return (<div>{this.state.menu ?<NestedList menu = {this.state.menu} Click={this.handleClick}/>:<div>
+        return (<React.Fragment>{this.state.menu ?<main><Header title="Start A Workflow"/><NestedList menu = {this.state.menu} Click={this.handleClick}/></main>:<div>
               <h5>Initializing menu</h5>
             </div>}
-            </div>
+            </React.Fragment>
             )
       }
   }
@@ -366,12 +418,12 @@ class StartWrkflwComponent extends Component
           
       <div>
         
-        <Container maxWidth="lg">
+        {/* <Container maxWidth="lg"> */}
 
         
         { this.renderWorkFlow()} 
           
-        </Container>
+        {/* </Container> */}
         
         
       </div>

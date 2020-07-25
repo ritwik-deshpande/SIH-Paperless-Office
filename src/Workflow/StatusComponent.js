@@ -21,18 +21,24 @@ import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Typography from "@material-ui/core/Typography";
+import Header from '../Header';
+import Paper from '@material-ui/core/Paper'
+import SearchBar from 'material-ui-search-bar'
+
 import {
 	AppBar,
 	withStyles,
 	Toolbar,
 	ButtonGroup,
 	Box,
+	Tooltip,
 	TextField,
 	Grid,
 } from "@material-ui/core";
 import useStyles from "../Style";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import WorkflowNode from '../utils/WorkflowNode'
+import style from '../StyleSheet'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -43,6 +49,7 @@ class StatusComponent extends Component {
 		id: null,
 		status: null,
 		workflow: null,
+		searchId:"",
 		nodesList: [],
 		workflowSteps: [],
 		username: null,
@@ -118,11 +125,12 @@ class StatusComponent extends Component {
 			});
 	};
 
-	handleChange = (e) => {
-		console.log(e.target.value);
+	handleChange = (newValue) => {
+		// console.log(e.target.value);
+			// this.state.searchId = e.target.value
 		this.setState({
-			id: e.target.value,
-		});
+			searchId: newValue
+		})
 	};
 	handleOnUpdate = (old_version, old_object) => {
 		console.log("Handle Modify", this.state.workflow, old_object);
@@ -163,25 +171,32 @@ class StatusComponent extends Component {
 		});
 	};
 	handleGetWorkflow = (id) => {
-		this.state.open = true;
-		this.setState({
-			id: id,
-			status : null
-		});
-		api
-			.workFlow()
-			.getByid(id)
-			.then((res) => {
-				//console.log('The data received is',res.data)
-				if (res && res.data) {
-					this.setState({
-						workflow: res.data,
-						title: res.data.Title,
-						username: res.data.User,
-					}, ()=> { this.init() } );
+		this.state.id = null
+		if(id.localeCompare("")===0)
+		{
+			alert("Workflow Not Found");
+		}
+		else{
+			api
+				.workFlow()
+				.getByid(id)
+				.then((res) => {
+					console.log('The data received is',res.data)
+					if (res && res.data) {
+						this.setState({
+							workflow: res.data,
+							title: res.data.Title,
+							username: res.data.User,
+							id:id,
+							open:true
+						}, ()=> { this.init() } );
 					
-				}
-			});
+					}
+				})
+				.catch(err => {
+					alert("Workflow Not Found");
+				});
+		}
 	};
 	Click = () => {
 		this.setState({ myWorkflow: true });
@@ -193,110 +208,105 @@ class StatusComponent extends Component {
 		// this.state.title = this.props.location.search.split("=")[1]
 		// console.log(this.state.username,this.state.title)
 		// console.log(this.state.workflowSteps,this.state.nodesList)
-		if (
-			!this.state.id &&
-			this.props.location.search.localeCompare("") !== 0 &&
-			this.props.location.search.split("=")[1]
-		) {
-			console.log("in something");
-			this.setState({ id: this.props.location.search.split("=")[1] });
+		
+		if(this.state.id){
+			console.log("The id",this.state.id.length)
+		}
+		else{
+			console.log("id is false")
 		}
 		const { classes } = this.props;
 		return (
 			<div>
-			
+				<Header title={'My Workflows'}/>
+				{/* <Paper style={{backgroundColor:'#002a29'}}>
+					<Grid container justify="center" spacing={3}>
+						
+						<Grid item xs>
+							
+							<TextField
+								fullWidth
+								variant="filled"
+								size="small"
+								label="Enter Workflow ID to Search"
+								onChange={this.handleChange}
+								color="secondary"
+							/>
+							
+						</Grid>
+						<Grid item xs>
+							
+							<Button
+								variant="contained"
+								color="secondary"
+								//className={classes.button}
+								startIcon={<AddCommentIcon />}
+								onClick={() => {
+									this.handleGetWorkflow(this.state.searchId);
+								}}>
+								GET OTHER WORKFLOWS
+							</Button>
+							
+						</Grid>
+					</Grid>
+					</Paper> */}
+				<Paper className={classes.headerSearchBox} elevation={0} square>
+					<Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">
+						<Grid item xs={7} sm={8} md={10}>
+							<Tooltip title="Search other Workflows by ID" arrow placement="top-start">
+								<SearchBar
+								placeholder = "Search other Workflows by ID"
+								value={this.state.searchId}
+								onChange={(newValue) => this.handleChange(newValue)}
+								onRequestSearch={() => {
+									this.handleGetWorkflow(this.state.searchId);}}
+								fullWidth
+								/>
+							</Tooltip>
+						</Grid>
+						<Grid item xs={5} sm={4} md={2}>
+							<Button variant="contained" color="secondary" onClick={() => {
+											this.handleGetWorkflow(this.state.searchId);}} fullWidth>
+							GET WORKFLOW
+							</Button>
+						</Grid>
+					</Grid>
+				</Paper>
+								{/* <br></br> */}
 				<MyWorkflow
 					userObj={this.props.userObj}
 					handleSubmit={this.handleSearch}
 				/>
-			
-				<Box m={2} p={2}>
-					<Grid container spacing={3}>
-						
-						<Grid item xs>
-							{/* <Box m={2} p={2}> */}
-							<TextField
-								fullWidth
-								variant="outlined"
-								size="small"
-								label="Enter Workflow ID to Search"
-								onChange={this.handleChange}
-							/>
-							{/* </Box> */}
-						</Grid>
-						<Grid item xs>
-							{/* <Box m={2} p={2}> */}
-							<Button
-								variant="contained"
-								color="primary"
-								//className={classes.button}
-								startIcon={<AddCommentIcon />}
-								onClick={() => {
-									this.handleGetWorkflow(this.state.id);
-								}}>
-								GET WORKFLOW STATUS
-							</Button>
-							{/* </Box> */}
-						</Grid>
-					</Grid>
-				</Box>
 				{/* </form>  */}
 
 				<Dialog
 					fullScreen
 					open={this.state.open}
 					onClose={this.handleClose}
-					TransitionComponent={Transition}
-					PaperProps={{
-						style: {
-							backgroundColor: "#FFF",
-						},
-					}}>
-					{this.state.id ? (
-						!this.state.status ? (<div>
-					<AppBar className={classes.appBar}>
-					    <Toolbar className={classes.toolbar}>
-						<Box display='flex' flexGrow={1}>
-						<Button edge="start" autoFocus color="inherit" onClick={this.handleClose} startIcon={<ArrowBackIosIcon/>}>
-						    Go Back
-						</Button>
-						</Box>
-					    </Toolbar>
-					</AppBar>
-
-       					 <div className={classes.appBarSpacer} />
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<Typography component="h1" variant="h5" align="center">
-				 	    Workflow Not Found 
-				 	 </Typography>
-				   </div>
-						) : !this.state.updateWorkFlow ? (
+					TransitionComponent={Transition}>
+					{this.state.id  ? [ !this.state.updateWorkFlow ? (
 							<div className={classes.root}>
 								<AppBar className={classes.appBar}>
-									<Toolbar className={classes.toolbar}>
+									<Toolbar >
 										<Box display="flex" flexGrow={1}>
 											<Button
 												edge="start"
-												autoFocus
-												color="inherit"
+												color="primary"
 												onClick={this.handleClose}
 												startIcon={<ArrowBackIosIcon />}>
-												Go Back
+												Back
 											</Button>
 										</Box>
 										{(this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") || (this.state.workflow.User !== this.props.userObj.username ) ? null : (
 											<div>
 												<ButtonGroup variant="text">
 													<Box pr={3}>
-														<Button color="inherit" onClick={this.handleModify}>
+														<Button color="primary" onClick={this.handleModify}>
 															MODIFY WORKFLOW
 														</Button>
 													</Box>
 													<Box pl={3}>
-														<Button color="inherit" onClick={this.handleEnd}>
+														<Button color="primary" onClick={this.handleEnd}>
 															END WORKFLOW
 														</Button>
 													</Box>
@@ -305,17 +315,19 @@ class StatusComponent extends Component {
 										)}
 									</Toolbar>
 								</AppBar>
+								<main className={classes.content}>
 								<WorkFlowStatusUI
 									workflow={this.state.workflow}
 									title={this.state.title}
 									steps={this.state.workflowSteps}
 									nodesList={this.state.nodesList}
 								/>
+								</main>
 							</div>
 						) : (
 							<div>
 								<AppBar className={classes.appBar}>
-									<Toolbar className={classes.toolbar}>
+									<Toolbar >
 										<Box display="flex" flexGrow={1}>
 											<Button
 												edge="start"
@@ -323,16 +335,16 @@ class StatusComponent extends Component {
 												color="inherit"
 												onClick={this.handleClose}
 												startIcon={<ArrowBackIosIcon />}>
-												Go Back
+												Back
 											</Button>
 										</Box>
 									</Toolbar>
 								</AppBar>
 								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
 							</div>
-						)
-					) : null}
+						) ]: null}
 				</Dialog>
+			
 			</div>
 		);
 	}
@@ -347,4 +359,4 @@ const mapStatetoProps = (state) => {
 export default connect(
 	mapStatetoProps,
 	null
-)(withStyles(useStyles)(StatusComponent));
+)(withStyles(style)(StatusComponent));

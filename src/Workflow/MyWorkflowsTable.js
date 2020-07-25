@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
 
@@ -22,7 +22,8 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-import useStyles from "../Style";
+// import useStyles from "../Style";
+import style from "../StyleSheet";
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -77,12 +78,13 @@ const tableColumns = [
 export default function WorkflowTable({ Click, myworkflowsTable }) {
 	const { useState } = React;
 	const [selectedRow, setSelectedRow] = useState(null);
-	const classes = useStyles();
+	// const classes = useStyles();
+	const classes = makeStyles(style(useTheme()))();
 	return (
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
-				title="My Workflows"
+				title=" "
 				columns={tableColumns}
 				data={myworkflowsTable}
 				actions={[
@@ -90,10 +92,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 						icon: "view",
 						tooltip: "View Workflow",
 						onClick: (event, rowData) => {
-							alert(
-								"You want to view workflow " +
-									rowData.id
-							);
+						
 
 							Click(rowData.index_no);
 						},
@@ -116,14 +115,13 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 					sorting: true,
 					actionsColumnIndex: -1,
 					headerStyle: {
-						backgroundColor: "#4E9C81",
+						backgroundColor: "#006a5c",
 						color: "#FFF",
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
 					rowStyle: {
-						backgroundColor: "#FBFBFB",
-						color: "#000",
+					
 						fontSize: "14px",
 					},
 				}}
