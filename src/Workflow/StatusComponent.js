@@ -297,7 +297,7 @@ class StatusComponent extends Component {
 												Back
 											</Button>
 										</Box>
-										{(this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") || (this.state.workflow.User !== this.props.userObj.username ) ? null : (
+										{(this.state.workflow.status === "terminated") || (this.state.workflow.status === "Completed") || (this.state.workflow.User !== this.props.userObj.name ) ? null : (
 											<div>
 												<ButtonGroup variant="text">
 													<Box pr={3}>

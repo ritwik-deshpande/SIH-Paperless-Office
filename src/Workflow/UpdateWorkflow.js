@@ -67,10 +67,19 @@ class UpdateWorkflow extends Component
 	else{
 	
 		if(!this.state.FlowChart){
-	
+			let current_node_key = payload.Path[payload.Path.length-1];
+			payload["send_requests"] = []
+			for(let approver in  payload.FlowChart[current_node_key].approvedBy){
+
+				if(!payload.FlowChart[current_node_key].approvedBy[approver]){
+					payload.FlowChart[current_node_key].timestamp[approver] = null;
+				}
+				payload["send_requests"] = [...payload['send_requests'], approver];
+
+			}
 			 payload.id = old_version.split('v')[0] + 'v' + (parseInt(old_version.split('v')[1]) + 1)
 			 payload.FormData = this.state.FormData
-			 payload["send_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
+			 
 			 payload.Feedback =  "Resumed Workflow, Form Data Updated"
 			 alert_msg = "Workflow Updated with same current Progress.\n Your new Workflow id is"+payload.id
 		}

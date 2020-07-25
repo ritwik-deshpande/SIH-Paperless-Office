@@ -358,15 +358,15 @@ class CreatePDF extends React.Component {
 			this.state.workflow.cancel_requests = this.state.workflow.cancel_requests.concat([this.isUserInGroup(current_node_key,id)+'-'+id])
 		}
 		console.log("New Workflow", this.state.workflow);
-		window.location.reload(true)
-
+		
 		
 		api
 			.workFlow()
 			.put(this.state.workflow.id, this.state.workflow)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
-				
+				window.location.reload(true)
+
 			});
 
 		//Updating Average Response Time
@@ -434,11 +434,11 @@ class CreatePDF extends React.Component {
 			{
 				let group = this.isUserInGroup(current_node_key, id)
 				currentNode.approvedBy[group] = false;
-				currentNode.timestamp[group] = Timestamp.getTimestamp();
+				currentNode.timestamp[group] = Timestamp.getTimestamp(new Date().getTime());
 			}
 			else
 			{currentNode.approvedBy[id] = false;
-			currentNode.timestamp[id] = Timestamp.getTimestamp();}
+			currentNode.timestamp[id] = Timestamp.getTimestamp(new Date().getTime());}
 
 			this.state.workflow.cancel_requests = retval.cancel_reqs
 

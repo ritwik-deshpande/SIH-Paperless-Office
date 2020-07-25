@@ -31,6 +31,10 @@ class ApproveComponent extends React.Component {
 	}
 	createRequestTable(pending_requests) {
 		let tableData = [];
+		const displayPriority = {
+			'true' : "High",
+			'false' : "Normal"
+		}
 		for (var index in pending_requests.requests) {
 			tableData.push({
 				id: pending_requests.requests[index].id,
@@ -38,6 +42,7 @@ class ApproveComponent extends React.Component {
 				sender: pending_requests.requests[index].nameofSender,
 				feedback: pending_requests.requests[index].status,
 				time: Timestamp.getTimestamp(parseInt( pending_requests.requests[index].receivedon,10)),
+				priority : displayPriority[pending_requests.requests[index].priority],
 				item: pending_requests.requests[index],
 			});
 		}

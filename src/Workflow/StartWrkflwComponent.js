@@ -60,7 +60,7 @@ class StartWrkflwComponent extends Component
 	instructions :"",
 	uploadDocuments : false,
 		priority:false,
-        user: this.props.userObj.username,
+        user: this.props.userObj.name,
         selectedTitle : "",
         selectedId : 0,
       };

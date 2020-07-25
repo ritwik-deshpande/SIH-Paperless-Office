@@ -31,13 +31,28 @@ import CancelIcon from '@material-ui/icons/Cancel';
 export default function NodeStatus({ workflow, node }) {
 	const classes = useStyles();
 
-	const mapIdtoUser = {
-		DIR01: "Pramod Padole",
-		HOD001: "Umesh Deshpande",
-		AP001: "Ravindra Keskar",
-		AP002: "Anil Mokhade",
-		AP003: "Manish Kurhekar",
-	};
+	const mapIdtoUser={
+		'DIR01' : 'Pramod Padole',
+		'HOD001' : 'Umesh Deshpande',
+		'AP001' : 'Ravindra Keskar',
+		'AP002' : 'Anil Mokhade',
+		'AP003' : 'Manish Kurhekar',
+		'GRP000': 'Directors',
+	  'GRP001': "Deans",
+	  'GRP002': 'Associate Deans',
+	  'GRP003': 'Head of Department',
+	  'GRP004': 'Student Council',
+	  'GRP006': 'Assistant Professors',
+	  'GRP007': 'Teaching Assistants',
+	  'GRP008' : 'Security Section',
+	  'GRP009': 'Student Mentor Coordinator',
+	  'GRP010' : 'HR manager',
+	  'GRP011' : 'Accountants',
+	  'GRP012': 'Academics',
+	  'GRP013': 'Hostel Section',  
+	  'GRP014': 'Health Center',
+	  
+	  }
 
 	console.log("the Node is", node);
 
@@ -144,7 +159,10 @@ export default function NodeStatus({ workflow, node }) {
 				signatures={workflow.Signatures}
 			/>
 			<br />
-			<Typography variant="h6">Documents Uploaded</Typography>
+			{
+				workflow.FormData.Upload_Documents ? (<Typography variant="h6">Documents Uploaded</Typography>):null
+			}
+			
 			{workflow.FormData.Upload_Documents
 				? workflow.FormData.Upload_Documents.map((uri, index) => {
 						return (

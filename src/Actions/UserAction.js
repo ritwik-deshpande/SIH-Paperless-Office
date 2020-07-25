@@ -14,7 +14,7 @@ export const GetUser = (id, password) => {
         if( userObj && userObj.id.localeCompare(id))
         {
             
-            console.log("userobj", userObj.password)
+            console.log("userobj", userObj)
             if(bcrypt.compareSync(password, userObj.password)){
                     
                 dispatch({type: 'USER_VERIFIED',payload: userObj})
@@ -28,13 +28,13 @@ export const GetUser = (id, password) => {
 
             api.users().getByid(id).then(
                 res =>{
-                    console.log("The user",res.data.password)
+                    console.log("The user",res.data)
     
                     if(res.data.length== 0){
                         alert("Invalid Id");
                     }
                     else if(bcrypt.compareSync(password, res.data.password)){
-                        var hash = bcrypt.hashSync(res.data.pin, salt);
+                        var hash = bcrypt.hashSync('umesh', salt);
                         console.log(hash)
                         dispatch({type: 'USER_VERIFIED',payload: res.data})
                     }

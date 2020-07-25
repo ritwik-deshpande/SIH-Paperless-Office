@@ -53,7 +53,7 @@ export default function AddComments({ json, handleAddComment }) {
 							size="small"
 							value={comment}
 							name="comment"
-							label="Add your valuable comments"
+							label="Add comments (if any)"
 							onChange={handleChange}
 						/>
 					</Grid>
