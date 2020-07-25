@@ -1,20 +1,22 @@
 import React from 'react'
-import { Paper, Typography } from '@material-ui/core'
+import { Paper, Typography, Box, makeStyles, useTheme } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
+import style from './StyleSheet'
+
 function Header(props) 
 {
     const title = props.title
+    const classes = makeStyles(style(useTheme()))();
   return (
-    <div>
-        <Grid>
-      <Paper style={{width: '100%',
-    height: '110px', backgroundColor: '#002a29', color:'#fff'}}>
-      <Typography component="h4" variant="h4" align="left" style={{ marginLeft :'20px'}}>
-				 	    {title}
-				 	 </Typography>
-      </Paper>
-      </Grid>
-    </div>
+    <React.Fragment>
+      {/* <Paper className={classes.headerBox} elevation={0} square> */}
+        <Grid container wrap="nowrap" className={classes.headerBox} alignItems="flex-end" justify="center">
+          <Grid item xs>
+            <Typography variant="h4" className={classes.headerTitle}>{title}</Typography>
+          </Grid>
+        </Grid>
+      {/* </Paper> */}
+    </React.Fragment>
   )
 }
 

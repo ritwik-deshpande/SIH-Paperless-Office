@@ -31,8 +31,10 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
-import useStyles from "../../Style";
-import { Grid, Container, Box } from "@material-ui/core";
+// import useStyles from "../../Style";
+import { Grid, Container, Box, useTheme } from "@material-ui/core";
+import style from "../../StyleSheet";
+import Header from "../../Header";
 
 // const useStyles = makeStyles(theme => ({
 //     root: {
@@ -85,7 +87,8 @@ export default function NestedList({ menu, Click }) {
 		"Custom":"Please verify if the approvers are free and flowchart created is validated by the higher authority.Insure all nessecary documents are attached ",
 	}
 
-	const classes = useStyles();
+	// const classes = useStyles();
+	const classes = makeStyles(style(useTheme()))();
 	const [openBox, setOpenBox] = React.useState(false);
 
 	const handleClose = () => {
@@ -128,17 +131,17 @@ export default function NestedList({ menu, Click }) {
 	};
 
 	return (
-		<div>
+		<div style={{margin: '16px 20px'}}>
 			{/* <br></br>
 			<br></br> */}
-			<Typography className={classes.subtitle} variant="h6" noWrap>
+			{/* <Typography className={classes.subtitle} variant="h6" noWrap>
 				Start Workflow
-			</Typography>
-			<br></br>
-			<br></br>
+			</Typography> */}
+			{/* <br></br>
+			<br></br> */}
 
 				
-
+			{/* <Container max-width='lg' style={{marginTop: '16px'}}> */}
 			{/* <GridList
 				cellHeight={500}
 				spacing={30}
@@ -156,7 +159,7 @@ export default function NestedList({ menu, Click }) {
 											aria-label="previous"
 											onClick={() => Click(key.id, "SCW")}
 										align="center"> */}
-											<AddCircleIcon color="primary" style={{fontSize: 50 }} />
+											<AddCircleIcon color="secondary" style={{fontSize: 50 }} />
 										{/* </IconButton> */}
 
 											<CardContent>
@@ -171,7 +174,7 @@ export default function NestedList({ menu, Click }) {
 							) : (
 							<Grid item key={key} xs={12} sm={6} md={3}>
 								<Card className={classes.gridCard}>
-									<CardActionArea onClick={() => handleClick(key)}>
+									<CardActionArea onClick={() => handleClick(key)} style={{height: "100%"}}>
 										<CardMedia
 											className={classes.media}
 											image={Logo}
@@ -187,8 +190,8 @@ export default function NestedList({ menu, Click }) {
 												{InfomationOfWorkflows[key] }
 											</Typography>
 											<Box mt={2}>
-												<InboxIcon color="primary" fontSize="medium" align="center"/>
-												<Typography variant="subtitle1" align="center" display="inline" style={{paddingLeft: '8px'}}>
+												<InboxIcon color="secondary" fontSize="medium" align="center"/>
+												<Typography variant="subtitle1" color="inherit" align="center" display="inline" style={{paddingLeft: '8px'}}>
 													{key}
 												</Typography>
 											</Box>
@@ -265,6 +268,7 @@ export default function NestedList({ menu, Click }) {
       </Collapse> */}
 	  		</Grid>
 			{/* </GridList> */}
+			{/* </Container> */}
 		</div>
 	);
 }

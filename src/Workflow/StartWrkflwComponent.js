@@ -15,6 +15,7 @@ import { connect } from 'react-redux'
 import WorkflowNode from '../utils/WorkflowNode'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Header from '../Header';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -323,8 +324,8 @@ class StartWrkflwComponent extends Component
 	console.log("this .title", this.state.selectedTitle)
         if(this.state.selectedTitle.localeCompare("SCW") == 0){
 		console.log("Inside CUstom component")
-            return (<div>
-		<br/>
+            return (<React.Fragment>
+		{/* <br/>
      		<h2> BUILD YOUR OWN WORKFLOW </h2>
 		<br/>
 		<br/>
@@ -343,27 +344,39 @@ class StartWrkflwComponent extends Component
 		  />
 
           <CustomForm  uploadDocuments={this.state.uploadDocuments} save ={this.saveCustomForm}/>   
+		<br/> */}
+          <main>
+          <Header title="Build Your Own Workflow"/>
+          <Container style={{margin: "16px 0px"}}>
+          <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth onChange = {this.handleChange}/>
+          
 
-          <DisplayWorkflow title="Custom FlowChart" save={this.saveCustomFlowChart}/>   
+            <CustomForm  save ={this.saveCustomForm}/>   
 
-              <br/>
-              <br/>
-              <br/>
+            <DisplayWorkflow title="Custom FlowChart" save={this.saveCustomFlowChart}/>   
 
-              <Button
-              variant="contained"
-              color="primary"
-              onClick = {this.saveCustomWorkFlow}>
-            
-              Create WorkFlow
-            </Button>   
+                <br/>
+                <br/>
+                <br/>
 
-         
+                <Button
+                variant="contained"
+                color="primary"
+                onClick = {this.saveCustomWorkFlow}>
+              
+                Create WorkFlow
+              </Button>   
 
-            </div>)
+          </Container>
+          </main>
+          </React.Fragment>)
         }
         else{
-          return( <div>
+          return( 
+            <React.Fragment>
+            <main>
+            <Header title="Start Your Workflow"/>
+           <Container style={{margin: "16px 0px"}}>
             
             <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
 
@@ -383,16 +396,18 @@ class StartWrkflwComponent extends Component
             
               Start WorkFlow
             </Button>
-          </div>
+          </Container>
+          </main>
+          </React.Fragment>
           )
         }
       }
       else{
        
-        return (<div>{this.state.menu ?<NestedList menu = {this.state.menu} Click={this.handleClick}/>:<div>
+        return (<React.Fragment>{this.state.menu ?<main><Header title="Start A Workflow"/><NestedList menu = {this.state.menu} Click={this.handleClick}/></main>:<div>
               <h5>Initializing menu</h5>
             </div>}
-            </div>
+            </React.Fragment>
             )
       }
   }
@@ -403,12 +418,12 @@ class StartWrkflwComponent extends Component
           
       <div>
         
-        <Container maxWidth="lg">
+        {/* <Container maxWidth="lg"> */}
 
         
         { this.renderWorkFlow()} 
           
-        </Container>
+        {/* </Container> */}
         
         
       </div>

@@ -31,7 +31,7 @@ const theme = createMuiTheme({
 			// dark: "#4E9C81",
 		},
 		action: {
-			hover: "#182f37",
+			hover: "#0D8172", //"#00A58F",
 			selected: "#006A5C",
 			// focus: "#8DC3A7",
 		},
@@ -42,7 +42,7 @@ const theme = createMuiTheme({
 		},
 	},
 	typography: {
-		fontFamily: "Helvetica",
+		fontFamily: "Muli, Helvetica",
 	},
 	overrides: {
 		MuiCssBaseline: {
@@ -52,11 +52,11 @@ const theme = createMuiTheme({
 			},
 			'*::-webkit-scrollbar': {
 				width: '6px',
-				height: '6px'
+				height: '6px',
 			},
 			/* Track */
 			'*::-webkit-scrollbar-track': {
-				background: "#0e1c21",
+				backgroundColor: 'transparent',
 			},
 			
 			/* Handle */
