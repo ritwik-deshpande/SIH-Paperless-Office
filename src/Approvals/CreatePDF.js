@@ -95,7 +95,7 @@ class CreatePDF extends React.Component {
 	}
 
 	handleAddComment = (comment) => {
-		let timestamp = Timestamp.getTimestamp();
+		let timestamp = Timestamp.getTimestamp(new Date().getTime());
 
 		console.log(comment);
 		this.setState({
@@ -257,7 +257,7 @@ class CreatePDF extends React.Component {
 			if (id in currentNode.approvedBy) {
 				currentNode.approvedBy[id] = true;
 				// set pending request of current child as Approved
-				currentNode.timestamp[id] = Timestamp.getTimestamp();
+				currentNode.timestamp[id] = Timestamp.getTimestamp(new Date().getTime());
 			}
 			else if(this.isUserInGroup(current_node_key, id))
 			{
@@ -265,7 +265,7 @@ class CreatePDF extends React.Component {
 				console.log("group", group)
 				currentNode.approvedBy[group] = true;
 				// set pending request of current child as Approved
-				currentNode.timestamp[group] = Timestamp.getTimestamp();
+				currentNode.timestamp[group] = Timestamp.getTimestamp(new Date().getTime());
 			}
 			if (this.approvedByAll(currentNode.approvedBy)) {
 				//send request to approvers of next child
@@ -274,7 +274,7 @@ class CreatePDF extends React.Component {
 				if (currentNode.type === "End") {
 					this.state.workflow.status = "Completed";
 					this.state.workflow.nextNodes = [];
-					this.state.workflow.end_timestamp = Timestamp.getTimestamp();
+					this.state.workflow.end_timestamp = Timestamp.getTimestamp(new Date().getTime());
 				} else {
 					nextNodes = currentNode.nextNodes;
 					this.state.workflow.nextNodes = nextNodes;
@@ -306,11 +306,11 @@ class CreatePDF extends React.Component {
 			{
 				let group = this.isUserInGroup(current_node_key, id)
 				nextNode.approvedBy[group] = true;
-				nextNode.timestamp[group] = Timestamp.getTimestamp();
+				nextNode.timestamp[group] = Timestamp.getTimestamp(new Date().getTime());
 			}
 			else
 			{nextNode.approvedBy[id] = true;
-			nextNode.timestamp[id] = Timestamp.getTimestamp();}
+			nextNode.timestamp[id] = Timestamp.getTimestamp(new Date().getTime());}
 			// set pending request of current child as Approved
 			path = [...path, next_node_key];
 
@@ -324,7 +324,7 @@ class CreatePDF extends React.Component {
 					this.state.workflow.status = "Completed";
 					this.state.workflow.nextNodes = []
            				this.state.send_requests = []
-					this.state.workflow.end_timestamp = Timestamp.getTimestamp();
+					this.state.workflow.end_timestamp = Timestamp.getTimestamp(new Date().getTime());
 				} else {
 					nextNodes = nextNode.nextNodes;
 					this.state.workflow.nextNodes = nextNodes;
@@ -350,7 +350,7 @@ class CreatePDF extends React.Component {
 		this.state.workflow.Signatures = this.state.signatures;
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.Feedback = "Approved by " + name;
-		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp(new Date().getTime());
 		if(this.isUserInGroup(current_node_key,id)){
 		
 			this.state.workflow.cancel_requests = this.state.workflow.cancel_requests.concat([this.isUserInGroup(current_node_key,id)+'-'+id])
@@ -370,7 +370,7 @@ class CreatePDF extends React.Component {
 		//Updating Average Response Time
 
 		let response_time =
-			Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.receivedon);
+			Timestamp.getTSObj() - parseInt(this.props.item.receivedon, 10);
 		let avg_time = this.getAvgResponseTime(
 			userObj.avg_response_time,
 			userObj.no_of_approvals,
@@ -439,7 +439,7 @@ class CreatePDF extends React.Component {
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.isRejected = true;
 		this.state.workflow.Feedback = "Rejected by " + name;
-		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp(new Date().getTime());
 		if(this.isUserInGroup(current_node_key,id)){
 		
 			this.state.workflow.cancel_requests = this.state.workflow.cancel_requests.concat([this.isUserInGroup(current_node_key,id)+'-'+id])
@@ -458,7 +458,7 @@ class CreatePDF extends React.Component {
 		//Updating Average Response Time
 
 		let response_time =
-			Timestamp.getTSObj() - Timestamp.str2TSObj(this.props.item.receivedon);
+		Timestamp.getTSObj() - parseInt(this.props.item.receivedon, 10);
 		let avg_time = this.getAvgResponseTime(
 			userObj.avg_response_time,
 			userObj.no_of_approvals,

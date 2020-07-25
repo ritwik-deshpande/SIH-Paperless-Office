@@ -211,21 +211,21 @@
           "id": "222v0",
           "subject": "Application for Sports Secretary",
           "nameofSender": "Ritwik Deshpande",
-          "ts": "Jul 9 at 14:46, 2020",
+          "receivedon": "1595661410705",
           "status": "Pending"
         },
         {
           "id": "564v0",
           "subject": "Test",
           "nameofSender": "Ritwik Deshpande",
-          "receivedon": "Jul 21 at 14:46, 2020",
+          "receivedon": "1595661410705",
           "status": "Pending"
         },
         {
           "id": "536v0",
           "subject": "Library Reg",
           "nameofSender": "Ritwik Deshpande",
-          "ts": "Jul 21 at 14:46, 2020",
+          "receivedon": "1595661410705",
           "status": "Pending"
         }
       ]

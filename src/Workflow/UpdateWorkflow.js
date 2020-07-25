@@ -85,7 +85,7 @@ class UpdateWorkflow extends Component
 				"nextNodes":[],
 				"Signatures":{},
 				"status" : "active",
-				"begin_timestamp" : Timestamp.getTimestamp(),
+				"begin_timestamp" : Timestamp.getTimestamp(new Date().getTime()),
 				"end_timestamp" : "",
 				"formId": this.props.formId,
 				"flowchartId" :this.state.flowchartId,
@@ -105,10 +105,10 @@ class UpdateWorkflow extends Component
 				alert_msg = "Workflow Updated and Restarted .\n Your new Workflow id is"+payload.id
 		 }
 		 
-		 payload.Feedback_ts = Timestamp.getTimestamp()
+		 payload.Feedback_ts = Timestamp.getTimestamp(new Date().getTime())
 		 payload["cancel_requests"] = []
 		 old_object.Feedback = "Updated to version "+payload.id
-		 old_object.Feedback_ts = Timestamp.getTimestamp()
+		 old_object.Feedback_ts = Timestamp.getTimestamp(new Date().getTime())
 		 old_object["send_requests"] = [] 
 		 old_object["cancel_requests"] = WorkflowNode.getApprovers(old_object.FlowChart[old_path[old_path.length - 1]])
 	

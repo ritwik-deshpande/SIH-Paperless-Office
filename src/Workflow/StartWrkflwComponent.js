@@ -117,7 +117,7 @@ class StartWrkflwComponent extends Component
         "nextNodes":[],
         "Signatures":{},
         "status" : "active",
-        "begin_timestamp" : Timestamp.getTimestamp(),
+        "begin_timestamp" : Timestamp.getTimestamp(new Date().getTime()),
         "end_timestamp" : "",
         "formId": this.state.selectedId,
         "flowchartId": this.state.selectedId,
@@ -134,7 +134,7 @@ class StartWrkflwComponent extends Component
       console.log("The Payload",payload);
 
       payload.Feedback =  "Workflow Initiated"
-      payload.Feedback_ts = Timestamp.getTimestamp()
+      payload.Feedback_ts = Timestamp.getTimestamp(new Date().getTime())
 
 
       api.workFlow().post(payload).then(res =>{

@@ -102,9 +102,9 @@ class StatusComponent extends Component {
 	};
 	handleEnd = () => {
 		this.state.workflow.status = "terminated";
-		this.state.workflow.end_timestamp = Timestamp.getTimestamp();
+		this.state.workflow.end_timestamp = Timestamp.getTimestamp(new Date().getTime());
 		this.state.workflow.Feedback = "Terminated by User"
-		this.state.workflow.Feedback_ts = Timestamp.getTimestamp();
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp(new Date().getTime());
 		let Path = this.state.workflow.Path
 		this.state.workflow.send_requests = []
 		this.state.workflow["cancel_requests"] = WorkflowNode.getApprovers(this.state.workflow.FlowChart[Path[Path.length - 1]])
@@ -127,7 +127,7 @@ class StatusComponent extends Component {
 	handleOnUpdate = (old_version, old_object) => {
 		console.log("Handle Modify", this.state.workflow, old_object);
 		old_object.status = "terminated";
-		old_object.end_timestamp = Timestamp.getTimestamp();
+		old_object.end_timestamp = Timestamp.getTimestamp(new Date().getTime());
 		api
 			.workFlow()
 			.put(old_version, old_object)

@@ -48,7 +48,21 @@ const mapIdtoUser={
   'AP001' : 'Ravindra Keskar',
   'AP002' : 'Anil Mokhade',
   'AP003' : 'Manish Kurhekar',
-  
+  'GRP000': 'Directors',
+'GRP001': "Deans",
+'GRP002': 'Associate Deans',
+'GRP003': 'Head of Department',
+'GRP004': 'Student Council',
+'GRP006': 'Assistant Professors',
+'GRP007': 'Teaching Assistants',
+'GRP008' : 'Security Section',
+'GRP009': 'Student Mentor Coordinator',
+'GRP010' : 'HR manager',
+'GRP011' : 'Accountants',
+'GRP012': 'Academics',
+'GRP013': 'Hostel Section',  
+'GRP014': 'Health Center',
+
 }
 
 const countries = [
@@ -186,7 +200,7 @@ const NodeInnerCustom = ({ node, config }) => {
            
             onChange = {(event,value) => {console.log('The value is',value); if(value!== null)approver[node.id] = value.id}}
             autoHighlight
-            getOptionLabel={(option) => option.name+option.id+option.roles}
+            getOptionLabel={(option) => option.name+"            "+option.id+option.roles}
             renderOption={(option) => (
               <React.Fragment>
                 {/* <span style={{fontSize:10}}>{option.id, "  "}</span><br/> */}

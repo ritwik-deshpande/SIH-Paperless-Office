@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const Endpoint = "https://d7f0986b7e4f.ngrok.io"
+const Endpoint = "http://0f6ff3e5a4c1.ngrok.io"
+//const Endpoint = "http://localhost:3030"
 
 
 export default { 
@@ -77,7 +78,8 @@ export default {
 
     notification(){
       return {
-        get : (id) => axios.get(`${Endpoint}/notifications/${id}`)
+        get : (id,token) => axios.get(`${Endpoint}/notifications/${id}?token=${token}`),
+        delete : (id,token) => axios.post(`${Endpoint}/notifications/${id}`,{"token":token}),
     }
     }
           

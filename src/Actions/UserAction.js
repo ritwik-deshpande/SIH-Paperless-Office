@@ -1,5 +1,6 @@
 import api from '../utils/api'
 import axios from 'axios';
+import { setLogLevel } from 'firebase';
 var bcrypt = require('bcryptjs');
 
 export const GetUser = (id, password) => {
@@ -72,6 +73,11 @@ export const logout = (userObj) =>{
     return (dispatch, getState) =>
     {
         console.log(userObj)
+        api.notification().delete(userObj.id,sessionStorage.getItem("token")).then(
+            res=>{
+                console.log(res.data);
+            }
+        )
         dispatch({type:'USER_LOGOUT', payload:userObj})
         // maybe send data 
         // api.users().update(userObj.id,userObj).then(
