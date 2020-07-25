@@ -158,7 +158,7 @@ export default function AlignItemsList({ Click, requestTable }) {
 					sorting: true,
 					actionsColumnIndex: -1,
 					headerStyle: {
-						backgroundColor: "#006a5c",
+						backgroundColor: "#002a29",
 						color: "#FFF",
 						fontWeight: "bold",
 						fontSize: "15px",

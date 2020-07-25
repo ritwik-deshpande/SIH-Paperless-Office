@@ -25,11 +25,11 @@ class Root extends React.Component {
         return (
             <BrowserRouter>
                 <div>
-                    <ToastContainer
-                        autoClose={2000}
+                    {/* <ToastContainer
+                        autoClose={500}
                         hideProgressBar={true}
                         position={toast.POSITION.BOTTOM_RIGHT}
-                    />
+                    /> */}
                     <Switch>
                         <Route
                             absolute
@@ -37,12 +37,10 @@ class Root extends React.Component {
                             render={props => <Login showToast={this.showToast} userObj={this.props.userObj}{...props} />}
                         />
                         <Route
-                            
                             path="/main"
                             render={props => <Main showToast={this.showToast} userObj={this.props.userObj} {...props} />}
                         />
                         <Route
-                            
                             path="/profile"
                             render={props => (
                                 <Profile showToast={this.showToast} userObj={this.props.userObj}{...props} />
@@ -54,5 +52,4 @@ class Root extends React.Component {
         )
     }
 }
-
 export default Root

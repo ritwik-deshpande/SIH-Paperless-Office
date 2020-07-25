@@ -134,11 +134,11 @@ class Profile extends Component {
                     />
                 </div>
 
-                <span className="textLabel">Nickname:</span>
+                <span className="textLabel">Full Name:</span>
                 <input
                     className="textInput"
                     value={this.state.nickname ? this.state.nickname : ''}
-                    placeholder="Your nickname..."
+                    placeholder="Your full name..."
                     onChange={this.onChangeNickname}
                 />
                 <span className="textLabel">About me:</span>

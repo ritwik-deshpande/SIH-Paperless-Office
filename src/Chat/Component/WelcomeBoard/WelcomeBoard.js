@@ -6,6 +6,7 @@ export default class WelcomeBoard extends Component {
     render() {
         return (
             <div className="viewWelcomeBoard">
+                <br></br>
         <span className="textTitleWelcome">{`Welcome, ${
             this.props.currentUserNickname
             }`}</span>
