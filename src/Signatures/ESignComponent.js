@@ -50,36 +50,45 @@ class ESignComponent extends React.Component{
         console.log("The userid to search",this.state.value)
         let id = this.state.value
         console.log("The user",this.state.userObj)
-        
-             
-        api.users().getByid(id).then( res => {
-        	if (res && res.data){
-        	
-        		console.log(res.data)
-        		this.setState({
-        			viewProfile : res.data
-        		
-        		})
-        		
-        		if(id === this.state.userObj.id){
-					this.setState({
-							cannotUpdate : false,
-							userObj : res.data
-				
-						})
-			
-					}else{
+        if(id === "")
+		{
+			alert("User Not Found")
+		}
+		else{
+			 api.users().getByid(id).then( res => {
+		    	if (res && res.data){
+		    	
+		    		console.log(res.data)
+		    		this.setState({
+		    			viewProfile : res.data
+		    		})
+		    		
+		    		if(id === this.state.userObj.id){
 						this.setState({
-							cannotUpdate : true
+								cannotUpdate : false,
+								userObj : res.data
 				
-						})
+							})
+			
+						}else{
+							this.setState({
+								cannotUpdate : true
 				
-					}  
-        	
-        	
-        	}
-        
-        })
+							})
+				
+						}  
+		    	
+		    	
+		    	}
+		    
+		    })
+		    .catch( err =>{
+		    	alert("User Not Found")
+		    });
+
+		}
+             
+       
        
     }
     handleChange =(newValue) => {
