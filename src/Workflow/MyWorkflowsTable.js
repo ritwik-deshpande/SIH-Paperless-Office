@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
 
@@ -22,7 +22,8 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-import useStyles from "../Style";
+// import useStyles from "../Style";
+import style from "../StyleSheet";
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -77,7 +78,8 @@ const tableColumns = [
 export default function WorkflowTable({ Click, myworkflowsTable }) {
 	const { useState } = React;
 	const [selectedRow, setSelectedRow] = useState(null);
-	const classes = useStyles();
+	// const classes = useStyles();
+	const classes = makeStyles(style(useTheme()))();
 	return (
 		<div className={classes.tableStyle}>
 			<MaterialTable
