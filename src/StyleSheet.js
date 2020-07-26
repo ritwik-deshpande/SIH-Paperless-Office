@@ -1,5 +1,6 @@
 import { Hidden } from "@material-ui/core";
-
+import CalendarPhoto from './Calendar/spring.jpg'
+import SearchPhoto from './SearchUser/search.jpg'
 const drawerWidth = 300;
 const style = theme => ({
     root: {
@@ -119,7 +120,35 @@ const style = theme => ({
 		width: "100%",
 		padding: theme.spacing(2),
 		margin: "auto",
-	},
+    },
+    
+    calendarHeader: {
+        width: '100%',
+        height: '150px', 
+        backgroundImage: `url(${CalendarPhoto})`,
+        backgroundPosition: '0 40%',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    calendarIcon: {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(1),
+        float: 'left',  
+        fontSize: 40
+    },
+
+    SearchheaderBox: {
+        width: '100%',
+        height: '175px', 
+        backgroundImage: `url(${SearchPhoto})`,
+        backgroundPosition: '0 40%',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    searchheaderTitle: {
+        // marginLeft: theme.spacing(2),
+        // align: 'center',
+        // flexShrink: 1,
+        textTransform: "capitalize",
+    },
  });
 
 export default style;
