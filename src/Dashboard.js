@@ -46,7 +46,7 @@ import MyMails from './Email/MyMails';
 import ComposeMail from './Email/ComposeMail';
 import style from './StyleSheet';
 import Hidden from "@material-ui/core/Hidden";
-
+import SearchUser from './SearchUser/SearchUser';
 export default function Dashboard({ userObj, logout},props) {
 
   
@@ -286,10 +286,12 @@ export default function Dashboard({ userObj, logout},props) {
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
       <Route exact path='/esign' render={() => <ESignComponent userObj={userObj} />} />
+      <Route exact path='/calendar' render={() => <Calendar userObj={userObj} />} />
       <Route exact path='/approve' render={()=> <ApproveComponent userObj={userObj}/>} />
       <Route exact path='/status' component={StatusComponent}/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
+      <Route exact path='/searchuser' render={() => <SearchUser userObj={userObj} />} />
       
      
         </main>

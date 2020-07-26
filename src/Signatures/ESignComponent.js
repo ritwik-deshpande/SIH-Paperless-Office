@@ -106,7 +106,7 @@ class ESignComponent extends React.Component{
             <div>
 			<Header title="User Profile"/>
 		 
-			 <Paper className={classes.headerSearchBox} elevation={0} square>
+			 {/* <Paper className={classes.headerSearchBox} elevation={0} square>
 			 <Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">
 				 <Grid item xs={7} sm={8} md={10}>
 					<Tooltip title="Search a User by ID" arrow placement="top-start">
@@ -125,7 +125,7 @@ class ESignComponent extends React.Component{
 					</Button>
 				</Grid>
 			</Grid>
-			</Paper>
+			</Paper> */}
 		
 	
 
