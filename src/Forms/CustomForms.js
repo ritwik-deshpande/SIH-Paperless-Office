@@ -4,6 +4,9 @@ import React from 'react'
 import {Component} from 'react'
 import useStyles from '../Style'
 
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 
 class TestComponent extends  Component{
@@ -83,7 +86,8 @@ class CustomForms extends React.Component {
            }
         },
 	uiSchema :{}
-      }
+      },
+      uploadDocuments:false
     }
 
     constructor(){
@@ -91,6 +95,12 @@ class CustomForms extends React.Component {
         this.save = this.save.bind(this)
         this.reformatForm = this.reformatForm.bind(this)
     }   
+    handleCheck = (e) => {
+		this.setState({
+			uploadDocuments: e.target.checked
+	}) 	
+
+  }
 
     render(){
         return(
@@ -109,6 +119,10 @@ class CustomForms extends React.Component {
                     <ToolBox custom={ myCustoms } />
                 </div>
             </div>
+	   <FormControlLabel
+		    control={<Checkbox checked={this.state.uploadDocuments} onChange={this.handleCheck}  />}
+		    label="Upload Documents Feature"
+		  />
         </div>
 
         )
@@ -116,7 +130,7 @@ class CustomForms extends React.Component {
 
     reformatForm = (form) => {
 
-		if(this.props.uploadDocuments){
+		if(this.state.uploadDocuments){
 			this.state.form.schema.properties["Upload_Documents"] =  {
 										type: "array",
 										items: {

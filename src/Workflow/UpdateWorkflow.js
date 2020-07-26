@@ -139,9 +139,7 @@ class UpdateWorkflow extends Component
 		console.log("Saving Form")
 		console.log(FormData);
 		alert("Updated Form Response")
-		this.setState({
-		  FormData : FormData
-		})
+		this.state.FormData = FormData
 	  }
 	  
 
@@ -164,10 +162,9 @@ class UpdateWorkflow extends Component
 		  NewFlowChart.title = this.props.wrkflw.Title
 
 		  NewFlowChart.id = Timestamp.getTSID()
-		  this.setState({
-			  FlowChart : reformated_chart,
-			  flowchartId : NewFlowChart.id
-		  })
+		  this.state.FlowChart = reformated_chart
+		  this.state.flowchartId = NewFlowChart.id
+		  
 		  console.log(NewFlowChart)
 		  api.flowChart().post(NewFlowChart).then(res =>{
 		    console.log(res);

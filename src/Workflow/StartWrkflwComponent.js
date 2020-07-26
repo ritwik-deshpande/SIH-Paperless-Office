@@ -16,6 +16,18 @@ import WorkflowNode from '../utils/WorkflowNode'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Header from '../Header';
+import Dialog from "@material-ui/core/Dialog";
+import CloseIcon from "@material-ui/icons/Close";
+import style from '../StyleSheet'
+import Slide from "@material-ui/core/Slide";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import {
+	AppBar,
+	withStyles,
+	Toolbar,
+	Typography,
+	Box
+} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,6 +64,7 @@ class StartWrkflwComponent extends Component
         customWorkflow:"Empty",
         anchorEl:null,
         menu:null,
+	openDialog : false,
         showFormandWrkflw : false,
         FormData : null,
         CustomForm:null,
@@ -156,6 +169,11 @@ class StartWrkflwComponent extends Component
     
     
   }
+  savePriority = (p) => {
+        console.log("The priority is ",p)
+	this.state.priority = p
+  }
+		
 
   saveCustomForm = (Form) => {
 
@@ -173,9 +191,8 @@ class StartWrkflwComponent extends Component
       console.log("Saving Form",Form)
       alert("Saved Custom Form");
 
-      this.setState({
-        CustomForm: Form
-      })
+      this.state.CustomForm = Form
+      
 
     }
     
@@ -202,9 +219,7 @@ class StartWrkflwComponent extends Component
       NewFlowChart.chart = FlowChart
       console.log("Saving FlowChart ",NewFlowChart)
 
-      this.setState({
-        CustomFlowChart:NewFlowChart
-      })
+      this.state.CustomFlowChart = NewFlowChart
      
       alert("Saved Custom FlowChart");
 
@@ -257,9 +272,7 @@ class StartWrkflwComponent extends Component
     console.log("Saving Form")
     console.log(FormData);
     alert("Saved Form Response")
-    this.setState({
-      FormData : FormData
-    })
+    this.state.FormData = FormData
   }
   
   saveFlowChartData = (chart) =>
@@ -268,10 +281,14 @@ class StartWrkflwComponent extends Component
     console.log(chart)
     alert("Saved Flowchart Response")
     chart = ReformatWorkFlow.reformat(chart)
-    this.setState({
-      FlowChart : chart
-    })
+    this.state.FlowChart = chart
   }
+  handleBackButton = () =>{
+
+    this.setState({
+	showFormandWrkflw :false
+	})
+ }
 
   handleClick = (id,title) =>{
     console.log(title);
@@ -287,18 +304,8 @@ class StartWrkflwComponent extends Component
     this.setState({anchorEl : event.currentTarget});
   }
 	
- handleCheck = (e) => {
-		this.setState({
-			uploadDocuments: e.target.checked
-	}) 	
-
-  }
-  handleCheckPriority = (e) => {
-		this.setState({
-			priority: e.target.checked
-	}) 	
-
-  }
+ 
+  
   handleChange = (e) =>{
       this.state.customWorkflow = e.target.value;
   }
@@ -319,6 +326,10 @@ class StartWrkflwComponent extends Component
 
       //console.log("the state ")
       //console.log(this.state)
+      const { classes } = this.props;
+      const Transition = React.forwardRef(function Transition(props, ref) {
+		return <Slide direction="up" ref={ref} {...props} />;
+	});
 
       if(this.state.showFormandWrkflw){
 	console.log("this .title", this.state.selectedTitle)
@@ -340,19 +351,44 @@ class StartWrkflwComponent extends Component
           <CustomForm  uploadDocuments={this.state.uploadDocuments} save ={this.saveCustomForm}/>   
 		<br/> */}
           <main>
-          <Header title="Build Your Own Workflow"/>
-          <Container style={{margin: "16px 0px"}}>
-          <TextField required id="standard-required" label="Required" helperText="Enter Procedure Name: Ex Library Registraion" fullWidth onChange = {this.handleChange}/>
+	  <Dialog
+		fullScreen
+		open={this.state.showFormandWrkflw}
+		onClose={this.handleBackButton}
+		TransitionComponent={Transition}>
+		<AppBar  className={classes.appBar}>
+			<Toolbar >
+				<Box display="flex" flexGrow={1}>
+					<Button
+						edge="start"
+						autoFocus
+						color="inherit"
+						onClick={this.handleBackButton}
+						startIcon={<ArrowBackIosIcon />}>
+						Back
+					</Button>
+				</Box>
+				 <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+					<Box fontWeight={800} display="inline">BUILD YOUR OWN WORKFLOW</Box>
+				      </Typography>
+			</Toolbar>
+		</AppBar>	
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 
-			<TextField required id="standard-required" label="General Instructions" fullWidth
+         {/* <Header title="Build Your Own Workflow"/>*/}
+          <Container style={{margin: "16px 0px"}}>
+          	<TextField required id="standard-required" label="WorkFlow Name" fullWidth onChange = {this.handleChange}/>
+		<br/>
+		<br/>
+		<TextField required id="standard-required" label="General Instructions" fullWidth
 
 		       onChange = {this.handleChangeInstruction}
 		     />
           
-			<FormControlLabel
-		    control={<Checkbox checked={this.state.uploadDocuments} onChange={this.handleCheck}  />}
-		    label="Upload Documents Feature"
-		  />
+		
 
             <CustomForm  save ={this.saveCustomForm}/>   
 
@@ -362,7 +398,7 @@ class StartWrkflwComponent extends Component
                 <br/>
                 <br/>
 
-                <Button
+            <Button
                 variant="contained"
                 color="primary"
                 onClick = {this.saveCustomWorkFlow}>
@@ -371,6 +407,7 @@ class StartWrkflwComponent extends Component
               </Button>   
 
           </Container>
+	  </Dialog>
           </main>
           </React.Fragment>)
         }
@@ -378,19 +415,45 @@ class StartWrkflwComponent extends Component
           return( 
             <React.Fragment>
             <main>
-            <Header title="Start Your Workflow"/>
+	
+	     <Dialog
+		fullScreen
+		open={this.state.showFormandWrkflw}
+		onClose={this.handleBackButton}
+		TransitionComponent={Transition}>
+		<AppBar  className={classes.appBar}>
+			<Toolbar >
+				<Box display="flex" flexGrow={1}>
+					<Button
+						edge="start"
+						autoFocus
+						color="inherit"
+						onClick={this.handleBackButton}
+						startIcon={<ArrowBackIosIcon />}>
+						Back
+					</Button>
+				</Box>
+				 <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+					<Box fontWeight={800} display="inline">START YOUR WORKFLOW</Box>
+				      </Typography>
+			</Toolbar>
+		</AppBar>	
+
+           {/* <Header title="Start Your Workflow"/> */}
+
+	   <br/>
+		<br/>
+		<br/>
+		<br/>
            <Container style={{margin: "16px 0px"}}>
             
-            <FormComponent title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
+            <FormComponent  title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFormData} />
 
             <br/>
-			<FormControlLabel
-		    control={<Checkbox checked={this.state.priority} onChange={this.handleCheckPriority}  />}
-		    label="High Priority (Urgent Requirement)"
-		  />
+			
 			<br/>
 
-            <DisplayWorkflow title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFlowChartData}/>
+            <DisplayWorkflow label={"Init"} savePriority = {this.savePriority} title={this.state.selectedTitle} id={this.state.selectedId} save={this.saveFlowChartData}/>
          <br/>
             <Button
               variant="contained"
@@ -400,6 +463,7 @@ class StartWrkflwComponent extends Component
               Start WorkFlow
             </Button>
           </Container>
+	 </Dialog>
           </main>
           </React.Fragment>
           )
@@ -442,4 +506,4 @@ const mapStatetoProps = (state) =>{
     loggedIn : state.auth.loggedIn
   }
 }
-export default connect(mapStatetoProps, null)(StartWrkflwComponent);
+export default connect(mapStatetoProps, null)(withStyles(style)(StartWrkflwComponent));

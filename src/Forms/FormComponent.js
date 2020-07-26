@@ -24,9 +24,11 @@ class FormComponent extends Component{
             }
           }
           },
-          uiSchema : {}      
+          uiSchema : {}   
     }
   }
+ 
+
 
   onSubmit = ({formData}, e) => {
   
@@ -55,6 +57,9 @@ class FormComponent extends Component{
                     onChange={log("changed")}
                     onSubmit={this.onSubmit}
                     onError={log("errors")} />
+
+		
+		
             </div>
         )
     }

@@ -1,6 +1,8 @@
 import React from "react";
 import DragAndDropSidebar from "./DragandDropSidebar"
 import axios from 'axios';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import api from '../utils/api'
 import Container from '@material-ui/core/Container';
 const chartSimple = {
@@ -8,11 +10,14 @@ const chartSimple = {
   selected: {id:"node2"},
   hovered: {}
 };
+
+
 class DisplayWorkflow extends React.Component{
 
       constructor(props){
         super(props);
         this.state = {
+	    priority : false,   
             schema : null,
             default_schema : {
               "chart":{
@@ -78,6 +83,12 @@ class DisplayWorkflow extends React.Component{
            
       }
     }
+ handleCheckPriority = (e) => {
+		this.setState({
+			priority: e.target.checked
+	}) 	
+	this.props.savePriority(e.target.checked)
+  }
 
     componentDidMount(){
 
@@ -106,6 +117,13 @@ class DisplayWorkflow extends React.Component{
       return (
         
         <div >
+	
+	{this.props.label ?
+		<FormControlLabel
+		    control={<Checkbox checked={this.state.priority} onChange={this.handleCheckPriority}  />}
+		    label="High Priority (Urgent Requirement)"
+		  /> : <></>
+		}			
           <br/>
           <br/>
             <h4>FLOWCHART </h4>
