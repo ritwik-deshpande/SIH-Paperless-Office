@@ -66,6 +66,7 @@ export default function Dashboard({ userObj, logout},props) {
   }]);
   const [pushNotif, setPushNotifs] = React.useState({});
   const [open, setOpen] = React.useState(false);
+  //const [badge, setBadge] = React.useState(false);
 
   
   React.useEffect(() => {
@@ -175,7 +176,7 @@ export default function Dashboard({ userObj, logout},props) {
            
 
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge color="secondary">
+            <Badge badgeContent={''}color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
