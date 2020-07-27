@@ -58,6 +58,13 @@ export default {
 
 
 
+   getHours(ms) {
+
+	return  (ms / (1000 * 60 * 60)).toFixed(1); 
+   },
+
+
+
     conversion(ms) { 
   
   

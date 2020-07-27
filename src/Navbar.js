@@ -44,7 +44,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
-import AvatarImage from './images/lodu.jpeg'
+//import AvatarImage from './images/lodu.jpeg'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -159,7 +159,7 @@ function Listitems(props) {
           <div align='center'>
 						<img
 						  className={classes.navBarProfileLogo}
-						  src={AvatarImage}
+						  src={require('./images/'+props.userObj.id+".jpg")}
 			  			alt={props.userObj.name}
 						/>
 		  		</div>
