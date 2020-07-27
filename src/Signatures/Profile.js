@@ -16,7 +16,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import Timestamp from '../utils/TimeStamp'
-import AvatarImage from '../images/lodu.jpeg'
+//import AvatarImage from '../images/lodu.jpeg'
 
 import {
 	Card,
@@ -34,6 +34,16 @@ import {
 export default function Profile({userObj}) {
 	// const classes = useStyles();
 	const theme= useTheme();
+	function getProgress(hours){
+		let base = 5*24
+		if(hours > base)
+			return 0
+		else{
+			return (100 - ((hours/base)*100)).toFixed(1);
+		}
+        }
+
+
 	function displayProfile(){
 		let fields = []
 		for( var key in userObj)
@@ -78,7 +88,7 @@ export default function Profile({userObj}) {
 		  			<div className="mb-3 mx-auto">
 						<img
 						className="rounded-circle"
-						src={AvatarImage}
+						src={require("../images/" +userObj.id+".jpg")}
 			  			// src={userDetails.avatar}
 			  			alt={userObj.name}
 			  			width="110"
@@ -99,12 +109,16 @@ export default function Profile({userObj}) {
 			  		<strong className="text-muted d-block mb-2">
 					  Average Time for Approval:{Timestamp.conversion(userObj["avg_response_time"])}
 			  		</strong>
+					<br/>
+					<strong className="text-muted d-block mb-2">
+					  Efficiency 
+			  		</strong>
 			  		<Progress
 						className="progress-sm"
-						value={10}
+						value={getProgress(Timestamp.getHours(userObj["avg_response_time"]))}
 			  		>
 					<span className="progress-value">
-				  		{10}%
+				  		{getProgress(Timestamp.getHours(userObj["avg_response_time"]))}% 
 					</span>
 			  		</Progress>
 					</div>

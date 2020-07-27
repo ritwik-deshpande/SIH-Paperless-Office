@@ -164,8 +164,14 @@ class SearchUser extends React.Component{
 			</Grid>
 			</Paper>
 			<br/>
+			
+			
+			{ this.state.history.length !== 0 ?  <div>
+			<Profile userObj = {this.state.viewProfile} />
 		
-            {!(this.state.viewProfile.id === this.state.userObj.id)?
+		    </div> :<h6 style={{ marginLeft: 90 }}>No Search Query Entered</h6>}
+		
+         {/*   {!(this.state.viewProfile.id === this.state.userObj.id)?
             <div>
 			<Profile userObj = {this.state.viewProfile} />
 		
@@ -187,7 +193,7 @@ class SearchUser extends React.Component{
             </Grid>
         </div>
         : <h6>No search history</h6>)
-                }
+                } */}
 
 	  </div>
             
