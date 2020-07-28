@@ -39,7 +39,7 @@ import useStyles from "../Style";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import WorkflowNode from '../utils/WorkflowNode'
 import style from '../StyleSheet'
-
+import Header from '../Headers/MyWorkflowsHeader'
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -219,9 +219,7 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Header title={'Workflows'}/>
-
-
+				
 				<MyWorkflowsHeader title={'Workflows'}/>
 
 				{/* <Paper style={{backgroundColor:'#002a29'}}>

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, Grid, Typography, Avatar, Box, useTheme } from '@material-ui/core';
+import { Card, CardContent, Grid, Typography, Avatar, Box, useTheme, Paper } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
-
+import {withRouter} from 'react-router-dom'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {
   CardHeader,
@@ -21,52 +21,195 @@ import {
 import mockData from './data';
 import style from '../../../StyleSheet';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import SwipeableViews from 'react-swipeable-views';
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     height: '100%'
-//   },
-//   content: {
-//     alignItems: 'center',
-//     display: 'flex'
-//   },
-//   title: {
-//     fontWeight: 700
-//   },
-//   avatar: {
-//     backgroundColor: '#4caf50',
-//     height: 56,
-//     width: 56
-//   },
-//   icon: {
-//     height: 32,
-//     width: 32
-//   },
-//   difference: {
-//     marginTop: 2,
-//     display: 'flex',
-//     alignItems: 'center'
-//   },
-//   differenceIcon: {
-//     color: 'black'
-//   },
-//   differenceValue: {
-//     color: 'black',
-//     marginRight: 1
-//   }
-// }));
+function TabPanel(props) {
+  const { children, value, index,classes,...other } = props;
 
-const DueSoon = props => {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box className={classes.utilCard} style={{overflow: "auto"}}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+  const DueSoon = props => {
   const { className, ...rest } = props;
+  const handleClick = (path) => {
+	props.history.push(path)
+  }
+
+
+  function getRecentWorkflows(){
+	if (props.recentWorkflows.length === 0) {
+	    return (
+	      <Box m={1} p={2}>
+		<Typography>
+		  No Content to Display
+		</Typography>
+	      </Box>
+	    );
+	  }
+
+
+	let recentWorkflowsList = []
+      console.log(props.recentWorkflows)
+      for(var index in props.recentWorkflows){
+		recentWorkflowsList.push(
+			<ListItem key={props.recentWorkflows[index].id} alignItems="flex-start">
+			      <ListItemText 
+				primary={props.recentWorkflows[index].Title} 
+				secondary={
+				  <React.Fragment>
+				    <Typography variant="subtitle1">
+				      <Box fontSize={14} fontWeight={600}  color={"textSecondary"}> Status : {props.recentWorkflows[index].status} </Box>
+				    </Typography>
+				    <Typography variant="subtitle2">
+				      <Box fontSize={12} fontWeight="Light"> {props.recentWorkflows[index].Feedback} </Box>
+				    </Typography> 
+				    <Typography variant="subtitle2">
+				      <Box fontSize={12} fontWeight="Light"> Last Updated on: {props.recentWorkflows[index].Feedback_ts} </Box>
+				    </Typography> 
+				  </React.Fragment>
+				}
+			      /> 
+			      <IconButton
+				edge="end"
+				size="small"
+                                onClick={ () => handleClick('/status')}
+			      >
+				<ChevronRightIcon />
+			      </IconButton>
+			    </ListItem>
+			
+		)
+
+  	}
+	return recentWorkflowsList
+
+
+	
+  }
+
+  function getUrgentApprovals(){
+	console.log(props.urgentApprovals)
+
+        if (props.urgentApprovals.length === 0) {
+	    return (
+	      <Box m={1} p={2}>
+		<Typography>
+		  No Content to Display
+		</Typography>
+	      </Box>
+	    );
+	  }
+	let urgentApprovals = []
+        for(var index in props.urgentApprovals){
+	   	urgentApprovals.push(
+   			<ListItem key={props.urgentApprovals[index].id} alignItems="flex-start">
+			      <ListItemText 
+				primary={props.urgentApprovals[index].subject} 
+				secondary={
+				  <React.Fragment>
+				    <Typography variant="subtitle1">
+				      <Box fontSize={14} fontWeight={600}  color={"#ff9800"}> Waiting for Your Approval </Box>
+				    </Typography>
+				    <Typography variant="subtitle2">
+				      <Box fontSize={12} fontWeight="Light">Sent by: {props.urgentApprovals[index].nameofSender} </Box>
+				    </Typography> 
+				    <Typography variant="subtitle2">
+				      <Box fontSize={12} fontWeight="Light"> Received on: {props.urgentApprovals[index].receivedon} </Box>
+				    </Typography> 
+				  </React.Fragment>
+				}
+			      /> 
+			      <IconButton
+				edge="end"
+				size="small"
+                                onClick={() => handleClick('/approve')}
+			      >
+				<ChevronRightIcon />
+			      </IconButton>
+			    </ListItem>
+			
+		)
+
+	}
+	return urgentApprovals
+	
+  }
+
 
   // const classes = useStyles();
   const classes = makeStyles(style(useTheme()))();
-  const [dueSoonFlows] = useState(mockData);
 
+  
+  const [myWorkflows] = useState(mockData);
+  const [pendingApprovals] = "";
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
+  
   return (
-    <Card>
-      <CardContent style={{width:"100%"}}>
-          <Typography variant="h6" gutterBottom>
+    // <Card>
+    //   <CardContent style={{width:"100%"}}>
+    <Paper style={{width:"100%", height: "100%",padding:"8px"}}>
+      <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab label="Recent Workflows" wrapped/>
+          <Tab label="Urgent Approvals" wrapped/>
+      </Tabs>
+      <SwipeableViews
+        axis='x'
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} classes={classes}>
+        
+	   <List disablePadding dense>
+          {getRecentWorkflows()}
+	   </List>
+        </TabPanel>
+        <TabPanel value={value} index={1} classes={classes}>
+          
+	    <List disablePadding dense>
+          {getUrgentApprovals()}
+	    </List>
+        </TabPanel>
+      </SwipeableViews>
+    </Paper>
+      /* <Typography variant="h6" gutterBottom>
             Recent Workflows
           </Typography>
           <Divider />
@@ -97,9 +240,9 @@ const DueSoon = props => {
             
           ))}
          </List>
-        </Box>
-      </CardContent>
-    </Card>
+        </Box> */
+    //   </CardContent>
+    // </Card>
   );
 };
 
@@ -107,4 +250,4 @@ DueSoon.propTypes = {
   className: PropTypes.string
 };
 
-export default DueSoon;
+export default withRouter(DueSoon);

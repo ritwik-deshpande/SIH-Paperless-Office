@@ -86,8 +86,8 @@ function Dashboard({ userObj, logout},props) {
   	}
   }
   function renderLandingPageComponent(){
-  	if(myWorkflows){
-  		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows}/> )
+  	if(myWorkflows && myApprovals){
+  		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows} myApprovals={myApprovals}/> )
   	}
   	else{
   		return (<h1> Loading...</h1>)

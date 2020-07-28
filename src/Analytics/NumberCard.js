@@ -63,8 +63,32 @@ export default function NumberCard({data}) {
         <>
         {/* <Grid container alignContent="center" justify="space-around" align="center" spacing={2}> */}
         {Object.keys(data).map(key => {
-          
+          if(key.localeCompare("pending") === 0)
+	 {
           return (
+            <React.Fragment>
+              <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
+                <Card elevation={2}>
+                    <CardContent>
+                      <Box mt={1} textAlign="center" className={classes.numCardContent} >
+                        <Typography variant="h2" style={{color:color[key]}}>
+                          {data[key]}
+                        </Typography>
+                        <Typography component="h5" variant="h5" gutterbottom>
+                          {key}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                            APPROVALS
+                        </Typography>
+                      </Box> 
+                    </CardContent>
+                </Card>
+              </Grid>
+            </React.Fragment>
+          );
+	}
+	else{
+	return (
             <React.Fragment>
               <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
                 <Card elevation={2}>
@@ -85,6 +109,11 @@ export default function NumberCard({data}) {
               </Grid>
             </React.Fragment>
           );
+
+
+	}
+
+
         })}
         {/* </Grid> */}
         </>
