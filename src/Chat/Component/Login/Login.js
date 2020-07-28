@@ -26,7 +26,7 @@ class Login extends Component {
         if (localStorage.getItem(AppString.ID) && localStorage.getItem(AppString.ID).localeCompare(this.props.userObj.id)===0) {
             this.setState({isLoading: false}, () => {
                 this.setState({isLoading: false})
-                this.props.showToast(1, 'Login success')
+                //this.props.showToast(1, 'Login success')
                 this.props.history.push('/main')
             })
         } else {
@@ -67,7 +67,7 @@ class Login extends Component {
                                         localStorage.setItem(AppString.NICKNAME, user.name)
                                         //localStorage.setItem(AppString.PHOTO_URL, user.photoURL)
                                         this.setState({isLoading: false}, () => {
-                                            this.props.showToast(1, 'Login success')
+                                            //this.props.showToast(1, 'Login success')
                                             this.props.history.push('/main')
                                         })
                                     })
@@ -88,7 +88,7 @@ class Login extends Component {
                                     result.docs[0].data().aboutMe
                                 )
                                 this.setState({isLoading: false}, () => {
-                                    this.props.showToast(1, 'Login success')
+                                    //this.props.showToast(1, 'Login success')
                                     this.props.history.push('/main')
                                 })
                             }

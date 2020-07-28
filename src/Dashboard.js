@@ -65,7 +65,63 @@ export default function Dashboard({ userObj, logout},props) {
     content: "demo content for testing notification feature"
   }]);
   const [pushNotif, setPushNotifs] = React.useState({});
+
+  const [myWorkflows, setMyWorkflows] = React.useState(null)
+  const [myApprovals, setMyApprovals] = React.useState(null)
   const [open, setOpen] = React.useState(false);
+
+  //const [badge, setBadge] = React.useState(false);
+
+  
+  function renderStatusComponent(){
+  	if(myWorkflows){
+  		return (<StatusComponent myWorkflows={myWorkflows}/>)
+  	}
+  	else{
+  		return (<h1> Loading...</h1>)
+  	}
+  }
+  function renderLandingPageComponent(){
+  	if(myWorkflows){
+  		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows}/> )
+  	}
+  	else{
+  		return (<h1> Loading...</h1>)
+  	}
+  }
+  
+  function renderApprovalComponent(){
+  	if(myApprovals){
+  		return (<ApproveComponent userObj={userObj} myApprovals = {myApprovals}/>)
+  	}
+  	else{
+  		return (<h1> Loading...</h1>)
+  	}
+  }
+
+  React.useEffect(() => {
+
+	api
+			.pending_request()
+			.get(userObj.id)
+			.then((res) => {
+				console.log("The Pending Request data received is", res.data);
+				setMyApprovals(res.data)
+			});
+
+  },[])
+  
+  React.useEffect(() => {
+
+	api.myworkflows()
+			.get(userObj.name)
+			.then((res) => {
+				console.log("The Workflow data received is", res.data);
+				setMyWorkflows(res.data)
+			});
+
+  },[])
+
 
   
   React.useEffect(() => {
@@ -175,7 +231,7 @@ export default function Dashboard({ userObj, logout},props) {
            
 
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge color="secondary">
+            <Badge badgeContent={''}color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -281,14 +337,14 @@ export default function Dashboard({ userObj, logout},props) {
       <main className={classes.content}>
       <div className={classes.appBarSpacer} />
 
-      <Route exact path='/' render ={() => <LandingPage userObj = {userObj}/> }/>
+      <Route exact path='/' render ={() => renderLandingPageComponent() }/>
       <Route exact path='/viewDocs' component={FolderComponent} />
       <Route exact path='/getForm' component={StartWrkflwComponent} />
       <Route exact path='/Form' component={FormComponent} />
       <Route exact path='/esign' render={() => <ESignComponent userObj={userObj} />} />
       <Route exact path='/calendar' render={() => <Calendar userObj={userObj} />} />
-      <Route exact path='/approve' render={()=> <ApproveComponent userObj={userObj}/>} />
-      <Route exact path='/status' component={StatusComponent}/>
+      <Route exact path='/approve' render={()=> renderApprovalComponent()} />
+      <Route exact path='/status' render={ () => renderStatusComponent() }/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
       <Route exact path='/searchuser' render={() => <SearchUser userObj={userObj} />} />

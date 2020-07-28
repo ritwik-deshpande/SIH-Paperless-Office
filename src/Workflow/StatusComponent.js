@@ -208,6 +208,7 @@ class StatusComponent extends Component {
 		// this.state.title = this.props.location.search.split("=")[1]
 		// console.log(this.state.username,this.state.title)
 		// console.log(this.state.workflowSteps,this.state.nodesList)
+		console.log("Received Workflows", this.props.myWorkflows)
 		
 		if(this.state.id){
 			console.log("The id",this.state.id.length)
@@ -218,7 +219,9 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
+
 				<MyWorkflowsHeader title={'Workflows'}/>
+
 				{/* <Paper style={{backgroundColor:'#002a29'}}>
 					<Grid container justify="center" spacing={3}>
 						
@@ -274,6 +277,7 @@ class StatusComponent extends Component {
 				</Paper>
 								{/* <br></br> */}
 				<MyWorkflow
+				    myWorkflows={this.props.myWorkflows}
 					userObj={this.props.userObj}
 					handleSubmit={this.handleSearch}
 				/>
@@ -340,7 +344,7 @@ class StatusComponent extends Component {
 										</Box>
 									</Toolbar>
 								</AppBar>
-								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
+								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} FormData={this.state.workflow.FormData} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
 							</div>
 						) ]: null}
 				</Dialog>

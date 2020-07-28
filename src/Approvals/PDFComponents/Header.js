@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
 export default () => (
   <View style={styles.container}>
     <View style={styles.detailColumn}>
-      <Text style={styles.name}>Visvesvaraya National Institute of Technology, Nagpur</Text>
-      <Text style={styles.subtitle}>South Ambazari Road, Nagpur-10</Text>
+      {/* <Text style={styles.name}>Visvesvaraya National Institute of Technology, Nagpur</Text>
+      <Text style={styles.subtitle}>South Ambazari Road, Nagpur-10</Text> */}
       <Image style={styles.image} src={require("../../images/vnitheader.jpg")}/>
     </View>
     

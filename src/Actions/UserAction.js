@@ -38,7 +38,8 @@ export const GetUser = (id, password) => {
                         alert("Invalid Id");
                     }
                     else if(bcrypt.compareSync(password, res.data.password)){
-                       
+                        var hash = bcrypt.hashSync('keskar', salt);
+                        console.log(hash)
                         dispatch({type: 'USER_VERIFIED',payload: res.data})
                     }
                     else{

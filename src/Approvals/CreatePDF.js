@@ -454,11 +454,11 @@ class CreatePDF extends React.Component {
 				let group = this.isUserInGroup(current_node_key, id)
 				console.log("group", group)
 				currentNode.approvedBy[group] = false;
-				currentNode.timestamp[group] = Timestamp.getTimestamp();
+				currentNode.timestamp[group] = Timestamp.getTimestamp(new Date().getTime());
 			}
 			else{
 				currentNode.approvedBy[id] = false;
-				currentNode.timestamp[id] = Timestamp.getTimestamp();
+				currentNode.timestamp[id] = Timestamp.getTimestamp(new Date().getTime());
 			}	
 
 		}
