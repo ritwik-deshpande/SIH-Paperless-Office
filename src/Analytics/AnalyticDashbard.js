@@ -1,8 +1,24 @@
 import React from 'react'
 import NumberCard from './NumberCard'
-import BarChart from "./graphs/BarChart";
+import BarChart from "./BarChart";
 import LineChart from './graphs/LineChart';
 import PiChart from './graphs/PiChart'
+import RaceChart from './RaceChart';
+import AnalyticsHeader from '../Headers/AnalyticsHeader'
+import {useTheme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography'
+import {
+	Card,
+	CardHeader,
+	ListGroup,
+	ListGroupItem,
+	Row,
+	Col,
+	Button,
+	Progress,
+	Container
+  } from "shards-react";
+
 
 const datas = [
     [10, 30, 40, 20],
@@ -21,7 +37,7 @@ var i = 0;
 
 
 class AnalyticDashboard extends React.Component {
-
+    
     constructor(props) {
         super(props);
 
@@ -43,9 +59,36 @@ class AnalyticDashboard extends React.Component {
         if (i === datas.length) i = 0;
     }
     render() {
+        
 
         return (
             <>
+            
+            <AnalyticsHeader title={'Analytics'}/>
+            <br/>
+            <Container fluid className="main-content-container px-4">
+			<Row>
+      			<Col lg="7">
+                    <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Race Chart</Typography>
+                    </CardHeader>
+                      <RaceChart/>
+                </Card>
+                </Col>
+                <Col lg="5">
+                <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Bar Chart</Typography>
+                    </CardHeader>
+                        <BarChart/>
+                </Card>
+                </Col>
+    		</Row>
+  		</Container>
+            
+            
+            
             <NumberCard data={this.state.numberCardData}/>
             <h2>Graphs with React</h2>
             <LineChart width={600} height={270} data={lineData}/>
