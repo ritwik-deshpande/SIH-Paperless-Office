@@ -16,9 +16,9 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers/rootReducer";
 import thunk from "redux-thunk";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider, responsiveFontSizes } from "@material-ui/core/styles";
 
-const theme = createMuiTheme({
+let theme = createMuiTheme({
 	palette: {
 		primary: {
 			// light: "#358873",
@@ -42,7 +42,10 @@ const theme = createMuiTheme({
 		},
 	},
 	typography: {
-		fontFamily: "Muli, Helvetica",
+		fontFamily: [
+			'"Helvetica Neue"',
+			'Helvetica'
+		  ].join(','),
 	},
 	overrides: {
 		MuiCssBaseline: {
@@ -56,7 +59,7 @@ const theme = createMuiTheme({
 			},
 			/* Track */
 			'*::-webkit-scrollbar-track': {
-				backgroundColor: 'transparent',
+				backgroundColor: 'rgba(0, 0, 0, 0)',
 			},
 			
 			/* Handle */
@@ -69,11 +72,11 @@ const theme = createMuiTheme({
 			'*::-webkit-scrollbar-thumb:hover': {
 				background: "#005C50",
 			},
-		  }
+		  },
 		},
 	  }
 });
-
+theme = responsiveFontSizes(theme);
 const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(
 	<React.StrictMode>
