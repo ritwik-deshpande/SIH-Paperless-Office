@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 import WorkflowNode from '../utils/WorkflowNode'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Header from '../Header';
+import StartWorkflowHeader from '../Headers/StartWorkflowHeader';
 import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import style from '../StyleSheet'
@@ -160,8 +160,8 @@ class StartWrkflwComponent extends Component
       api.workFlow().post(payload).then(res =>{
       console.log(res);
       alert("Workflow Initiated successfully.\n Your Workflow id is"+payload.id)
-      this.props.history.push("/status?id="+this.state.id+"v0")
-
+      this.props.history.push("/status")
+      window.location.reload(true)
 
       })
 
@@ -471,7 +471,7 @@ class StartWrkflwComponent extends Component
       }
       else{
        
-        return (<React.Fragment>{this.state.menu ?<main><Header title="Start A Workflow"/><NestedList menu = {this.state.menu} Click={this.handleClick}/></main>:<div>
+        return (<React.Fragment>{this.state.menu ?<main><StartWorkflowHeader title="Start A Workflow"/><NestedList menu = {this.state.menu} Click={this.handleClick}/></main>:<div>
               <h5>Initializing menu</h5>
             </div>}
             </React.Fragment>

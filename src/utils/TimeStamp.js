@@ -51,10 +51,18 @@ export default {
 
 
    getTSID(){
-    let timestamp = new Date().getUTCMilliseconds();
+    //let timestamp = new Date().getUTCMilliseconds();
+    let timestamp = Math.floor(Math.random()*100000)
     console.log(timestamp)
     return timestamp
   }  ,
+
+
+
+   getHours(ms) {
+
+	return  (ms / (1000 * 60 * 60)).toFixed(1); 
+   },
 
 
 

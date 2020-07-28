@@ -1,0 +1,7 @@
+{
+    "employeeData":[{ "Text": "Dr. R.B. Keskar","userID": "AP001", "Id": 1, "GroupId": 1, "Color": "#bbdc00", "Designation": "Assistant Professor, CSE Dept." },
+        { "Text": "Dr. Anil Mokhade", "Id": 2,"userID": "AP002", "GroupId": 2, "Color": "#9e5fff", "Designation": "Assistant Professor, CSE Dept." },
+        { "Text": "Dr. Umesh Deshpande", "Id": 3,"userID": "AP003", "GroupId": 1, "Color": "#bbdc00", "Designation": "HOD, CSE Dept." },
+        { "Text": "Dr. P.M. Padole", "Id": 4,"userID": "HOD001", "GroupId": 2, "Color": "#9e5fff", "Designation": "Director, VNIT" }
+    ]
+}

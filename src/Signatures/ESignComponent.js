@@ -7,7 +7,7 @@ import api from '../utils/api'
 import Button from '@material-ui/core/Button';
 import Profile from './Profile'
 import Calendar from '../Calendar/Calendar'
-import Header from '../Header'
+import MyProfileHeader from '../Headers/MyProfileHeader'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import style from '../StyleSheet'
@@ -104,9 +104,9 @@ class ESignComponent extends React.Component{
 		const { classes } = this.props 
         return(
             <div>
-			<Header title="User Profile"/>
+			<MyProfileHeader title="User Profile"/>
 		 
-			 <Paper className={classes.headerSearchBox} elevation={0} square>
+			 {/* <Paper className={classes.headerSearchBox} elevation={0} square>
 			 <Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">
 				 <Grid item xs={7} sm={8} md={10}>
 					<Tooltip title="Search a User by ID" arrow placement="top-start">
@@ -125,7 +125,7 @@ class ESignComponent extends React.Component{
 					</Button>
 				</Grid>
 			</Grid>
-			</Paper>
+			</Paper> */}
 		
 	
 

@@ -33,7 +33,7 @@ import Avatar from "@material-ui/core/Avatar";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import CreateIcon from "@material-ui/icons/Create";
 import style from "../StyleSheet";
-import Header from "../Header";
+import ApprovalsHeader from "../Headers/ApprovalsHeader";
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -131,7 +131,7 @@ export default function AlignItemsList({ Click, requestTable }) {
 	// }
 	return (
 		<React.Fragment>
-		<Header title="Approve Documents"/>
+		<ApprovalsHeader title="Approve Documents"/>
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}

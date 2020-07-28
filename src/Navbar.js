@@ -11,7 +11,9 @@ import LayersIcon from '@material-ui/icons/Layers';
 import { withRouter } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import TodayIcon from '@material-ui/icons/Today';
 // import useStyles from './Style'
+import PageviewIcon from '@material-ui/icons/Pageview';
 import Typography from '@material-ui/core/Typography';
 import ChatIcon from '@material-ui/icons/Chat';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -42,7 +44,9 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
-import AvatarImage from './images/lodu.jpeg';
+
+
+//import AvatarImage from './images/lodu.jpeg'
 
 
 function Alert(props) {
@@ -161,7 +165,7 @@ function Listitems(props) {
           <div align='center'>
 						<img
 						  className={classes.navBarProfileLogo}
-						  src={AvatarImage}
+						  src={require('./images/'+props.userObj.id+".jpg")}
 			  			alt={props.userObj.name}
 						/>
 		  		</div>
@@ -200,14 +204,24 @@ function Listitems(props) {
           </ListItem>
         </Tooltip>
 
+        <Tooltip title={props.open ? "" : "Planner"}>
+          <ListItem button={!(selectedIndex===3)} selected={selectedIndex===3} onClick={() => handleNavlink('/calendar',3)}>
+            <ListItemIcon className={classes.navBarIcons}>
+              <TodayIcon />
+            </ListItemIcon>
+            <ListItemText primary="Schedule A Meet"/>
+          </ListItem>
+        </Tooltip>
+
         <Tooltip title={props.open ? "" : "My Documents"}>
-          <ListItem button={!(selectedIndex===3)} selected={selectedIndex===3} onClick={() => handleNavlink('/viewDocs',3)}>
+          <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/viewDocs',4)}>
             <ListItemIcon className={classes.navBarIcons}>
               <FolderIcon />
             </ListItemIcon>
             <ListItemText primary="My Documents" /> 
           </ListItem>
         </Tooltip>
+
 
         <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
 
@@ -221,7 +235,7 @@ function Listitems(props) {
         </Tooltip>
         
         <Tooltip title={props.open ? "" : "Start a Workflow"}>
-          <ListItem button={!(selectedIndex===5)} selected={selectedIndex===5} onClick={() => handleNavlink('/getForm',5)}>
+          <ListItem button={!(selectedIndex===6)} selected={selectedIndex===6} onClick={() => handleNavlink('/getForm',6)}>
             <ListItemIcon className={classes.navBarIcons}>
               <PlayCircleFilledWhiteIcon />
             </ListItemIcon>
@@ -230,7 +244,7 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "Approve Documents"}>
-          <ListItem button={!(selectedIndex===6)} selected={selectedIndex===6} onClick={() => handleNavlink('/approve',6)}>
+          <ListItem button={!(selectedIndex===7)} selected={selectedIndex===7} onClick={() => handleNavlink('/approve',7)}>
             <ListItemIcon className={classes.navBarIcons}>
               <CreateIcon />
             </ListItemIcon>
@@ -239,7 +253,7 @@ function Listitems(props) {
         </Tooltip>
 
         <Tooltip title={props.open ? "" : "Chat"}>
-          <ListItem button={!(selectedIndex===7)} selected={selectedIndex===7} onClick={() => handleNavlink('/chat',7)}>
+          <ListItem button={!(selectedIndex===8)} selected={selectedIndex===8} onClick={() => handleNavlink('/chat',8)}>
             <ListItemIcon className={classes.navBarIcons}>
               <ChatIcon />
             </ListItemIcon>
@@ -248,7 +262,7 @@ function Listitems(props) {
         </Tooltip>
  
 	      <Tooltip title={props.open ? "" : "Analytics"}>
-          <ListItem button={!(selectedIndex===8)} selected={selectedIndex===8} onClick={() => handleNavlink('/analytics',8)}>
+          <ListItem button={!(selectedIndex===9)} selected={selectedIndex===9} onClick={() => handleNavlink('/analytics',9)}>
             <ListItemIcon className={classes.navBarIcons}>
               <AssessmentIcon />
             </ListItemIcon>
@@ -259,11 +273,20 @@ function Listitems(props) {
         <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
 
         <Tooltip title={props.open ? "" : "Report Error"}>
-          <ListItem button={!(selectedIndex===9)} selected={selectedIndex===9} onClick={handleClickOpenDialog}>
+          <ListItem button={!(selectedIndex===10)} selected={selectedIndex===10} onClick={handleClickOpenDialog}>
             <ListItemIcon className={classes.navBarIcons}>
               <ReportIcon />
             </ListItemIcon>
             <ListItemText primary="Report Error"/>
+          </ListItem>
+        </Tooltip>
+
+        <Tooltip title={props.open ? "" : "Search User"}>
+          <ListItem button={!(selectedIndex===11)} selected={selectedIndex===11} onClick={() => handleNavlink('/searchuser',11)}>
+            <ListItemIcon className={classes.navBarIcons}>
+              <PageviewIcon />
+            </ListItemIcon>
+            <ListItemText primary="Search User"/>
           </ListItem>
         </Tooltip>
 

@@ -23,7 +23,7 @@ class UpdateWorkflow extends Component
 	constructor(props){
       super(props);
       this.state = {
-        FormData : null,
+        FormData : this.props.FormData,
         FlowChart : null,
         selectedTitle : this.props.selectedTitle,
         formId : this.props.formId,
@@ -187,7 +187,7 @@ class UpdateWorkflow extends Component
 			<br/>
 			<div>
             
-            <FormComponent title={this.state.selectedTitle} id={this.state.formId} save={this.saveFormData} />
+            <FormComponent title={this.state.selectedTitle} id={this.state.formId} formData = {this.state.FormData} save={this.saveFormData} />
 
             <br/>
 
@@ -198,7 +198,7 @@ class UpdateWorkflow extends Component
               color="primary"
               onClick = {this.postRequest}>
             
-              Update and Restart Workflow
+              Update Workflow
             </Button>
           </div>
 

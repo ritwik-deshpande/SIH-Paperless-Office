@@ -1,5 +1,10 @@
 import { Hidden } from "@material-ui/core";
-
+import CalendarPhoto from './images/headers/spring.jpg'
+import SearchPhoto from './images/headers/search.jpg'
+import ProfilePhoto from './images/headers/myprofileheader.jpg'
+import WorkflowsPhoto from './images/headers/myworkflows.jpg'
+import StartWorkflowPhoto from './images/headers/startworkflow.jpg'
+import ApprovalsPhoto from './images/headers/approve.jpg'
 const drawerWidth = 300;
 const style = theme => ({
     root: {
@@ -173,7 +178,70 @@ const style = theme => ({
         [theme.breakpoints.up("sm")]: {
             height: "300px",
         }
-    }
+    },
+
+    
+    calendarHeader: {
+        width: '100%',
+        height: '150px', 
+        backgroundImage: `url(${CalendarPhoto})`,
+        backgroundPosition: '0 20%',
+        backgroundSize: '1000px',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    calendarIcon: {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(1),
+        float: 'left',  
+        fontSize: 40
+    },
+
+    SearchheaderBox: {
+        width: '100%',
+        height: '175px', 
+        backgroundImage: `url(${SearchPhoto})`,
+        backgroundPosition: '0 40%',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    searchheaderTitle: {
+        // marginLeft: theme.spacing(2),
+        // align: 'center',
+        // flexShrink: 1,
+        textTransform: "capitalize",
+    },
+    myProfileHeader:{
+    width: '100%',
+    height: '175px', 
+    backgroundImage: `url(${ProfilePhoto})`,
+    backgroundPosition: '0 20%',
+    backgroundSize: '1000px',
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    myWorkflowsHeader:{
+    width: '100%',
+    height: '175px', 
+    backgroundImage: `url(${WorkflowsPhoto})`,
+    backgroundPosition: '0 30%',
+    backgroundSize: '1200px',
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    startWorkflowHeader: {
+        width: '100%',
+        height: '175px', 
+        backgroundImage: `url(${StartWorkflowPhoto})`,
+        backgroundPosition: '0 55%',
+        backgroundSize: '900px',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        approvalsHeader: {
+            width: '100%',
+            height: '175px', 
+            backgroundImage: `url(${ApprovalsPhoto})`,
+            backgroundPosition: '0 35%',
+            backgroundSize: '1200px',
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+        }
+
  });
 
 export default style;
