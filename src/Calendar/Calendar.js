@@ -2,7 +2,7 @@ import { render } from 'react-dom';
 import './index.css';
 import React from 'react';
 import { ScheduleComponent, ResourcesDirective, ResourceDirective, ViewsDirective, ViewDirective, Inject, TimelineViews, Resize, DragAndDrop, TimelineMonth, Day } from '@syncfusion/ej2-react-schedule';
-import CalendarHeader from './CalendarHeader'
+import CalendarHeader from '../Headers/CalendarHeader'
 import { extend } from '@syncfusion/ej2-base';
 import { SampleBase } from './sample-base';
 import * as dataSource from './datasource.json';
@@ -19,8 +19,14 @@ constructor() {
 getEmployeeName(value) {
     return value.resourceData[value.resource.textField];
 }
+
+getEmployeeID(value){
+    return value.resourceData.userID;
+}
 getEmployeeImage(value) {
-    let resourceName = this.getEmployeeName(value);
+   
+    let resourceName = this.getEmployeeID(value);
+    console.log("The value is "+resourceName)
     return resourceName.toLowerCase();
 }
 getEmployeeDesignation(value) {

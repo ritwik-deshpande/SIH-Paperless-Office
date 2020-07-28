@@ -21,7 +21,7 @@ import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Typography from "@material-ui/core/Typography";
-import Header from '../Header';
+import MyWorkflowsHeader from '../Headers/MyWorkflowsHeader';
 import Paper from '@material-ui/core/Paper'
 import SearchBar from 'material-ui-search-bar'
 
@@ -219,7 +219,9 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Header title={'WORKFLOWS'}/>
+
+				<MyWorkflowsHeader title={'Workflows'}/>
+
 				{/* <Paper style={{backgroundColor:'#002a29'}}>
 					<Grid container justify="center" spacing={3}>
 						

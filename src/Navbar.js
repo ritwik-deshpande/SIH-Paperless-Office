@@ -216,12 +216,12 @@ function Listitems(props) {
           </ListItem>
         </Tooltip>
 
-        <Tooltip title={props.open ? "" : "My Workflows"}>
+        <Tooltip title={props.open ? "" : "Workflows"}>
           <ListItem button={!(selectedIndex===5)} selected={selectedIndex===5} onClick={() => handleNavlink('/status',5)}>
             <ListItemIcon className={classes.navBarIcons}>
               <WorkIcon />
             </ListItemIcon>
-            <ListItemText primary="My WorkFlows"/>
+            <ListItemText primary="WorkFlows"/>
           </ListItem>
         </Tooltip>
 
