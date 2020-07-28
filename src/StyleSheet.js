@@ -5,6 +5,7 @@ import ProfilePhoto from './images/headers/myprofileheader.jpg'
 import WorkflowsPhoto from './images/headers/myworkflows.jpg'
 import StartWorkflowPhoto from './images/headers/startworkflow.jpg'
 import ApprovalsPhoto from './images/headers/approve.jpg'
+import AnalyticsPhoto from './images/headers/analytics.jpg'
 const drawerWidth = 300;
 const style = theme => ({
     root: {
@@ -183,6 +184,14 @@ const style = theme => ({
             height: '175px', 
             backgroundImage: `url(${ApprovalsPhoto})`,
             backgroundPosition: '0 35%',
+            backgroundSize: '1200px',
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        analyticsHeader: {
+            width: '100%',
+            height: '175px', 
+            backgroundImage: `url(${AnalyticsPhoto})`,
+            backgroundPosition: '0 45%',
             backgroundSize: '1200px',
             color: theme.palette.getContrastText(theme.palette.primary.main),
         }
