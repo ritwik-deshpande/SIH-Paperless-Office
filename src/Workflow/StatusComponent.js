@@ -219,6 +219,8 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
+				<Header title={'Workflows'}/>
+
 
 				<MyWorkflowsHeader title={'Workflows'}/>
 

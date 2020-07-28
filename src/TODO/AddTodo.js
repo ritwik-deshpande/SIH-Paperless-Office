@@ -39,19 +39,19 @@ class AddTodo extends Component {
 			<Box>
 				<Grid container spacing={2} justify="space-evenly" alignItems="flex-end">
 						
-					<Grid item xs={12} sm={9}>
+					<Grid item xs={8} >
 						{/* <Box m={2} p={2}> */}
 						<TextField
-							defaultValue = {this.state.inputValue}
+							value = {this.state.inputValue}
 							fullWidth
 							variant="outlined"
 							size="small"
-							label="Add to TODO List"
+							label="Add to List"
 							onChange={this.handleChange}
 						/>
 						{/* </Box> */}
 					</Grid>
-					<Grid item xs={12} sm={3}>
+					<Grid item xs={4} >
 						{/* <Box m={2} p={2}> */}
 						<Button
 							fullWidth

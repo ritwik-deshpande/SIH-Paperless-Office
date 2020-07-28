@@ -9,10 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-    root: {
-        margin: 20,
-        maxWidth: 345,
-    },
 });
 
 export default function PagesSaved() {
@@ -20,7 +16,7 @@ export default function PagesSaved() {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card elevation={2}>
             <CardActionArea>
                 <CardMedia
                     component="img"
