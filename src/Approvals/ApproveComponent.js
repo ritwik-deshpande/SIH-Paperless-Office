@@ -29,17 +29,10 @@ class ApproveComponent extends React.Component {
 		};
 	}
 	componentDidMount() {
-		console.log(this.props.userObj);
-		api
-			.pending_request()
-			.get(this.props.userObj.id)
-			.then((res) => {
-				console.log("The data received is", res.data);
-				this.setState({
-					json: res.data,
-					requestTable: this.createRequestTable(res.data),
-				});
-			});
+		this.setState({
+			json: this.props.myApprovals,
+			requestTable: this.createRequestTable(this.props.myApprovals),
+		});
 	}
 	createRequestTable(pending_requests) {
 		let tableData = [];
@@ -101,7 +94,9 @@ class ApproveComponent extends React.Component {
 									</Box>
 								</Toolbar>
 							</AppBar>
-						
+							<br/>
+`							<br/>
+							<br/>
 							<CreatePDF item={this.state.item} />
 						</Dialog>
 					) : (
