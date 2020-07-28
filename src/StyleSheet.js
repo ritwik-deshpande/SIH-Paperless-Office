@@ -1,6 +1,10 @@
 import { Hidden } from "@material-ui/core";
-import CalendarPhoto from './Calendar/spring.jpg'
-import SearchPhoto from './SearchUser/search.jpg'
+import CalendarPhoto from './images/headers/spring.jpg'
+import SearchPhoto from './images/headers/search.jpg'
+import ProfilePhoto from './images/headers/myprofileheader.jpg'
+import WorkflowsPhoto from './images/headers/myworkflows.jpg'
+import StartWorkflowPhoto from './images/headers/startworkflow.jpg'
+import ApprovalsPhoto from './images/headers/approve.jpg'
 const drawerWidth = 300;
 const style = theme => ({
     root: {
@@ -126,7 +130,8 @@ const style = theme => ({
         width: '100%',
         height: '150px', 
         backgroundImage: `url(${CalendarPhoto})`,
-        backgroundPosition: '0 40%',
+        backgroundPosition: '0 20%',
+        backgroundSize: '1000px',
         color: theme.palette.getContrastText(theme.palette.primary.main),
     },
     calendarIcon: {
@@ -149,6 +154,38 @@ const style = theme => ({
         // flexShrink: 1,
         textTransform: "capitalize",
     },
+    myProfileHeader:{
+    width: '100%',
+    height: '175px', 
+    backgroundImage: `url(${ProfilePhoto})`,
+    backgroundPosition: '0 20%',
+    backgroundSize: '1000px',
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    myWorkflowsHeader:{
+    width: '100%',
+    height: '175px', 
+    backgroundImage: `url(${WorkflowsPhoto})`,
+    backgroundPosition: '0 30%',
+    backgroundSize: '1200px',
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    startWorkflowHeader: {
+        width: '100%',
+        height: '175px', 
+        backgroundImage: `url(${StartWorkflowPhoto})`,
+        backgroundPosition: '0 55%',
+        backgroundSize: '900px',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        approvalsHeader: {
+            width: '100%',
+            height: '175px', 
+            backgroundImage: `url(${ApprovalsPhoto})`,
+            backgroundPosition: '0 35%',
+            backgroundSize: '1200px',
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+        }
  });
 
 export default style;

@@ -7,6 +7,7 @@ import WelcomeBoard from '../WelcomeBoard/WelcomeBoard'
 import './Main.css'
 import ChatBoard from './../ChatBoard/ChatBoard'
 import {AppString} from './../Const'
+import Tooltip from '@material-ui/core/Tooltip';
 
 class Main extends Component {
     constructor(props) {
@@ -124,19 +125,21 @@ class Main extends Component {
             <div className="root">
                 {/* Header */}
                 <div className="header">
-                    <span>MAIN</span>
+                    <span><strong>Digi</strong>Connect</span>
+                    <Tooltip title="Edit Profile">
                     <img
                         className="icProfile"
-                        alt="An icon default avatar"
+                        alt="Edit Profile"
                         src={images.ic_default_avatar}
                         onClick={this.onProfileClick}
                     />
-                    <img
+                    </Tooltip>
+                    {/* <img
                         className="icLogout"
                         alt="An icon logout"
                         src={images.ic_logout}
                         onClick={this.onLogoutClick}
-                    />
+                    /> */}
                 </div>
 
                 {/* Body */}

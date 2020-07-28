@@ -84,7 +84,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
-				title=" "
+				title="My Workflows"
 				columns={tableColumns}
 				data={myworkflowsTable}
 				actions={[
