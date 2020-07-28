@@ -51,7 +51,7 @@ export default function ShowPDF({ formData, signatures, title }) {
 					<View>
 						<Image style={styles.image} src={signatures[person]} />
 					</View>
-					<Text style={styles.text}>Signed by {person}</Text>
+					<Text style={styles.sign}>Signed by {person}</Text>
 				</>
 			);
 		}
@@ -60,7 +60,7 @@ export default function ShowPDF({ formData, signatures, title }) {
 	function getContent() {
 		let content = [];
 		for (var key in formData) {
-			if (key.localeCompare("Upload_Documents") !== 0) {
+			if (key.localeCompare("Upload_Documents") !== 0 && key.localeCompare("Instructions") !== 0) {
 				content.push(
 					<>
 						<Text style={styles.text}>
@@ -72,6 +72,23 @@ export default function ShowPDF({ formData, signatures, title }) {
 		}
 		return content;
 	}
+	function getInstructions() {
+		let content = [];
+		if(formData && formData["Instructions"]){
+			content.push(
+				<>
+					<Text style={styles.instructions}>
+					Instructions
+					</Text>
+					<Text style={styles.instructions}>
+						{formData["Instructions"]}
+					</Text>
+				</>
+			);
+		}
+
+		return content;
+	}
 
 	return (
 		<>
@@ -79,6 +96,8 @@ export default function ShowPDF({ formData, signatures, title }) {
 				<Document>
 					<Page style={styles.page} size="A4">
 						<Header />
+						
+						{getInstructions()}
 						<Text style={styles.text}>{title}</Text>
 						{getContent()}
 					</Page>
@@ -134,4 +153,18 @@ const styles = StyleSheet.create({
 		paddingVertical: 30,
 		color: "#212121",
 	},
+	sign:{
+		width: "50%",
+		backgroundColor: "#ffffff",
+		paddingHorizontal: 50,
+		paddingVertical: 30,
+		color: "#212121",
+	},
+	instructions:{
+		width: "100%",
+		backgroundColor: "#ffe0e0",
+		paddingHorizontal: 20,
+		paddingVertical: 30,
+		color: "#8B0000",
+	}
 });

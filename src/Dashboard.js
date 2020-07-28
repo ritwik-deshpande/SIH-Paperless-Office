@@ -69,6 +69,9 @@ export default function Dashboard({ userObj, logout},props) {
   const [myWorkflows, setMyWorkflows] = React.useState(null)
   const [myApprovals, setMyApprovals] = React.useState(null)
   const [open, setOpen] = React.useState(false);
+
+  //const [badge, setBadge] = React.useState(false);
+
   
   function renderStatusComponent(){
   	if(myWorkflows){
@@ -118,6 +121,7 @@ export default function Dashboard({ userObj, logout},props) {
 			});
 
   },[])
+
 
   
   React.useEffect(() => {
@@ -227,7 +231,7 @@ export default function Dashboard({ userObj, logout},props) {
            
 
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge color="secondary">
+            <Badge badgeContent={''}color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>

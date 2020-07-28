@@ -342,7 +342,7 @@ class StatusComponent extends Component {
 										</Box>
 									</Toolbar>
 								</AppBar>
-								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
+								<UpdateWorkflow  selectedTitle= {this.state.workflow.Title} FormData={this.state.workflow.FormData} formId = {this.state.workflow.formId} flowchartId = {this.state.workflow.flowchartId} wrkflw ={ this.state.workflow}  onUpdate = {this.handleOnUpdate} />
 							</div>
 						) ]: null}
 				</Dialog>

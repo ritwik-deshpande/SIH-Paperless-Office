@@ -28,7 +28,11 @@ class FormComponent extends Component{
     }
   }
  
-
+  onChange = (data, e) => {
+  
+    console.log("onChange: ", data);
+    
+  }
 
   onSubmit = ({formData}, e) => {
   
@@ -54,7 +58,8 @@ class FormComponent extends Component{
              
                 <Form schema={this.state.schema}
                     uiSchema={this.state.uiSchema}
-                    onChange={log("changed")}
+                    formData = {this.props.formData}
+                    onChange={this.onChange}
                     onSubmit={this.onSubmit}
                     onError={log("errors")} />
 
