@@ -160,8 +160,8 @@ class StartWrkflwComponent extends Component
       api.workFlow().post(payload).then(res =>{
       console.log(res);
       alert("Workflow Initiated successfully.\n Your Workflow id is"+payload.id)
-      this.props.history.push("/status?id="+this.state.id+"v0")
-
+      this.props.history.push("/status")
+      window.location.reload(true)
 
       })
 

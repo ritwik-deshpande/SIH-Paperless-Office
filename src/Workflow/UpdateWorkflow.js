@@ -198,7 +198,7 @@ class UpdateWorkflow extends Component
               color="primary"
               onClick = {this.postRequest}>
             
-              Update and Restart Workflow
+              Update Workflow
             </Button>
           </div>
 

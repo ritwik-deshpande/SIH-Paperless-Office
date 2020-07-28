@@ -9,13 +9,13 @@ class MyWorkflow extends React.Component {
 		this.state = {
 			showPDF: false,
 			item: null,
-			myworkflows: null,
+			myworkflows: this.props.myWorkflows,
 			tableData: [],
 			tableCreated: false,
 		};
 	}
 	componentDidMount() {
-		api
+		/*api
 			.myworkflows()
 			.get(this.props.userObj.name)
 			.then((res) => {
@@ -23,8 +23,10 @@ class MyWorkflow extends React.Component {
 				this.setState({
 					myworkflows: res.data,
 				});
-				this.initTable(this.state.myworkflows);
-			});
+				
+			});*/
+		console.log("IN table received",this.state.myworkflows)
+		this.initTable(this.state.myworkflows);
 	}
 	initTable(myworkflows) {
 		let tableData = [
@@ -37,20 +39,22 @@ class MyWorkflow extends React.Component {
 			},
 		];
 		let i = 0;
-		for (i = 0; i < myworkflows.length; i++) {
-			this.state.tableData.push({
-				id: myworkflows[i].id,
-				wname: myworkflows[i].Title,
-				status: myworkflows[i].status,
-				lastfeedback: myworkflows[i].Feedback,
-				time: myworkflows[i].Feedback_ts,
-				index_no: i,
+		if(myworkflows){
+			for (i = 0; i < myworkflows.length; i++) {
+				this.state.tableData.push({
+					id: myworkflows[i].id,
+					wname: myworkflows[i].Title,
+					status: myworkflows[i].status,
+					lastfeedback: myworkflows[i].Feedback,
+					time: myworkflows[i].Feedback_ts,
+					index_no: i,
+				});
+			}
+			console.log(this.state.tableData);
+			this.setState({
+				tableCreated: true,
 			});
 		}
-		console.log(this.state.tableData);
-		this.setState({
-			tableCreated: true,
-		});
 	}
 	handleClick = (index) => {
 		console.log(index);
