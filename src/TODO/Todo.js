@@ -6,18 +6,8 @@ import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid'
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from "@material-ui/core/Typography";
-import { Box, ButtonGroup } from "@material-ui/core";
+import { Box, ButtonGroup, ListItemIcon, ListItemSecondaryAction } from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
-
-const listElementStyles = {
-	fontSize: 12,
-	// lineHeight: '12px',
-}
-
-const listElementCheckedStyles = {
-	...listElementStyles,
-	textDecoration: 'line-through',
-}
 
 class Todo extends Component{
 	
@@ -42,22 +32,21 @@ class Todo extends Component{
     } = this.props;
 
 		return(
-			<ListItem dense>
-			
-			
-				<Checkbox
-					checked={this.props.checked}
-					onChange={this.onCheck}
-				  />
-				
+			<ListItem dense disableGutters>
+				<ListItemIcon>
+					<Checkbox
+						checked={this.props.checked}
+						onChange={this.onCheck}
+					/>
+				</ListItemIcon>
 				<ListItemText  primary={todo} />
-				
-				<IconButton onClick={this.onClick} >
-					<DeleteIcon/>
-				</IconButton>
-			
-			
+				<ListItemSecondaryAction>
+					<IconButton onClick={this.onClick} >
+						<DeleteIcon/>
+					</IconButton>
+				</ListItemSecondaryAction>
 			</ListItem>
+			
 		)
 	}
 } 

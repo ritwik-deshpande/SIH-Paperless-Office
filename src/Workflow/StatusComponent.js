@@ -218,7 +218,7 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Header title={'My Workflows'}/>
+				<Header title={'Workflows'}/>
 				{/* <Paper style={{backgroundColor:'#002a29'}}>
 					<Grid container justify="center" spacing={3}>
 						

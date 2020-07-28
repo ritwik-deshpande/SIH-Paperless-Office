@@ -46,8 +46,9 @@ import MyMails from './Email/MyMails';
 import ComposeMail from './Email/ComposeMail';
 import style from './StyleSheet';
 import Hidden from "@material-ui/core/Hidden";
+import { useLocation } from 'react-router-dom';
 
-export default function Dashboard({ userObj, logout},props) {
+function Dashboard({ userObj, logout},props) {
 
   
   // window.addEventListener('load', async () => {
@@ -123,6 +124,12 @@ export default function Dashboard({ userObj, logout},props) {
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
   // const handleDrawerClose = () => {
   //   setOpen(false);
   // };
@@ -140,7 +147,22 @@ export default function Dashboard({ userObj, logout},props) {
   const notify = Boolean(anchorEl);
   const id = notify ? 'simple-popover' : undefined;
 
+  
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const navBar = (
+    <React.Fragment>
+      <div className={classes.toolbarIcon}>
+        <IconButton onClick={handleDrawerClose} className={classes.navBarIcons}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <NavBar userObj = {userObj} open = {open} logout = {logout} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>
+    </React.Fragment>
+  );
+
   const container = window !== undefined ? () => window().document.body : undefined;
+  console.log("Dashboard :",userObj)
   return (
 
     <BrowserRouter>
@@ -157,7 +179,7 @@ export default function Dashboard({ userObj, logout},props) {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerToggle}
+              onClick={handleDrawerOpen}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -232,30 +254,26 @@ export default function Dashboard({ userObj, logout},props) {
           <NavBar userObj = {userObj} open = {open} logout = {logout}/>
         
       </Drawer> */}
-      <nav className={classes.drawer} aria-label="mailbox folders">
+      <nav className={classes.drawer} aria-label="mailbox folders"> 
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
+        <Hidden mdUp implementation="css">
           <Drawer
             container={container}
             variant="temporary"
             open={open}
-            onClose={handleDrawerToggle}
+            onClose={handleDrawerClose}
             classes={{
               paper: classes.drawerPaper
             }}
             ModalProps={{
               keepMounted: true // Better open performance on mobile.
             }}
+            
           >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={handleDrawerToggle} className={classes.navBarIcons}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+            {navBar}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
           <Drawer
             variant="permanent"
             className={clsx(classes.drawer, {
@@ -266,15 +284,8 @@ export default function Dashboard({ userObj, logout},props) {
                 [classes.drawerClose]: !open
               })
             }}
-            
           >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={handleDrawerToggle} className={classes.navBarIcons}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            {/* {!open && <div className={classes.appBarspacer} />} */}
-              <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+              {navBar}
           </Drawer>
         </Hidden>
       </nav>
@@ -304,3 +315,5 @@ export default function Dashboard({ userObj, logout},props) {
 
   );
 }
+
+export default Dashboard;

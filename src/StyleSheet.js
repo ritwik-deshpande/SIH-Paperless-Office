@@ -3,11 +3,20 @@ import { Hidden } from "@material-ui/core";
 const drawerWidth = 300;
 const style = theme => ({
     root: {
-        display: "flex"
+        display: "flex",
+        "& .MuiOutlinedInput-root": {
+			"& fieldset": {
+				borderColor: theme.palette.grey[500],
+			},
+			"&:hover fieldset": {
+				borderColor: theme.palette.secondary.dark,
+				borderWidth: 2,
+			},
+		},
     },
     drawer: {
         height: "100vh",
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
             flexShrink: 0,
             whiteSpace: "nowrap",
         }
@@ -67,11 +76,14 @@ const style = theme => ({
     navBarListItems: {
         "& .Mui-selected": {
             borderRadius: "1px 50px 50px 1px", 
-          },
-          "& .MuiListItem-root:not(.Mui-selected):hover": {
+        },
+        "& .MuiListItem-root:not(.Mui-selected):hover": {
             borderRadius: "1px 50px 50px 1px",
             backgroundColor: "#182f37",
-        }
+        },
+    },
+    navBarDivider: {
+        backgroundColor: theme.palette.getContrastText(theme.palette.background.navBarListBg),
     },
     navBarIcons: {
         color: theme.palette.getContrastText(theme.palette.background.navBarListBg)
@@ -101,6 +113,37 @@ const style = theme => ({
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.getContrastText(theme.palette.primary.main),
     },
+    sideMenuButton: {
+        paddingRight: theme.spacing(2),
+        [theme.breakpoints.up("lg")]: {
+            display: 'none'
+        }
+    },
+    sideDrawer: {
+        zIndex: theme.zIndex.appBar - 5,
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    sideDrawerPaper: {
+        zIndex: theme.zIndex.appBar - 5,
+        width: drawerWidth,
+        backgroundColor: theme.palette.background.default,
+        [theme.breakpoints.up("lg")]: {
+            '&::-webkit-scrollbar': {
+                display: 'none',
+            },
+        }
+    },
+    sideDrawerContainer: {
+        padding: theme.spacing(2),
+    },
+    landingPageMainContent: {
+        padding: theme.spacing(2),
+        // overflow: "auto",
+        [theme.breakpoints.up("lg")]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+        }
+    },
     gridCard: {
 		margin: 'auto',
 		width: "100%",
@@ -119,7 +162,18 @@ const style = theme => ({
 		width: "100%",
 		padding: theme.spacing(2),
 		margin: "auto",
-	},
+    },
+	numCardContent: {
+		textTransform: "capitalize",
+		margin: 'auto',
+    },
+    utilCard: {
+        width: "100%",
+        maxHeight: "300px",
+        [theme.breakpoints.up("sm")]: {
+            height: "300px",
+        }
+    }
  });
 
 export default style;

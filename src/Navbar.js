@@ -42,7 +42,8 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
-import AvatarImage from './images/lodu.jpeg'
+import AvatarImage from './images/lodu.jpeg';
+
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -60,21 +61,25 @@ function Listitems(props) {
   pageDict['/chat']=7;
   pageDict['/analytics']=8;
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(pageDict[props.history.location.pathname]);
 
+  props.setSelectedIndex(pageDict[props.history.location.pathname]);
+  let selectedIndex = props.selectedIndex;
+  // const [selectedIndex, setSelectedIndex] = React.useState(pageDict[props.history.location.pathname]);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleNavlink = (link, index) => {
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
+    // setSelectedIndex(index);
     setAnchorEl(null);
     console.log(props);
     props.history.push(link);  
   };
  
   const handleDashboard = (index) =>{
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
+    // setSelectedIndex(index);
     console.log('Props is',props);
     props.history.push('/');
     
@@ -124,7 +129,6 @@ function Listitems(props) {
   const classes = makeStyles(style(useTheme()))();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
     <div>
       {/* {props.open ? <div className={classes.navBarProfile} >
@@ -205,16 +209,16 @@ function Listitems(props) {
           </ListItem>
         </Tooltip>
 
-        <Tooltip title={props.open ? "" : "My Workflows"}>
+        <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
+
+        <Tooltip title={props.open ? "" : "View Workflows"}>
           <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/status',4)}>
             <ListItemIcon className={classes.navBarIcons}>
               <WorkIcon />
             </ListItemIcon>
-            <ListItemText primary="My WorkFlows"/>
+            <ListItemText primary="View WorkFlows"/>
           </ListItem>
         </Tooltip>
-
-        <Divider/>
         
         <Tooltip title={props.open ? "" : "Start a Workflow"}>
           <ListItem button={!(selectedIndex===5)} selected={selectedIndex===5} onClick={() => handleNavlink('/getForm',5)}>
@@ -252,7 +256,7 @@ function Listitems(props) {
           </ListItem>
         </Tooltip>
       
-        <Divider/>
+        <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
 
         <Tooltip title={props.open ? "" : "Report Error"}>
           <ListItem button={!(selectedIndex===9)} selected={selectedIndex===9} onClick={handleClickOpenDialog}>
@@ -347,4 +351,4 @@ function Listitems(props) {
 
 
 
-export default withRouter(Listitems )
+export default withRouter(Listitems)

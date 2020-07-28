@@ -84,7 +84,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
-				title=" "
+				title="My Workflows"
 				columns={tableColumns}
 				data={myworkflowsTable}
 				actions={[
@@ -102,7 +102,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 							onClick={(event) => props.action.onClick(event, props.data)}
 							color="primary"
 							variant="contained"
-							style={{ textTransform: "none" }}
+							style={{ textTransform: "capitalize" }}
 							size="small">
 							<VisibilityIcon />
 						</IconButton>
@@ -114,12 +114,12 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 					actionsColumnIndex: -1,
 					headerStyle: {
 						backgroundColor: "#002a29",
-						color: "#FFF",
+						color: "#fff",
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
 					rowStyle: {
-					
+
 						fontSize: "14px",
 					},
 				}}

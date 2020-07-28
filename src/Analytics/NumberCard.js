@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { Grid, Paper, Box, useTheme } from '@material-ui/core';
-import useStyles from '../Style'
-
+// import useStyles from '../Style'
+import styles from '../StyleSheet'
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     display: 'flex',
@@ -35,14 +35,14 @@ import useStyles from '../Style'
 //   }
 //   }));
 // const theme = useTheme();
-const styles = theme => ({
-  numCardNumber: {
-		margin: "auto",
-    // flex: '1 0 auto',
-		padding: theme.spacing(1),
-		// alignItems: "flex-start",
-	},
-});
+// const styles = theme => ({
+//   numCardNumber: {
+// 		margin: "auto",
+//     // flex: '1 0 auto',
+// 		padding: theme.spacing(1),
+// 		// alignItems: "flex-start",
+// 	},
+// });
 
 const color = {};
 color['pending'] = "#ff9800";
@@ -51,9 +51,9 @@ color['terminated'] = "#d32f2f";
 color['active'] = "#303f9f"
 
 export default function NumberCard({data}) {
-    const classes = useStyles();
+    // const classes = useStyles();
     // const s = makeStyles(styles(useTheme()));
-    const cls = makeStyles(styles(useTheme()))();
+    const classes = makeStyles(styles(useTheme()))();
     const color = {};
     color['pending'] = "#ff9800";
     color['completed'] = "#4caf50";
@@ -67,31 +67,23 @@ export default function NumberCard({data}) {
           return (
             <React.Fragment>
               <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
-                <Paper className={classes.numCard}>
-                  <Grid item container >
-                    <Grid item xs={5} sm={5} md={5}>
-                    
-                    <Typography variant="h2" style={{color:color[key]}} className={cls.numCardNumber}>
-                      {data[key]}
-                    </Typography>
-
-                  </Grid>
-                  
-                  <Grid item xs={8} sm={7} md={8}>
-                  <Box className={classes.numCardContent} m={1} >
-                    <Typography component="h5" variant="h5">
-                      {key}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                      Worflows
-                    </Typography>
-                  </Box>
-                  {/* </Grid> */}
-                  </Grid>
-                  </Grid>
-              </Paper>
-            </Grid>
-        </React.Fragment>
+                <Card elevation={2}>
+                    <CardContent>
+                      <Box mt={1} textAlign="center" className={classes.numCardContent} >
+                        <Typography variant="h2" style={{color:color[key]}}>
+                          {data[key]}
+                        </Typography>
+                        <Typography component="h5" variant="h5" gutterbottom>
+                          {key}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                            WORKFLOWS
+                        </Typography>
+                      </Box> 
+                    </CardContent>
+                </Card>
+              </Grid>
+            </React.Fragment>
           );
         })}
         {/* </Grid> */}
