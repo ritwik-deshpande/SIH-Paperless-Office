@@ -69,7 +69,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 	for(var index in myWorkflows){
 			let time_gap =Timestamp.getTSObj() - Timestamp.str2TSObj(myWorkflows[index].begin_timestamp);
 			time_gap = Timestamp.getHours(time_gap)
-			let base_time = 1*24
+			let base_time = 5*24
 			console.log(time_gap)
 
 			if(time_gap<base_time)
@@ -93,7 +93,8 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 		}
 
 	for( var index in myApprovals.requests){
-		if(myApprovals.requests[index].priority && (myApprovals.requests[index].status.localeCompare("Pending") === 0)){
+		//if(myApprovals.requests[index].priority && (myApprovals.requests[index].status.localeCompare("Pending") === 0)){
+		if(myApprovals.requests[index].status.localeCompare("Pending") === 0){
 			urgentApprovals.push(myApprovals.requests[index])
 		}
         }

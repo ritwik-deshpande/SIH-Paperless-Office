@@ -11,6 +11,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import style from '../StyleSheet'
 import Slide from "@material-ui/core/Slide";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import {withRouter} from 'react-router-dom'
 import {
 	AppBar,
 	Toolbar,
@@ -25,15 +26,29 @@ class ApproveComponent extends React.Component {
 		this.state = {
 			showPDF: false,
 			item: null,
-			requestTable: null,
+			requestTable: null
 		};
 	}
 	componentDidMount() {
-		this.setState({
+		
+
+		if(this.props.location.state){
+			this.setState({
+			item:this.props.location.state,
+			showPDF: true,
 			json: this.props.myApprovals,
-			requestTable: this.createRequestTable(this.props.myApprovals),
-		});
+			requestTable: this.createRequestTable(this.props.myApprovals)
+			})
+		}
+		else{
+			this.setState({
+			json: this.props.myApprovals,
+				requestTable: this.createRequestTable(this.props.myApprovals),
+			});
+		
+		}
 	}
+	
 	createRequestTable(pending_requests) {
 		let tableData = [];
 		const displayPriority = {
@@ -92,12 +107,12 @@ class ApproveComponent extends React.Component {
 											Back
 										</Button>
 									</Box>
+									<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+					<Box fontWeight={800} display="inline">{this.state.item.subject}</Box>
+				      </Typography>
 								</Toolbar>
 							</AppBar>
-							<br/>
-`							<br/>
-							<br/>
-							<CreatePDF item={this.state.item} />
+							<CreatePDF item={this.state.item} setResponded = {this.setResponded}/>
 						</Dialog>
 					) : (
 						<AlignItemsList
@@ -114,4 +129,4 @@ class ApproveComponent extends React.Component {
 		);
 	}
 }
-export default withStyles(style)(ApproveComponent);
+export default withStyles(style)(withRouter(ApproveComponent));

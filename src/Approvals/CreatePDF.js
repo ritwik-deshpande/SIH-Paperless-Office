@@ -37,6 +37,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Box, Container } from "@material-ui/core";
 import WorkflowNode from "../utils/WorkflowNode";
 import HeaderBanner from '../Header';
+import {withRouter} from 'react-router-dom'
 var bcrypt = require('bcryptjs');
 
 const mapIdtoRoles ={
@@ -365,6 +366,7 @@ class CreatePDF extends React.Component {
 			.put(this.state.workflow.id, this.state.workflow)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
+				this.props.history.push('/approve')
 				window.location.reload(true)
 
 			});
@@ -472,14 +474,15 @@ class CreatePDF extends React.Component {
 			this.state.workflow.cancel_requests = this.state.workflow.cancel_requests.concat([this.isUserInGroup(current_node_key,id)+'-'+id])
 		}
 		console.log("New Workflow", this.state.workflow);
-		window.location.reload(true)
+		//window.location.reload(true)
 
 		api
 			.workFlow()
 			.put(this.state.workflow.id, this.state.workflow)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
-				
+				this.props.history.push('/approve')
+				window.location.reload(true)
 			});
 
 		//Updating Average Response Time
@@ -511,10 +514,12 @@ class CreatePDF extends React.Component {
 			<React.Fragment>
 				{this.state.comments ? (
 					<>
-						{/* <br/>
-	   <br/>
-	   <br/> */}
-	   					<HeaderBanner title={"Status Of Workflow : "+this.state.workflow.status} />
+						 <br/>
+						   <br/>
+						   <br/> 
+	   					<Typography component="h1" variant="h5" align="center" style={{textTransform:"capitalize"}}>
+							Current Status : {this.state.workflow.status}
+						</Typography>
 						{/* // <Typography component="h3" variant="h5" className={classes.title}>
 						// 	STATUS OF WORKFLOW : {this.state.workflow.status}
 						// </Typography> */}
@@ -630,4 +635,4 @@ const mapStatetoProps = (state) => {
 		loggedIn: state.auth.loggedIn,
 	};
 };
-export default connect(mapStatetoProps, null)(CreatePDF);
+export default connect(mapStatetoProps, null)(withRouter(CreatePDF));

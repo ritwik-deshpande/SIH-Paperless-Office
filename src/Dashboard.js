@@ -109,8 +109,16 @@ function Dashboard({ userObj, logout},props) {
 			.pending_request()
 			.get(userObj.id)
 			.then((res) => {
+				if(res && res.data){
 				console.log("The Pending Request data received is", res.data);
 				setMyApprovals(res.data)
+				}
+				else{
+				     setMyApprovals({requests:[]})
+				}
+			})
+			.catch(err => {
+			      setMyApprovals({requests:[]})			
 			});
 
   },[])
@@ -120,8 +128,16 @@ function Dashboard({ userObj, logout},props) {
 	api.myworkflows()
 			.get(userObj.name)
 			.then((res) => {
-				console.log("The Workflow data received is", res.data);
-				setMyWorkflows(res.data)
+				if(res && res.data){
+					console.log("The Workflow data received is", res.data);
+					setMyWorkflows(res.data)
+				}
+				else{
+					setMyWorkflows([])
+				}
+			})
+			.catch(err => {
+				setMyWorkflows([])
 			});
 
   },[])

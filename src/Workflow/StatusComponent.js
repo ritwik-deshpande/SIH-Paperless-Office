@@ -24,7 +24,7 @@ import Typography from "@material-ui/core/Typography";
 import MyWorkflowsHeader from '../Headers/MyWorkflowsHeader';
 import Paper from '@material-ui/core/Paper'
 import SearchBar from 'material-ui-search-bar'
-
+import {withRouter} from 'react-router-dom'
 import {
 	AppBar,
 	withStyles,
@@ -68,6 +68,31 @@ class StatusComponent extends Component {
 		//   })
 		//   this.init()
 		// })
+
+
+		if(this.props.location.state){
+			let curentWorkflow = this.props.location.state
+
+			console.log("Current Workflow", curentWorkflow)
+			this.setState(
+			{
+				status: null,
+				id: curentWorkflow.id,
+				workflow: curentWorkflow,
+				title: curentWorkflow.Title,
+				username: curentWorkflow.User,
+			},
+			() => {
+				this.init();
+			}
+			);
+
+			console.log(this.state);
+
+			this.setState({
+				open: true,
+			});
+		}
 	}
 	requestAccepted(d) {
 		for (var key in d) {
@@ -121,6 +146,7 @@ class StatusComponent extends Component {
 			.then((res) => {
 				console.log("Updated New Workflow", res);
 				alert("WorkFlow Terminated !");
+                                this.props.history.push('/status')
 				window.location.reload(true)
 			});
 	};
@@ -141,6 +167,7 @@ class StatusComponent extends Component {
 			.put(old_version, old_object)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
+				this.props.history.push('/status')
 				window.location.reload(true)
 			});
 	};
@@ -191,6 +218,9 @@ class StatusComponent extends Component {
 							open:true
 						}, ()=> { this.init() } );
 					
+					}
+					else{
+						alert("Workflow Not Found");
 					}
 				})
 				.catch(err => {
@@ -363,4 +393,4 @@ const mapStatetoProps = (state) => {
 export default connect(
 	mapStatetoProps,
 	null
-)(withStyles(style)(StatusComponent));
+)(withStyles(style)(withRouter(StatusComponent)));

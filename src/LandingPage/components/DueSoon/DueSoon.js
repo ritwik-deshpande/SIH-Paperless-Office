@@ -7,6 +7,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 import {withRouter} from 'react-router-dom'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Timestamp from "../../../utils/TimeStamp";
 import {
   CardHeader,
   Button,
@@ -53,8 +54,11 @@ TabPanel.propTypes = {
 
   const DueSoon = props => {
   const { className, ...rest } = props;
-  const handleClick = (path) => {
-	props.history.push(path)
+  const handleClick = (path, payload) => {
+	props.history.push({
+		pathname:path,
+		state: payload
+		})
   }
 
 
@@ -80,6 +84,10 @@ TabPanel.propTypes = {
 				secondary={
 				  <React.Fragment>
 				    <Typography variant="subtitle1">
+				      <Box fontSize={14} fontWeight={600}  color={"textSecondary"}> Id : {props.recentWorkflows[index].id} </Box>
+				    </Typography>
+
+				    <Typography variant="subtitle1">
 				      <Box fontSize={14} fontWeight={600}  color={"textSecondary"}> Status : {props.recentWorkflows[index].status} </Box>
 				    </Typography>
 				    <Typography variant="subtitle2">
@@ -94,7 +102,7 @@ TabPanel.propTypes = {
 			      <IconButton
 				edge="end"
 				size="small"
-                                onClick={ () => handleClick('/status')}
+                                onClick={ () => handleClick('/status', props.recentWorkflows[index])}
 			      >
 				<ChevronRightIcon />
 			      </IconButton>
@@ -129,6 +137,9 @@ TabPanel.propTypes = {
 				primary={props.urgentApprovals[index].subject} 
 				secondary={
 				  <React.Fragment>
+				   <Typography variant="subtitle1">
+				      <Box fontSize={14} fontWeight={600} > Id : {props.urgentApprovals[index].id} </Box>
+				    </Typography>
 				    <Typography variant="subtitle1">
 				      <Box fontSize={14} fontWeight={600}  color={"#ff9800"}> Waiting for Your Approval </Box>
 				    </Typography>
@@ -136,7 +147,7 @@ TabPanel.propTypes = {
 				      <Box fontSize={12} fontWeight="Light">Sent by: {props.urgentApprovals[index].nameofSender} </Box>
 				    </Typography> 
 				    <Typography variant="subtitle2">
-				      <Box fontSize={12} fontWeight="Light"> Received on: {props.urgentApprovals[index].receivedon} </Box>
+				      <Box fontSize={12} fontWeight="Light"> Received on: {Timestamp.getTimestamp(parseInt( props.urgentApprovals[index].receivedon,10))} </Box>
 				    </Typography> 
 				  </React.Fragment>
 				}
@@ -144,7 +155,7 @@ TabPanel.propTypes = {
 			      <IconButton
 				edge="end"
 				size="small"
-                                onClick={() => handleClick('/approve')}
+                                onClick={() => handleClick('/approve', props.urgentApprovals[index])}
 			      >
 				<ChevronRightIcon />
 			      </IconButton>
