@@ -9,9 +9,9 @@ const styles = theme => ({
 	},
 });
 
-export default function BarChart() {
+export default function Sunburst() {
     
-    return(<div className="BarChart">
+    return(<div className="Sunburst">
     <Helmet>
       <script src="https://public.flourish.studio/resources/embed.js" />
     </Helmet>
