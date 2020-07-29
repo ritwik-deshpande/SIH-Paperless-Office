@@ -1,6 +1,6 @@
 import React from 'react'
 import NumberCard from './NumberCard'
-import BarChart from "./BarChart";
+import Sunburst from "./Sunburst";
 import LineChart from './graphs/LineChart';
 import PiChart from './graphs/PiChart'
 import RaceChart from './RaceChart';
@@ -18,6 +18,7 @@ import {
 	Progress,
 	Container
   } from "shards-react";
+import HBarChart from './HBarChart';
 
 
 const datas = [
@@ -71,7 +72,7 @@ class AnalyticDashboard extends React.Component {
       			<Col lg="7">
                     <Card small >
                     <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
-                    <Typography variant="h6" >Race Chart</Typography>
+                    <Typography variant="h6" >Types Of Workflow</Typography>
                     </CardHeader>
                       <RaceChart/>
                 </Card>
@@ -79,22 +80,33 @@ class AnalyticDashboard extends React.Component {
                 <Col lg="5">
                 <Card small >
                     <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
-                    <Typography variant="h6" >Bar Chart</Typography>
+                    <Typography variant="h6" >Work Chart</Typography>
                     </CardHeader>
-                        <BarChart/>
+                        <Sunburst/>
                 </Card>
                 </Col>
     		</Row>
+            <br/>
+            <Row>
+      			<Col lg="12">
+                  <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Department Wise Chart</Typography>
+                    </CardHeader>
+                      <HBarChart/>
+                </Card>
+
+
+                  </Col>
+            </Row>
   		</Container>
-            
-            
-            
-            <NumberCard data={this.state.numberCardData}/>
+
+            {/* <NumberCard data={this.state.numberCardData}/>
             <h2>Graphs with React</h2>
             <LineChart width={600} height={270} data={lineData}/>
             <button onClick={this.changeData}>Change Data</button>
             <BarChart width={600} height={400} data={this.state.barChartData} />
-	    <PiChart />
+	    <PiChart /> */}
             </>
         )
     }
