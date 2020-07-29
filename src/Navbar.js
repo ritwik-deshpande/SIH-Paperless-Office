@@ -58,12 +58,14 @@ function Listitems(props) {
   const pageDict = {};
   pageDict['/']=1;
   pageDict['/esign']=2;
-  pageDict['/viewDocs']=3;
-  pageDict['/status']=4;
-  pageDict['/getForm']=5;
-  pageDict['/approve']=6;
-  pageDict['/chat']=7;
-  pageDict['/analytics']=8;
+  pageDict['/calendar'] = 3;
+  pageDict['/viewDocs']=4;
+  pageDict['/status']=5;
+  pageDict['/getForm']=6;
+  pageDict['/approve']=7;
+  pageDict['/chat']=8;
+  pageDict['/analytics']=9;
+  pageDict['/searchuser'] = 11
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   props.setSelectedIndex(pageDict[props.history.location.pathname]);
@@ -226,7 +228,7 @@ function Listitems(props) {
         <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
 
         <Tooltip title={props.open ? "" : "View Workflows"}>
-          <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/status',4)}>
+          <ListItem button={!(selectedIndex===5)} selected={selectedIndex===5} onClick={() => handleNavlink('/status',5)}>
             <ListItemIcon className={classes.navBarIcons}>
               <WorkIcon />
             </ListItemIcon>
@@ -355,7 +357,7 @@ function Listitems(props) {
         </Snackbar>
 
         <Tooltip title={props.open ? "" : "LogOut"}>
-          <ListItem button={!(selectedIndex===10)} selected={selectedIndex===10}  onClick={ () => props.logout()}>
+          <ListItem button={!(selectedIndex===12)} selected={selectedIndex===12}  onClick={ () => props.logout()}>
             <ListItemIcon className={classes.navBarIcons}>
               <ExitToAppIcon />
             </ListItemIcon>

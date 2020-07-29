@@ -39,7 +39,7 @@ import useStyles from "../Style";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import WorkflowNode from '../utils/WorkflowNode'
 import style from '../StyleSheet'
-
+import Header from '../Headers/MyWorkflowsHeader'
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });

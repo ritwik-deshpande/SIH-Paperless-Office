@@ -18,6 +18,7 @@ import style from '../StyleSheet'
 import Todo from '../TODO/Main'
 import TimeWidget from './TimeWidget'
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
+import Timestamp from "../utils/TimeStamp";
 
 import {
   
@@ -45,15 +46,76 @@ function Copyright() {
 
   
 
-export default function  MainComponent ({userObj, props}){
+export default function  MainComponent ({userObj, props, myApprovals, myWorkflows}){
     // const classes = useStyles();
     const classes = makeStyles(style(useTheme()))();
     // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+    const [pending, setPending] = React.useState(myApprovals.requests.length)
+    const [completed, setCompleted] = React.useState(0)
+    const [active ,setActive] = React.useState(0)
+    const [terminated, setTerminated] = React.useState(0)
+    const [recentWorkflows, setRecentWorkflows] = React.useState([])
+    const [urgentApprovals, setUrgentApprovals] = React.useState([])
+
+    React.useEffect( () => {
+        console.log(myApprovals)
+	let temp_completed = 0
+	let temp_active = 0
+	let temp_terminated = 0
+	
+	let recentWorkflows = []
+	let urgentApprovals = []
+	for(var index in myWorkflows){
+			let time_gap =Timestamp.getTSObj() - Timestamp.str2TSObj(myWorkflows[index].begin_timestamp);
+			time_gap = Timestamp.getHours(time_gap)
+			let base_time = 1*24
+			console.log(time_gap)
+
+			if(time_gap<base_time)
+			{
+				recentWorkflows.push(myWorkflows[index])
+			}
+
+
+			if(myWorkflows[index].status.localeCompare("terminated") === 0)
+			{
+				temp_terminated++
+			}
+			else if(myWorkflows[index].status.localeCompare("active") === 0)
+			{	
+				temp_active++
+			}
+			else{
+
+				temp_completed++
+			}
+		}
+
+	for( var index in myApprovals.requests){
+		if(myApprovals.requests[index].priority && (myApprovals.requests[index].status.localeCompare("Pending") === 0)){
+			urgentApprovals.push(myApprovals.requests[index])
+		}
+        }
+		
+
+	setActive(temp_active)
+	setCompleted(temp_completed)
+	setTerminated(temp_terminated)
+	setRecentWorkflows(recentWorkflows)
+	setUrgentApprovals(urgentApprovals)
+
+
+   },[])
+
+    
+
+
     const numberCardData = {
-      pending : 24,
-      completed : 100,
-      terminated : 25,
-      active : 5
+      pending : pending,
+      completed : completed,
+      terminated : terminated,
+      active : active
   }
   const [sideBarOpen, setSideBarOpen] = React.useState(false);
     
@@ -72,7 +134,7 @@ export default function  MainComponent ({userObj, props}){
       </div>
     </div>
   )
-
+	//initNumbers()
         return(
           <React.Fragment>
             <Header title={'Welcome, ' + userObj.name} Click={handleSideDrawerToggle}/>
@@ -89,7 +151,7 @@ export default function  MainComponent ({userObj, props}){
 
                 {/* Due Soon */}
                 <Grid item xs={12} sm={6}>
-                  <DueSoon />
+                  <DueSoon recentWorkflows={recentWorkflows} urgentApprovals = {urgentApprovals}/>
                 </Grid>
                 
                 {/* Over Due */}
