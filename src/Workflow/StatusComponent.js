@@ -57,6 +57,7 @@ class StatusComponent extends Component {
 		updateWorkFlow: false,
 		myWorkflow: false,
 		open: false,
+		filter : null
 	};
 
 	componentDidMount() {
@@ -71,27 +72,38 @@ class StatusComponent extends Component {
 
 
 		if(this.props.location.state){
-			let curentWorkflow = this.props.location.state
 
-			console.log("Current Workflow", curentWorkflow)
-			this.setState(
+			if(( typeof this.props.location.state) === "string")
 			{
-				status: null,
-				id: curentWorkflow.id,
-				workflow: curentWorkflow,
-				title: curentWorkflow.Title,
-				username: curentWorkflow.User,
-			},
-			() => {
-				this.init();
+				this.setState({
+					filter : this.props.location.state
+				})
+
+				
 			}
-			);
+			else{
+				let curentWorkflow = this.props.location.state
 
-			console.log(this.state);
+				console.log("Current Workflow", curentWorkflow)
+				this.setState(
+				{
+					status: null,
+					id: curentWorkflow.id,
+					workflow: curentWorkflow,
+					title: curentWorkflow.Title,
+					username: curentWorkflow.User,
+				},
+				() => {
+					this.init();
+				}
+				);
 
-			this.setState({
-				open: true,
-			});
+				console.log(this.state);
+
+				this.setState({
+					open: true,
+				});
+			}
 		}
 	}
 	requestAccepted(d) {
@@ -312,6 +324,7 @@ class StatusComponent extends Component {
 				    myWorkflows={this.props.myWorkflows}
 					userObj={this.props.userObj}
 					handleSubmit={this.handleSearch}
+					filter={this.state.filter}
 				/>
 				{/* </form>  */}
 

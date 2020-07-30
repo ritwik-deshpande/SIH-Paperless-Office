@@ -26,23 +26,38 @@ class ApproveComponent extends React.Component {
 		this.state = {
 			showPDF: false,
 			item: null,
-			requestTable: null
+			requestTable: null,
+			filter:null
 		};
 	}
 	componentDidMount() {
 		
 
 		if(this.props.location.state){
-			this.setState({
-			item:this.props.location.state,
-			showPDF: true,
-			json: this.props.myApprovals,
-			requestTable: this.createRequestTable(this.props.myApprovals)
-			})
+
+			if(( typeof this.props.location.state) === "string")
+			{
+				this.setState({
+					filter : this.props.location.state,
+					json: this.props.myApprovals,
+					requestTable: this.createRequestTable(this.props.myApprovals),
+				});
+
+				
+			}
+			else{
+
+				this.setState({
+				item:this.props.location.state,
+				showPDF: true,
+				json: this.props.myApprovals,
+				requestTable: this.createRequestTable(this.props.myApprovals)
+				})
+			}
 		}
 		else{
 			this.setState({
-			json: this.props.myApprovals,
+				json: this.props.myApprovals,
 				requestTable: this.createRequestTable(this.props.myApprovals),
 			});
 		
@@ -119,6 +134,7 @@ class ApproveComponent extends React.Component {
 							Click={this.handleClick}
 							userObj={this.props.userObj}
 							requestTable={this.state.requestTable}
+							filter={this.state.filter}
 						/>
 					)
 				) : (

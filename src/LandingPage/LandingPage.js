@@ -11,7 +11,7 @@ import FormBuilder from 'react-form-builder2'
 import CustomForm from '../Forms/CustomForms'
 import Calendar from '../Calendar/Calendar'
 import Header from '../Header';
-import NumberCard from '../Analytics/NumberCard'
+import NumberCard from './components/NumberCard'
 import PagesSaved from './pagesSaved'
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import style from '../StyleSheet'
@@ -51,7 +51,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
     const classes = makeStyles(style(useTheme()))();
     // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    const [pending, setPending] = React.useState(myApprovals.requests.length)
+    const [pending, setPending] = React.useState(0)
     const [completed, setCompleted] = React.useState(0)
     const [active ,setActive] = React.useState(0)
     const [terminated, setTerminated] = React.useState(0)
@@ -63,7 +63,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 	let temp_completed = 0
 	let temp_active = 0
 	let temp_terminated = 0
-	
+	let temp_pending = 0
 	let recentWorkflows = []
 	let urgentApprovals = []
 	for(var index in myWorkflows){
@@ -96,11 +96,13 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 		//if(myApprovals.requests[index].priority && (myApprovals.requests[index].status.localeCompare("Pending") === 0)){
 		if(myApprovals.requests[index].status.localeCompare("Pending") === 0){
 			urgentApprovals.push(myApprovals.requests[index])
+			temp_pending++
 		}
         }
 		
 
 	setActive(temp_active)
+	setPending(temp_pending)
 	setCompleted(temp_completed)
 	setTerminated(temp_terminated)
 	setRecentWorkflows(recentWorkflows)
@@ -113,8 +115,8 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 
 
     const numberCardData = {
-      pending : pending,
-      completed : completed,
+      Pending : pending,
+      Completed : completed,
       terminated : terminated,
       active : active
   }

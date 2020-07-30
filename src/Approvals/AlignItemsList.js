@@ -68,14 +68,7 @@ const tableIcons = {
 // 	// },
 // }));
 
-const tableColumns = [
-	{ title: "Workflow ID", field: "id" },
-	{ title: "Workflow Name", field: "wname" },
-	{ title: "Sender Name", field: "sender" },
-	{ title: "Request Feedback", field: "feedback" },
-	{ title: "Last Updated On", field: "time" },
-	{ title: "Priority", field: "priority" } // add type: 'numeric' if required
-];
+
 
 // const json ={
 
@@ -92,10 +85,23 @@ const tableColumns = [
 // { id: '2', wname: 'Escape from Mind Flayer', sender: 'Will Byers', feedback: 'Approved', time: 33},
 //{ id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', feedback: 'Rejected', time: 2},
 //]
-export default function AlignItemsList({ Click, requestTable }) {
+export default function AlignItemsList({ Click, requestTable, filter }) {
 	// const tableclasses = useTableStyles();
 	// const classes = useStyles();
 	const classes = makeStyles(style(useTheme()))();
+
+	const tableColumns = [
+	{ title: "Workflow ID", field: "id" },
+	{ title: "Workflow Name", field: "wname" },
+	{ title: "Sender Name", field: "sender" },
+	{ title: "Request Feedback", field: "feedback",defaultFilter : filter },
+	{ title: "Last Updated On", field: "time" },
+	{ title: "Priority", field: "priority" } // add type: 'numeric' if required
+];
+
+
+
+
 	// const renderListItem = (obj) =>{
 	//   return(obj.map(item =>{
 	//     return(
@@ -129,13 +135,19 @@ export default function AlignItemsList({ Click, requestTable }) {
 	//   </div>
 	//   )}))
 	// }
+
+	let tableTitle = "My Approvals "
+	if(filter){
+		tableTitle = tableTitle.concat(filter)
+	}
+
 	return (
 		<React.Fragment>
 		<ApprovalsHeader title="Approve Documents"/>
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
-				title=""
+				title={tableTitle}
 				columns={tableColumns}
 				data={requestTable}
 				actions={[

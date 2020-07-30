@@ -68,6 +68,7 @@ class MyWorkflow extends React.Component {
 					<WorkflowTable
 						Click={this.handleClick}
 						userObj={this.props.userObj}
+						filter={this.props.filter}
 						myworkflowsTable={this.state.tableData}
 					/>
 				) : (
