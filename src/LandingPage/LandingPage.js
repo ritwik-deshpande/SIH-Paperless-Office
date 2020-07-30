@@ -106,9 +106,9 @@ const MainComponent= ({userObj}) =>{
 		<br/>
 		 {/* <Todo userid = {userObj.id}/> */}
 
-              <Box pt={4}>
+              {/* <Box pt={4}>
                 <Copyright />
-              </Box>
+              </Box> */}
               </Container>
 		
           </main>

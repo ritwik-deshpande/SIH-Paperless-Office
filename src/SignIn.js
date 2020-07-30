@@ -93,9 +93,9 @@ export default function SignIn({signin}) {
               Sign In
             </Button>
             
-            <Box mt={5}>
+            {/* <Box mt={5}>
               <Copyright />
-            </Box>
+            </Box> */}
           </form>
         </div>
         </Grid>
