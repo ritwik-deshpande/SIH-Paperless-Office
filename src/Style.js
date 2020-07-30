@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
 		width: 90,
 	},
 	cardDim: {
-		width: 300,
-		height: 300,
+		width: 400,
+		height: 400,
 	},
 	toolbarIcon: {
 		display: "flex",

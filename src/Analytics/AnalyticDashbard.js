@@ -68,6 +68,10 @@ class AnalyticDashboard extends React.Component {
             <AnalyticsHeader title={'Analytics'}/>
             <br/>
             <Container fluid className="main-content-container px-4">
+            <Row>
+                <NumberCard data={this.state.numberCardData}/>
+            </Row>
+            <br/>
 			<Row>
       			<Col lg="7">
                     <Card small >
