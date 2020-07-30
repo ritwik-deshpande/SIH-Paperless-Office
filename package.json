@@ -58,6 +58,7 @@
     "react-jsonschema-form": "^1.8.1",
     "react-loading": "^2.0.3",
     "react-materialize": "^3.6.1",
+    "react-mentions": "^4.0.1",
     "react-pdf": "^4.1.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^7.2.0",

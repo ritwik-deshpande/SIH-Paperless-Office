@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
 import {
   Card,
   CardHeader,
@@ -13,11 +13,17 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  IconButton
+  IconButton,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography
 } from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import CommentBox from './Response/CommentBox'
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import style from '../../../StyleSheet'
 import mockData from './data';
 
 // const useStyles = makeStyles(() => ({
@@ -36,12 +42,19 @@ import mockData from './data';
 //   }
 // }));
 
-const NewsFeed = props => {
-  const { className, ...rest } = props;
+function NewsFeed(props){
+  //const { className, ...rest } = props;
+  const classes = makeStyles(style(useTheme()))();
+  //const classes = useStyles();
 
-  // const classes = useStyles();
+  const user = props.userObj;
 
   const [products] = useState(mockData);
+  
+  const [expanded, setExpanded] = React.useState(false);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <Card>
@@ -51,19 +64,22 @@ const NewsFeed = props => {
       />
       <Divider />
       <CardContent style={{padding: 0, maxHeight:"800px",overflow:"auto"}}>
-        <List>
           {products.map((product, i) => (
-            <ListItem divider={i < products.length - 1} key={product.id}>
-              <ListItemText primary={product.name} secondary={`Updated ${product.updatedAt.fromNow()}`}/>
-              <IconButton
-                edge="end"
-                size="small"
-              >
-                <MoreVertIcon />
-              </IconButton>
-            </ListItem>
-          ))}
-        </List>
+              <div>
+              <Accordion expanded={expanded === product.id} onChange={handleChange(product.id)} style={{width: '100%'}}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                >
+                <Typography>{product.title}</Typography>
+                
+                </AccordionSummary>
+                <AccordionDetails>
+                    <CommentBox id={product.id} comments ={product.comments} user ={user}/>
+                </AccordionDetails>
+              </Accordion>
+          </div>))}
       </CardContent>
       <Divider />
       <CardActions style={{justifyContent: 'flex-end'}}>
