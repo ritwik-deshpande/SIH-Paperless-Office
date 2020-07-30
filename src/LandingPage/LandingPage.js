@@ -164,7 +164,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 		           
                 {/* News Feed */}
                 <Grid item xs={12}>
-                  <NewsFeed />
+                  <NewsFeed user= {userObj}/>
                 </Grid>
               </Grid>
 

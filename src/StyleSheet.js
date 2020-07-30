@@ -256,7 +256,16 @@ const style = theme => ({
             alignItems: 'center',
             height: '100vh',
             backgroundColor: '#fff'
-        }
+        },
+        newsheading: {
+            fontSize: theme.typography.pxToRem(15),
+            flexBasis: '33.33%',
+            flexShrink: 0,
+          },
+          newssecondaryHeading: {
+            fontSize: theme.typography.pxToRem(15),
+            color: theme.palette.text.secondary,
+          },
 
  });
 
