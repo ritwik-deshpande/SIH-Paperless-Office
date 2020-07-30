@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import img from '../images/PageSaved.jpg'
 import {
     FacebookShareButton,
     TwitterShareButton,
@@ -22,11 +23,11 @@ export default function PagesSaved(props) {
 
     const classes = useStyles();
     const workingDays = 5;
-    const TreeFormula = (31.2/(500*7))
-    const CO2Formula = (1.6/(500*7))
-    const numberOfPages = (props.number*workingDays)
-    const numberOfTrees = (props.number*workingDays*TreeFormula)
-    const CO2Emission = (props.number*workingDays*CO2Formula)
+    const TreeFormula = (31.2/(500))
+    const CO2Formula = (1.6/(500))
+    const numberOfPages = (props.number)
+    const numberOfTrees = (props.number*TreeFormula)
+    const CO2Emission = (props.number*CO2Formula)
     return (
         <Card elevation={2}>
             <CardActionArea>
@@ -34,7 +35,7 @@ export default function PagesSaved(props) {
                     component="img"
                     alt="Trees Saved"
                     height="140"
-                    image="../../pageSaved.jpg"
+                    image={img}
                     title="Contemplative Reptile"
                 />
                 <CardContent>
@@ -42,7 +43,7 @@ export default function PagesSaved(props) {
                         Pages saved using DigiDocs
           </Typography>
                     <Typography gutterBottom variant="h2" component="h1">
-                        {numberOfPages}                    
+                        {numberOfPages}                     
           </Typography>
                     <Typography variant="h6" color="textSecondary" component="p">
                         Trees saved

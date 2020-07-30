@@ -57,6 +57,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
     const [terminated, setTerminated] = React.useState(0)
     const [recentWorkflows, setRecentWorkflows] = React.useState([])
     const [urgentApprovals, setUrgentApprovals] = React.useState([])
+    const [numberofPages, setNumberofPages] = React.useState(myApprovals.requests.length*10 + myWorkflows.length*10)
 
     React.useEffect( () => {
         console.log(myApprovals)
@@ -133,7 +134,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
         <TimeWidget />
       </div>
       <div style={{marginTop: '16px'}}>
-        <PagesSaved number="40"/>
+        <PagesSaved number={numberofPages}/>
       </div>
     </div>
   )
