@@ -35,7 +35,7 @@ import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
 import { toast, ToastContainer } from 'react-toastify'
 import { Box, makeStyles, useTheme, Tooltip } from '@material-ui/core';
-
+import Container from '@material-ui/core/Container'
 //import { Alert } from 'react-native';
 import { messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
@@ -47,7 +47,7 @@ import ComposeMail from './Email/ComposeMail';
 import style from './StyleSheet';
 import Hidden from "@material-ui/core/Hidden";
 import SearchUser from './SearchUser/SearchUser';
-
+import LoadingLogo from './images/load.gif'
 import { useLocation } from 'react-router-dom';
 
 function Dashboard({ userObj, logout},props) {
@@ -82,7 +82,9 @@ function Dashboard({ userObj, logout},props) {
   		return (<StatusComponent myWorkflows={myWorkflows}/>)
   	}
   	else{
-  		return (<h1> Loading...</h1>)
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard" />
+      </div>)
   	}
   }
   function renderLandingPageComponent(){
@@ -90,7 +92,9 @@ function Dashboard({ userObj, logout},props) {
   		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows} myApprovals={myApprovals}/> )
   	}
   	else{
-  		return (<h1> Loading...</h1>)
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard" className="center"/></div>
+      )
   	}
   }
   
@@ -99,7 +103,9 @@ function Dashboard({ userObj, logout},props) {
   		return (<ApproveComponent userObj={userObj} myApprovals = {myApprovals}/>)
   	}
   	else{
-  		return (<h1> Loading...</h1>)
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard"  className="center"/></div>
+      )
   	}
   }
 

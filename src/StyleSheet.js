@@ -249,6 +249,13 @@ const style = theme => ({
             backgroundPosition: '0 45%',
             backgroundSize: '1200px',
             color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        logocenter: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#fff'
         }
 
  });

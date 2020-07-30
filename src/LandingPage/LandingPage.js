@@ -133,7 +133,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
         <TimeWidget />
       </div>
       <div style={{marginTop: '16px'}}>
-        <PagesSaved />
+        <PagesSaved number="40"/>
       </div>
     </div>
   )
