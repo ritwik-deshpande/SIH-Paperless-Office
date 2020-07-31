@@ -173,6 +173,11 @@ const style = theme => ({
 		textTransform: "capitalize",
 		margin: 'auto',
     },
+    numCardBox: {
+        width: "100%",
+        height: "100%",
+        padding: theme.spacing(1),
+    },
     utilCard: {
         width: "100%",
         maxHeight: "300px",
@@ -257,13 +262,23 @@ const style = theme => ({
             height: '100vh',
             backgroundColor: '#fff'
         },
+        newsBox: {
+            width: "100%",
+            maxHeight: '1000px',
+            overflow: "auto",
+            "& .Mui-disabled":{
+                backgroundColor: theme.palette.background.paper,
+                color: theme.palette.primary.main,
+                opacity: 1
+            },
+        },
         newsheading: {
-            fontSize: theme.typography.pxToRem(15),
+            fontSize: theme.typography.pxToRem(13),
             flexBasis: '33.33%',
             flexShrink: 0,
           },
           newssecondaryHeading: {
-            fontSize: theme.typography.pxToRem(15),
+            fontSize: theme.typography.pxToRem(13),
             color: theme.palette.text.secondary,
           },
 

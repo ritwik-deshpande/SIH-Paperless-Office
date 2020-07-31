@@ -17,14 +17,19 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography
+  Typography,
+  Paper,
+  Box,
+  Grid
 } from '@material-ui/core';
 
 import CommentBox from './Response/CommentBox'
+import Comment from "./Response/Comment";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import style from '../../../StyleSheet'
 import mockData from './data';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 // const useStyles = makeStyles(() => ({
 //   root: {
@@ -56,16 +61,34 @@ function NewsFeed(props){
     setExpanded(isExpanded ? panel : false);
   };
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const latestComments = 2;
   return (
-    <Card>
+    // <Paper>
+    //   <Typography variant="h6" gutterBottom>
+    //          Feed
+    //       </Typography>
+    <div className={classes.newsBox}>
+      
+    {/* <Card>
       <CardHeader
         subtitle={`${products.length} in total`}
         title="News Feed"
       />
-      <Divider />
-      <CardContent style={{padding: 0, maxHeight:"800px",overflow:"auto"}}>
+      <Divider /> */}
+      <Accordion style={{width: '100%'}} disabled>
+          <AccordionSummary
+            id="panel1bh-header"
+          >
+          <Typography >NEWS FEED </Typography>
+          
+          </AccordionSummary>
+            
+        </Accordion>
           {products.map((product, i) => (
-              <div>
+              
               <Accordion expanded={expanded === product.id} onChange={handleChange(product.id)} style={{width: '100%'}}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -75,13 +98,24 @@ function NewsFeed(props){
                 <Typography>{product.title}</Typography>
                 
                 </AccordionSummary>
-                <AccordionDetails>
-                    <CommentBox id={product.id} comments ={product.comments} user ={user}/>
+                <AccordionDetails >
+                  <div style={{width:"100%"}}>
+                    <List dense>
+                      {
+                        product.comments.slice(0,latestComments).map(comment => {
+                          return (
+                            <Comment author={comment.name} body={comment.comment} key={comment.id} time={comment.timestamp}/>
+                          );
+                        })
+                      }
+                    </List>
+                    <CommentBox id={product.id} comments ={product.comments} title={product.title} user ={user} fullScreen={fullScreen}/>
+                  </div>
                 </AccordionDetails>
               </Accordion>
-          </div>))}
-      </CardContent>
-      <Divider />
+          ))}
+      {/* </CardContent> */}
+      {/* <Divider />
       <CardActions style={{justifyContent: 'flex-end'}}>
         <Button
           color="primary"
@@ -91,7 +125,9 @@ function NewsFeed(props){
           View all <ArrowRightIcon />
         </Button>
       </CardActions>
-    </Card>
+    </Card> */}
+    </div>
+    // </Paper>
   );
 };
 
