@@ -3,9 +3,28 @@ import Dashboard from './Dashboard'
 import SignIn from './SignIn'
 import { connect } from 'react-redux'
 import {GetUser, logout} from './Actions/UserAction'
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
 
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        DigiDocs
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 class Main extends Component {
 
+  
   SignInFunction = (id,password) =>{
 
     console.log("The id"+id)
@@ -27,6 +46,10 @@ class Main extends Component {
         <Dashboard userObj={this.props.userObj} logout= {this.SignOutFunction} />  
         : 
         <SignIn signin = {this.SignInFunction}/>}
+
+<Box mt={5}>
+              <Copyright />
+            </Box>
         </div>
       )
   }

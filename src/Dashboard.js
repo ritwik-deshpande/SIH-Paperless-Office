@@ -47,10 +47,15 @@ import ComposeMail from './Email/ComposeMail';
 import style from './StyleSheet';
 import Hidden from "@material-ui/core/Hidden";
 import SearchUser from './SearchUser/SearchUser';
+
+import DisplayWorkflow from './Workflow/DisplayWorkflowComponent';
+import DisplayHierarchy from './Hierarchy/displayHierarchy';
+
 import LoadingLogo from './images/load.gif'
 import { useLocation } from 'react-router-dom';
 
 function Dashboard({ userObj, logout},props) {
+
 
 
   
@@ -384,6 +389,7 @@ function Dashboard({ userObj, logout},props) {
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
       <Route exact path='/searchuser' render={() => <SearchUser userObj={userObj} />} />
+      <Route exact path='/Hierarchy' render={() => <DisplayHierarchy userObj={userObj} />} />
       
      
         </main>

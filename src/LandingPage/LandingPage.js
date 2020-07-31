@@ -169,9 +169,9 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
                 </Grid>
               </Grid>
 
-              <Box pt={6}>
+          {/* <Box pt={6}>
                 <Copyright />
-              </Box>  
+              </Box>  */}
           
               <Hidden lgUp implementation="css">
                 <Drawer
@@ -205,6 +205,7 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
               </Hidden>
               </div>
            </React.Fragment>
+
         )
     }
 
