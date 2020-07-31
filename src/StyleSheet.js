@@ -1,14 +1,28 @@
 import { Hidden } from "@material-ui/core";
-import CalendarPhoto from './Calendar/spring.jpg'
-import SearchPhoto from './SearchUser/search.jpg'
+import CalendarPhoto from './images/headers/spring.jpg'
+import SearchPhoto from './images/headers/search.jpg'
+import ProfilePhoto from './images/headers/myprofileheader.jpg'
+import WorkflowsPhoto from './images/headers/myworkflows.jpg'
+import StartWorkflowPhoto from './images/headers/startworkflow.jpg'
+import ApprovalsPhoto from './images/headers/approve.jpg'
+import AnalyticsPhoto from './images/headers/analytics.jpg'
 const drawerWidth = 300;
 const style = theme => ({
     root: {
-        display: "flex"
+        display: "flex",
+        "& .MuiOutlinedInput-root": {
+			"& fieldset": {
+				borderColor: theme.palette.grey[500],
+			},
+			"&:hover fieldset": {
+				borderColor: theme.palette.secondary.dark,
+				borderWidth: 2,
+			},
+		},
     },
     drawer: {
         height: "100vh",
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
             flexShrink: 0,
             whiteSpace: "nowrap",
         }
@@ -68,11 +82,14 @@ const style = theme => ({
     navBarListItems: {
         "& .Mui-selected": {
             borderRadius: "1px 50px 50px 1px", 
-          },
-          "& .MuiListItem-root:not(.Mui-selected):hover": {
+        },
+        "& .MuiListItem-root:not(.Mui-selected):hover": {
             borderRadius: "1px 50px 50px 1px",
             backgroundColor: "#182f37",
-        }
+        },
+    },
+    navBarDivider: {
+        backgroundColor: theme.palette.getContrastText(theme.palette.background.navBarListBg),
     },
     navBarIcons: {
         color: theme.palette.getContrastText(theme.palette.background.navBarListBg)
@@ -102,6 +119,37 @@ const style = theme => ({
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.getContrastText(theme.palette.primary.main),
     },
+    sideMenuButton: {
+        paddingRight: theme.spacing(2),
+        [theme.breakpoints.up("lg")]: {
+            display: 'none'
+        }
+    },
+    sideDrawer: {
+        zIndex: theme.zIndex.appBar - 5,
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    sideDrawerPaper: {
+        zIndex: theme.zIndex.appBar - 5,
+        width: drawerWidth,
+        backgroundColor: theme.palette.background.default,
+        [theme.breakpoints.up("lg")]: {
+            '&::-webkit-scrollbar': {
+                display: 'none',
+            },
+        }
+    },
+    sideDrawerContainer: {
+        padding: theme.spacing(2),
+    },
+    landingPageMainContent: {
+        padding: theme.spacing(2),
+        // overflow: "auto",
+        [theme.breakpoints.up("lg")]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+        }
+    },
     gridCard: {
 		margin: 'auto',
 		width: "100%",
@@ -121,12 +169,25 @@ const style = theme => ({
 		padding: theme.spacing(2),
 		margin: "auto",
     },
+	numCardContent: {
+		textTransform: "capitalize",
+		margin: 'auto',
+    },
+    utilCard: {
+        width: "100%",
+        maxHeight: "300px",
+        [theme.breakpoints.up("sm")]: {
+            height: "300px",
+        }
+    },
+
     
     calendarHeader: {
         width: '100%',
         height: '150px', 
         backgroundImage: `url(${CalendarPhoto})`,
-        backgroundPosition: '0 40%',
+        backgroundPosition: '0 20%',
+        backgroundSize: '1000px',
         color: theme.palette.getContrastText(theme.palette.primary.main),
     },
     calendarIcon: {
@@ -149,6 +210,63 @@ const style = theme => ({
         // flexShrink: 1,
         textTransform: "capitalize",
     },
+    myProfileHeader:{
+    width: '100%',
+    height: '175px', 
+    backgroundImage: `url(${ProfilePhoto})`,
+    backgroundPosition: '0 20%',
+    backgroundSize: '1000px',
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    myWorkflowsHeader:{
+    width: '100%',
+    height: '175px', 
+    backgroundImage: `url(${WorkflowsPhoto})`,
+    backgroundPosition: '0 30%',
+    backgroundSize: '1200px',
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    },
+    startWorkflowHeader: {
+        width: '100%',
+        height: '175px', 
+        backgroundImage: `url(${StartWorkflowPhoto})`,
+        backgroundPosition: '0 55%',
+        backgroundSize: '900px',
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        approvalsHeader: {
+            width: '100%',
+            height: '175px', 
+            backgroundImage: `url(${ApprovalsPhoto})`,
+            backgroundPosition: '0 35%',
+            backgroundSize: '1200px',
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        analyticsHeader: {
+            width: '100%',
+            height: '175px', 
+            backgroundImage: `url(${AnalyticsPhoto})`,
+            backgroundPosition: '0 45%',
+            backgroundSize: '1200px',
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        logocenter: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#fff'
+        },
+        newsheading: {
+            fontSize: theme.typography.pxToRem(15),
+            flexBasis: '33.33%',
+            flexShrink: 0,
+          },
+          newssecondaryHeading: {
+            fontSize: theme.typography.pxToRem(15),
+            color: theme.palette.text.secondary,
+          },
+
  });
 
 export default style;

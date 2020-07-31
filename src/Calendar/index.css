@@ -40,26 +40,18 @@
     white-space: normal;
 }
 
-.block-events.e-schedule .template-wrap .employee-image {
-    background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/alice.png');
+.block-events.e-schedule .template-wrap .employee-image.ap001 {
+    background-image: url(../images/AP001.jpg);
 }
 
-.block-events.e-schedule .template-wrap .employee-image.robert {
-    background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/robert.png');
+.block-events.e-schedule .template-wrap .employee-image.ap002 {
+    background-image: url(../images/AP002.jpg);
 }
 
-.block-events.e-schedule .template-wrap .employee-image.robson {
-    background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/robson.png');
+.block-events.e-schedule .template-wrap .employee-image.ap003 {
+    background-image: url(../images/AP003.jpg);
 }
 
-.block-events.e-schedule .template-wrap .employee-image.laura {
-    background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/laura.png');
-}
-
-.block-events.e-schedule .template-wrap .employee-image.nancy {
-    background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/nancy.png');
-}
-
-.block-events.e-schedule .template-wrap .employee-image.margaret {
-    background-image: url('https://ej2.syncfusion.com/react/demos/src/schedule/images/margaret.png');
+.block-events.e-schedule .template-wrap .employee-image.hod001 {
+    background-image: url(../images/HOD001.jpg);
 }

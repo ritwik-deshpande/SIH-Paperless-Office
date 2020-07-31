@@ -21,10 +21,10 @@ import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Typography from "@material-ui/core/Typography";
-import Header from '../Header';
+import MyWorkflowsHeader from '../Headers/MyWorkflowsHeader';
 import Paper from '@material-ui/core/Paper'
 import SearchBar from 'material-ui-search-bar'
-
+import {withRouter} from 'react-router-dom'
 import {
 	AppBar,
 	withStyles,
@@ -39,7 +39,7 @@ import useStyles from "../Style";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import WorkflowNode from '../utils/WorkflowNode'
 import style from '../StyleSheet'
-
+import Header from '../Headers/MyWorkflowsHeader'
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -57,6 +57,7 @@ class StatusComponent extends Component {
 		updateWorkFlow: false,
 		myWorkflow: false,
 		open: false,
+		filter : null
 	};
 
 	componentDidMount() {
@@ -68,6 +69,42 @@ class StatusComponent extends Component {
 		//   })
 		//   this.init()
 		// })
+
+
+		if(this.props.location.state){
+
+			if(( typeof this.props.location.state) === "string")
+			{
+				this.setState({
+					filter : this.props.location.state
+				})
+
+				
+			}
+			else{
+				let curentWorkflow = this.props.location.state
+
+				console.log("Current Workflow", curentWorkflow)
+				this.setState(
+				{
+					status: null,
+					id: curentWorkflow.id,
+					workflow: curentWorkflow,
+					title: curentWorkflow.Title,
+					username: curentWorkflow.User,
+				},
+				() => {
+					this.init();
+				}
+				);
+
+				console.log(this.state);
+
+				this.setState({
+					open: true,
+				});
+			}
+		}
 	}
 	requestAccepted(d) {
 		for (var key in d) {
@@ -121,6 +158,7 @@ class StatusComponent extends Component {
 			.then((res) => {
 				console.log("Updated New Workflow", res);
 				alert("WorkFlow Terminated !");
+                                this.props.history.push('/status')
 				window.location.reload(true)
 			});
 	};
@@ -141,6 +179,7 @@ class StatusComponent extends Component {
 			.put(old_version, old_object)
 			.then((res) => {
 				console.log("Updated New Workflow", res);
+				this.props.history.push('/status')
 				window.location.reload(true)
 			});
 	};
@@ -192,6 +231,9 @@ class StatusComponent extends Component {
 						}, ()=> { this.init() } );
 					
 					}
+					else{
+						alert("Workflow Not Found");
+					}
 				})
 				.catch(err => {
 					alert("Workflow Not Found");
@@ -219,7 +261,11 @@ class StatusComponent extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Header title={'WORKFLOWS'}/>
+				{/* <Header title={'Workflows'}/> */}
+
+
+				<MyWorkflowsHeader title={'Workflows'}/>
+
 				{/* <Paper style={{backgroundColor:'#002a29'}}>
 					<Grid container justify="center" spacing={3}>
 						
@@ -278,6 +324,7 @@ class StatusComponent extends Component {
 				    myWorkflows={this.props.myWorkflows}
 					userObj={this.props.userObj}
 					handleSubmit={this.handleSearch}
+					filter={this.state.filter}
 				/>
 				{/* </form>  */}
 
@@ -361,4 +408,4 @@ const mapStatetoProps = (state) => {
 export default connect(
 	mapStatetoProps,
 	null
-)(withStyles(style)(StatusComponent));
+)(withStyles(style)(withRouter(StatusComponent)));

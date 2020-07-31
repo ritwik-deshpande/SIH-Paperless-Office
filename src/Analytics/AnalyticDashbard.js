@@ -1,8 +1,25 @@
 import React from 'react'
 import NumberCard from './NumberCard'
-import BarChart from "./graphs/BarChart";
+import Sunburst from "./Sunburst";
 import LineChart from './graphs/LineChart';
 import PiChart from './graphs/PiChart'
+import RaceChart from './RaceChart';
+import AnalyticsHeader from '../Headers/AnalyticsHeader'
+import {useTheme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography'
+import {
+	Card,
+	CardHeader,
+	ListGroup,
+	ListGroupItem,
+	Row,
+	Col,
+	Button,
+	Progress,
+	Container
+  } from "shards-react";
+import HBarChart from './HBarChart';
+
 
 const datas = [
     [10, 30, 40, 20],
@@ -21,7 +38,7 @@ var i = 0;
 
 
 class AnalyticDashboard extends React.Component {
-
+    
     constructor(props) {
         super(props);
 
@@ -43,15 +60,57 @@ class AnalyticDashboard extends React.Component {
         if (i === datas.length) i = 0;
     }
     render() {
+        
 
         return (
             <>
-            <NumberCard data={this.state.numberCardData}/>
+            
+            <AnalyticsHeader title={'Analytics'}/>
+            <br/>
+            <Container fluid className="main-content-container px-4">
+            <Row>
+                <NumberCard data={this.state.numberCardData}/>
+            </Row>
+            <br/>
+			<Row>
+      			<Col lg="7">
+                    <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Types Of Workflow</Typography>
+                    </CardHeader>
+                      <RaceChart/>
+                </Card>
+                </Col>
+                <Col lg="5">
+                <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Work Chart</Typography>
+                    </CardHeader>
+                        <Sunburst/>
+                </Card>
+                </Col>
+    		</Row>
+            <br/>
+            <Row>
+      			<Col lg="12">
+                  <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Department Wise Chart</Typography>
+                    </CardHeader>
+                      <HBarChart/>
+                </Card>
+
+
+                  </Col>
+            </Row>
+  		</Container>
+
+            {/* <NumberCard data={this.state.numberCardData}/>
             <h2>Graphs with React</h2>
             <LineChart width={600} height={270} data={lineData}/>
             <button onClick={this.changeData}>Change Data</button>
             <BarChart width={600} height={400} data={this.state.barChartData} />
-	    <PiChart />
+	    <PiChart /> */}
             </>
         )
     }

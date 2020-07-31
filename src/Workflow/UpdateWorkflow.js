@@ -100,6 +100,7 @@ class UpdateWorkflow extends Component
 				"flowchartId" :this.state.flowchartId,
 				"Feedback" : "",
 				"Feedback_ts": 0,
+                                "priority": false,
 				"User":old_object.User,
 				"Title": old_object.Title,
 

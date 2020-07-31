@@ -57,13 +57,6 @@ const useTableStyles = makeStyles((theme) => ({
 	},
 }));
 
-const tableColumns = [
-	{ title: "Workflow ID", field: "id" },
-	{ title: "Workflow Name", field: "wname" },
-	{ title: "Status", field: "status" },
-	{ title: "Last Feedback", field: "lastfeedback" },
-	{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
-];
 
 // const json ={
 
@@ -75,16 +68,39 @@ const tableColumns = [
 //             nameofSender: 'Mike Wheeler', status: 'Threatened by the party'}]
 // }
 
-export default function WorkflowTable({ Click, myworkflowsTable }) {
+export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	const { useState } = React;
 	const [selectedRow, setSelectedRow] = useState(null);
+
+
+
+	const tableColumns = [
+	{ title: "Workflow ID", field: "id" },
+	{ title: "Workflow Name", field: "wname" },
+	{ title: "Status", field: "status" , defaultFilter : filter},
+	{ title: "Last Feedback", field: "lastfeedback" },
+	{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
+	];
+
+
+
+
+
 	// const classes = useStyles();
 	const classes = makeStyles(style(useTheme()))();
+ 
+	let tableTitle = "My Workflows "
+	if(filter){
+		tableTitle = tableTitle.concat(filter)
+		console.log("The table title", tableTitle)
+	}
+
+	console.log("The table title", tableTitle)
 	return (
 		<div className={classes.tableStyle}>
 			<MaterialTable
 				icons={tableIcons}
-				title=" "
+				title= {tableTitle}
 				columns={tableColumns}
 				data={myworkflowsTable}
 				actions={[
@@ -102,7 +118,7 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 							onClick={(event) => props.action.onClick(event, props.data)}
 							color="primary"
 							variant="contained"
-							style={{ textTransform: "none" }}
+							style={{ textTransform: "capitalize" }}
 							size="small">
 							<VisibilityIcon />
 						</IconButton>
@@ -114,12 +130,12 @@ export default function WorkflowTable({ Click, myworkflowsTable }) {
 					actionsColumnIndex: -1,
 					headerStyle: {
 						backgroundColor: "#002a29",
-						color: "#FFF",
+						color: "#fff",
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
 					rowStyle: {
-					
+
 						fontSize: "14px",
 					},
 				}}

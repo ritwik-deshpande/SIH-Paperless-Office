@@ -24,7 +24,7 @@ class TodoList extends Component {
     )
   })
     return(
-      <List dense>
+    <List dense>
       { todoNode }
     </List>
     )

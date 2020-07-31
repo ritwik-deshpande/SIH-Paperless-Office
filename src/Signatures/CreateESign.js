@@ -16,6 +16,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ClearIcon from '@material-ui/icons/Clear';
 import SaveIcon from '@material-ui/icons/Save';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionActions from '@material-ui/core/AccordionActions';
+import Divider from '@material-ui/core/Divider';
+import GestureIcon from '@material-ui/icons/Gesture';
+import BackupIcon from '@material-ui/icons/Backup';
 import {
 	Card,
 	CardHeader,
@@ -112,7 +119,11 @@ export default function CreateESign({userObj, saveUser}) {
   	setOpenDialog(null)
   }
   
- 
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleTabChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  }
 
   const handleChange = (file) =>{
 
@@ -287,6 +298,37 @@ export default function CreateESign({userObj, saveUser}) {
 			  return fields;
  }
 
+function displayCurrent(){
+	let fields = []
+	fields.push(<Card small className="mb-4">
+	<CardHeader style ={{ backgroundColor: '#002a29' }}>
+	<Typography variant="h6" style={{color: '#fff'}}>Current E-Signature</Typography>
+	</CardHeader>
+	<Container>
+	<ListGroup flush>
+	  <ListGroupItem className="p-3">
+	  <Row>
+		  <Col>
+		  <Row>
+			{/* Info (Help) */}
+				<Col md="12" className="form-group">
+				
+					{userObj.esign.localeCompare("Empty") == 0 ?  <Typography gutterBottom variant="h5" component="h2">
+						E-Signature Not Available. Please create one.
+					</Typography> : <div>
+					<img src = {userObj.esign} alt ="Original Signature"></img>
+					</div>}
+        	
+				</Col>
+			</Row>
+			</Col>
+		</Row>
+		</ListGroupItem>
+		</ListGroup>
+		</Container>
+		</Card>)
+		return fields;
+}
 
 function updateSign(){
 	let fields = []
@@ -310,39 +352,50 @@ function updateSign(){
               			</Row>
 
 						  <Row>
-							<Col md="6" className="form-group">
+							  <Col md="12" className="form-group">
+							  	<Accordion square expanded={expanded === 'panel1'} onChange={handleTabChange('panel1')}>
+								<AccordionSummary 
+									aria-controls="panel1d-content" 
+									id="panel1d-header"
+									expandIcon={<GestureIcon />}>
+          							<Typography>Click here to Sign on Canvas</Typography>
+        						</AccordionSummary>
+        						<AccordionDetails>
 								<Card className={classes.cardDim}>
-									<Typography gutterBottom variant="h5" component="h2">
-										Sign on the Canvas
-									</Typography>
 									<div className={styles.sigContainer}>
-									<SignaturePad canvasProps={{className: styles.sigPad}}
+									<SignaturePad canvasProps={{width: 400, height: 300, className: styles.sigPad}}
 										ref={(ref) => { sigPad = ref }} />
 									</div>
 									</Card>
-									<br/>
-									<Button variant="outlined" color="secondary" onClick={clear} startIcon={<ClearIcon/>}>
+								</AccordionDetails>
+								<Divider />
+									<AccordionActions>
+									<Button size="small" color="secondary" onClick={clear} startIcon={<ClearIcon/>}>
               						Clear
             						</Button>
-									<Button variant="contained" color="secondary"  onClick={getSign} style={{marginLeft:'40px'}} startIcon={<SaveIcon/>}>
+									<Button size="small" variant="contained" color="primary"  onClick={getSign} style={{marginLeft:'40px'}} startIcon={<SaveIcon/>}>
               						Save Sign
             						</Button>
-							</Col>
-
-							<Col md="6" className="form-group">
-								<Card className={classes.cardDim}>
-            					{userObj.esign.localeCompare("Empty") == 0 ?  <Typography gutterBottom variant="h5" component="h2">
-            						ESIGNATURE  : ESIGN NOT CREATED
-          						</Typography> : <div><Typography gutterBottom variant="h5" component="h2">
-            						Current E-Signature
-          						</Typography>
-          						<img src = {userObj.esign} alt ="Original Signature"></img>
-          						</div>}
-        						</Card>
-        						<input label = "Upload E-Signature" type = "file" accept =".png" onChange ={e => handleChange(e.target.files[0])}/>
-        						<Button variant="contained" color="secondary"  onClick = {getSignImage} startIcon={<startIcon/>}>
-          							Save Uploaded E-Signature</Button>
-						  	</Col>
+									</AccordionActions>
+      							</Accordion>
+      
+								<Accordion square expanded={expanded === 'panel2'} onChange={handleTabChange('panel2')}>
+									<AccordionSummary 
+										aria-controls="panel2d-content" 
+										id="panel2d-header"
+										expandIcon={<BackupIcon />}>
+									<Typography>Click here to Upload Image of Signature</Typography>
+									</AccordionSummary>
+									<AccordionDetails>
+									<input label = "Upload" type = "file" accept =".png" onChange ={e => handleChange(e.target.files[0])}/>
+									</AccordionDetails>
+									<Divider />
+									<AccordionActions>
+									<Button variant="contained" color="primary"  onClick = {getSignImage} startIcon={<startIcon/>}>
+          							Save</Button>
+									</AccordionActions>
+      							</Accordion>
+							  </Col>
 						  </Row>
 			</Col>
 		</Row>
@@ -364,8 +417,11 @@ function updateSign(){
       		</Col>
 		</Row>
 		<Row>
-			<Col lg="12">
+			<Col lg="7">
 				{updateSign()}
+			</Col>
+			<Col lg="5">
+				{displayCurrent()}
 			</Col>
 		</Row>
 		<Button variant="contained" color="primary" size="large" onClick = { updateUser } endIcon={<SaveIcon/>}style={{ margin: 20 }} >

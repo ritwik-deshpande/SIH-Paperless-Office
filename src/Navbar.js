@@ -44,7 +44,10 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
+
+
 //import AvatarImage from './images/lodu.jpeg'
+
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -55,28 +58,34 @@ function Listitems(props) {
   const pageDict = {};
   pageDict['/']=1;
   pageDict['/esign']=2;
-  pageDict['/viewDocs']=3;
-  pageDict['/status']=4;
-  pageDict['/getForm']=5;
-  pageDict['/approve']=6;
-  pageDict['/chat']=7;
-  pageDict['/analytics']=8;
+  pageDict['/calendar'] = 3;
+  pageDict['/viewDocs']=4;
+  pageDict['/status']=5;
+  pageDict['/getForm']=6;
+  pageDict['/approve']=7;
+  pageDict['/chat']=8;
+  pageDict['/analytics']=9;
+  pageDict['/searchuser'] = 11
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(pageDict[props.history.location.pathname]);
 
+  props.setSelectedIndex(pageDict[props.history.location.pathname]);
+  let selectedIndex = props.selectedIndex;
+  // const [selectedIndex, setSelectedIndex] = React.useState(pageDict[props.history.location.pathname]);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleNavlink = (link, index) => {
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
+    // setSelectedIndex(index);
     setAnchorEl(null);
     console.log(props);
     props.history.push(link);  
   };
  
   const handleDashboard = (index) =>{
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
+    // setSelectedIndex(index);
     console.log('Props is',props);
     props.history.push('/');
     
@@ -126,7 +135,6 @@ function Listitems(props) {
   const classes = makeStyles(style(useTheme()))();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
     <div>
       {/* {props.open ? <div className={classes.navBarProfile} >
@@ -216,16 +224,17 @@ function Listitems(props) {
           </ListItem>
         </Tooltip>
 
-        <Tooltip title={props.open ? "" : "My Workflows"}>
+
+        <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
+
+        <Tooltip title={props.open ? "" : "View Workflows"}>
           <ListItem button={!(selectedIndex===5)} selected={selectedIndex===5} onClick={() => handleNavlink('/status',5)}>
             <ListItemIcon className={classes.navBarIcons}>
               <WorkIcon />
             </ListItemIcon>
-            <ListItemText primary="My WorkFlows"/>
+            <ListItemText primary="View WorkFlows"/>
           </ListItem>
         </Tooltip>
-
-        <Divider/>
         
         <Tooltip title={props.open ? "" : "Start a Workflow"}>
           <ListItem button={!(selectedIndex===6)} selected={selectedIndex===6} onClick={() => handleNavlink('/getForm',6)}>
@@ -263,7 +272,7 @@ function Listitems(props) {
           </ListItem>
         </Tooltip>
       
-        <Divider/>
+        <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
 
         <Tooltip title={props.open ? "" : "Report Error"}>
           <ListItem button={!(selectedIndex===10)} selected={selectedIndex===10} onClick={handleClickOpenDialog}>
@@ -348,7 +357,7 @@ function Listitems(props) {
         </Snackbar>
 
         <Tooltip title={props.open ? "" : "LogOut"}>
-          <ListItem button={!(selectedIndex===10)} selected={selectedIndex===10}  onClick={ () => props.logout()}>
+          <ListItem button={!(selectedIndex===12)} selected={selectedIndex===12}  onClick={ () => props.logout()}>
             <ListItemIcon className={classes.navBarIcons}>
               <ExitToAppIcon />
             </ListItemIcon>
@@ -367,4 +376,4 @@ function Listitems(props) {
 
 
 
-export default withRouter(Listitems )
+export default withRouter(Listitems)

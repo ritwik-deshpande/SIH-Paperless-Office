@@ -35,7 +35,7 @@ import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
 import { toast, ToastContainer } from 'react-toastify'
 import { Box, makeStyles, useTheme, Tooltip } from '@material-ui/core';
-
+import Container from '@material-ui/core/Container'
 //import { Alert } from 'react-native';
 import { messaging } from './Chat/Config/MyFirebase'
 import firebase from 'firebase'
@@ -47,9 +47,16 @@ import ComposeMail from './Email/ComposeMail';
 import style from './StyleSheet';
 import Hidden from "@material-ui/core/Hidden";
 import SearchUser from './SearchUser/SearchUser';
+
 import DisplayWorkflow from './Workflow/DisplayWorkflowComponent';
 import DisplayHierarchy from './Hierarchy/displayHierarchy';
-export default function Dashboard({ userObj, logout},props) {
+
+import LoadingLogo from './images/load.gif'
+import { useLocation } from 'react-router-dom';
+
+function Dashboard({ userObj, logout},props) {
+
+
 
   
   // window.addEventListener('load', async () => {
@@ -80,15 +87,19 @@ export default function Dashboard({ userObj, logout},props) {
   		return (<StatusComponent myWorkflows={myWorkflows}/>)
   	}
   	else{
-  		return (<h1> Loading...</h1>)
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard" />
+      </div>)
   	}
   }
   function renderLandingPageComponent(){
-  	if(myWorkflows){
-  		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows}/> )
+  	if(myWorkflows && myApprovals){
+  		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows} myApprovals={myApprovals}/> )
   	}
   	else{
-  		return (<h1> Loading...</h1>)
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard" className="center"/></div>
+      )
   	}
   }
   
@@ -97,7 +108,9 @@ export default function Dashboard({ userObj, logout},props) {
   		return (<ApproveComponent userObj={userObj} myApprovals = {myApprovals}/>)
   	}
   	else{
-  		return (<h1> Loading...</h1>)
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard"  className="center"/></div>
+      )
   	}
   }
 
@@ -107,8 +120,16 @@ export default function Dashboard({ userObj, logout},props) {
 			.pending_request()
 			.get(userObj.id)
 			.then((res) => {
+				if(res && res.data){
 				console.log("The Pending Request data received is", res.data);
 				setMyApprovals(res.data)
+				}
+				else{
+				     setMyApprovals({requests:[]})
+				}
+			})
+			.catch(err => {
+			      setMyApprovals({requests:[]})			
 			});
 
   },[])
@@ -118,8 +139,16 @@ export default function Dashboard({ userObj, logout},props) {
 	api.myworkflows()
 			.get(userObj.name)
 			.then((res) => {
-				console.log("The Workflow data received is", res.data);
-				setMyWorkflows(res.data)
+				if(res && res.data){
+					console.log("The Workflow data received is", res.data);
+					setMyWorkflows(res.data)
+				}
+				else{
+					setMyWorkflows([])
+				}
+			})
+			.catch(err => {
+				setMyWorkflows([])
 			});
 
   },[])
@@ -181,6 +210,12 @@ export default function Dashboard({ userObj, logout},props) {
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
   // const handleDrawerClose = () => {
   //   setOpen(false);
   // };
@@ -198,7 +233,22 @@ export default function Dashboard({ userObj, logout},props) {
   const notify = Boolean(anchorEl);
   const id = notify ? 'simple-popover' : undefined;
 
+  
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const navBar = (
+    <React.Fragment>
+      <div className={classes.toolbarIcon}>
+        <IconButton onClick={handleDrawerClose} className={classes.navBarIcons}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <NavBar userObj = {userObj} open = {open} logout = {logout} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>
+    </React.Fragment>
+  );
+
   const container = window !== undefined ? () => window().document.body : undefined;
+  console.log("Dashboard :",userObj)
   return (
 
     <BrowserRouter>
@@ -215,7 +265,7 @@ export default function Dashboard({ userObj, logout},props) {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerToggle}
+              onClick={handleDrawerOpen}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -290,30 +340,26 @@ export default function Dashboard({ userObj, logout},props) {
           <NavBar userObj = {userObj} open = {open} logout = {logout}/>
         
       </Drawer> */}
-      <nav className={classes.drawer} aria-label="mailbox folders">
+      <nav className={classes.drawer} aria-label="mailbox folders"> 
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
+        <Hidden mdUp implementation="css">
           <Drawer
             container={container}
             variant="temporary"
             open={open}
-            onClose={handleDrawerToggle}
+            onClose={handleDrawerClose}
             classes={{
               paper: classes.drawerPaper
             }}
             ModalProps={{
               keepMounted: true // Better open performance on mobile.
             }}
+            
           >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={handleDrawerToggle} className={classes.navBarIcons}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+            {navBar}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
           <Drawer
             variant="permanent"
             className={clsx(classes.drawer, {
@@ -324,15 +370,8 @@ export default function Dashboard({ userObj, logout},props) {
                 [classes.drawerClose]: !open
               })
             }}
-            
           >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={handleDrawerToggle} className={classes.navBarIcons}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            {/* {!open && <div className={classes.appBarspacer} />} */}
-              <NavBar userObj = {userObj} open = {open} logout = {logout}/>
+              {navBar}
           </Drawer>
         </Hidden>
       </nav>
@@ -365,3 +404,5 @@ export default function Dashboard({ userObj, logout},props) {
 
   );
 }
+
+export default Dashboard;
