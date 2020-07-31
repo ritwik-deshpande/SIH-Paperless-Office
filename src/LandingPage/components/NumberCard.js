@@ -84,21 +84,21 @@ function NumberCard(props) {
 	 {
           return (
             <React.Fragment>
-              <Grid item key={key} xs={6} sm={6} md={3} container direction="column" onClick = {() => {handleClick('/approve', key)}}>
-                <Card elevation={2}>
-                    <CardContent>
-                      <Box mt={1} textAlign="center" className={classes.numCardContent} >
-                        <Typography variant="h2" style={{color:color[key]}}>
-                          {data[key]}
-                        </Typography>
-                        <Typography component="h5" variant="h5" gutterbottom>
-                          {key}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                            APPROVALS
-                        </Typography>
-                      </Box> 
-                    </CardContent>
+              <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
+                <Card elevation={2}>  
+                  <CardActionArea onClick = {() => {handleClick('/approve', key)}} className={classes.numCardBox}>
+                    <Box mt={1} textAlign="center" className={classes.numCardContent} >
+                      <Typography variant="h2" style={{color:color[key]}}>
+                        {data[key]}
+                      </Typography>
+                      <Typography component="h5" variant="h5" gutterbottom>
+                        {key}
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                          APPROVALS
+                      </Typography>
+                    </Box> 
+                  </CardActionArea>
                 </Card>
               </Grid>
             </React.Fragment>
@@ -109,19 +109,19 @@ function NumberCard(props) {
             <React.Fragment>
               <Grid item key={key} xs={6} sm={6} md={3} container direction="column" onClick = {() => {handleClick('/status', key)}}>
                 <Card elevation={2}>
-                    <CardContent>
-                      <Box mt={1} textAlign="center" className={classes.numCardContent} >
-                        <Typography variant="h2" style={{color:color[key]}}>
-                          {data[key]}
-                        </Typography>
-                        <Typography component="h5" variant="h5" gutterbottom>
-                          {key}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                            WORKFLOWS
-                        </Typography>
-                      </Box> 
-                    </CardContent>
+                  <CardActionArea onClick = {() => {handleClick('/status', key)}} className={classes.numCardBox}>
+                    <Box mt={1} textAlign="center" className={classes.numCardContent} >
+                      <Typography variant="h2" style={{color:color[key]}}>
+                        {data[key]}
+                      </Typography>
+                      <Typography component="h5" variant="h5" gutterbottom>
+                        {key}
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                          WORKFLOWS
+                      </Typography>
+                    </Box> 
+                  </CardActionArea>
                 </Card>
               </Grid>
             </React.Fragment>

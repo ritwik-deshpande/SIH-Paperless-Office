@@ -21,6 +21,18 @@ export default [
       comment: 'comment 4',
       name: 'name 4',
       timestamp: '19 July 2020'},
+      {id: 5,
+        comment: 'comment 5',
+        name: 'name 5',
+        timestamp: '19 July 2020'},
+      {id: 6,
+        comment: 'comment 6',
+        name: 'name 6',
+        timestamp: '19 July 2020'},
+      {id: 7,
+        comment: 'comment 7',
+        name: 'name 7',
+        timestamp: '19 July 2020'},
     ]
   },
   {
