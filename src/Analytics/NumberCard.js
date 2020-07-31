@@ -8,9 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import {
+	Col
+  } from "shards-react";
 import { Grid, Paper, Box, useTheme } from '@material-ui/core';
 // import useStyles from '../Style'
 import styles from '../StyleSheet'
@@ -67,7 +67,7 @@ export default function NumberCard({data}) {
 	 {
           return (
             <React.Fragment>
-              <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
+              <Col lg="3">
                 <Card elevation={2}>
                     <CardContent>
                       <Box mt={1} textAlign="center" className={classes.numCardContent} >
@@ -83,14 +83,15 @@ export default function NumberCard({data}) {
                       </Box> 
                     </CardContent>
                 </Card>
-              </Grid>
+              </Col>
+              
             </React.Fragment>
           );
 	}
 	else{
 	return (
             <React.Fragment>
-              <Grid item key={key} xs={6} sm={6} md={3} container direction="column">
+              <Col lg="3">
                 <Card elevation={2}>
                     <CardContent>
                       <Box mt={1} textAlign="center" className={classes.numCardContent} >
@@ -106,14 +107,10 @@ export default function NumberCard({data}) {
                       </Box> 
                     </CardContent>
                 </Card>
-              </Grid>
+              </Col>
             </React.Fragment>
           );
-
-
 	}
-
-
         })}
         {/* </Grid> */}
         </>

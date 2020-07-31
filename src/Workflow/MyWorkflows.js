@@ -2,7 +2,8 @@ import React from "react";
 import WorkflowTable from "./MyWorkflowsTable";
 import api from "../utils/api";
 import axios from "axios";
-
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography'
 class MyWorkflow extends React.Component {
 	constructor(props) {
 		super(props);
@@ -72,7 +73,11 @@ class MyWorkflow extends React.Component {
 						myworkflowsTable={this.state.tableData}
 					/>
 				) : (
-					<div> Fetching My Workflows </div>
+					<div style={{ display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '50vh'}}> <Typography variant="h5"> Fetching My Workflows</Typography><br/><LinearProgress style={{ display: 'flex',
+					width: '50%'}} color="secondary" /> </div>
 				)}
 			</div>
 		);
