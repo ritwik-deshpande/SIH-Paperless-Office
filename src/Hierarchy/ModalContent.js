@@ -53,7 +53,8 @@ class ModalContent extends React.Component{
 					if (res && res.data) {
                         this.props.history.push({
                             pathname: '/status',
-                            state: res.data
+                            state: res.data,
+                            sentBy: '/Hierarchy'
                           })
                     }
                 })
@@ -62,12 +63,13 @@ class ModalContent extends React.Component{
     
     render(){
         return(
-            <AlignItemsList
-							Click={this.handleClick}
-							userObj={this.props.userObj}
-							requestTable={this.state.requestTable}
-                            filter={null}
-                            node = {this.props.nodes}
+        				
+    		<AlignItemsList
+			Click={this.handleClick}
+			userObj={this.props.userObj}
+			requestTable={this.state.requestTable}
+		            filter={null}
+		            node = {this.props.nodes}
 						/>
         )
     }

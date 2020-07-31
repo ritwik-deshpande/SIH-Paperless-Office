@@ -44,7 +44,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
-
+import GroupIcon from '@material-ui/icons/Group';
 
 //import AvatarImage from './images/lodu.jpeg'
 
@@ -66,6 +66,7 @@ function Listitems(props) {
   pageDict['/chat']=8;
   pageDict['/analytics']=9;
   pageDict['/searchuser'] = 11
+  pageDict['/Hierarchy'] = 12
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   props.setSelectedIndex(pageDict[props.history.location.pathname]);
@@ -221,6 +222,15 @@ function Listitems(props) {
               <FolderIcon />
             </ListItemIcon>
             <ListItemText primary="My Documents" /> 
+          </ListItem>
+        </Tooltip>
+
+	 <Tooltip title={props.open ? "" : "My Team"}>
+          <ListItem button={!(selectedIndex===12)} selected={selectedIndex===12} onClick={() => handleNavlink('/Hierarchy',12)}>
+            <ListItemIcon className={classes.navBarIcons}>
+              <GroupIcon />
+            </ListItemIcon>
+            <ListItemText primary="My Team" /> 
           </ListItem>
         </Tooltip>
 

@@ -85,7 +85,7 @@ const tableIcons = {
 // { id: '2', wname: 'Escape from Mind Flayer', sender: 'Will Byers', feedback: 'Approved', time: 33},
 //{ id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', feedback: 'Rejected', time: 2},
 //]
-export default function AlignItemsList({ Click, requestTable, filter }) {
+export default function AlignItemsList({ Click, requestTable, filter, node }) {
 	// const tableclasses = useTableStyles();
 	// const classes = useStyles();
 	const classes = makeStyles(style(useTheme()))();
@@ -136,7 +136,10 @@ export default function AlignItemsList({ Click, requestTable, filter }) {
 	//   )}))
 	// }
 
-	let tableTitle = "My Approvals "
+	
+
+        if(!node){
+        let tableTitle = "My Approvals "
 	if(filter){
 		tableTitle = tableTitle.concat(filter)
 	}
@@ -188,7 +191,8 @@ export default function AlignItemsList({ Click, requestTable, filter }) {
 			/>
 		</div>
 		</React.Fragment>
-		// <List className={classes.root}>
+
+				// <List className={classes.root}>
 
 		//   {renderListItem(json['requests'])}
 
@@ -228,4 +232,69 @@ export default function AlignItemsList({ Click, requestTable, filter }) {
 		// </div>
 		// <List className={classes.root}>{renderListItem(json["requests"])}</List>
 	);
+
+
+
+
+	}
+
+		else{
+		
+		     let tableTitle = node.name
+			
+				tableTitle = tableTitle.concat("\'s  Approvals")
+			
+
+			return(<React.Fragment>
+			<br/>
+			<br/>
+			<br/>
+		<div className={classes.tableStyle}>
+			<MaterialTable
+				icons={tableIcons}
+				title={tableTitle}
+				columns={tableColumns}
+				data={requestTable}
+				actions={[
+					{
+						icon: "view",
+						tooltip: "Approve Document",
+						onClick: (event, rowData) => {
+							Click(rowData.item);
+						},
+					},
+				]}
+				components={{
+					Action: (props) => (
+						<IconButton
+							onClick={(event) => props.action.onClick(event, props.data)}
+							color="primary"
+							variant="contained"
+							style={{ textTransform: "none" }}
+							size="small">
+							<VisibilityIcon />
+						</IconButton>
+					),
+				}}
+				options={{
+					search: true,
+					sorting: true,
+					actionsColumnIndex: -1,
+					headerStyle: {
+						backgroundColor: "#002a29",
+						color: "#FFF",
+						fontWeight: "bold",
+						fontSize: "15px",
+					},
+					rowStyle: {
+						fontSize: "14px",
+					},
+				}}
+			/>
+		</div>
+		</React.Fragment>
+)
+
+		}
+
 }

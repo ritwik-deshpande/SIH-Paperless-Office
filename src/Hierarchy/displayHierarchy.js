@@ -5,8 +5,21 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 import Modal from '@material-ui/core/Modal';
-import ModalContent from './ModalContent'
+import ModalContent from './ModalContent';
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { withRouter } from "react-router";
+import useStyles from '../Style'
+import {
+	AppBar,
+	withStyles,
+	Toolbar,
+	ButtonGroup,
+	Box,
+	Button,
+	Tooltip,
+	TextField,
+	Grid,
+} from "@material-ui/core";
 const data = {
   DIR01: {
     id: "DIR01",
@@ -49,16 +62,7 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+
 
 function DisplayHierarchy(props) {
 
@@ -83,7 +87,7 @@ function DisplayHierarchy(props) {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
+    <div style={modalStyle} className={classes.hierarchyPaper}>
       
       <ModalContent nodes={juniornode} history={props.history}/>
       {console.log(props)}
@@ -121,7 +125,23 @@ function DisplayHierarchy(props) {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
+        <div>
+		<AppBar className={classes.appBar}>
+				<Toolbar >
+					<Box display="flex" flexGrow={1}>
+						<Button
+							edge="start"
+							autoFocus
+							color="inherit"
+							onClick={handleClose}
+							startIcon={<ArrowBackIosIcon />}>
+							Back
+						</Button>
+					</Box>
+				</Toolbar>
+			</AppBar>
         {body}
+        </div>
       </Modal>
     </React.Fragment>
   );

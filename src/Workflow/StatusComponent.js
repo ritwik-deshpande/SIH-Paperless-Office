@@ -57,6 +57,7 @@ class StatusComponent extends Component {
 		updateWorkFlow: false,
 		myWorkflow: false,
 		open: false,
+		sentBy:null,
 		filter : null
 	};
 
@@ -83,6 +84,8 @@ class StatusComponent extends Component {
 			}
 			else{
 				let curentWorkflow = this.props.location.state
+				
+				console.log(this.props)
 
 				console.log("Current Workflow", curentWorkflow)
 				this.setState(
@@ -92,6 +95,7 @@ class StatusComponent extends Component {
 					workflow: curentWorkflow,
 					title: curentWorkflow.Title,
 					username: curentWorkflow.User,
+					sentBy : this.props.location.sentBy
 				},
 				() => {
 					this.init();
@@ -204,10 +208,16 @@ class StatusComponent extends Component {
 		});
 	};
 	handleClose = () => {
-		this.setState({
-			open: false,
-			updateWorkFlow: false,
-		});
+	
+		if(this.state.sentBy){
+			this.props.history.push('/Hierarchy')
+		
+		}else{
+			this.setState({
+				open: false,
+				updateWorkFlow: false,
+			});
+		}
 	};
 	handleGetWorkflow = (id) => {
 		this.state.id = null
