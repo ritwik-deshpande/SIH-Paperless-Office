@@ -20,7 +20,7 @@ import AddCommentIcon from "@material-ui/icons/AddComment";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Header from "./PDFComponents/Header";
 
-export default function ShowPDF({ formData, signatures, title }) {
+export default function ShowPDF({ formData, signatures, title, seals }) {
 	/*const MyContent = (
  
         <Page style={styles.page} size="A4">
@@ -46,14 +46,27 @@ export default function ShowPDF({ formData, signatures, title }) {
 		let signs = [];
 		for (var person in signatures) {
 			console.log(signatures[person]);
-			signs.push(
-				<>
+			if(seals && person in seals){
+				
+				signs.push(<>
+					<View>
+						<Image style={styles.image} src={signatures[person]} />
+						<Image style={styles.image} src={seals[person]} />
+					</View>
+					<Text style={styles.sign}>Signed by {person}</Text>
+				</>)
+				
+			}
+			else{
+				signs.push(
+					<>
 					<View>
 						<Image style={styles.image} src={signatures[person]} />
 					</View>
 					<Text style={styles.sign}>Signed by {person}</Text>
-				</>
-			);
+					</>
+				);
+			}	
 		}
 		return signs;
 	}

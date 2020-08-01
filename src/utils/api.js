@@ -1,7 +1,8 @@
 import axios from "axios";
 
-//const Endpoint = "http://42b1d69b42c1.ngrok.io"
-const Endpoint = "http://localhost:3030"
+const Endpoint = "https://dd174d9b3f2e.ngrok.io"
+//const Endpoint = "http://localhost:3030"
+
 
 
 export default { 
