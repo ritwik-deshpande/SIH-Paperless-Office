@@ -1,18 +1,31 @@
 import React from "react";
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Typography, Box, Divider } from "@material-ui/core";
 class Comment extends React.Component {
   render() {
-    return (<div>
+    return (<React.Fragment>
           <ListItem>
           <ListItemIcon>
-            <AccountCircle />
+            <Avatar alt={this.props.author} src="../../../../public/logo512.png" />
           </ListItemIcon>
-          <ListItemText>@{this.props.author}: {this.props.body + "\t\t"} at {this.props.time}</ListItemText>
+          <ListItemText 
+            > 
+            <Typography varaint="h4" display="inline">
+                <Box fontWeight="Bold" display="inline">{this.props.author}: </Box>
+              </Typography>
+              <Typography color="textPrimary" display="inline">
+                {this.props.body}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {this.props.time}
+              </Typography>
+            </ListItemText>
         </ListItem>
-    </div>
+        <Divider variant="inset"/>
+    </React.Fragment>
       // <div className="commaent">
       //   <p className="comment-header">@{this.props.author}: {this.props.body}</p>
       //   {/* <div className="comment-footer">

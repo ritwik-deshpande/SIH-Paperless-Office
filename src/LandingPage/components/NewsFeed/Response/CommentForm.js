@@ -1,9 +1,11 @@
 import React from "react";
-import { Grid, TextField, Button} from '@material-ui/core'
+import { Grid, TextField, Button, Box} from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { MentionsInput, Mention } from 'react-mentions'
 import {swapTags, getUsersFromTags} from './tags'
 import './mention-style.css'
+import AddCommentIcon from '@material-ui/icons/AddComment';
+
 class CommentForm extends React.Component {
   
   constructor(props) {
@@ -75,7 +77,7 @@ class CommentForm extends React.Component {
 
     const displayText = swapTags(this.state.value)
     const uniqueUsers = getUsersFromTags(this.state.value)
-    return (<div>
+    return (<React.Fragment>
    
       {/* <TextField 
             placeholder="Comment"
@@ -84,6 +86,9 @@ class CommentForm extends React.Component {
             onChange={this.handleChange}
           >
         </TextField> */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={7} md={9}>
+        
         <MentionsInput
           value={this.state.value}
           onChange={this.handleMentionChange}
@@ -104,10 +109,12 @@ class CommentForm extends React.Component {
             className="mentions__mention"
           />
         </MentionsInput>
-     
-      <Button size="small" variant="outlined" onClick={this._handleSubmit.bind(this)}>Post Comment</Button>
-   
-          </div>
+        </Grid>
+        <Grid item xs={12} sm={5} md={3}>
+          <Button size="small" variant="contained" color="secondary" onClick={this._handleSubmit.bind(this)} startIcon={<AddCommentIcon/>}>Post Comment</Button>
+        </Grid>
+      </Grid>
+    </React.Fragment>
       
     );
   } // end render

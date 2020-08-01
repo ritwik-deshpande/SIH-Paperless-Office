@@ -1,50 +1,52 @@
 .mentions {
-    margin: 1em 0;
+    margin: 0;
   }
   
   .mentions--singleLine .mentions__control {
     display: inline-block;
   }
   .mentions--singleLine .mentions__higlighter {
-    padding: 1px;
+    padding: 4px;
     border: 2px inset transparent;
   }
   .mentions--singleLine .mentions__input {
-    padding: 5px;
+    padding: 8px;
     border: 2px inset;
   }
   
   .mentions--multiLine .mentions__control {
     font-family: Helvetica, sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     border: 1px solid silver;
   }
   .mentions--multiLine .mentions__highlighter {
-    padding: 9px;
+    padding: 8px;
   }
   .mentions--multiLine .mentions__input {
-    padding: 0px;
-    min-height: 63px;
-    width: 500px;
+    padding: 8px;
+    min-height: 50px;
+    width: 100%;
     outline: 0;
     border: 0;
   }
   
   .mentions__suggestions__list {
+    padding: 4px;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
     font-size: 10pt;
   }
   
   .mentions__suggestions__item {
-    padding: 5px 15px;
+    padding: 8px 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   }
   
   .mentions__suggestions__item--focused {
-    background-color: #cee4e5;
+    background-color: #aee3e6;
   }
   
   .mentions__mention {
-    background-color: #cee4e5;
+    background-color: #9bd5d8;
   }
