@@ -157,6 +157,7 @@ export default function NodeStatus({ workflow, node }) {
 				formData={workflow.FormData}
 				title={workflow.Title}
 				signatures={workflow.Signatures}
+				seals={workflow.seals}
 			/>
 			<br />
 			{

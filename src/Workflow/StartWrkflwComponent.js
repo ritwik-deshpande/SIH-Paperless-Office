@@ -135,6 +135,7 @@ class StartWrkflwComponent extends Component
         "Path": this.initPath(),
         "nextNodes":[],
         "Signatures":{},
+	"seals":{},
         "status" : "active",
         "begin_timestamp" : Timestamp.getTimestamp(new Date().getTime()),
         "end_timestamp" : "",
