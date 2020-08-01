@@ -67,31 +67,35 @@ export default function  MainComponent ({userObj, props, myApprovals, myWorkflow
 	let temp_pending = 0
 	let recentWorkflows = []
 	let urgentApprovals = []
-	for(var index in myWorkflows){
-			let time_gap =Timestamp.getTSObj() - Timestamp.str2TSObj(myWorkflows[index].begin_timestamp);
-			time_gap = Timestamp.getHours(time_gap)
-			let base_time = 5*24
-			console.log(time_gap)
+  for(var index in myWorkflows)
+  {
+      if(myWorkflows[index].status.localeCompare("corrupted") !== 0)
+      {
+        let time_gap =Timestamp.getTSObj() - Timestamp.str2TSObj(myWorkflows[index].begin_timestamp);
+        time_gap = Timestamp.getHours(time_gap)
+        let base_time = 5*24
+        console.log(time_gap)
 
-			if(time_gap<base_time)
-			{
-				recentWorkflows.push(myWorkflows[index])
-			}
+        if(time_gap<base_time)
+        {
+          recentWorkflows.push(myWorkflows[index])
+        }
 
 
-			if(myWorkflows[index].status.localeCompare("terminated") === 0)
-			{
-				temp_terminated++
-			}
-			else if(myWorkflows[index].status.localeCompare("active") === 0)
-			{	
-				temp_active++
-			}
-			else{
+        if(myWorkflows[index].status.localeCompare("terminated") === 0)
+        {
+          temp_terminated++
+        }
+        else if(myWorkflows[index].status.localeCompare("active") === 0)
+        {	
+          temp_active++
+        }
+        else{
 
-				temp_completed++
-			}
-		}
+          temp_completed++
+      }
+    }
+	}
 
 	for( var index in myApprovals.requests){
 		//if(myApprovals.requests[index].priority && (myApprovals.requests[index].status.localeCompare("Pending") === 0)){

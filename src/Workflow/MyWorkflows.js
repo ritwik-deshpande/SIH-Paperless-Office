@@ -42,14 +42,25 @@ class MyWorkflow extends React.Component {
 		let i = 0;
 		if(myworkflows){
 			for (i = 0; i < myworkflows.length; i++) {
-				this.state.tableData.push({
+				if(myworkflows[i].status.localeCompare("corrupted") === 0){
+					this.state.tableData.push({
+						id: myworkflows[i].id,
+						wname: " ",
+						status: "Workflow is corrupted",
+						lastfeedback: " ",
+						time:" ",
+						index_no: i,
+					});
+				}
+				else
+				{this.state.tableData.push({
 					id: myworkflows[i].id,
 					wname: myworkflows[i].Title,
 					status: myworkflows[i].status,
 					lastfeedback: myworkflows[i].Feedback,
 					time: myworkflows[i].Feedback_ts,
 					index_no: i,
-				});
+				});}
 			}
 			console.log(this.state.tableData);
 			this.setState({

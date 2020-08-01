@@ -77,7 +77,11 @@ TabPanel.propTypes = {
 	let recentWorkflowsList = []
       console.log(props.recentWorkflows)
       for(var index in props.recentWorkflows){
+        if( props.recentWorkflows[index].status.localeCompare("corrupted") === 0){
+            continue;
+        }
 		recentWorkflowsList.push(
+
 			<ListItem key={props.recentWorkflows[index].id} alignItems="flex-start">
 			      <ListItemText 
 				primary={props.recentWorkflows[index].Title} 

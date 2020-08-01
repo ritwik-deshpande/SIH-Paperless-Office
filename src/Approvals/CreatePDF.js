@@ -87,11 +87,17 @@ class CreatePDF extends React.Component {
 			.then((res) => {
 				console.log("The data received is", res.data);
 				if (res.data) {
-					this.setState({
+
+					if(res.data.status.localeCompare("corrupted") === 0)
+					{
+						alert("Workflow is corrupted");
+					}
+					else
+					{this.setState({
 						workflow: res.data,
 						comments: res.data.Comments,
 						signatures: res.data.Signatures,
-					});
+					});}
 				}
 			});
 	}
