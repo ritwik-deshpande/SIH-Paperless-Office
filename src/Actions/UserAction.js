@@ -11,9 +11,9 @@ export const GetUser = (id, password) => {
         var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
         
         console.log("password", password)
-	var hash = bcrypt.hashSync('keskar', salt);
-        console.log(hash)
-
+	    var hash = bcrypt.hashSync('1234', salt);
+        console.log('1234',hash)
+ 
 
         if( userObj && userObj.id.localeCompare(id) === 0)
         {

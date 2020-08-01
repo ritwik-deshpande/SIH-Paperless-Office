@@ -188,7 +188,13 @@ class StatusComponent extends Component {
 			});
 	};
 	handleSearch = (curentWorkflow) => {
-		this.setState(
+		//add what is changed for corrupt workflow
+		if(curentWorkflow.status.localeCompare("corrupted") === 0)
+		{
+			alert("This workflow is corrupted")
+		}
+		else
+		{this.setState(
 			{
 				status: null,
 				id: curentWorkflow.id,
@@ -201,11 +207,14 @@ class StatusComponent extends Component {
 			}
 		);
 
-		console.log(this.state);
-
 		this.setState({
 			open: true,
 		});
+		}
+
+		//console.log(this.state);
+
+		
 	};
 	handleClose = () => {
 	
@@ -232,13 +241,20 @@ class StatusComponent extends Component {
 				.then((res) => {
 					console.log('The data received is',res.data)
 					if (res && res.data) {
-						this.setState({
+						if(res.data.status.localeCompare("corrupted") === 0)
+						{
+							alert('Workflow is corrupted');
+						}
+						else
+						{
+							this.setState({
 							workflow: res.data,
 							title: res.data.Title,
 							username: res.data.User,
 							id:id,
 							open:true
 						}, ()=> { this.init() } );
+					}
 					
 					}
 					else{
