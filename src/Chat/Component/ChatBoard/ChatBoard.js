@@ -188,7 +188,8 @@ export default class ChatBoard extends Component {
                 <div className="headerChatBoard">
                     <img
                         className="viewAvatarItem"
-                        src={this.currentPeerUser.photoUrl}
+                        // src={this.currentPeerUser.photoUrl}
+                        src={require('../../../images/'+this.currentPeerUser.id+".jpg")}
                         alt="icon avatar"
                     />
                     <span className="textHeaderChatBoard">

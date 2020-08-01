@@ -12,7 +12,7 @@ export default class WelcomeBoard extends Component {
             }`}</span>
                 <img
                     className="avatarWelcome"
-                    src={this.props.currentUserAvatar}
+                    src={require('../../../images/'+this.props.currentUserAvatar+".jpg")}
                     alt="icon avatar"
                 />
                 <span className="textDesciptionWelcome">

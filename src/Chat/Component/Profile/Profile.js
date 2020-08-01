@@ -6,6 +6,9 @@ import {myFirestore, myStorage} from '../../Config/MyFirebase'
 import images from './../Themes/Images'
 import './Profile.css'
 import {AppString} from './../Const'
+import Tooltip from '@material-ui/core/Tooltip';
+import { Button } from '@material-ui/core'
+import { Redirect } from 'react-router-dom'
 
 class Profile extends Component {
     constructor(props) {
@@ -15,7 +18,8 @@ class Profile extends Component {
             id: localStorage.getItem(AppString.ID),
             nickname: localStorage.getItem(AppString.NICKNAME),
             aboutMe: localStorage.getItem(AppString.ABOUT_ME),
-            photoUrl: localStorage.getItem(AppString.PHOTO_URL)
+            photoUrl: localStorage.getItem(AppString.PHOTO_URL),
+            redirect: false
         }
         this.newAvatar = null
         this.newPhotoUrl = ''
@@ -31,6 +35,16 @@ class Profile extends Component {
         }
     }
 
+    setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+      }
+      renderRedirect = () => {
+        if (this.state.redirect) {
+          return <Redirect to='/main' />
+        }
+      }
     onChangeNickname = event => {
         this.setState({nickname: event.target.value})
     }
@@ -112,9 +126,17 @@ class Profile extends Component {
             <div className="root">
                 <div className="header">
                     <span>PROFILE</span>
+                    
+                    <Tooltip title="Back">
+                    <div style={{float: 'right'}}>
+                        {this.renderRedirect()}
+                        <Button color="secondary" variant="contained" style={{float: 'right'}} onClick={this.setRedirect}>Back</Button>
+                    </div>    
+                    </Tooltip>
+                   
                 </div>
 
-                <img className="avatar" alt="Avatar" src={this.state.photoUrl}/>
+                <img className="avatar" alt="Avatar" src={require('../../../images/'+this.state.id+".jpg")}/>
 
                 <div className="viewWrapInputFile">
                     <img
