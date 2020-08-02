@@ -186,7 +186,7 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 					},
 					rowStyle: rowData => ({
 						fontSize: "14px",
-						color: rowData.priority === 'High' && rowData.feedback === 'Pending' ? "#ef5350" : "#000",
+						color: rowData.priority === 'High' && rowData.feedback === 'Pending' ? "#ff9800" : "#000",
 						fontWeight: rowData.priority === 'High' && rowData.feedback === 'Pending' ? "Bold" : "Medium",
 					}),
 				}}
