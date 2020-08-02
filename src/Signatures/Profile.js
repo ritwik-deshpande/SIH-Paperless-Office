@@ -48,7 +48,7 @@ export default function Profile({userObj}) {
 		let fields = []
 		for( var key in userObj)
 		{
-		if(key.localeCompare("esign") && key.localeCompare("notifications") && key.localeCompare("password") && key.localeCompare("pin")){
+		if(key.localeCompare("esign") && key.localeCompare("seals") && key.localeCompare("notifications") && key.localeCompare("password") && key.localeCompare("pin")){
 	    	let field_key = key
 			if(key.localeCompare("avg_response_time") === 0)
 			{

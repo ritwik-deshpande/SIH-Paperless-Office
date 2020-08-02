@@ -99,6 +99,7 @@ class UpdateWorkflow extends Component
 				"formId": this.props.formId,
 				"flowchartId" :this.state.flowchartId,
 				"Feedback" : "",
+				"seals":{}, 
 				"Feedback_ts": 0,
                                 "priority": false,
 				"User":old_object.User,

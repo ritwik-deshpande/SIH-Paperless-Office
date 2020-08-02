@@ -37,7 +37,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Box, Container } from "@material-ui/core";
 import WorkflowNode from "../utils/WorkflowNode";
 import HeaderBanner from '../Header';
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import {withRouter} from 'react-router-dom'
+import style from '../StyleSheet'
+import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+
 var bcrypt = require('bcryptjs');
 
 const mapIdtoRoles ={
@@ -64,9 +74,12 @@ class CreatePDF extends React.Component {
 			isSigned: false,
 			isApproved: false,
 			openDialog : false,
+			openSealMenu : false,
 			pin: null,
+			selectedSeal:null,
 			comments: null,
 			workflow: null,
+			seals:null,
 			signatures: null,
 			// comments : [{id:1, name:'Dustin Henderson', message: 'never ending story. turn around and look at what tyou see.<br/>In her face something never ending story. turn around and look at what tyou see.<br/>In her face something'},
 			// {id:2, name: 'Will Byers', message: 'Approved by Chief PD'},
@@ -97,9 +110,64 @@ class CreatePDF extends React.Component {
 						workflow: res.data,
 						comments: res.data.Comments,
 						signatures: res.data.Signatures,
+						seals: res.data.seals,
 					});}
 				}
 			});
+	}
+	handleCloseSealMenu = () => {
+	     this.setState({
+			openSealMenu : false,
+	     	
+	     })
+		
+	}
+	getSeal = ()=>{
+	
+		return this.state.selectedSeal
+	}
+	
+	
+	handleAddSeal = (seal,index) => {
+		console.log("The role",seal,index)
+	
+		this.setState({
+			openDialog : true,
+			selectedSeal :seal,
+			isApproved: true,
+			openSealMenu:false,
+		})
+		
+	}
+	
+	getListItem = () => {
+	
+		/*var seal_menu = []
+	    for(var index in this.props.userObj.seals){
+	    
+	    	seal_menu.push()
+	    
+	    }
+	
+		return seal_menu*/
+		
+		    return Object.keys(this.props.userObj.seals).map((key, seal) => {
+		    
+		    	return (<div >
+					<ListItem
+						button
+						onClick={() => this.handleAddSeal(this.props.userObj.seals[key])}>
+						<ListItemIcon>
+							<AddIcon />
+						</ListItemIcon>
+						<ListItemText primary={key} />
+					</ListItem>
+					{/* </div> */}
+				</div>)
+				
+			})
+
+	
 	}
 
 	handleAddComment = (comment) => {
@@ -197,8 +265,7 @@ class CreatePDF extends React.Component {
 		console.log("Open Dialog")
 	
 		this.setState({
-			openDialog : true,
-			isApproved: true
+			openSealMenu : true,
 		})
 	
 	}
@@ -206,7 +273,7 @@ class CreatePDF extends React.Component {
 	handleSubmit = () => {
 		console.log("Compare",this.state.pin,this.props.userObj.pin)
 		//this.state.pin.localeCompare(this.props.userObj.pin) === 0
-		//
+		//bcrypt.compareSync(this.state.pin, this.props.userObj.pin)
 		if(bcrypt.compareSync(this.state.pin, this.props.userObj.pin)){
 			this.setState({
 				openDialog : false
@@ -255,9 +322,16 @@ class CreatePDF extends React.Component {
 		let name = this.props.userObj.name;
 		let id = this.props.userObj.id;
 		let esign = this.props.userObj.esign;
+		
+		let seal = this.state.selectedSeal
+		
+		
 		// console.log(this.state.signatures);
 		this.setState({ isSigned: true });
 		this.state.signatures[name] = esign;
+		if(seal){
+			this.state.seals[name] = seal;
+		}
 		// console.log("in handlesignClick");
 		this.state.workflow.send_requests = []
 		this.state.workflow.cancel_requests = []
@@ -357,6 +431,7 @@ class CreatePDF extends React.Component {
 		}
 
 		this.state.workflow.Signatures = this.state.signatures;
+		this.state.workflow.seals = this.state.seals;
 		this.state.workflow.Comments = this.state.comments;
 		this.state.workflow.Feedback = "Approved by " + name;
 		this.state.workflow.Feedback_ts = Timestamp.getTimestamp(new Date().getTime());
@@ -397,7 +472,7 @@ class CreatePDF extends React.Component {
 			.update(userObj.id, userObj)
 			.then((res) => {
 				console.log("Updated user sucessfully");
-			});
+			}); 
 	};
 	
 	handleRejectClick = () => {
@@ -515,7 +590,7 @@ class CreatePDF extends React.Component {
 	};
 
 	render() {
-		// const { classes } = this.props;
+		const { classes } = this.props;
 		return (
 			<React.Fragment>
 				{this.state.comments ? (
@@ -535,6 +610,7 @@ class CreatePDF extends React.Component {
 								formData={this.state.workflow.FormData}
 								title={this.state.workflow.Title}
 								signatures={this.state.signatures}
+								seals={this.state.seals}
 							/>
 						</Box>
 						<br />
@@ -611,6 +687,32 @@ class CreatePDF extends React.Component {
 										Approve and add e-signature
 									</Button>
 								</Box>
+								<Dialog
+									onClose={() => {this.handleCloseSealMenu()}}
+									scroll="paper"
+									aria-labelledby="customized-dialog-title"
+									open={this.state.openSealMenu}>
+									<DialogTitle>
+										<Typography variant="h6" display="inline">
+											Add Institute Seal
+										</Typography>
+										<IconButton
+											className={classes.closeButton}
+											onClick={() => {this.handleCloseSealMenu()} }>
+											<CloseIcon />
+										</IconButton>
+									</DialogTitle>
+									<DialogContent dividers>
+										<List component="div">
+											{this.getListItem()}
+										</List>
+									</DialogContent>
+								</Dialog>
+						
+
+
+
+
 								<Box>
 									<Button
 										variant="contained"
@@ -641,4 +743,4 @@ const mapStatetoProps = (state) => {
 		loggedIn: state.auth.loggedIn,
 	};
 };
-export default connect(mapStatetoProps, null)(withRouter(CreatePDF));
+export default connect(mapStatetoProps, null)(withRouter(withStyles(style)(CreatePDF)));
