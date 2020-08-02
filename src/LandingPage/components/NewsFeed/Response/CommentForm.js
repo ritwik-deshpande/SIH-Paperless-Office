@@ -17,6 +17,7 @@ class CommentForm extends React.Component {
       value: '',
       singleLineValue: '',
       mentionData: null,
+      plainText: '',
       users: [
         {
           _id: 'AP001',
@@ -62,15 +63,18 @@ class CommentForm extends React.Component {
     this.setState({
       value: newValue,
       mentionData: {newValue, newPlainTextValue, mentions},
+      plainText: newPlainTextValue
     })
   }
 
   _handleSubmit(event) {
     event.preventDefault(); // prevents page from reloading on submit
+
     let author = 'some name';
-    let body = this.state.value;
+    let body = this.state.plainText;
     let date = Timestamp.getTimestamp(new Date().getTime())
     this.props.addComment(author.value, body, date);
+
   }
   
   render() {
