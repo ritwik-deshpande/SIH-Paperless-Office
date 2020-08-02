@@ -1,18 +1,23 @@
 import axios from "axios";
 
-//const Endpoint = "https://7c4b9a50c2cf.ngrok.io"
+//const Endpoint = "https://1c3817142143.ngrok.io"
 const Endpoint = "http://localhost:3030"
-
 
 export default { 
 
-    posts(url) {
+    leave(){
       return {
-        getOne: ({ id }) => axios.get(`${url}/${id}`),
-        getAll: () => {return `${Endpoint}/${url}`},
-        update: (toUpdate) =>  axios.put(url,toUpdate),
-        create: (toCreate) =>  axios.put(url,toCreate),
-        delete: ({ id }) =>  axios.delete(`${url}/${id}`)
+        post : (id,leaveobj) => axios.post(`${Endpoint}/leave/${id}`,leaveobj)
+      }
+    },
+
+    posts() {
+      return {
+        getOne: ({ id }) => axios.get(`${Endpoint}/post/${id}`),
+        getAll: () => axios.get(`${Endpoint}/post`),
+        update: (toUpdate) =>  axios.put(`${Endpoint}/post`,toUpdate),
+        create: (toCreate) =>  axios.put(`${Endpoint}/post`,toCreate),
+        delete: ({ id }) =>  axios.delete(`${Endpoint}/post/${id}`)
       }
     },
     users(){

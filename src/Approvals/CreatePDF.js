@@ -43,6 +43,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import {withRouter} from 'react-router-dom'
+import Divider from "@material-ui/core/Divider";
+
+import { ButtonGroup } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { green } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
+import CancelIcon from '@material-ui/icons/Cancel';
 import style from '../StyleSheet'
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -68,10 +75,13 @@ const mapIdtoRoles ={
 
 }
 class CreatePDF extends React.Component {
+
+	//classes = useStyles();
 	constructor(props) {
 		super(props);
 		this.state = {
 			isSigned: false,
+			isResponded : false,
 			isApproved: false,
 			openDialog : false,
 			openSealMenu : false,
@@ -90,6 +100,22 @@ class CreatePDF extends React.Component {
 			// ]
 		};
 		console.log("in Create PDF");
+	}
+
+	viewedWorkflow = () => {
+		console.log("Viewed Workflow")
+		this.state.workflow.Feedback = "Viewed by " + this.props.userObj.name;
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp(new Date().getTime());
+
+		api
+		.workFlow()
+		.put(this.state.workflow.id, this.state.workflow)
+		.then((res) => {
+			console.log("Viewing Workflow", res);
+			//this.props.history.push('/approve')
+			//window.location.reload(true)
+
+		});
 	}
 
 	componentDidMount() {
@@ -111,7 +137,7 @@ class CreatePDF extends React.Component {
 						comments: res.data.Comments,
 						signatures: res.data.Signatures,
 						seals: res.data.seals,
-					});}
+					}, () => { this.viewedWorkflow() });}
 				}
 			});
 	}
@@ -311,6 +337,9 @@ class CreatePDF extends React.Component {
 		//broadcast to the next level.
 		// at the end send update message to server along with the required arrays.
 
+		this.state.isResponded = true
+
+
 		let node_level = this.state.workflow.Path.length;
 		let path = this.state.workflow.Path;
 		let current_node_key = this.state.workflow.Path[node_level - 1];
@@ -486,6 +515,8 @@ class CreatePDF extends React.Component {
 		// add the content for Rejection.
 		//notifies the owner.
 
+		this.state.isResponded = true
+
 		console.log("in handlesignClick");
 
 		let node_level = this.state.workflow.Path.length;
@@ -588,7 +619,21 @@ class CreatePDF extends React.Component {
 				console.log("Updated user sucessfully");
 			});
 	};
+	handleDownload = (uri, index) => {
+		const linkSource = uri;
+		const downloadLink = document.createElement("a");
+		const fileName = uri.split(";")[1];
 
+		downloadLink.href = linkSource;
+		downloadLink.download = fileName;
+		downloadLink.click();
+	};
+	handleView = (uri) => {
+		let pdfWindow = window.open("");
+		pdfWindow.document.write(
+			"<iframe width='100%' height='100%' src='" + uri + "'></iframe>"
+		);
+	};
 	render() {
 		const { classes } = this.props;
 		return (
@@ -614,7 +659,48 @@ class CreatePDF extends React.Component {
 							/>
 						</Box>
 						<br />
-
+							
+						{
+				this.state.workflow.FormData.Upload_Documents ? (<Typography variant="h6">Documents Uploaded</Typography>):null
+			}
+			
+			{this.state.workflow.FormData.Upload_Documents
+				? this.state.workflow.FormData.Upload_Documents.map((uri, index) => {
+						return (
+							<>
+								<Box display="flex" m={1}>
+									<Box flexGrow={1} p={1}>
+										{index + 1}.{" " + uri.split(";")[1] + " : "}
+									</Box>
+									<ButtonGroup variant="text">
+										<Box pr={3}>
+											<Button
+												// variant="outlined"
+												color="primary"
+												onClick={() => this.handleView(uri)}
+												startIcon={<VisibilityIcon />}
+												//className={this.classes.button}
+												>
+												View DOCUMENT
+											</Button>
+										</Box>
+										<Box pl={3}>
+											<Button
+												color="primary"
+												onClick={() => this.handleDownload(uri, index)}
+												startIcon={<GetAppIcon />}
+												//className={this.classes.button}
+												>
+												Download DOCUMENT
+											</Button>
+										</Box>
+									</ButtonGroup>
+								</Box>
+								<Divider />
+							</>
+						);
+				  })
+				: null}
 						<AddComments
 							json={{ listitems: this.state.comments }}
 							handleAddComment={this.handleAddComment}

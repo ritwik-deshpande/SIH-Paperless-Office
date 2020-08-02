@@ -66,12 +66,12 @@ const mapIdtoUser={
 }
 
 const countries = [
-  { name: 'Ravindra Keskar', id: 'AP001', roles:["Assistant Professors","Student Mentor Coordinator","Academics"] },
-  { name: 'Manish Kurhekar', id: 'AP003',roles: ["Assistant Professors","Academics"] },
-  { name: 'Umesh Deshpande', id: 'HOD001', roles: ["Head of Department","Academics"] },
-  { name: 'Anil Mokhade', id: 'AP002',roles:["Assistant Professors","Academics"]  },
-  { name: 'Pramod Padole', id: 'DIR01',roles:["Directors","Academics"]},
-  { name: 'MHRD', id:'MHRD1', roles:[]},
+  { name: 'Ravindra Keskar',rtime:"45m" , id: 'AP001', roles:["Assistant Professors","Student Mentor Coordinator","Academics"] },
+  { name: 'Manish Kurhekar',rtime: "2h 10m", id: 'AP003',roles: ["Assistant Professors","Academics"] },
+  { name: 'Umesh Deshpande',rtime:"1d", id: 'HOD001', roles: ["Head of Department","Academics"] },
+  { name: 'Anil Mokhade',rtime:"2h", id: 'AP002',roles:["Assistant Professors","Academics"]  },
+  { name: 'Pramod Padole',rtime:"4h", id: 'DIR01',roles:["Directors","Academics"]},
+  { name: 'MHRD', rtime:"",id:'MHRD1', roles:[]},
   {id: "GRP000", name: "Directors", roles: []},
 	{id: "GRP001", name: "Deans",roles: [] },
 	{id: "GRP002", name:"Associate Deans",roles: []},
@@ -204,7 +204,7 @@ const NodeInnerCustom = ({ node, config }) => {
             renderOption={(option) => (
               <React.Fragment>
                 {/* <span style={{fontSize:10}}>{option.id, "  "}</span><br/> */}
-                <span style={{fontSize:14}}>{option.name}</span>
+            <span style={{fontSize:14}}>{option.name+" "+option.rtime}</span>
               </React.Fragment>
             )}
             renderInput={(params) => (

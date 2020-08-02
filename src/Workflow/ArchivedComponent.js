@@ -44,7 +44,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
 
-class StatusComponent extends Component {
+class ArchivedComponent extends Component {
 	state = {
 		id: null,
 		status: null,
@@ -57,9 +57,8 @@ class StatusComponent extends Component {
 		updateWorkFlow: false,
 		myWorkflow: false,
 		archivedWorkflows : null,
-		nonArchivedWorkflows : null,
 		open: false,
-		tableTitle: "My_Applications", 
+		tableTitle: "Archived_Applications", 
 		sentBy:null,
 		filter : null
 	};
@@ -128,19 +127,18 @@ class StatusComponent extends Component {
 					{
 					  list1.push(myWorkflows[index])
 					}*/
-					if(!allWorkflows[index].isArchived){
+					if(allWorkflows[index].isArchived){
 			
 						list1.push(allWorkflows[index])
 					}
 			
-					
 			
-					}
+				}
 				
 			}
-			console.log("The list1", list1)
+			console.log("The list", list1)
 			this.setState({
-				nonArchivedWorkflows : list1
+				archivedWorkflows : list1
 			})
 			
 		}
@@ -381,15 +379,15 @@ class StatusComponent extends Component {
 					</Grid>
 				</Paper>
 								{/* <br></br> */}
-				
-				{ this.state.nonArchivedWorkflows ? 
+				{ this.state.archivedWorkflows ? 
 				<MyWorkflow
 					tableTitle={this.state.tableTitle}
-				    myWorkflows={this.state.nonArchivedWorkflows}
+				    myWorkflows={this.state.archivedWorkflows}
 					userObj={this.props.userObj}
 					handleSubmit={this.handleSearch}
 					filter={this.state.filter}
 				/> : <h1> Fetching Workflows </h1>}
+				
 
 				{/* </form>  */}
 
@@ -473,4 +471,4 @@ const mapStatetoProps = (state) => {
 export default connect(
 	mapStatetoProps,
 	null
-)(withStyles(style)(withRouter(StatusComponent)));
+)(withStyles(style)(withRouter(ArchivedComponent)));

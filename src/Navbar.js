@@ -59,7 +59,7 @@ function Listitems(props) {
   pageDict['/']=1;
   pageDict['/esign']=2;
   pageDict['/calendar'] = 3;
-  pageDict['/viewDocs']=4;
+  pageDict['/archive']=4;
   pageDict['/status']=5;
   pageDict['/getForm']=6;
   pageDict['/approve']=7;
@@ -217,12 +217,7 @@ function Listitems(props) {
         {/* </Tooltip> */}
 
         {/* <Tooltip title={props.open ? "" : "My Documents"}> */}
-         {/* <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/viewDocs',4)}>
-            <ListItemIcon className={classes.navBarIcons}>
-              <FolderIcon />
-            </ListItemIcon>
-            <ListItemText primary="My Documents" /> 
-          </ListItem> /*}
+          
         {/* </Tooltip> */}
 
 	      {/* <Tooltip title={props.open ? "" : "My Team"}> */}
@@ -244,6 +239,16 @@ function Listitems(props) {
             </ListItemIcon>
             <ListItemText primary="View Applications"/>
           </ListItem>
+
+
+	  <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/archive',4)}>
+            <ListItemIcon className={classes.navBarIcons}>
+              <FolderIcon />
+            </ListItemIcon>
+            <ListItemText primary="Archievd Applications" /> 
+          </ListItem> 
+
+		
         {/* </Tooltip> */}
         
         {/* <Tooltip title={props.open ? "" : "Start a Workflow"}> */}
