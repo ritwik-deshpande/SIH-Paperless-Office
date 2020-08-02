@@ -59,7 +59,7 @@ const tableIcons = {
 	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-export default function AlignItemsList({ Click, requestTable, filter, node }) {
+export default function AlignItemsList({ Click, requestTable, filter, node, title }) {
 	// const tableclasses = useTableStyles();
 	// const classes = useStyles();
 	const classes = makeStyles(style(useTheme()))();
@@ -76,7 +76,7 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 
 	if(!node)
 	{
-        let tableTitle = "My Approvals "
+        let tableTitle = title
 		if(filter)
 		{
 			tableTitle = tableTitle.concat(filter)

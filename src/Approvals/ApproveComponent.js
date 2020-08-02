@@ -165,6 +165,7 @@ class ApproveComponent extends React.Component {
 							userObj={this.props.userObj}
 							requestTable={this.state.requestTable}
 							filter={this.state.filter}
+							title={"My Approvals"}
 						/>
 						{
 							this.state.nominatorTables ? 
@@ -173,6 +174,7 @@ class ApproveComponent extends React.Component {
 								userObj={this.props.userObj}
 								requestTable={this.state.nominatorTables[0]}
 								filter={null}
+								title={"Nominators Approvals"}
 							/>)
 							: null
 						}

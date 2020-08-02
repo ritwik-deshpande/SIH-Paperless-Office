@@ -79,11 +79,9 @@ class MyWorkflow extends React.Component {
 		.then((res) => {
 			alert("Archived Application "+this.state.myworkflows[index].id)
 			this.props.history.push('/archive')
-			window.location.reload(true)
+			// window.location.reload(true)
 
 		});
-
-		
 		
 	}
 
