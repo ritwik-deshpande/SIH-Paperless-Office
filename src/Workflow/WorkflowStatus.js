@@ -1,5 +1,5 @@
 import React from "react";
-
+import clsx from "clsx";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
@@ -91,7 +91,13 @@ export default function WorkflowStatus({ workflow, title, steps, nodesList }) {
 		// }
 		return (
 			<Typography component="h1" variant="h5" align="center" style={{textTransform:"capitalize"}}>
-				Current Status : {workflow.status}
+				Current Status: 
+				<Box display="inline" fontWeight={600} className={clsx({
+					[classes.pendingColor]: workflow.status.toLowerCase()==='pending',
+					[classes.activeColor]: workflow.status.toLowerCase()==='active',
+					[classes.terminatedColor]: workflow.status.toLowerCase()==='terminated',
+					[classes.completedColor]: workflow.status.toLowerCase()==='completed',
+				})}>{" "+workflow.status}</Box>
 			</Typography>
 		);
 	};

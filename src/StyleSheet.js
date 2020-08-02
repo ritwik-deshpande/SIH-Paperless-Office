@@ -6,6 +6,8 @@ import WorkflowsPhoto from './images/headers/myworkflows.jpg'
 import StartWorkflowPhoto from './images/headers/startworkflow.jpg'
 import ApprovalsPhoto from './images/headers/approve.jpg'
 import AnalyticsPhoto from './images/headers/analytics.jpg'
+import MyTeamsPhoto from './images/headers/my_team.jpg'
+
 const drawerWidth = 300;
 const style = theme => ({
     root: {
@@ -19,6 +21,18 @@ const style = theme => ({
 				borderWidth: 2,
 			},
 		},
+    },
+    pendingColor: {
+        color: "#ff9800",
+    },
+    completedColor: {
+        color: "#43a047",
+    },
+    activeColor: {
+        color: "#01579b",
+    },
+    terminatedColor: {
+        color: "#e53935",
     },
     drawer: {
         height: "100vh",
@@ -281,6 +295,19 @@ const style = theme => ({
             fontSize: theme.typography.pxToRem(13),
             color: theme.palette.text.secondary,
           },
+          myteamHeader: {
+            width: '100%',
+            height: '175px', 
+            backgroundImage: `url(${MyTeamsPhoto})`,
+            backgroundPosition: '0 55%',
+            backgroundSize: '1200px',
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+        treeviewroot:{
+            height: 264,
+            flexGrow: 1,
+            maxWidth: 200,
+        }
 
  });
 

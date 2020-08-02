@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import MaterialTable from "material-table";
+import MaterialTable, { MTableBody, MTableBodyRow } from "material-table";
 import Typography from "@material-ui/core/Typography";
 import { forwardRef } from "react";
 import AddBox from "@material-ui/icons/AddBox";
@@ -91,8 +91,8 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 	const classes = makeStyles(style(useTheme()))();
 
 	const tableColumns = [
-	{ title: "Workflow ID", field: "id" },
-	{ title: "Workflow Name", field: "wname" },
+	{ title: "Application ID", field: "id" },
+	{ title: "Application Name", field: "wname" },
 	{ title: "Sender Name", field: "sender" },
 	{ title: "Request Feedback", field: "feedback",defaultFilter : filter },
 	{ title: "Last Updated On", field: "time" },
@@ -184,9 +184,11 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 						fontWeight: "bold",
 						fontSize: "15px",
 					},
-					rowStyle: {
+					rowStyle: rowData => ({
 						fontSize: "14px",
-					},
+						color: rowData.priority === 'High' && rowData.feedback === 'Pending' ? "#ef5350" : "#000",
+						fontWeight: rowData.priority === 'High' && rowData.feedback === 'Pending' ? "Bold" : "Medium",
+					}),
 				}}
 			/>
 		</div>

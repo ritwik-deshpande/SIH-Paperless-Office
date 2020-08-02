@@ -121,7 +121,7 @@ function NewsFeed(props){
                         })
                       }
                     </List>
-                    <CommentBox id={product.id} comments ={product.comments} title={product.title} user ={user} fullScreen={fullScreen}/>
+                    <CommentBox id={product.id} comments ={product.comments} title={product.title} userObj ={props.userObj} fullScreen={fullScreen}/>
                   </div>
                 </AccordionDetails>
               </Accordion>

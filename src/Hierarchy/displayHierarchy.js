@@ -9,6 +9,19 @@ import ModalContent from './ModalContent';
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { withRouter } from "react-router";
 import useStyles from '../Style'
+import MyTeamHeader from '../Headers/MyTeamHeader'
+import StyledTreeItem from './StyledTreeItem'
+import { useTheme } from '@material-ui/core/styles';
+import {
+	Card,
+	CardHeader,
+	ListGroup,
+	ListGroupItem,
+	Row,
+	Col,
+	Progress,
+	Container
+  } from "shards-react";
 import {
 	AppBar,
 	withStyles,
@@ -18,7 +31,8 @@ import {
 	Button,
 	Tooltip,
 	TextField,
-	Grid,
+  Grid,
+  Typography
 } from "@material-ui/core";
 const data = {
   DIR01: {
@@ -67,6 +81,7 @@ function getModalStyle() {
 function DisplayHierarchy(props) {
 
   const classes = useStyles();
+  const theme= useTheme();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -96,7 +111,7 @@ function DisplayHierarchy(props) {
 
   
   const renderTree = nodes => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}  onLabelClick={()=>{handleOpen(nodes)}}>
+    <StyledTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}  onLabelClick={()=>{handleOpen(nodes)}}>
       
       {Array.isArray(nodes.children)
         ? nodes.children.map(node => {
@@ -104,21 +119,40 @@ function DisplayHierarchy(props) {
             return renderTree(data[node]);
           })
         : null}
-    </TreeItem>
+    </StyledTreeItem>
   );
 
   return (
     <React.Fragment>
+       {console.log("im here !!")}
+      <MyTeamHeader title={'My Team'} /> 
+      <br/>
+     <Container fluid className="main-content-container px-4">
+			<Row>
+      			<Col lg="12">
+            <Card small >
+    		<CardHeader style ={{ backgroundColor: theme.palette.primary.main, color: theme.palette.getContrastText(theme.palette.primary.main) }}>
+      		<Typography variant="h6" >sample header text</Typography>
+    		</CardHeader>
+    		<ListGroup flush>
+      			<ListGroupItem >
+        		<Row>
+          			<Col md="12" className="form-group">
+            <TreeView
+              className={classes.treeviewroot}
+              defaultExpanded={[props.userObj.id]}
+              defaultCollapseIcon={<ExpandMoreIcon />}
+              defaultExpandIcon={<ChevronRightIcon />}
+              defaultEndIcon={<div style={{ width: 24 }} />}
+            >
+            {renderTree(data[props.userObj.id])}
+            </TreeView>
+            </Col></Row></ListGroupItem></ListGroup></Card>
+      			</Col>
+    		</Row>
+        
+  		</Container>
      
-      {console.log("im here !!")}
-      <TreeView
-        //className={classes.root}
-        defaultCollapseIcon={<ExpandMoreIcon />}
-        defaultExpanded={[props.userObj.id]}
-        defaultExpandIcon={<ChevronRightIcon />}
-      > 
-      {renderTree(data[props.userObj.id])}
-      </TreeView>
       <Modal
         open={open}
         onClose={handleClose}

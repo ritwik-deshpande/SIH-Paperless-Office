@@ -82,7 +82,7 @@ class CommentBox extends React.Component {
     console.log("new comment " + body + "is going to be added")
     const comment = {
       id: this.state.comments.length + 1,
-      name: 'userObj',
+      name: this.props.userObj.name,
       comment: body,
       timestamp: date
     };

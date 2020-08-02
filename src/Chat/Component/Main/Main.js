@@ -99,7 +99,8 @@ class Main extends Component {
                         >
                             <img
                                 className="viewAvatarItem"
-                                src={item.data().photoUrl}
+                                src={require('../../../images/'+item.data().id+".jpg")}
+                                //src={item.data().photoUrl}
                                 alt="icon avatar"
                             />
                             <div className="viewWrapContentItem">
@@ -125,6 +126,7 @@ class Main extends Component {
             <div className="root">
                 {/* Header */}
                 <div className="header">
+                    
                     <span><strong>Digi</strong>Connect</span>
                     <Tooltip title="Edit Profile">
                     <img
@@ -154,7 +156,7 @@ class Main extends Component {
                         ) : (
                             <WelcomeBoard
                                 currentUserNickname={this.currentUserNickname}
-                                //currentUserAvatar={this.currentUserAvatar}
+                                currentUserAvatar={this.currentUserId}
                             />
                         )}
                     </div>

@@ -290,7 +290,7 @@ class StatusComponent extends Component {
 				{/* <Header title={'Workflows'}/> */}
 
 
-				<MyWorkflowsHeader title={'Workflows'}/>
+				<MyWorkflowsHeader title={'Applications'}/>
 
 				{/* <Paper style={{backgroundColor:'#002a29'}}>
 					<Grid container justify="center" spacing={3}>
@@ -377,7 +377,7 @@ class StatusComponent extends Component {
 												<ButtonGroup variant="text">
 													<Box pr={3}>
 														<Button color="primary" onClick={this.handleModify}>
-															MODIFY WORKFLOW
+															RESUBMIT WORKFLOW
 														</Button>
 													</Box>
 													<Box pl={3}>

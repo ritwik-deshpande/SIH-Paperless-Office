@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import AlignItemsList from "../Approvals/AlignItemsList";
 import CreatePDF from "./CreatePDF";
 import api from "../utils/api";
@@ -122,9 +123,15 @@ class ApproveComponent extends React.Component {
 											Back
 										</Button>
 									</Box>
-									<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-					<Box fontWeight={800} display="inline">{this.state.item.subject}</Box>
-				      </Typography>
+									<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} display="inline">
+										<Box fontWeight={800} display="inline">{this.state.item.subject + " "}</Box>
+										- Status : <Box display="inline" fontWeight={600} className={clsx({
+											[classes.pendingColor]: this.state.item.status.toLowerCase()==='pending',
+											[classes.activeColor]: this.state.item.status.toLowerCase()==='active',
+											[classes.terminatedColor]: this.state.item.status.toLowerCase()==='rejected',
+											[classes.completedColor]: this.state.item.status.toLowerCase()==='approved',
+										})}>{this.state.item.status}</Box>
+				      				</Typography>
 								</Toolbar>
 							</AppBar>
 							<CreatePDF item={this.state.item} setResponded = {this.setResponded}/>
