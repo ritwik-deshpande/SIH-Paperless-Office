@@ -12,6 +12,14 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import style from '../StyleSheet'
 import { withStyles, Tooltip } from '@material-ui/core';
+import {
+	AppBar,
+	Toolbar,
+	ButtonGroup,
+	Box,
+	TextField
+} from "@material-ui/core";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
 class ESignComponent extends React.Component{
 
@@ -44,7 +52,13 @@ class ESignComponent extends React.Component{
     }
  
     
-
+	handleBackButton = () => {
+	
+		this.setState({
+			updateProfile : false
+		})
+	
+	}
   
     handleSearch = () =>{
         console.log("The userid to search",this.state.value)
@@ -134,7 +148,22 @@ class ESignComponent extends React.Component{
 
 		( this.state.updateProfile ?
 
-		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> : 
+		(<><AppBar className={classes.appBar}>
+			<Toolbar >
+				<Box display="flex" flexGrow={1}>
+					<Button
+						edge="start"
+						autoFocus
+						color="inherit"
+						onClick={this.handleBackButton}
+						startIcon={<ArrowBackIosIcon />}>
+						Back
+					</Button>
+				</Box>
+			</Toolbar>
+		</AppBar>
+
+		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> </>): 
 		
 		<div>
 			{ !this.state.cannotUpdate ?	
