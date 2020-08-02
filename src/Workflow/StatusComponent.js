@@ -377,7 +377,7 @@ class StatusComponent extends Component {
 												<ButtonGroup variant="text">
 													<Box pr={3}>
 														<Button color="primary" onClick={this.handleModify}>
-															MODIFY WORKFLOW
+															RESUBMIT WORKFLOW
 														</Button>
 													</Box>
 													<Box pl={3}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../../Workflow/WorkflowComponents/grid.jpg';
 import Card from '@material-ui/core/Card';
@@ -44,12 +45,6 @@ import styles from '../../StyleSheet'
 // 	},
 // });
 
-const color = {};
-color['pending'] = "#ff9800";
-color['completed'] = "#4caf50";
-color['terminated'] = "#d32f2f";
-color['active'] = "#303f9f"
-
 function NumberCard(props) {
     // const classes = useStyles();
     // const s = makeStyles(styles(useTheme()));
@@ -75,7 +70,7 @@ function NumberCard(props) {
 	}
 
     }
-
+    const theme = useTheme();
     return(
         <>
         {/* <Grid container alignContent="center" justify="space-around" align="center" spacing={2}> */}
@@ -88,7 +83,7 @@ function NumberCard(props) {
                 <Card elevation={2}>  
                   <CardActionArea onClick = {() => {handleClick('/approve', key)}} className={classes.numCardBox}>
                     <Box mt={1} textAlign="center" className={classes.numCardContent} >
-                      <Typography variant="h2" style={{color:color[key]}}>
+                      <Typography variant="h2"  className={classes.pendingColor}>
                         {data[key]}
                       </Typography>
                       <Typography component="h5" variant="h5" gutterbottom>
@@ -111,7 +106,11 @@ function NumberCard(props) {
                 <Card elevation={2}>
                   <CardActionArea onClick = {() => {handleClick('/status', key)}} className={classes.numCardBox}>
                     <Box mt={1} textAlign="center" className={classes.numCardContent} >
-                      <Typography variant="h2" style={{color:color[key]}}>
+                      <Typography variant="h2" className={clsx( {
+                        [classes.completedColor]: key==='Completed',
+                        [classes.activeColor]: key==='active',
+                        [classes.terminatedColor]: key==='terminated',
+                      })}>
                         {data[key]}
                       </Typography>
                       <Typography component="h5" variant="h5" gutterbottom>
