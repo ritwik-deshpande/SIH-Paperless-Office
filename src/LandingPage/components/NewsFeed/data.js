@@ -6,33 +6,21 @@ export default [
     title: 'M.Tech Admission 2020',
     comments: [
       {id: 1,
-      comment: 'comment 1',
-      name: 'name 1',
-      timestamp: '22 July 2020'},
+      comment: 'Registration are happening at the Auditorium',
+      name: 'Ravindra Keskar',
+      timestamp: '22 Jul at 10:20, 2020'},
       {id: 2,
-      comment: 'comment 2',
-      name: 'name 2',
-      timestamp: '21 July 2020'},
+      comment: 'Registration Timings are: 9am to 5pm',
+      name: 'Ravindra Keskar',
+      timestamp: '22 Jul at 10:40, 2020'},
       {id: 3,
-      comment: 'comment 3',
-      name: 'name 3',
-      timestamp: '20 July 2020'},
+      comment: 'All CSE M.Tech Admission to be held in Smart Classroom',
+      name: 'Umesh Deshpande',
+      timestamp: '20 Jul at 10:43, 2020'},
       {id: 4,
-      comment: 'comment 4',
-      name: 'name 4',
-      timestamp: '19 July 2020'},
-      {id: 5,
-        comment: 'comment 5',
-        name: 'name 5',
-        timestamp: '19 July 2020'},
-      {id: 6,
-        comment: 'comment 6',
-        name: 'name 6',
-        timestamp: '19 July 2020'},
-      {id: 7,
-        comment: 'comment 7',
-        name: 'name 7',
-        timestamp: '19 July 2020'},
+      comment: 'Please carry all nessecary documents during registration',
+      name: 'Ravindra Keskar',
+      timestamp: '19 Jul at 11:00, 2020'}
     ]
   },
   {
@@ -90,9 +78,9 @@ export default [
     title: 'Department of Civil Engineering is organizing an International Conference on Advances in Civil Engineering ACE 2020',
     comments: [
       {id: 1,
-      comment: 'comment 1',
-      name: 'name 1',
-      timestamp: '22 July 2020'}
+      comment: 'For more information visit the website',
+      name: 'Pramod Padole',
+      timestamp: '22 Aug, 10:30 2020'}
     ]
   }
 ];
