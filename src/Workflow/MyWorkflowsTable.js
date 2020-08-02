@@ -82,7 +82,7 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	{ title: "Application Name", field: "wname" },
 	{ title: "Status", field: "status" , defaultFilter : filter, 
 		render: rowData => 
-		<div style={{display:"inline"}} 
+		<div style={{display:"inline", textTransform:"capitalize"}} 
 			className={clsx({
 			[classes.activeColor]: rowData.status==='active',
 			[classes.terminatedColor]: rowData.status==='terminated',
