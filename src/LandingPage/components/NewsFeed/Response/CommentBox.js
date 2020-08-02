@@ -46,7 +46,7 @@ class CommentBox extends React.Component {
           : null }
         </Box>
         {/* {commentNodes} */}
-        <Dialog open={this.state.showComments} onClose={this._handleClick.bind(this)} fullWidth maxWidth="sm" fullScreen={this.props.fullScreen}>
+        <Dialog open={this.state.showComments} onClose={this._handleClick.bind(this)} fullWidth maxWidth="md" fullScreen={this.props.fullScreen} PaperProps={{style:{overflow:"hidden"}}}>
           <DialogTitle id="form-dialog-title">
             <div>
               <Typography gutterBottom>
