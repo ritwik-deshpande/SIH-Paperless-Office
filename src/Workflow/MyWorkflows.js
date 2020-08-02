@@ -4,6 +4,8 @@ import api from "../utils/api";
 import axios from "axios";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography'
+import {withRouter} from 'react-router-dom'
+
 class MyWorkflow extends React.Component {
 	constructor(props) {
 		super(props);
@@ -68,6 +70,24 @@ class MyWorkflow extends React.Component {
 			});
 		}
 	}
+	handleArchive = (index) => {
+		console.log(this.state.myworkflows[index]);
+		this.state.myworkflows[index]["isArchived"] = true
+		api
+		.workFlow()
+		.put(this.state.myworkflows[index].id, this.state.myworkflows[index])
+		.then((res) => {
+			alert("Archived Application "+this.state.myworkflows[index].id)
+			this.props.history.push('/archive')
+			window.location.reload(true)
+
+		});
+
+		
+		
+	}
+
+
 	handleClick = (index) => {
 		console.log(index);
 		console.log(this.state.myworkflows[index]);
@@ -78,7 +98,9 @@ class MyWorkflow extends React.Component {
 			<div>
 				{this.state.tableCreated ? (
 					<WorkflowTable
+						tableTitle={this.props.tableTitle}
 						Click={this.handleClick}
+						Archive={this.handleArchive}
 						userObj={this.props.userObj}
 						filter={this.props.filter}
 						myworkflowsTable={this.state.tableData}
@@ -94,4 +116,4 @@ class MyWorkflow extends React.Component {
 		);
 	}
 }
-export default MyWorkflow;
+export default withRouter(MyWorkflow);

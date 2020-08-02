@@ -31,6 +31,7 @@ import StartWrkflwComponent from './Workflow/StartWrkflwComponent';
 import ApproveComponent from './Approvals/ApproveComponent';
 import ESignComponent from './Signatures/ESignComponent'
 import StatusComponent from './Workflow/StatusComponent'
+import ArchivedComponent from './Workflow/ArchivedComponent'
 import api from './utils/api'
 import Root from './Chat/Component/Root/Root'
 import { toast, ToastContainer } from 'react-toastify'
@@ -76,15 +77,18 @@ function Dashboard({ userObj, logout},props) {
   const [pushNotif, setPushNotifs] = React.useState({});
 
   const [myWorkflows, setMyWorkflows] = React.useState(null)
+  const [notArchivedWorkflows, setNotArchivedWorkflows] = React.useState(null)
+  const [archivedWorkflows, setArchivedWorkflows] = React.useState(null)
   const [myApprovals, setMyApprovals] = React.useState(null)
   const [open, setOpen] = React.useState(false);
 
   //const [badge, setBadge] = React.useState(false);
 
+
   
   function renderStatusComponent(){
   	if(myWorkflows){
-  		return (<StatusComponent myWorkflows={myWorkflows}/>)
+  		return (<StatusComponent myWorkflows={myWorkflows} />)
   	}
   	else{
   		return (<div className={classes.logocenter}>
@@ -92,6 +96,17 @@ function Dashboard({ userObj, logout},props) {
       </div>)
   	}
   }
+  function renderArchivedComponent(){
+  	if(myWorkflows){
+  		return (<ArchivedComponent myWorkflows={myWorkflows} />)
+  	}
+  	else{
+  		return (<div className={classes.logocenter}>
+        <img src={LoadingLogo} alt="Loading Dashboard" />
+      </div>)
+  	}
+  }
+  
   function renderLandingPageComponent(){
   	if(myWorkflows && myApprovals){
   		return (<LandingPage userObj = {userObj} myWorkflows={myWorkflows} myApprovals={myApprovals}/> )
@@ -141,7 +156,13 @@ function Dashboard({ userObj, logout},props) {
 			.then((res) => {
 				if(res && res.data){
 					console.log("The Workflow data received is", res.data);
+					//segregateWorkflows(res.data)
+
+
 					setMyWorkflows(res.data)
+
+
+
 				}
 				else{
 					setMyWorkflows([])
@@ -386,6 +407,7 @@ function Dashboard({ userObj, logout},props) {
       <Route exact path='/calendar' render={() => <Calendar userObj={userObj} />} />
       <Route exact path='/approve' render={()=> renderApprovalComponent()} />
       <Route exact path='/status' render={ () => renderStatusComponent() }/>
+       <Route exact path='/archive' render={ () => renderArchivedComponent() }/>
       <Route exact path='/chat' component={() => <Root userObj={userObj} />}/>
       <Route exact path='/analytics' component={() => <AnalyticDashboard userObj={userObj} />}/>
       <Route exact path='/searchuser' render={() => <SearchUser userObj={userObj} />} />

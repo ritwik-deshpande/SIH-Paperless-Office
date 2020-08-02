@@ -27,6 +27,7 @@ import ViewColumn from "@material-ui/icons/ViewColumn";
 import style from "../StyleSheet";
 import { Box } from "@material-ui/core";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import ArchiveIcon from '@material-ui/icons/Archive';
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -71,28 +72,29 @@ const useTableStyles = makeStyles((theme) => ({
 //             nameofSender: 'Mike Wheeler', status: 'Threatened by the party'}]
 // }
 
-export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
+export default function WorkflowTable({ Archive, tableTitle, Click, myworkflowsTable, filter }) {
 	const { useState } = React;
 	const [selectedRow, setSelectedRow] = useState(null);
 
 
-
 	const tableColumns = [
-	{ title: "Application ID", field: "id" },
-	{ title: "Application Name", field: "wname" },
-	{ title: "Status", field: "status" , defaultFilter : filter, 
-		render: rowData => 
-		<div style={{display:"inline", textTransform:"capitalize"}} 
-			className={clsx({
-			[classes.activeColor]: rowData.status==='active',
-			[classes.terminatedColor]: rowData.status==='terminated',
-			[classes.completedColor]: rowData.status==='Completed',
-		})}><FiberManualRecordIcon style={{fontSize:"10px"}}/><Box fontWeight="Bold" display="inline">{" "+rowData.status}</Box>
-		</div>
-	},
-	{ title: "Last Feedback", field: "lastfeedback" },
-	{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
-];
+		{ title: "Application ID", field: "id" },
+		{ title: "Application Name", field: "wname" },
+		{ title: "Status", field: "status" , defaultFilter : filter, 
+			render: rowData => 
+			<div style={{display:"inline", textTransform:"capitalize"}} 
+				className={clsx({
+				[classes.activeColor]: rowData.status==='active',
+				[classes.terminatedColor]: rowData.status==='terminated',
+				[classes.completedColor]: rowData.status==='Completed',
+			})}><FiberManualRecordIcon style={{fontSize:"10px"}}/><Box fontWeight="Bold" display="inline">{" "+rowData.status}</Box>
+			</div>
+		},
+		{ title: "Last Feedback", field: "lastfeedback" },
+		{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
+	];
+
+	
 
 
 
@@ -102,7 +104,6 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	const classes = makeStyles(style(useTheme()))();
  
 	const theme=useTheme();
-	let tableTitle = "My Applications "
 	if(filter){
 		tableTitle = tableTitle.concat(filter)
 		console.log("The table title", tableTitle)
@@ -110,8 +111,11 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 
 	console.log("The table title", tableTitle)
 	console.log("Table data",myworkflowsTable)
+	
 	return (
 		<div className={classes.tableStyle}>
+
+			{tableTitle.localeCompare("My_Applications")===0 ?
 			<MaterialTable
 				icons={tableIcons}
 				title= {tableTitle}
@@ -119,25 +123,20 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 				data={myworkflowsTable}
 				actions={[
 					{
-						icon: "view",
-						tooltip: "View Workflow",
+						icon: () => <VisibilityIcon/>,
+						tooltip: "View",
 						onClick: (event, rowData) => {
 							Click(rowData.index_no);
 						},
 					},
+					{
+						icon: () => <ArchiveIcon />,
+						tooltip: "Archive",
+						onClick: (event, rowData) => {
+							Archive(rowData.index_no);
+						},
+					},
 				]}
-				components={{
-					Action: (props) => (
-						<IconButton
-							onClick={(event) => props.action.onClick(event, props.data)}
-							color="primary"
-							variant="contained"
-							style={{ textTransform: "capitalize" }}
-							size="small">
-							<VisibilityIcon />
-						</IconButton>
-					),
-				}}
 				options={{
 					search: true,
 					sorting: true,
@@ -152,7 +151,39 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 						fontSize: "14px",
 					},
 				}}
-			/>
+			/> :
+			<MaterialTable
+				icons={tableIcons}
+				title= {tableTitle}
+				columns={tableColumns}
+				data={myworkflowsTable}
+				actions={[
+					{
+						icon: () => <VisibilityIcon/>,
+						tooltip: "View",
+						onClick: (event, rowData) => {
+							Click(rowData.index_no);
+						},
+					}
+				]}
+				options={{
+					search: true,
+					sorting: true,
+					actionsColumnIndex: -1,
+					headerStyle: {
+						backgroundColor: "#002a29",
+						color: "#fff",
+						fontWeight: "bold",
+						fontSize: "15px",
+					},
+					rowStyle: {
+						fontSize: "14px",
+					},
+				}}
+			/>}
+
+
+			
 		</div>
 	);
 	// const renderListItem = (obj) =>{

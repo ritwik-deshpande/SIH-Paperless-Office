@@ -94,7 +94,7 @@ class ApproveComponent extends React.Component {
         handleBackButton = () =>{
 		this.setState({
 			showPDF: false,
-		})
+		}, () => { window.location.reload(true) })
 	}
 	render() {
 		const { classes } = this.props;
