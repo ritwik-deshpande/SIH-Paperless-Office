@@ -17,7 +17,7 @@ class CommentForm extends React.Component {
       value: '',
       singleLineValue: '',
       mentionData: null,
-      plainText: '',
+      // plainText: '',
       users: [
         {
           _id: 'AP001',
@@ -43,11 +43,15 @@ class CommentForm extends React.Component {
       workflows: [
         {
           _id: '32v3',
-          name: { first: 'Workflow_3', last: 'Workflow_3' }
+          name: { first: 'Application_3', last: '' }
         },
         {
           _id: '13v3',
-          name: { first: 'Workflow_2', last: 'Workflow_2' }
+          name: { first: 'Application_2', last: '' }
+        },
+        {
+          _id: '32v3',
+          name: { first: 'Application_4', last: '' }
         }
       ],
     };
@@ -63,7 +67,7 @@ class CommentForm extends React.Component {
     this.setState({
       value: newValue,
       mentionData: {newValue, newPlainTextValue, mentions},
-      plainText: newPlainTextValue
+      // plainText: newPlainTextValue
     })
   }
 
@@ -71,21 +75,23 @@ class CommentForm extends React.Component {
     event.preventDefault(); // prevents page from reloading on submit
 
     let author = 'some name';
-    let body = this.state.plainText;
+    let body = this.state.value;
     let date = Timestamp.getTimestamp(new Date().getTime())
     this.props.addComment(author.value, body, date);
-
+    this.setState ({
+      value: ""
+    })
   }
   
   render() {
     const userMentionData = this.state.users.map(myUser => ({
       id: myUser._id,
-      display: `${myUser.name.first} ${myUser.name.last}`
+      display: `${myUser.name.first}_${myUser.name.last}`
     }))
 
     const workflowMentionData = this.state.workflows.map(myWorkflow => ({
       id: myWorkflow._id,
-      display: `${myWorkflow.name.first} ${myWorkflow.name.last}`
+      display: `${myWorkflow.name.first}_${myWorkflow.name.last}`
     }))
 
     const displayText = swapTags(this.state.value)
@@ -105,21 +111,29 @@ class CommentForm extends React.Component {
         <MentionsInput
           value={this.state.value}
           onChange={this.handleMentionChange}
-          markup="@{{__type__||__id__||__display__}}"
           placeholder="Write a comment..."
           className="mentions"
+          allowSuggestionsAboveCursor	
         >
           <Mention
+            displayTransform={(id,display)=>`@${display}`}
+            markup="@__display__"
+            regex={/@(\S+)/}
             type="user"
             trigger="@"
             data={userMentionData}
             className="mentions__mention"
+            appendSpaceOnAdd
           />
           <Mention
+            displayTransform={(id,display)=>`#${display}`}
+            markup="#__display__"
+            regex={/#(\S+)/}
             type="workflow"
             trigger="#"
             data={workflowMentionData}
             className="mentions__mention"
+            appendSpaceOnAdd
           />
         </MentionsInput>
         </Grid>

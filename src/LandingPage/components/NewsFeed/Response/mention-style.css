@@ -17,21 +17,19 @@
   .mentions--multiLine .mentions__control {
     font-family: Helvetica, sans-serif;
     font-size: 12pt;
-    border: 1px solid silver;
   }
   .mentions--multiLine .mentions__highlighter {
     padding: 8px;
+    border: 1px solid transparent;
+    padding: 9px;
+    min-height: 63px;
   }
   .mentions--multiLine .mentions__input {
     padding: 8px;
-    min-height: 50px;
-    width: 100%;
     outline: 0;
-    border: 0;
   }
   
   .mentions__suggestions__list {
-    padding: 4px;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 5px;
@@ -48,5 +46,10 @@
   }
   
   .mentions__mention {
-    background-color: #9bd5d8;
+    position: relative;
+    z-index: 1;
+    color: blue;
+    text-shadow: 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white,
+      -1px -1px 1px white;
+    pointer-events: none;
   }
