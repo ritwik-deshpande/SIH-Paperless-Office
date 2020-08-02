@@ -11,6 +11,8 @@ import MyProfileHeader from '../Headers/MyProfileHeader'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import style from '../StyleSheet'
+import Switch from '@material-ui/core/Switch';
+
 import { withStyles, Tooltip } from '@material-ui/core';
 import {
 	AppBar,
@@ -20,6 +22,7 @@ import {
 	TextField
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import TimeStamp from '../utils/TimeStamp';
 
 class ESignComponent extends React.Component{
 
@@ -31,7 +34,8 @@ class ESignComponent extends React.Component{
         updateProfile : false,
         viewProfile: JSON.parse(JSON.stringify(this.props.userObj)),
 		value : "",
-		cannotUpdate : false
+		cannotUpdate : false,
+		checkedA : false
       };
       console.log(this.state);
   	}
@@ -51,7 +55,32 @@ class ESignComponent extends React.Component{
 		})
     }
  
-    
+    handleLeave = (e) => {
+		const payload = {onleave: e.target.checked,
+			nominators : [this.state.userObj.id],
+			nominee : "AP003",
+			datefrom: new Date().getTime().toString(),
+			dateto : new Date().getTime().toString()}
+		var bool = e.target.checked
+		console.log(payload)
+			api.leave().post(this.state.userObj.id,payload ).then((res)=>{
+
+				if(res && res.data.allowed)
+				{
+					this.setState({
+						checkedA: bool
+					})
+				}
+				else
+				{
+					this.setState({
+						checkedA: !bool
+					})
+				}
+			})
+		
+	}
+	
 	handleBackButton = () => {
 	
 		this.setState({
@@ -89,10 +118,7 @@ class ESignComponent extends React.Component{
 								cannotUpdate : true
 				
 							})
-				
-						}  
-		    	
-		    	
+						}  		    	
 		    	}
 		    
 		    })
@@ -101,10 +127,9 @@ class ESignComponent extends React.Component{
 		    });
 
 		}
-             
-       
-       
-    }
+	}
+	
+
     handleChange =(newValue) => {
 
 		console.log("The value is", newValue)
@@ -118,33 +143,9 @@ class ESignComponent extends React.Component{
 		const { classes } = this.props 
         return(
             <div>
-			<MyProfileHeader title="User Profile"/>
-		 
-			 {/* <Paper className={classes.headerSearchBox} elevation={0} square>
-			 <Grid container spacing={3} direction="row" justify="flex-start" alignItems="flex-start">
-				 <Grid item xs={7} sm={8} md={10}>
-					<Tooltip title="Search a User by ID" arrow placement="top-start">
-						<SearchBar
-						placeholder = "Search a User by ID"
-						value = {this.state.value}
-						onChange={(newValue) => this.handleChange(newValue)}
-						onRequestSearch={() => this.handleSearch(this.state.value)}
-						fullWidth
-						/>
-					</Tooltip>
-				</Grid>
-			  	<Grid item xs={5} sm={4} md={2}>
-					<Button variant="contained" color="secondary" onClick = { this.handleSearch } fullWidth>
-					GET PROFILE 
-					</Button>
-				</Grid>
-			</Grid>
-			</Paper> */}
-		
-	
-
-		
-               { this.state.userObj ?
+			<MyProfileHeader title="User Profile"/>		
+               
+			{ this.state.userObj ?
 
 		( this.state.updateProfile ?
 
@@ -166,10 +167,20 @@ class ESignComponent extends React.Component{
 		<CreateESign saveUser={this.updateUser} userObj={this.state.userObj}/> </>): 
 		
 		<div>
-			{ !this.state.cannotUpdate ?	
+			{ !this.state.cannotUpdate ?
+			<>	
 			<Button variant="contained" color="primary" onClick = { this.onUpdateClick } style={{margin: "16px 26px"}}>
 			UPDATE YOUR PROFILE 
-			</Button> : null }
+			</Button>
+			<Switch
+			checked={this.state.checkedA}
+			onChange={this.handleLeave}
+			name="checkedA"
+			inputProps={{ 'aria-label': 'secondary checkbox' }}
+		  />
+		  </>
+			:
+			null }
 			<Profile userObj = {this.state.viewProfile} />
 		{/* <Calendar userObj = {this.state.viewProfile}  /> */}
 		

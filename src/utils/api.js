@@ -1,10 +1,16 @@
 import axios from "axios";
 
-const Endpoint = "https://1f0b477a025b.ngrok.io"
+const Endpoint = "https://1c3817142143.ngrok.io"
 //const Endpoint = "http://localhost:3030"
 
 
 export default { 
+
+    leave(){
+      return {
+        post : (id,leaveobj) => axios.post(`${Endpoint}/leave/${id}`,leaveobj)
+      }
+    },
 
     posts() {
       return {
