@@ -267,6 +267,20 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: "auto",
 		marginRight: "auto",
 	},
+	myteamavatar: {
+		width: 64,
+		height: 64,
+	},
+	myteamname: {
+		fontFamily: 'fira sans',
+		fontWeight: 'bold',
+		fontSize: 14,
+		whiteSpace: 'nowrap',
+		marginTop: 4,
+	},
+	myteamposition: {
+		verticalAlign: 'super',
+	},
 }));
 
 export default useStyles;

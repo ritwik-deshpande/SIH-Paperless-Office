@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.48",
     "@mrblenny/react-flow-chart": "0.0.11",
+    "@mui-treasury/components": "^1.9.1",
     "@react-pdf/renderer": "^1.6.8",
     "@syncfusion/ej2-base": "^18.2.44",
     "@syncfusion/ej2-react-schedule": "^18.2.44",

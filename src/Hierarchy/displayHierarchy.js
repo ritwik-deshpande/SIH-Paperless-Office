@@ -12,6 +12,9 @@ import useStyles from '../Style'
 import MyTeamHeader from '../Headers/MyTeamHeader'
 import StyledTreeItem from './StyledTreeItem'
 import { useTheme } from '@material-ui/core/styles';
+import OrgChart from '@mui-treasury/components/chart/org';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import {
 	Card,
 	CardHeader,
@@ -38,29 +41,94 @@ const data = {
   DIR01: {
     id: "DIR01",
     name: "Pramod Padole",
-    children: ["HOD001"]
+    src: `${require("../images/DIR01.jpg")}`,
+    children: [
+      {
+        id: "HOD001",
+        name: "Umesh Deshpande",
+        src: `${require("../images/HOD001.jpg")}`,
+        children: [
+          {
+            id: "AP001",
+            name: "Ravindra Keskar",
+            src: `${require("../images/AP001.jpg")}`,
+            children: [
+              {
+                id: "20409",
+                name: "Ritwik Deshpande",
+                src: `${require("../images/20409.jpg")}`,
+              }
+            ]
+          }, 
+          {
+            id: "AP002",
+            name: "Anil Mokhade",
+            src: `${require("../images/AP002.jpg")}`,
+          }, 
+          {
+            id: "AP003",
+            name: "Manish Kurhekar",
+            src: `${require("../images/AP003.jpg")}`,
+          }
+        ]
+      }
+    ]
   },
   HOD001: {
     id: "HOD001",
     name: "Umesh Deshpande",
-    children: ["AP001", "AP002", "AP003"]
+    src: `${require("../images/HOD001.jpg")}`,
+    children: [
+      {
+        id: "AP001",
+        name: "Ravindra Keskar",
+        src: `${require("../images/AP001.jpg")}`,
+        children: [
+          {
+            id: "20409",
+            name: "Ritwik Deshpande",
+            src: `${require("../images/20409.jpg")}`,
+          }
+        ]
+      }, 
+      {
+        id: "AP002",
+        name: "Anil Mokhade",
+        src: `${require("../images/AP002.jpg")}`,
+      }, 
+      {
+        id: "AP003",
+        name: "Manish Kurhekar",
+        src: `${require("../images/AP003.jpg")}`,
+      }
+    ]
   },
   AP001: {
     id: "AP001",
     name: "Ravindra Keskar",
-    children: ["20409"]
+    src: `${require("../images/AP001.jpg")}`,
+    children: [
+      {
+        id: "20409",
+        name: "Ritwik Deshpande",
+        src: `${require("../images/20409.jpg")}`,
+      }
+    ]
   },
   AP002: {
     id: "AP002",
-    name: "Anil Mokhade"
+    name: "Anil Mokhade",
+    src: `${require("../images/AP002.jpg")}`,
   },
   AP003: {
     id: "AP003",
-    name: "Manish Kurhekar"
+    name: "Manish Kurhekar",
+    src: `${require("../images/AP003.jpg")}`,
   },
   "20409": {
     id: "20409",
-    name: "Ritwik Deshpande"
+    name: "Ritwik Deshpande",
+    src: `${require("../images/20409.jpg")}`,
   }
 };
 
@@ -132,21 +200,34 @@ function DisplayHierarchy(props) {
       			<Col lg="12">
             <Card small >
     		<CardHeader style ={{ backgroundColor: theme.palette.primary.main, color: theme.palette.getContrastText(theme.palette.primary.main) }}>
-      		<Typography variant="h6" >sample header text</Typography>
+      		<Typography variant="body" >Click on profile photo to view approval requests</Typography>
     		</CardHeader>
     		<ListGroup flush>
       			<ListGroupItem >
         		<Row>
           			<Col md="12" className="form-group">
-            <TreeView
-              className={classes.treeviewroot}
-              defaultExpanded={[props.userObj.id]}
-              defaultCollapseIcon={<ExpandMoreIcon />}
-              defaultExpandIcon={<ChevronRightIcon />}
-              defaultEndIcon={<div style={{ width: 24 }} />}
-            >
-            {renderTree(data[props.userObj.id])}
-            </TreeView>
+                <OrgChart
+                  spacingX={24}
+                  treeData={data[props.userObj.id]}
+                  renderContent={({ id, name, src }) => (
+                    <Box m={2} align={'center'}>
+                      {/* <IconButton onClick={handleOpen(data[id])}> */}
+                      <IconButton onClick={()=> {handleOpen(data[id])}}>
+                      <Avatar className={classes.myteamavatar} src={src} alt={name} />
+                      </IconButton>
+                      <Typography className={classes.myteamname} variant={'h6'}>
+                        {name}
+                      </Typography>
+                      <Typography
+                        className={classes.myteamposition}
+                        color={'textSecondary'}
+                        variant={'caption'}
+                      >
+                        {id}
+                      </Typography>
+                    </Box>
+                  )}
+                />
             </Col></Row></ListGroupItem></ListGroup></Card>
       			</Col>
     		</Row>

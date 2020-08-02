@@ -307,8 +307,7 @@ const style = theme => ({
             height: 264,
             flexGrow: 1,
             maxWidth: 200,
-        }
-
+        },
  });
 
 export default style;
