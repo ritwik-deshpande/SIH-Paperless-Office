@@ -217,22 +217,22 @@ function Listitems(props) {
         {/* </Tooltip> */}
 
         {/* <Tooltip title={props.open ? "" : "My Documents"}> */}
-          <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/viewDocs',4)}>
+         {/* <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/viewDocs',4)}>
             <ListItemIcon className={classes.navBarIcons}>
               <FolderIcon />
             </ListItemIcon>
             <ListItemText primary="My Documents" /> 
-          </ListItem>
+          </ListItem> /*}
         {/* </Tooltip> */}
 
-	 <Tooltip title={props.open ? "" : "My Team"}>
+	      {/* <Tooltip title={props.open ? "" : "My Team"}> */}
           <ListItem button={!(selectedIndex===12)} selected={selectedIndex===12} onClick={() => handleNavlink('/Hierarchy',12)}>
             <ListItemIcon className={classes.navBarIcons}>
               <GroupIcon />
             </ListItemIcon>
             <ListItemText primary="My Team" /> 
           </ListItem>
-        </Tooltip>
+        {/* </Tooltip> */}
 
 
         <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
@@ -242,7 +242,7 @@ function Listitems(props) {
             <ListItemIcon className={classes.navBarIcons}>
               <WorkIcon />
             </ListItemIcon>
-            <ListItemText primary="View WorkFlows"/>
+            <ListItemText primary="View Applications"/>
           </ListItem>
         {/* </Tooltip> */}
         

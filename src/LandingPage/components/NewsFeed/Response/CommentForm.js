@@ -5,6 +5,7 @@ import { MentionsInput, Mention } from 'react-mentions'
 import {swapTags, getUsersFromTags} from './tags'
 import './mention-style.css'
 import AddCommentIcon from '@material-ui/icons/AddComment';
+import Timestamp from '../../../../utils/TimeStamp'
 
 class CommentForm extends React.Component {
   
@@ -28,17 +29,25 @@ class CommentForm extends React.Component {
         },
         {
           _id: 'AP003',
-          name: { first: 'M', last: 'K' }
+          name: { first: 'Manish', last: 'Kurehkar' }
+        },
+	{
+          _id: 'HOD001',
+          name: { first: 'Umesh', last: 'Deshpande' }
+        },
+	{
+          _id: 'DIR01',
+          name: { first: 'Pramod', last: 'Padole' }
         }
       ],
       workflows: [
         {
           _id: '32v3',
-          name: { first: 'Student Council', last: 'Application' }
+          name: { first: 'Workflow_3', last: 'Workflow_3' }
         },
         {
           _id: '13v3',
-          name: { first: 'Fee', last: 'Remission' }
+          name: { first: 'Workflow_2', last: 'Workflow_2' }
         }
       ],
     };
@@ -60,10 +69,12 @@ class CommentForm extends React.Component {
 
   _handleSubmit(event) {
     event.preventDefault(); // prevents page from reloading on submit
-    let author = 'Ritwik';
+
+    let author = 'some name';
     let body = this.state.plainText;
-    let date = new Date()
-    this.props.addComment(author.value, body, date.toString());
+    let date = Timestamp.getTimestamp(new Date().getTime())
+    this.props.addComment(author.value, body, date);
+
   }
   
   render() {

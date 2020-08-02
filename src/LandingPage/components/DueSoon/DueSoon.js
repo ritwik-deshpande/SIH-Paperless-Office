@@ -92,7 +92,10 @@ TabPanel.propTypes = {
 				    </Typography>
 
 				    <Typography variant="subtitle1">
-				      <Box fontSize={14} fontWeight={600}  color={"textSecondary"}> Status : {props.recentWorkflows[index].status} </Box>
+				      <Box fontSize={14} fontWeight={600}  color={'textSecondary'} > Status : <Box display="inline" className={clsx({
+                [classes.activeColor]: props.recentWorkflows[index].status==='active',
+                [classes.terminatedColor]: props.recentWorkflows[index].status==='terminated',
+              })}> {props.recentWorkflows[index].status} </Box></Box>
 				    </Typography>
 				    <Typography variant="subtitle2">
 				      <Box fontSize={12} fontWeight="Light"> {props.recentWorkflows[index].Feedback} </Box>
@@ -145,7 +148,7 @@ TabPanel.propTypes = {
 				      <Box fontSize={14} fontWeight={600} > Id : {props.urgentApprovals[index].id} </Box>
 				    </Typography>
 				    <Typography variant="subtitle1">
-				      <Box fontSize={14} fontWeight={600}  color={"#ff9800"}> Waiting for Your Approval </Box>
+				      <Box fontSize={14} fontWeight={600}  className={classes.pendingColor}> Waiting for Your Approval </Box>
 				    </Typography>
 				    <Typography variant="subtitle2">
 				      <Box fontSize={12} fontWeight="Light">Sent by: {props.urgentApprovals[index].nameofSender} </Box>
@@ -202,7 +205,7 @@ TabPanel.propTypes = {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Recent Workflows" wrapped/>
+          <Tab label="Recent Applications" wrapped/>
           <Tab label="Urgent Approvals" wrapped/>
       </Tabs>
       <SwipeableViews
