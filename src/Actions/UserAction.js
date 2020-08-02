@@ -6,13 +6,19 @@ var RSA = require('hybrid-crypto-js').RSA;
 var Crypt = require('hybrid-crypto-js').Crypt;
 var aesjs = require('aes-js');
 const NodeRSA = require('node-rsa');
+const crypto = require("crypto");
 
 export const GetUser = (id, password) => {
     return (dispatch, getState) =>{
 
         //console.log("getstate : " ,getState().auth.loggedIn)
         let userObj = getState().auth.userObj
-    var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
+        var salt = "$2a$04$XkEO9KJolCWvmniNP4VHWe";
+        //const cipher = crypto.createCipher("aes-128-cbc", "aesEncryptionKey");
+        //var encrypted = cipher.update("$2a$04$XkEO9KJolCWvmniNP4VHWe25Nao8/AAadzlRONio8WOnBRGFOnoVO", "utf8", "base64");
+        //encrypted += cipher.final("base64");
+        //console.log(encrypted);
+        const decipher = crypto.createDecipher("aes-128-cbc", "aesEncryptionKey");
         
         //console.log("password", password)
 	    //var hash = bcrypt.hashSync('1234', salt);
@@ -27,8 +33,12 @@ export const GetUser = (id, password) => {
         if( userObj && userObj.id.localeCompare(id) === 0)
         {
             
-            console.log("userobj", userObj)
-            if(bcrypt.compareSync(password, userObj.password)){
+            console.log("userobj", userObj.password)
+            //var decrypted = decipher.update("IYxPde03BBX/jXWGg+nv0Q01Sr5ayVQ2yWb4nyGdPLKbmCZUqsafcJuv7wE6aRX4Uz11QUZhAt2A7VO+fRv1zw==", "base64", "utf8");
+            var decrypted = decipher.update(userObj.password,'base64','utf8')
+            decrypted += decipher.final("utf8");
+            console.log(decrypted);
+            if(bcrypt.compareSync(password, decrypted)){
                     
                 dispatch({type: 'USER_VERIFIED',payload: userObj})
             }
@@ -38,38 +48,7 @@ export const GetUser = (id, password) => {
             }
         }
         else{
-            rsa.generateKeyPair(function(keyPair) {
-                // Callback function receives new 1024 bit key pair as a first argument
-                var publicKey = keyPair.publicKey;
-                var privateKey = keyPair.privateKey;
-                console.log(publicKey, privateKey )
-                var enc = 'AoFE8EIOdh1zxvc06dQnh0kuWU7tItRZzxYa3l6o7BQzJuvvUKBKVJVykQZLEugWTS+NDPgqBdLKEus1YNoKNGxw4pok5X0BdhWRjJ3mA9jY3bVvO3AHPAeovaJ9JMYiEZU5MXp66s71lFpH7NBNfourROs4gwx292cCt6f2TxI='
-                const key = new NodeRSA('-----BEGIN RSA PRIVATE KEY-----\n'+
-                'MIICXAIBAAKBgQCI76wVLqBErn2EjdAs5lJEvCm3oatXDMXhWJWuuW2ZZnElZt6f\n'+
-                '9tYYCArt324/YVZ83jiuEn6h8ND+oO1JDNAIklSOAGmz7Ksuq6wlmlCVQDlXwwZA\n'+
-                'pV6TOgqfk4o5N83enweSdSAaAlcaCbCGDN7HK0U/Qr+V7LxdU8NZr+OGvwIDAQAB\n'+
-                'AoGAbEkjSojZghZ9+YFvWuIzslkdoDH/XVIjdQTpMQc/TSw+UzZa3CKEwPIzOlIS\n'+
-                'S5p8mzfbmIPVkdfuXT0DB15TbxSWO+RrDT/2SrM9JsPWthHDA9Xt83nbmgKRLjex\n'+
-                'LA/ZGJDOCeL9zK4+asTBuMKh36hY+iJ6XkFuy5braA6OKaECQQDo/N+IX7QKb4Vy\n'+
-                'lI9thQfGijuN/WEgRao/3TeidCKc2m7hNHq/qo6GS4UCvH40WkHwUGTPFol3U91q\n'+
-                'XO/dtIZvAkEAlnYfXhOGYb+uX1xY5KI1MhKgnHaSbo/foCU7XI/3fXC8ImxtaZjG\n'+
-                'xAQl1/CPd+xyA4ZiaO3H7l8QkTx9gECssQJATRoh/0dslWeCigCP1naHtDRasQqA\n'+
-                '8eUcCjZzCtfT/IRs3So41OTkdZzYT6eBPGICIDz6n22d4FdolqJa3su3EQJANY8s\n'+
-                '0U8/+dHC350+43w+VWm+FJQ8wfCjGR3HyMZSwit8PQC93eYNcz9KvVibqYPYfhq7\n'+
-                'M0DZd6gNfLW8swfSsQJBANjujHYcGtfCykGejGmc6qyXOXl/+lLWqDbdnCaqebuA\n'+
-                'aY3DFYj3vUhPkhE5EQPOdy9nMPLvRE9AIDFGGpQkDUg=\n'+
-                '-----END RSA PRIVATE KEY-----');
-
-                var aes_key = 'Ow8ozxc4hQjKh4JP2FB/uQ=='
-                var aesCtr = new aesjs.ModeOfOperation.ctr(aes_key, new aesjs.Counter(5));
-                var decryptedBytes = aesCtr.decrypt(aesjs.utils.hex.toBytes('LxMgvAWHBMYvu9HplZK1Hg=='));
- 
-                // Convert our bytes back into text
-                var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
-                console.log(decryptedText);
-                //var plaintext = aes
-
-                //console.log(key.decrypt(enc,'utf8'))
+            
                 
                 api.users().getByid(id,).then(
                     res =>{
@@ -78,21 +57,24 @@ export const GetUser = (id, password) => {
                         if(res.data.length== 0){
                             alert("Invalid Id");
                         }
-                        else if(bcrypt.compareSync(password, res.data.password)){
-                            var hash = bcrypt.hashSync('keskar', salt);
-                            console.log(hash)
-                            dispatch({type: 'USER_VERIFIED',payload: res.data})
-                        }
                         else{
-                            dispatch({type: 'INVALID_PASSWORD',payload: res.data})
-                            alert("Invalid Password");
+                            //var decrypted = decipher.update("IYxPde03BBX/jXWGg+nv0Q01Sr5ayVQ2yWb4nyGdPLKbmCZUqsafcJuv7wE6aRX4Uz11QUZhAt2A7VO+fRv1zw==", "base64", "utf8");
+                            var decrypted = decipher.update(res.data.password,'base64','utf8')
+                            decrypted += decipher.final("utf8");
+                            console.log(decrypted);
+                            if(bcrypt.compareSync(password, decrypted)){
+                                // var hash = bcrypt.hashSync('keskar', salt);
+                                // console.log(hash)
+                                dispatch({type: 'USER_VERIFIED',payload: res.data})
+                            }
+                            else{
+                                dispatch({type: 'INVALID_PASSWORD',payload: res.data})
+                                alert("Invalid Password");
+                            }
                         }
-    
                         
                     
                     })
-
-            }, 1024); 
             
         }
         
