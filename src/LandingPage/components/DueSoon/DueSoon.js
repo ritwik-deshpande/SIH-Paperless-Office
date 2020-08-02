@@ -92,9 +92,10 @@ TabPanel.propTypes = {
 				    </Typography>
 
 				    <Typography variant="subtitle1">
-				      <Box fontSize={14} fontWeight={600}  color={'textSecondary'} > Status : <Box display="inline" className={clsx({
-                [classes.activeColor]: props.recentWorkflows[index].status==='active',
-                [classes.terminatedColor]: props.recentWorkflows[index].status==='terminated',
+				      <Box fontSize={14} fontWeight={600}  color={'textSecondary'} > Status : <Box display="inline" style={{textTransform:"capitalize"}} className={clsx({
+                [classes.activeColor]: props.recentWorkflows[index].status.toLowerCase()==='active',
+                [classes.terminatedColor]: props.recentWorkflows[index].status.toLowerCase()==='terminated',
+                [classes.completedColor]: props.recentWorkflows[index].status.toLowerCase()==='completed',
               })}> {props.recentWorkflows[index].status} </Box></Box>
 				    </Typography>
 				    <Typography variant="subtitle2">
