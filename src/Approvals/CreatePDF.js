@@ -43,6 +43,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import {withRouter} from 'react-router-dom'
+import Divider from "@material-ui/core/Divider";
+
+import { ButtonGroup } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { green } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
+import CancelIcon from '@material-ui/icons/Cancel';
 import style from '../StyleSheet'
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -68,6 +75,8 @@ const mapIdtoRoles ={
 
 }
 class CreatePDF extends React.Component {
+
+	//classes = useStyles();
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -610,7 +619,21 @@ class CreatePDF extends React.Component {
 				console.log("Updated user sucessfully");
 			});
 	};
+	handleDownload = (uri, index) => {
+		const linkSource = uri;
+		const downloadLink = document.createElement("a");
+		const fileName = uri.split(";")[1];
 
+		downloadLink.href = linkSource;
+		downloadLink.download = fileName;
+		downloadLink.click();
+	};
+	handleView = (uri) => {
+		let pdfWindow = window.open("");
+		pdfWindow.document.write(
+			"<iframe width='100%' height='100%' src='" + uri + "'></iframe>"
+		);
+	};
 	render() {
 		const { classes } = this.props;
 		return (
@@ -636,7 +659,48 @@ class CreatePDF extends React.Component {
 							/>
 						</Box>
 						<br />
-
+							
+						{
+				this.state.workflow.FormData.Upload_Documents ? (<Typography variant="h6">Documents Uploaded</Typography>):null
+			}
+			
+			{this.state.workflow.FormData.Upload_Documents
+				? this.state.workflow.FormData.Upload_Documents.map((uri, index) => {
+						return (
+							<>
+								<Box display="flex" m={1}>
+									<Box flexGrow={1} p={1}>
+										{index + 1}.{" " + uri.split(";")[1] + " : "}
+									</Box>
+									<ButtonGroup variant="text">
+										<Box pr={3}>
+											<Button
+												// variant="outlined"
+												color="primary"
+												onClick={() => this.handleView(uri)}
+												startIcon={<VisibilityIcon />}
+												//className={this.classes.button}
+												>
+												View DOCUMENT
+											</Button>
+										</Box>
+										<Box pl={3}>
+											<Button
+												color="primary"
+												onClick={() => this.handleDownload(uri, index)}
+												startIcon={<GetAppIcon />}
+												//className={this.classes.button}
+												>
+												Download DOCUMENT
+											</Button>
+										</Box>
+									</ButtonGroup>
+								</Box>
+								<Divider />
+							</>
+						);
+				  })
+				: null}
 						<AddComments
 							json={{ listitems: this.state.comments }}
 							handleAddComment={this.handleAddComment}

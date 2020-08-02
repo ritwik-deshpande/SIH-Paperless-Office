@@ -59,33 +59,7 @@ const tableIcons = {
 	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-// const useTableStyles = makeStyles((theme) => ({
-// 	// root: {
-// 	// 	width: "100%",
-// 	// 	paddingLeft: "20px",
-// 	// 	paddingRight: "10px",
-// 	// 	paddingTop: "20px",
-// 	// },
-// }));
-
-
-
-// const json ={
-
-//   listitems : [{id:1, subject:'Need Plancks constant',
-//             nameofSender: 'Dustin Henderson', status: 'never ending story'},
-//             {id:2, subject:'Escape from Mind Flayer',
-//             nameofSender: 'Will Byers', status: 'Approved by Chief PD'},
-//             {id:3, subject:'Want eleven to stop',
-//             nameofSender: 'Mike Wheeler', status: 'Threatened by the party'}]
-// }
-
-//const tableData = [
-// { id: '1', wname: 'Need Plancks Constant', sender: 'Dustin Henderson', feedback: 'Approved', time: 10},
-// { id: '2', wname: 'Escape from Mind Flayer', sender: 'Will Byers', feedback: 'Approved', time: 33},
-//{ id: '3', wname: 'Want Eleven To Stop', sender: 'Mike Wheeler', feedback: 'Rejected', time: 2},
-//]
-export default function AlignItemsList({ Click, requestTable, filter, node }) {
+export default function AlignItemsList({ Click, requestTable, filter, node, title }) {
 	// const tableclasses = useTableStyles();
 	// const classes = useStyles();
 	const classes = makeStyles(style(useTheme()))();
@@ -98,51 +72,15 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 	{ title: "Last Updated On", field: "time" },
 	{ title: "Priority", field: "priority" } // add type: 'numeric' if required
 ];
-
-
-
-
-	// const renderListItem = (obj) =>{
-	//   return(obj.map(item =>{
-	//     return(
-	//     <div key={item.id}>
-	//     <ListItem alignItems="flex-start">
-	//       <ListItemAvatar>
-	//         <Avatar alt={item.nameofSender} src="/static/images/avatar/1.jpg" />
-	//       </ListItemAvatar>
-	//       <ListItemText
-	//         primary={ item.subject }
-	//         secondary={
-	//           <React.Fragment>
-	//             <Typography
-	//               component="span"
-	//               variant="body2"
-	//               className={classes.inline}
-	//               color="textPrimary"
-	//             >
-	//               {item.nameofSender}
-	//             </Typography><br/>
-	//             {item.status}
-	//              On: {item.ts}
-	//           </React.Fragment>
-	//         }
-	//       />
-	//       <IconButton color="primary" onClick={()=>Click(item)}>
-	//       <DoubleArrowTwoToneIcon style={{ fontSize: 40 }} />
-	//       </IconButton>
-	//     </ListItem>
-	//     <Divider variant="inset" component="li" />
-	//   </div>
-	//   )}))
-	// }
-
 	
 
-        if(!node){
-        let tableTitle = "My Approvals "
-	if(filter){
-		tableTitle = tableTitle.concat(filter)
-	}
+	if(!node)
+	{
+        let tableTitle = title
+		if(filter)
+		{
+			tableTitle = tableTitle.concat(filter)
+		}
 
 	return (
 		<React.Fragment>
@@ -193,58 +131,12 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 			/>
 		</div>
 		</React.Fragment>
-
-				// <List className={classes.root}>
-
-		//   {renderListItem(json['requests'])}
-
-		// 					Click(rowData.id);
-		// 				},
-		// 			},
-		// 		]}
-		// 		components={{
-		// 			Action: (props) => (
-		// 				<IconButton
-		// 					onClick={(event) => props.action.onClick(event, props.data)}
-		// 					color="primary"
-		// 					variant="contained"
-		// 					style={{ textTransform: "none" }}
-		// 					size="small">
-		// 					<VerifiedUserIcon />
-		// 				</IconButton>
-		// 			),
-		// 		}}
-		// 		options={{
-		// 			search: true,
-		// 			sorting: true,
-		// 			actionsColumnIndex: -1,
-		// 			headerStyle: {
-		// 				backgroundColor: "#4E9C81",
-		// 				color: "#FFF",
-		// 				fontWeight: "bold",
-		// 				fontSize: "15px",
-		// 			},
-		// 			rowStyle: {
-		// 				backgroundColor: "#FBFBFB",
-		// 				color: "#000",
-		// 				fontSize: "14px",
-		// 			},
-		// 		}}
-		// 	/>
-		// </div>
-		// <List className={classes.root}>{renderListItem(json["requests"])}</List>
 	);
 
-
-
-
 	}
-
-		else{
-		
-		     let tableTitle = node.name
-			
-				tableTitle = tableTitle.concat("\'s  Approvals")
+	else{
+		    let tableTitle = node.name
+			tableTitle = tableTitle.concat("\'s  Approvals")
 			
 
 			return(<React.Fragment>

@@ -28,12 +28,12 @@ class ApproveComponent extends React.Component {
 			showPDF: false,
 			item: null,
 			requestTable: null,
-			filter:null
+			filter:null,
+			nominatorTables : null
 		};
 	}
 	componentDidMount() {
 		
-
 		if(this.props.location.state){
 
 			if(( typeof this.props.location.state) === "string")
@@ -44,7 +44,6 @@ class ApproveComponent extends React.Component {
 					requestTable: this.createRequestTable(this.props.myApprovals),
 				});
 
-				
 			}
 			else{
 
@@ -57,11 +56,34 @@ class ApproveComponent extends React.Component {
 			}
 		}
 		else{
-			this.setState({
-				json: this.props.myApprovals,
-				requestTable: this.createRequestTable(this.props.myApprovals),
-			});
-		
+			var tables = []
+			if(this.props.userObj.nominators && this.props.userObj.nominators.length !== 0)
+			{this.props.userObj.nominators.forEach((val)=>{
+				console.log("fetching pending ", val)
+				console.log(this.props.myApprovals)
+				
+				api.pending_request().get(val).then((res) => {
+					console.log(res.data)
+					tables = [...tables, this.createRequestTable(res.data)]
+					console.log(tables)
+					this.setState({
+						json: this.props.myApprovals,
+						requestTable: this.createRequestTable(this.props.myApprovals),
+						nominatorTables : tables
+					});
+					
+				})
+			})}
+			else
+			{
+				this.setState({
+					json: this.props.myApprovals,
+					requestTable: this.createRequestTable(this.props.myApprovals),
+				});
+			}
+
+			
+			
 		}
 	}
 	
@@ -137,12 +159,27 @@ class ApproveComponent extends React.Component {
 							<CreatePDF item={this.state.item} setResponded = {this.setResponded}/>
 						</Dialog>
 					) : (
+						<>
 						<AlignItemsList
 							Click={this.handleClick}
 							userObj={this.props.userObj}
 							requestTable={this.state.requestTable}
 							filter={this.state.filter}
+							title={"My Approvals"}
 						/>
+						{
+							this.state.nominatorTables ? 
+							(<AlignItemsList
+								Click={this.handleClick}
+								userObj={this.props.userObj}
+								requestTable={this.state.nominatorTables[0]}
+								filter={null}
+								title={"Nominators Approvals"}
+							/>)
+							: null
+						}
+						
+						</>
 					)
 				) : (
 					<div> Fetching Approval Requests</div>
