@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from 'clsx';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -24,6 +25,8 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 // import useStyles from "../Style";
 import style from "../StyleSheet";
+import { Box } from "@material-ui/core";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -77,10 +80,19 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	const tableColumns = [
 	{ title: "Workflow ID", field: "id" },
 	{ title: "Workflow Name", field: "wname" },
-	{ title: "Status", field: "status" , defaultFilter : filter},
+	{ title: "Status", field: "status" , defaultFilter : filter, 
+		render: rowData => 
+		<div style={{display:"inline"}} 
+			className={clsx({
+			[classes.activeColor]: rowData.status==='active',
+			[classes.terminatedColor]: rowData.status==='terminated',
+			[classes.completedColor]: rowData.status==='completed',
+		})}><FiberManualRecordIcon style={{fontSize:"10px"}}/><Box fontWeight="Bold" display="inline">{" "+rowData.status}</Box>
+		</div>
+	},
 	{ title: "Last Feedback", field: "lastfeedback" },
 	{ title: "Last Updated On", field: "time" }, // add type: 'numeric' if required
-	];
+];
 
 
 
@@ -89,6 +101,7 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	// const classes = useStyles();
 	const classes = makeStyles(style(useTheme()))();
  
+	const theme=useTheme();
 	let tableTitle = "My Workflows "
 	if(filter){
 		tableTitle = tableTitle.concat(filter)
@@ -96,6 +109,7 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	}
 
 	console.log("The table title", tableTitle)
+	console.log("Table data",myworkflowsTable)
 	return (
 		<div className={classes.tableStyle}>
 			<MaterialTable
@@ -135,7 +149,6 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 						fontSize: "15px",
 					},
 					rowStyle: {
-
 						fontSize: "14px",
 					},
 				}}

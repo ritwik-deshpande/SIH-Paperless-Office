@@ -39,6 +39,10 @@ let theme = createMuiTheme({
 			paper: "#fff",
 			default: "#f4f6f8", 
 			navBarListBg: "#0e1c21",
+			active: "#0288d1",
+		},
+		pending: {
+			backgroundColor: "#ff9800",
 		},
 	},
 	typography: {

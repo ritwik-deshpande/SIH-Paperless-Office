@@ -523,9 +523,9 @@ class CreatePDF extends React.Component {
 						 <br/>
 						   <br/>
 						   <br/> 
-	   					<Typography component="h1" variant="h5" align="center" style={{textTransform:"capitalize"}}>
+	   					{/* <Typography component="h1" variant="h5" align="center" style={{textTransform:"capitalize"}}>
 							Current Status : {this.state.workflow.status}
-						</Typography>
+						</Typography> */}
 						{/* // <Typography component="h3" variant="h5" className={classes.title}>
 						// 	STATUS OF WORKFLOW : {this.state.workflow.status}
 						// </Typography> */}
@@ -595,7 +595,7 @@ class CreatePDF extends React.Component {
 										startIcon={<ThumbDownIcon />}
 										disabled
 										onClick={this.handleRejectClick}>
-										Reject
+										Ask for Changes
 									</Button>
 								</Box>
 							</Box>
@@ -618,7 +618,7 @@ class CreatePDF extends React.Component {
 										//className={classes.button}
 										startIcon={<ThumbDownIcon />}
 										onClick={this.handleRejectClick}>
-										Reject
+										Ask for Changes
 									</Button>
 								</Box>
 							</Box>

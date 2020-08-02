@@ -225,14 +225,14 @@ function Listitems(props) {
           </ListItem>
         {/* </Tooltip> */}
 
-	 <Tooltip title={props.open ? "" : "My Team"}>
+	      {/* <Tooltip title={props.open ? "" : "My Team"}> */}
           <ListItem button={!(selectedIndex===12)} selected={selectedIndex===12} onClick={() => handleNavlink('/Hierarchy',12)}>
             <ListItemIcon className={classes.navBarIcons}>
               <GroupIcon />
             </ListItemIcon>
             <ListItemText primary="My Team" /> 
           </ListItem>
-        </Tooltip>
+        {/* </Tooltip> */}
 
 
         <Divider classes={{root: classes.navBarDivider}} variant={props.open ? "fullWidth" :"middle"}/>
