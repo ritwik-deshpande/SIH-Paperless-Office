@@ -78,15 +78,15 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 
 
 	const tableColumns = [
-	{ title: "Workflow ID", field: "id" },
-	{ title: "Workflow Name", field: "wname" },
+	{ title: "Application ID", field: "id" },
+	{ title: "Application Name", field: "wname" },
 	{ title: "Status", field: "status" , defaultFilter : filter, 
 		render: rowData => 
 		<div style={{display:"inline"}} 
 			className={clsx({
 			[classes.activeColor]: rowData.status==='active',
 			[classes.terminatedColor]: rowData.status==='terminated',
-			[classes.completedColor]: rowData.status==='completed',
+			[classes.completedColor]: rowData.status==='Completed',
 		})}><FiberManualRecordIcon style={{fontSize:"10px"}}/><Box fontWeight="Bold" display="inline">{" "+rowData.status}</Box>
 		</div>
 	},
@@ -102,7 +102,7 @@ export default function WorkflowTable({ Click, myworkflowsTable, filter }) {
 	const classes = makeStyles(style(useTheme()))();
  
 	const theme=useTheme();
-	let tableTitle = "My Workflows "
+	let tableTitle = "My Applications "
 	if(filter){
 		tableTitle = tableTitle.concat(filter)
 		console.log("The table title", tableTitle)

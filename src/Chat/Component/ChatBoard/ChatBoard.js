@@ -309,7 +309,7 @@ export default class ChatBoard extends Component {
                                 <div className="viewWrapItemLeft3">
                                     {this.isLastMessageLeft(index) ? (
                                         <img
-                                            src={this.currentPeerUser.photoUrl}
+                                            src={require('../../../images/'+this.currentPeerUser.id+".jpg")}
                                             alt="avatar"
                                             className="peerAvatarLeft"
                                         />

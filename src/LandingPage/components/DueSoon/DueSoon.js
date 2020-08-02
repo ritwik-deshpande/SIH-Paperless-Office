@@ -205,7 +205,7 @@ TabPanel.propTypes = {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Recent Workflows" wrapped/>
+          <Tab label="Recent Applications" wrapped/>
           <Tab label="Urgent Approvals" wrapped/>
       </Tabs>
       <SwipeableViews

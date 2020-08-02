@@ -91,8 +91,8 @@ export default function AlignItemsList({ Click, requestTable, filter, node }) {
 	const classes = makeStyles(style(useTheme()))();
 
 	const tableColumns = [
-	{ title: "Workflow ID", field: "id" },
-	{ title: "Workflow Name", field: "wname" },
+	{ title: "Application ID", field: "id" },
+	{ title: "Application Name", field: "wname" },
 	{ title: "Sender Name", field: "sender" },
 	{ title: "Request Feedback", field: "feedback",defaultFilter : filter },
 	{ title: "Last Updated On", field: "time" },

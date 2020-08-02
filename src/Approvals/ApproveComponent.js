@@ -128,8 +128,8 @@ class ApproveComponent extends React.Component {
 										- Status : <Box display="inline" fontWeight={600} className={clsx({
 											[classes.pendingColor]: this.state.item.status.toLowerCase()==='pending',
 											[classes.activeColor]: this.state.item.status.toLowerCase()==='active',
-											[classes.terminatedColor]: this.state.item.status.toLowerCase()==='terminated',
-											[classes.completedColor]: this.state.item.status.toLowerCase()==='completed',
+											[classes.terminatedColor]: this.state.item.status.toLowerCase()==='rejected',
+											[classes.completedColor]: this.state.item.status.toLowerCase()==='approved',
 										})}>{this.state.item.status}</Box>
 				      				</Typography>
 								</Toolbar>

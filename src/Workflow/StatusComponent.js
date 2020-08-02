@@ -290,7 +290,7 @@ class StatusComponent extends Component {
 				{/* <Header title={'Workflows'}/> */}
 
 
-				<MyWorkflowsHeader title={'Workflows'}/>
+				<MyWorkflowsHeader title={'Applications'}/>
 
 				{/* <Paper style={{backgroundColor:'#002a29'}}>
 					<Grid container justify="center" spacing={3}>

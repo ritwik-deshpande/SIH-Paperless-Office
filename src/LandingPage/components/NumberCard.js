@@ -117,7 +117,7 @@ function NumberCard(props) {
                         {key}
                       </Typography>
                       <Typography variant="subtitle1" color="textSecondary">
-                          WORKFLOWS
+                          APPLICATIONS
                       </Typography>
                     </Box> 
                   </CardActionArea>

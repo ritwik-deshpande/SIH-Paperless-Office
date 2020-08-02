@@ -7,10 +7,13 @@ export function swapTags(text){
   const tags = text.match(/@\{\{[^\}]+\}\}/gi) || []
   tags.map(myTag => {
     const tagData = myTag.slice(3, -2)
+    console.log("The tag is", tagData)
     const tagDataArray = tagData.split('||')
     const tagDisplayValue = tagDataArray[2]
     displayText = displayText.replace(new RegExp(_escapeRegExp(myTag), 'gi'), tagDisplayValue)
   })
+  console.log("The tag is", displayText)
+
   return displayText
 }
 
