@@ -81,6 +81,7 @@ class CreatePDF extends React.Component {
 		super(props);
 		this.state = {
 			isSigned: false,
+			isResponded : false,
 			isApproved: false,
 			openDialog : false,
 			openSealMenu : false,
@@ -99,6 +100,22 @@ class CreatePDF extends React.Component {
 			// ]
 		};
 		console.log("in Create PDF");
+	}
+
+	viewedWorkflow = () => {
+		console.log("Viewed Workflow")
+		this.state.workflow.Feedback = "Viewed by " + this.props.userObj.name;
+		this.state.workflow.Feedback_ts = Timestamp.getTimestamp(new Date().getTime());
+
+		api
+		.workFlow()
+		.put(this.state.workflow.id, this.state.workflow)
+		.then((res) => {
+			console.log("Viewing Workflow", res);
+			//this.props.history.push('/approve')
+			//window.location.reload(true)
+
+		});
 	}
 
 	componentDidMount() {
@@ -120,7 +137,7 @@ class CreatePDF extends React.Component {
 						comments: res.data.Comments,
 						signatures: res.data.Signatures,
 						seals: res.data.seals,
-					});}
+					}, () => { this.viewedWorkflow() });}
 				}
 			});
 	}
@@ -320,6 +337,9 @@ class CreatePDF extends React.Component {
 		//broadcast to the next level.
 		// at the end send update message to server along with the required arrays.
 
+		this.state.isResponded = true
+
+
 		let node_level = this.state.workflow.Path.length;
 		let path = this.state.workflow.Path;
 		let current_node_key = this.state.workflow.Path[node_level - 1];
@@ -494,6 +514,8 @@ class CreatePDF extends React.Component {
 	rejectDocument = () => {
 		// add the content for Rejection.
 		//notifies the owner.
+
+		this.state.isResponded = true
 
 		console.log("in handlesignClick");
 
