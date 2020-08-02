@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import api from '../../../utils/api'
 import { makeStyles, useTheme } from '@material-ui/styles';
 import {
   Card,
@@ -49,12 +50,23 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 function NewsFeed(props){
   //const { className, ...rest } = props;
+
+  const [products, setProducts] = useState(mockData);
+  // useEffect( () =>{
+
+  //   api.posts().getAll().then((res)=>{
+  //       if(res && res.data){
+
+  //         setProducts(res.data)
+  //       }
+  //   })
+  // })
   const classes = makeStyles(style(useTheme()))();
   //const classes = useStyles();
 
   const user = props.userObj;
 
-  const [products] = useState(mockData);
+  
   
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = (panel) => (event, isExpanded) => {

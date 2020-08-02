@@ -1,18 +1,18 @@
 import axios from "axios";
 
-const Endpoint = "http://42b1d69b42c1.ngrok.io"
-//const Endpoint = "http://localhost:3030"
+//const Endpoint = "https://42b1d69b42c1.ngrok.io"
+const Endpoint = "http://localhost:3030"
 
 
 export default { 
 
-    posts(url) {
+    posts() {
       return {
-        getOne: ({ id }) => axios.get(`${url}/${id}`),
-        getAll: () => {return `${Endpoint}/${url}`},
-        update: (toUpdate) =>  axios.put(url,toUpdate),
-        create: (toCreate) =>  axios.put(url,toCreate),
-        delete: ({ id }) =>  axios.delete(`${url}/${id}`)
+        getOne: ({ id }) => axios.get(`${Endpoint}/post/${id}`),
+        getAll: () => axios.get(`${Endpoint}/post`),
+        update: (toUpdate) =>  axios.put(`${Endpoint}/post`,toUpdate),
+        create: (toCreate) =>  axios.put(`${Endpoint}/post`,toCreate),
+        delete: ({ id }) =>  axios.delete(`${Endpoint}/post/${id}`)
       }
     },
     users(){
