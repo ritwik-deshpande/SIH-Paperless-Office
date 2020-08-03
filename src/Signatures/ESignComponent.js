@@ -314,7 +314,7 @@ class ESignComponent extends React.Component{
 
 						<TextField
 							id="nominee"
-							label="Enter the nominee name"
+							label="Enter the nominee ID. (Ex:AP001)"
 							type="text"
 							value = {this.state.nominee}
 							onChange={(e) => this.setState({nominee:e.target.value})}

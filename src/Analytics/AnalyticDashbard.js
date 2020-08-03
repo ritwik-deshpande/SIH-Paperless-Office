@@ -76,7 +76,7 @@ class AnalyticDashboard extends React.Component {
       			<Col lg="7">
                     <Card small >
                     <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
-                    <Typography variant="h6" >Types Of Workflow</Typography>
+                    <Typography variant="h6" >Number of Applications per Procedure over time</Typography>
                     </CardHeader>
                       <RaceChart/>
                 </Card>
@@ -84,7 +84,7 @@ class AnalyticDashboard extends React.Component {
                 <Col lg="5">
                 <Card small >
                     <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
-                    <Typography variant="h6" >Work Chart</Typography>
+                    <Typography variant="h6" >Work Distribution for each Department</Typography>
                     </CardHeader>
                         <Sunburst/>
                 </Card>
@@ -95,7 +95,7 @@ class AnalyticDashboard extends React.Component {
       			<Col lg="12">
                   <Card small >
                     <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
-                    <Typography variant="h6" >Department Wise Chart</Typography>
+                    <Typography variant="h6" >Environmental Contribution by the Institute </Typography>
                     </CardHeader>
                       <HBarChart/>
                 </Card>

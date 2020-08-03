@@ -45,6 +45,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import style from './StyleSheet';
 import GroupIcon from '@material-ui/icons/Group';
+import ArchiveIcon from '@material-ui/icons/Archive';
 
 //import AvatarImage from './images/lodu.jpeg'
 
@@ -243,7 +244,7 @@ function Listitems(props) {
 
 	  <ListItem button={!(selectedIndex===4)} selected={selectedIndex===4} onClick={() => handleNavlink('/archive',4)}>
             <ListItemIcon className={classes.navBarIcons}>
-              <FolderIcon />
+              <ArchiveIcon />
             </ListItemIcon>
             <ListItemText primary="Archievd Applications" /> 
           </ListItem> 

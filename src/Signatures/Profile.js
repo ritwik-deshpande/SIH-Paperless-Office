@@ -79,6 +79,15 @@ export default function Profile({userObj}) {
 		}
 		return fields
 	}
+        function getLeaveStatus(label){
+		if(!label){
+			return "In Office"
+		}
+		else{
+			return "On Leave"
+		}
+
+	}
 
 	function displayGeneralInfo(){
 		let fields = []
@@ -201,6 +210,13 @@ export default function Profile({userObj}) {
                   				<label ><strong>Roles</strong></label>
 							<Typography> {
 							userObj.roles + " "
+							} </Typography>
+                			</Col>
+
+					<Col md="12" className="form-group">
+                  				<label ><strong>Leave Status</strong></label>
+							<Typography> {
+							getLeaveStatus(userObj.onleave)
 							} </Typography>
                 			</Col>
 						</Row>
