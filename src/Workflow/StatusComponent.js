@@ -117,8 +117,8 @@ class StatusComponent extends Component {
 			  let allWorkflows = this.props.myWorkflows
 			  for(var index in allWorkflows)
 			  {
-				  if(allWorkflows[index].status.localeCompare("corrupted") !== 0)
-				  {
+				  //if(allWorkflows[index].status.localeCompare("corrupted") !== 0)
+				  //{
 					/*let time_gap =Timestamp.getTSObj() - Timestamp.str2TSObj(myWorkflows[index].begin_timestamp);
 					time_gap = Timestamp.getHours(time_gap)
 					let base_time = 5*24
@@ -135,7 +135,7 @@ class StatusComponent extends Component {
 			
 					
 			
-					}
+					//}
 				
 			}
 			console.log("The list1", list1)
