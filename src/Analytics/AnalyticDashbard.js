@@ -4,6 +4,7 @@ import Sunburst from "./Sunburst";
 import LineChart from './graphs/LineChart';
 import PiChart from './graphs/PiChart'
 import RaceChart from './RaceChart';
+import RadialChart from './RadialChart'
 import AnalyticsHeader from '../Headers/AnalyticsHeader'
 import {useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
@@ -92,7 +93,7 @@ class AnalyticDashboard extends React.Component {
     		</Row>
             <br/>
             <Row>
-      			<Col lg="12">
+      			<Col lg="7">
                   <Card small >
                     <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
                     <Typography variant="h6" >Environmental Contribution by the Institute </Typography>
@@ -100,6 +101,15 @@ class AnalyticDashboard extends React.Component {
                       <HBarChart/>
                 </Card>
 
+
+                  </Col>
+                  <Col lg="5">
+                  <Card small >
+                    <CardHeader style ={{ backgroundColor: '#002a29', color: '#fff' }}>
+                    <Typography variant="h6" >Average Time per Application</Typography>
+                    </CardHeader>
+                      <RadialChart/>
+                </Card>
 
                   </Col>
             </Row>
